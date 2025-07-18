@@ -11,5 +11,12 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     references.value[type as keyof References]?.unshift(reference);
   }
 
-  return { references, add };
+  function remove(type: string, referenceId: string) {
+    const filterReferences = references.value[type as keyof References]?.filter(
+      (ref) => ref.id !== referenceId,
+    );
+    references.value[type as keyof References] = filterReferences as Book[];
+  }
+
+  return { references, add, remove };
 });

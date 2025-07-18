@@ -5,12 +5,13 @@
     <q-drawer v-model="leftDrawerOpen" side="left" overlay bordered>
       <q-list>
         <template v-for="(menuItem, index) in menuList" :key="index">
+          <q-separator />
           <q-item exact :to="menuItem.to" active-class="text-primary">
             <!-- <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
             </q-item-section> -->
             <q-item-section>
-              {{ menuItem.label }}
+              {{ menuItem.label.toUpperCase() }}
             </q-item-section>
           </q-item>
         </template>

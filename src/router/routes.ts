@@ -7,6 +7,12 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', name: 'references', component: () => import('pages/IndexPage.vue') },
       { path: '/books', name: 'books', component: () => import('pages/BooksPage.vue') },
+      {
+        path: 'book/:id',
+        name: 'book-id',
+        component: () => import('pages/books/BookPage.vue'),
+        props: (route) => ({ id: route.params.id }),
+      },
     ],
   },
 

@@ -84,7 +84,7 @@ async function findReference() {
       const result = await response.json();
       console.log(result.items[0].volumeInfo);
       const referenceFound = result.items[0].volumeInfo as Book;
-      referenceFound.id = Number(referenceFound.industryIdentifiers![0]!.identifier);
+      referenceFound.id = referenceFound.industryIdentifiers![0]!.identifier;
       newReference.value = referenceFound;
       stepperRef?.value.next();
     }
