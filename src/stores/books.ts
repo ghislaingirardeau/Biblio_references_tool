@@ -23,8 +23,8 @@ export const useBooksStore = defineStore('BooksStore', () => {
     const lowerQuery = query.toLowerCase();
     const filterBooks = books.value.filter(
       (book) =>
-        book.title.toLowerCase().includes(lowerQuery) ||
-        book.authors.join(' ').toLowerCase().includes(lowerQuery),
+        book.title!.toLowerCase().includes(lowerQuery) ||
+        book.authors!.join(' ').toLowerCase().includes(lowerQuery),
     );
     if (filterBooks.length === 0) {
       return 'Book not found';
@@ -34,7 +34,7 @@ export const useBooksStore = defineStore('BooksStore', () => {
   }
 
   function add(book: Book) {
-    book.id = Number(book.industryIdentifiers[0]!.identifier);
+    book.id = Number(book.industryIdentifiers![0]!.identifier);
     books.value.unshift(book);
     // localStorage.setItem('books', JSON.stringify(books.value));
   }

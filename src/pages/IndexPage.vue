@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { useReferencesStore } from 'src/stores/references';
+import { ref } from 'vue';
 
 const { references } = useReferencesStore();
 </script>
