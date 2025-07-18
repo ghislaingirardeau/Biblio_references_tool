@@ -1,5 +1,13 @@
 <template>
-  <q-page class="italic"> hello </q-page>
+  <q-page class="p-2">
+    <pre>
+      {{ references }}
+    </pre>
+  </q-page>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useReferencesStore } from 'src/stores/references';
+
+const { references } = useReferencesStore();
+</script>

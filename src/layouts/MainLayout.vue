@@ -9,7 +9,18 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" side="left" behavior="mobile" bordered>
-      <!-- drawer content -->
+      <q-list>
+        <template v-for="(menuItem, index) in menuList" :key="index">
+          <q-item exact :to="menuItem.to" active-class="text-primary">
+            <!-- <q-item-section avatar>
+              <q-icon :name="menuItem.icon" />
+            </q-item-section> -->
+            <q-item-section>
+              {{ menuItem.label }}
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-list>
     </q-drawer>
 
     <q-page-container>
@@ -27,8 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 const leftDrawerOpen = ref(false);
+import { useReferencesStore } from 'src/stores/references';
+
+const { references } = useReferencesStore();
+
+const menuList = computed(() => {
+  return Object.keys(references).map((ref) => ({ label: ref, to: { name: ref } }));
+});
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
