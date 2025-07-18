@@ -6,44 +6,13 @@
         v-model="identifier"
         label="Reference Identifier (ISBN or DOI)"
         placeholder="976-xxxxx"
+        class="mb-2"
       />
+      <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <div class="flex q-gutter-y-sm">
-        <q-input class="w-full" filled v-model="newReference.title" label="Title" />
-
-        <div v-for="(author, index) in newReference.authors" :key="index" class="w-full">
-          <q-input
-            filled
-            v-model="newReference.authors![index]"
-            :label="'Author'.concat(': ' + (index + 1))"
-          />
-        </div>
-        <q-input class="w-full" filled v-model="newReference.subtitle" label="Subtitle" />
-        <q-input class="w-full" filled v-model="newReference.publisher" label="Publisher" />
-        <q-input
-          class="w-full"
-          filled
-          v-model="newReference.publishedDate"
-          label="Published Date"
-        />
-        <q-input
-          class="w-full"
-          filled
-          v-model="newReference.pageCount"
-          type="number"
-          label="Pages"
-        />
-        <q-input
-          class="w-full"
-          filled
-          type="url"
-          v-model="newReference.infoLink"
-          disable
-          label="Info Link"
-        />
-      </div>
+      <StepEdit v-model:newReference="newReference" />
     </q-step>
 
     <template v-slot:navigation>
@@ -73,6 +42,7 @@ import { useReferencesStore } from 'src/stores/references';
 import type { Book } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import StepEdit from './StepEdit.vue';
 
 const step = ref(1);
 const stepperRef = ref();
@@ -101,9 +71,11 @@ function saveReference() {
   modalReferenceStore.reset();
 }
 
+const errorMessage = ref<null | string>(null);
 async function findReference() {
   try {
     isSearchingReference.value = true;
+    errorMessage.value = null;
 
     const response = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1`,
@@ -118,6 +90,7 @@ async function findReference() {
     }
   } catch (error) {
     console.log(error);
+    errorMessage.value = 'Reference not found';
   }
   isSearchingReference.value = false;
 }

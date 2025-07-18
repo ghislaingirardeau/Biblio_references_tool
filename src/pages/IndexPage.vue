@@ -1,9 +1,5 @@
 <template>
-  <q-page class="p-2">
-    <pre>
-      {{ references }}
-    </pre>
-  </q-page>
+  <q-page class="p-2"> Card of all references </q-page>
 </template>
 
 <script setup lang="ts">

@@ -7,7 +7,7 @@
         {{ mainTitle }}
       </q-toolbar-title>
       <q-space />
-      <q-btn dense flat round icon="add" @click="openModal" />
+      <q-btn v-if="!isRouteHome" dense flat round icon="add" @click="openModal" />
     </q-toolbar>
   </q-header>
 </template>
