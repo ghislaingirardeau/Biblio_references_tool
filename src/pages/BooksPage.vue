@@ -1,43 +1,25 @@
 <template>
   <q-page class="p-2">
-    Books
-    <q-btn label="Maximized" color="primary" @click="dialog = true" />
-
-    <q-dialog
-      v-model="dialog"
-      persistent
-      :maximized="maximizedToggle"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-    >
-      <q-card class="bg-primary text-white">
-        <q-bar>
-          <q-space />
-
-          <q-btn dense flat icon="close" v-close-popup>
-            <q-tooltip class="bg-white text-primary">Close</q-tooltip>
-          </q-btn>
-        </q-bar>
-
-        <q-card-section>
-          <div class="text-h6">Alert</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate
-          voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam
-          exercitationem aut, natus minima, porro labore.
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-  </q-page>
+    <q-list v-if="references.books?.length" bordered separator>
+      <q-item clickable v-ripple v-for="book in references.books" :key="book.id!">
+        <q-item-section>
+          <q-item-label>{{ book.title }}</q-item-label>
+          <q-item-label caption>{{ book.authors![0] }}</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <div class="flex">
+            <q-btn dense flat round icon="edit" />
+            <q-btn dense flat round icon="delete" />
+          </div>
+        </q-item-section>
+      </q-item> </q-list
+  ></q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useReferencesStore } from 'src/stores/references';
 
-const dialog = ref(false);
-const maximizedToggle = ref(true);
+const { references } = useReferencesStore();
 </script>
 
 <style scoped></style>

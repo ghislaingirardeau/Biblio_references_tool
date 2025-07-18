@@ -22,6 +22,7 @@
     </q-page-container>
 
     <TheFooter />
+    <ReferenceModal :modalMode="modalMode" />
   </q-layout>
 </template>
 
@@ -30,6 +31,8 @@ import { computed, ref } from 'vue';
 import { useReferencesStore } from 'src/stores/references';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
+import ReferenceModal from 'src/components/ReferenceModal.vue';
+import { useRoute } from 'vue-router';
 
 const { references } = useReferencesStore();
 
@@ -38,4 +41,10 @@ const menuList = computed(() => {
 });
 
 const leftDrawerOpen = ref(false);
+
+const route = useRoute();
+
+const modalMode = computed(() => {
+  return route.params?.id ? 'quote' : 'reference';
+});
 </script>

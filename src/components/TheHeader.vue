@@ -6,6 +6,8 @@
       <q-toolbar-title @click="$router.push({ name: 'references' })">
         {{ mainTitle }}
       </q-toolbar-title>
+      <q-space />
+      <q-btn dense flat round icon="add" @click="openModal" />
     </q-toolbar>
   </q-header>
 </template>
@@ -14,11 +16,20 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { format } from 'quasar';
+import { useModalReferenceStore } from 'src/stores/modalReferences';
+import { storeToRefs } from 'pinia';
 const { capitalize } = format;
 
 const route = useRoute();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
+
+const modalReferenceStore = useModalReferenceStore();
+const { open, isForQuote, isForReference } = storeToRefs(modalReferenceStore);
+
+function openModal() {
+  open.value = true;
+}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
