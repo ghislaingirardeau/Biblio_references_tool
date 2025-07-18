@@ -12,7 +12,7 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <StepEdit v-model:newReference="newReference" />
+      <ReferenceEdit v-model:newReference="newReference" />
     </q-step>
 
     <template v-slot:navigation>
@@ -42,7 +42,7 @@ import { useReferencesStore } from 'src/stores/references';
 import type { Book } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import StepEdit from './StepEdit.vue';
+import ReferenceEdit from './ReferenceEdit.vue';
 
 const step = ref(1);
 const stepperRef = ref();

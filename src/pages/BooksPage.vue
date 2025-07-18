@@ -24,7 +24,7 @@ const ReferencesStore = useReferencesStore();
 const router = useRouter();
 
 async function goToBook(id: string) {
-  await router.push({ name: 'book-id', params: { id } });
+  await router.push({ name: 'books-id', params: { id } });
 }
 
 function deleteBook(id: string) {

@@ -21,7 +21,8 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <ModalStepper />
+        <ReferenceStepper v-if="props.modalMode === 'reference'" />
+        <QuoteStepper v-else />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -31,7 +32,8 @@
 import { storeToRefs } from 'pinia';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { computed, ref } from 'vue';
-import ModalStepper from './ReferenceModal/ModalStepper.vue';
+import ReferenceStepper from './ReferenceModal/ReferenceStepper.vue';
+import QuoteStepper from './ReferenceModal/QuoteStepper.vue';
 
 const modalReferenceStore = useModalReferenceStore();
 const { open } = storeToRefs(modalReferenceStore);
