@@ -118,9 +118,6 @@ const detectBarcode = async (imageElement: HTMLImageElement) => {
 
       // si il y a un code bar detecté, on stop la camera et l'interval
       stopCamera();
-    } else {
-      // sinon on continue la detection tant que le composant est ouvert
-      codeBarMessage.value = 'Aucun code-barres détecté... continuer la détection';
     }
   } catch (error) {
     console.error('Erreur lors de la détection :', error);

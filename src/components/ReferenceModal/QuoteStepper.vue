@@ -1,7 +1,7 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
     <q-step :name="1" title="Quote" icon="settings" :done="step > 1" class="text-black">
-      scan Image and extract OCR
+      <VideoToImgCanvas v-model:newQuote="newQuote" @next-step="step = 2" />
       <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
     </q-step>
 
@@ -45,6 +45,7 @@ import type { Quote } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import QuoteEdit from './QuoteEdit.vue';
+import VideoToImgCanvas from './videoToImgCanvas.vue';
 
 const step = ref(1);
 const stepperRef = ref();
