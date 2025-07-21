@@ -27,7 +27,6 @@ const ReferencesStore = useReferencesStore();
 const router = useRouter();
 
 const books: ComputedRef<Book[]> = computed(() => {
-  // If filterReferences is an array of Book, return it; otherwise, return references.books or []
   if (Array.isArray(ReferencesStore.filterReferences)) {
     return ReferencesStore.filterReferences as Book[];
   }

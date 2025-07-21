@@ -56,7 +56,7 @@ function filterReferences() {
 }
 
 function filterQuotes() {
-  message.value = ReferencesStore.filter(route.name as string, query.value);
+  message.value = ReferencesStore.filterQuotes(query.value);
 }
 
 watch(

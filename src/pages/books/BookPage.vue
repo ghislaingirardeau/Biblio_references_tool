@@ -19,7 +19,8 @@
 
 <script setup lang="ts">
 import { useReferencesStore } from 'src/stores/references';
-import { computed } from 'vue';
+import type { Quote } from 'src/types/books';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
@@ -27,13 +28,20 @@ const ReferencesStore = useReferencesStore();
 const route = useRoute();
 
 const quotes = computed(() => {
-  const type = (route.name as string).split('-')[0] as string;
-  return ReferencesStore.findQuotes(type, route.params.id as string);
+  if (Array.isArray(ReferencesStore.filteredQuotes)) {
+    return ReferencesStore.filteredQuotes as Quote[];
+  }
+  return ReferencesStore.quotes ?? [];
 });
 
 function deleteQuote(id: string) {
   console.log('delete quote');
 }
+
+onMounted(() => {
+  const type = (route.name as string).split('-')[0] as string;
+  ReferencesStore.findQuotes(type, route.params.id as string);
+});
 </script>
 
 <style scoped></style>
