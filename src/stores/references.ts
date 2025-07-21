@@ -52,7 +52,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   function addQuote(type: string, bookId: string, quote: Quote) {
-    console.log(type, bookId);
     const referenceFound = find(type, bookId);
 
     if (referenceFound && referenceFound?.quotes) {
@@ -62,5 +61,25 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
   }
 
-  return { references, add, remove, addQuote, getTitle, filterReferences, filter, resetFilter };
+  function findQuotes(type: string, bookId: string) {
+    const referenceFound = find(type, bookId);
+
+    if (referenceFound && referenceFound?.quotes) {
+      return referenceFound.quotes;
+    } else {
+      return [];
+    }
+  }
+
+  return {
+    references,
+    getTitle,
+    add,
+    remove,
+    addQuote,
+    findQuotes,
+    filterReferences,
+    filter,
+    resetFilter,
+  };
 });
