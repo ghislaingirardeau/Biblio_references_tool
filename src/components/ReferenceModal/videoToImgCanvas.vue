@@ -14,7 +14,7 @@
       @touchend.prevent="stopDrag"
     />
     <video ref="videoRef" style="display: none" autoplay playsinline />
-    <p>{{ cameras[1]?.label }}</p>
+    <pre>{{ cameras }}</pre>
     <q-btn @click="captureRect" outline color="primary" label="Scan" />
     <!-- <img
       v-if="capturedImg"
@@ -41,7 +41,7 @@ const { videoInputs: cameras } = useDevicesList({
   requestPermissions: true,
   onUpdated() {
     if (!cameras.value.find((i) => i.deviceId === currentCamera.value))
-      currentCamera.value = cameras.value[1]?.deviceId;
+      currentCamera.value = cameras.value[0]?.deviceId;
   },
 });
 
