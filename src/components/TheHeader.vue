@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <q-toolbar-title @click="$router.push({ name: 'references' })">
+      <q-toolbar-title @click="$router.go(-1)">
         {{ mainTitle }}
       </q-toolbar-title>
       <q-space />
@@ -18,6 +18,7 @@ import { useRoute } from 'vue-router';
 import { format } from 'quasar';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { storeToRefs } from 'pinia';
+import { useReferencesStore } from 'src/stores/references';
 const { capitalize } = format;
 
 const route = useRoute();
@@ -25,6 +26,7 @@ const route = useRoute();
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 
 const modalReferenceStore = useModalReferenceStore();
+const referenceStore = useReferencesStore();
 const { open, isForQuote, isForReference } = storeToRefs(modalReferenceStore);
 
 function openModal() {
@@ -42,9 +44,12 @@ const isRouteHome = computed(() => {
 const mainTitle = computed(() => {
   if (isRouteHome.value) {
     return 'References';
-  } else {
-    return capitalize(route.name as string);
   }
+  if (route.params.id) {
+    const [type] = (route.name! as string).split('-');
+    return referenceStore.getTitle(type!, route.params.id as string);
+  }
+  return capitalize(route.name as string);
 });
 </script>
 

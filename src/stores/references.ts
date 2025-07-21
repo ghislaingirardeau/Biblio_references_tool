@@ -15,6 +15,10 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     return references.value[type as keyof References]!.find((ref) => ref.id === id);
   }
 
+  function getTitle(type: string, id: string) {
+    return references.value[type as keyof References]!.find((ref) => ref.id === id)?.title;
+  }
+
   function remove(type: string, referenceId: string) {
     const filterReferences = references.value[type as keyof References]?.filter(
       (ref) => ref.id !== referenceId,
@@ -33,5 +37,5 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
   }
 
-  return { references, add, remove, addQuote };
+  return { references, add, remove, addQuote, getTitle };
 });
