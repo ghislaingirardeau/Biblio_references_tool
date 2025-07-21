@@ -1,12 +1,14 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
     <q-step :name="1" title="Book" icon="settings" :done="step > 1" class="text-black">
+      <BarcodeDetection @detection-isbn="handleDetectionComplete" v-model:isScanning="isScanning" />
+      <q-separator />
       <q-input
         filled
         v-model="identifier"
         label="Reference Identifier (ISBN or DOI)"
         placeholder="976-xxxxx"
-        class="mb-2"
+        class="mb-2 mt-2"
       />
       <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
     </q-step>
@@ -20,6 +22,7 @@
         <q-btn
           @click="modalAction"
           :loading="isSearchingReference"
+          :disable="isScanning && step === 1"
           color="primary"
           :label="step === 2 ? 'Save' : 'Find'"
         />
@@ -43,12 +46,14 @@ import type { Book } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ReferenceEdit from './ReferenceEdit.vue';
+import BarcodeDetection from './BarcodeDetection.vue';
 
 const step = ref(1);
 const stepperRef = ref();
 
 const identifier = ref('0299326101');
 const isSearchingReference = ref(false);
+const isScanning = ref(true);
 
 const newReference = ref<Book>({ id: null });
 
@@ -72,6 +77,7 @@ function saveReference() {
 }
 
 const errorMessage = ref<null | string>(null);
+
 async function findReference() {
   try {
     isSearchingReference.value = true;
@@ -93,6 +99,11 @@ async function findReference() {
     errorMessage.value = 'Reference not found';
   }
   isSearchingReference.value = false;
+}
+
+async function handleDetectionComplete(payload: string) {
+  identifier.value = payload;
+  await findReference();
 }
 </script>
 
