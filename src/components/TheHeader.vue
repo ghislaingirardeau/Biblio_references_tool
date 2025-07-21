@@ -26,7 +26,7 @@ const route = useRoute();
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 
 const modalReferenceStore = useModalReferenceStore();
-const referenceStore = useReferencesStore();
+const ReferenceStore = useReferencesStore();
 const { open, isForQuote, isForReference } = storeToRefs(modalReferenceStore);
 
 function openModal() {
@@ -47,7 +47,7 @@ const mainTitle = computed(() => {
   }
   if (route.params.id) {
     const [type] = (route.name! as string).split('-');
-    return referenceStore.getTitle(type!, route.params.id as string);
+    return ReferenceStore.getTitle(type!, route.params.id as string);
   }
   return capitalize(route.name as string);
 });

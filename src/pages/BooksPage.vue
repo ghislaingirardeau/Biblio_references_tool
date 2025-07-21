@@ -1,7 +1,7 @@
 <template>
   <q-page class="p-2">
-    <q-list v-if="ReferencesStore.references.books?.length" bordered separator>
-      <q-item clickable v-ripple v-for="book in ReferencesStore.references.books" :key="book.id!">
+    <q-list v-if="books && books.length" bordered separator>
+      <q-item clickable v-ripple v-for="book in books" :key="book.id!">
         <q-item-section @click="goToBook(book.id!)">
           <q-item-label>{{ book.title }} {{ book.id }}</q-item-label>
           <q-item-label caption>{{ book.authors![0] }}</q-item-label>
@@ -18,10 +18,21 @@
 
 <script setup lang="ts">
 import { useReferencesStore } from 'src/stores/references';
+import type { Book } from 'src/types/books';
+import { computed } from 'vue';
+import type { ComputedRef } from 'vue';
 import { useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
 const router = useRouter();
+
+const books: ComputedRef<Book[]> = computed(() => {
+  // If filterReferences is an array of Book, return it; otherwise, return references.books or []
+  if (Array.isArray(ReferencesStore.filterReferences)) {
+    return ReferencesStore.filterReferences as Book[];
+  }
+  return ReferencesStore.references.books ?? [];
+});
 
 async function goToBook(id: string) {
   await router.push({ name: 'books-id', params: { id } });
