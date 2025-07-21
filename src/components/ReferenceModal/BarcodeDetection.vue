@@ -1,7 +1,7 @@
 <template>
   <div class="flex my-2">
-    <video v-if="!codeBarMessage" ref="videoElement" class="rounded-md h-80 w-full" />
-    <p v-else class="mt-2 font-bold italic">
+    <video ref="videoElement" class="rounded-md h-80 w-full" />
+    <p class="mt-2 font-bold italic">
       {{ codeBarMessage }}
     </p>
   </div>
@@ -38,11 +38,7 @@ async function startCamera() {
       videoElement.value.srcObject = stream;
       videoElement.value.onloadedmetadata = async () => {
         await videoElement.value?.play();
-        setTimeout(() => {
-          stopCamera();
-        }, 12000);
       };
-      console.dir(videoElement.value);
     }
   } catch (error) {
     isScanning.value = false;
@@ -60,6 +56,7 @@ function stopCamera() {
 
 // Toutes les 3s, on extrait une image de la vidéo
 const getBarcodeFromVideoInterval = useIntervalFn(() => {
+  console.log('useIntervalFn');
   if (!('BarcodeDetector' in window) || !window.BarcodeDetector) {
     isScanning.value = false;
     return;
@@ -87,8 +84,8 @@ function extractPictureFromVideo() {
       };
       imageEl.onerror = () => {
         isScanning.value = false;
-        console.error("Impossible de charger l'image");
-        codeBarMessage.value = "Erreur de chargement de l'image";
+        console.error("Impossible d'extraire l'image");
+        codeBarMessage.value = "Impossible d'extraire l'image";
       };
     }
   }
