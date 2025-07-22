@@ -26,7 +26,7 @@
         <q-btn
           @click="modalAction"
           :loading="isSearchingReference"
-          :disable="isScanning && step === 1"
+          :disable="useIsMobile() && isScanning && step === 1"
           color="primary"
           :label="step === 2 ? 'Save' : 'Find'"
         />
