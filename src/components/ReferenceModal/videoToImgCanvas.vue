@@ -43,7 +43,9 @@ const { videoInputs: cameras } = useDevicesList({
 const { stream, enabled } = useUserMedia({
   constraints: reactive({
     video: computed(() =>
-      currentCamera.value ? { deviceId: { exact: currentCamera.value } } : true,
+      currentCamera.value
+        ? { deviceId: { exact: currentCamera.value } }
+        : { facingMode: { exact: 'environment' } },
     ),
   }),
 });
@@ -217,24 +219,36 @@ async function captureRect() {
     rect.value.height, // destination
   );
 
-  capturedImg.value = tempCanvas.toDataURL('image/png');
+  // Générer une image base64
+  const base64Image = tempCanvas.toDataURL('image/jpeg');
 
-  // Convert frame to blob
-  const blob = await new Promise<Blob | null>((resolve) =>
-    tempCanvas.toBlob(resolve, 'image/jpeg'),
-  );
-  if (!blob) return;
-  const {
-    data: { text },
-  } = await Tesseract.recognize(blob, 'fra', {
-    logger: (m) => console.log(m),
-  });
-  // load the quote
-  newQuote.value!.content = text;
-  // go to edit
-  emits('next-step');
-  // stop camera
-  enabled.value = false;
+  capturedImg.value = base64Image;
+
+  // Appel OCR.Space via fetch
+  const formData = new URLSearchParams();
+  formData.append('apikey', 'K86384102188957'); // Remplace par ta clé API OCR.Space
+  formData.append('language', 'fre'); // ou 'eng', 'spa' etc.
+  formData.append('base64Image', base64Image);
+  formData.append('isOverlayRequired', 'false');
+
+  try {
+    const response = await fetch('https://api.ocr.space/parse/image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formData.toString(),
+    });
+
+    const data = await response.json();
+    const text = data.ParsedResults?.[0]?.ParsedText || '';
+    // load the quote
+    newQuote.value!.content = text;
+    // go to edit
+    emits('next-step');
+    // stop camera
+    enabled.value = false;
+  } catch (error) {
+    console.error('Erreur OCR:', error);
+  }
 }
 
 onMounted(() => {
