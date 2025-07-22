@@ -52,14 +52,15 @@ const { videoInputs: cameras } = useDevicesList({
   onUpdated() {
     if (!cameras.value.find((i) => i.deviceId === currentCamera.value))
       currentCamera.value = cameras.value[1]?.deviceId;
-    console.log('on update camera', currentCamera.value, cameras.value);
   },
 });
 
 const { stream, enabled } = useUserMedia({
   constraints: reactive({
     video: computed(() =>
-      currentCamera.value ? { deviceId: { exact: currentCamera.value } } : true,
+      currentCamera.value
+        ? { deviceId: { exact: currentCamera.value } }
+        : { facingMode: { exact: 'environment' } },
     ),
   }),
 });
