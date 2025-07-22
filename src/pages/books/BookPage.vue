@@ -41,6 +41,7 @@ function deleteQuote(id: string) {
 onMounted(() => {
   const type = (route.name as string).split('-')[0] as string;
   ReferencesStore.findQuotes(type, route.params.id as string);
+  console.log(process.env.API);
 });
 </script>
 

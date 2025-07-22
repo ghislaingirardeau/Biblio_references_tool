@@ -24,6 +24,7 @@
     "@tailwindcss/postcss": "^4.1.11",
     "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^13.5.0",
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",

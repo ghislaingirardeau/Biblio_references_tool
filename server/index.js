@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
 import routerApi from './router.js';
 
@@ -20,6 +21,7 @@ app.use(
   }),
 );
 app.use(fileUpload());
+app.use(bodyParser.json({ limit: '10mb' }));
 
 app.use('/api', routerApi);
 

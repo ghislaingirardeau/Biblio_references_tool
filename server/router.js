@@ -1,10 +1,11 @@
 import express from 'express';
 import { homeServer } from './controller/global.js';
-import { imgToText } from './controller/ocr.js';
+import { imgToText, captureToText } from './controller/ocr.js';
 const router = express.Router();
 
 router.get('/', homeServer);
 
-router.post('/ocr', imgToText);
+router.post('/ocrFile', imgToText);
+router.post('/ocrCapture', captureToText);
 
 export default router;

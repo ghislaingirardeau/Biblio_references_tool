@@ -28,3 +28,19 @@ export async function imgToText(req, res) {
     res.status(500).send('OCR processing failed.');
   }
 }
+
+export async function captureToText(req, res) {
+  try {
+    const { imageBase64 } = req.body;
+
+    const [result] = await client.textDetection({
+      image: { content: imageBase64.split(',')[1] }, // enlever "data:image/png;base64,"
+    });
+
+    const detections = result.textAnnotations;
+    res.json({ text: detections[0]?.description || '' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('OCR processing failed.');
+  }
+}

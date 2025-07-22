@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import { useDevicesList, useUserMedia } from '@vueuse/core';
 import type { Quote } from 'src/types/books';
-import Tesseract from 'tesseract.js';
 import { computed, onMounted, onUnmounted, reactive, ref, shallowRef, watchEffect } from 'vue';
 
 const newQuote = defineModel<Quote>('newQuote');
@@ -43,9 +42,7 @@ const { videoInputs: cameras } = useDevicesList({
 const { stream, enabled } = useUserMedia({
   constraints: reactive({
     video: computed(() =>
-      currentCamera.value
-        ? { deviceId: { exact: currentCamera.value } }
-        : { facingMode: { exact: 'environment' } },
+      currentCamera.value ? { deviceId: { exact: currentCamera.value } } : true,
     ),
   }),
 });
@@ -222,26 +219,17 @@ async function captureRect() {
   // Générer une image base64
   const base64Image = tempCanvas.toDataURL('image/jpeg');
 
-  capturedImg.value = base64Image;
-
-  // Appel OCR.Space via fetch
-  const formData = new URLSearchParams();
-  formData.append('apikey', 'K86384102188957'); // Remplace par ta clé API OCR.Space
-  formData.append('language', 'fre'); // ou 'eng', 'spa' etc.
-  formData.append('base64Image', base64Image);
-  formData.append('isOverlayRequired', 'false');
-
   try {
-    const response = await fetch('https://api.ocr.space/parse/image', {
+    const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString(),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64: base64Image }),
     });
 
     const data = await response.json();
-    const text = data.ParsedResults?.[0]?.ParsedText || '';
-    // load the quote
-    newQuote.value!.content = text;
+
+    // // load the quote
+    newQuote.value!.content = data.text;
     // go to edit
     emits('next-step');
     // stop camera

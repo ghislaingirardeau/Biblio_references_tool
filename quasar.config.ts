@@ -53,7 +53,9 @@ export default defineConfig((ctx) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        API: ctx.dev ? 'http://localhost:3000/api' : 'http://localhost:3000/api',
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
