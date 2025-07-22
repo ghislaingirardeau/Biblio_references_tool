@@ -1,10 +1,10 @@
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import 'dotenv/config';
-import session from 'express-session';
+import fileUpload from 'express-fileupload';
+import vision from '@google-cloud/vision';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 
 import routerApi from './router.js';
 
@@ -17,22 +17,8 @@ const port = process.env.PORT || 3000;
 // Configuration de base
 app.use(
   cors({
-    origin: ['http://localhost:9000', 'https://shops-tools.onrender.com'],
+    origin: ['http://localhost:9200'],
     credentials: true,
-  }),
-);
-
-app.use(bodyParser.json());
-
-app.use(
-  session({
-    secret: 'votre-secret-tres-securise',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 1000 * 60 * 60, //* le token ne sera valable qu'un heure
-      sameSite: 'lax',
-    },
   }),
 );
 
@@ -60,12 +46,12 @@ app.use((req, res, next) => {
 
 /* MIDDLEWARE FOR CONNECTED USER */
 
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }
-  res.status(401).json({ message: 'Non authentifié' });
-}
+// function isAuthenticated(req, res, next) {
+//   if (req.session && req.session.user) {
+//     return next();
+//   }
+//   res.status(401).json({ message: 'Non authentifié' });
+// }
 
 /* Suppression d'un appareil */
 /* Par contre, si un utilisateur veut supprimer un appareil enregistré, là oui, tu dois :

@@ -14,16 +14,22 @@
     "dev:pwa": "quasar dev -m pwa",
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa",
-    "postinstall": "quasar prepare"
+    "postinstall": "quasar prepare",
+    "start": "node server/index.js"
   },
   "dependencies": {
+    "@google-cloud/vision": "^5.3.1",
     "@quasar/extras": "^1.16.4",
     "@tailwindcss/postcss": "^4.1.11",
     "@vueup/vue-quill": "^1.2.0",
     "@vueuse/core": "^13.5.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-fileupload": "^1.5.2",
     "pinia": "^3.0.1",
     "postcss": "^8.5.6",
     "quasar": "^2.16.0",
+    "register-service-worker": "^1.7.2",
     "tesseract.js": "^6.0.1",
     "vue": "^3.4.18",
     "vue-i18n": "^11.0.0",
@@ -44,7 +50,14 @@
     "tailwindcss": "^4.1.11",
     "typescript": "~5.5.3",
     "vite-plugin-checker": "^0.9.0",
-    "vue-tsc": "^2.0.29"
+    "vue-tsc": "^2.0.29",
+    "workbox-build": "^7.3.0",
+    "workbox-cacheable-response": "^7.3.0",
+    "workbox-core": "^7.3.0",
+    "workbox-expiration": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0",
+    "workbox-strategies": "^7.3.0"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",

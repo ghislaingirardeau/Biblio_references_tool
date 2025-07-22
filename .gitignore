@@ -3,6 +3,9 @@
 node_modules
 /server/keys
 
+/server/keys
+/src-pwa
+
 # Quasar core related directories
 .quasar
 /dist
