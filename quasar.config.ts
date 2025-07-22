@@ -54,7 +54,9 @@ export default defineConfig((ctx) => {
       // publicPath: '/',
       // analyze: true,
       env: {
-        API: ctx.dev ? 'http://localhost:3000/api' : 'http://localhost:3000/api',
+        API: ctx.dev
+          ? 'http://localhost:3000/api'
+          : 'https://biblio-references-tool.onrender.com/api',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

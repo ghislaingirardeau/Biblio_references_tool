@@ -42,7 +42,9 @@ const { videoInputs: cameras } = useDevicesList({
 const { stream, enabled } = useUserMedia({
   constraints: reactive({
     video: computed(() =>
-      currentCamera.value ? { deviceId: { exact: currentCamera.value } } : true,
+      currentCamera.value
+        ? { deviceId: { exact: currentCamera.value } }
+        : { facingMode: { exact: 'environment' } },
     ),
   }),
 });
