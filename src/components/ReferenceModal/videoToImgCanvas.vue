@@ -13,8 +13,18 @@
       @touchmove.prevent="onDrag"
       @touchend.prevent="stopDrag"
     />
-    <video ref="videoRef" style="display: none" autoplay playsinline />
-    <pre>{{ cameras }}</pre>
+    <video ref="videoRef" autoplay playsinline />
+    <div>
+      <div
+        v-for="camera of cameras"
+        :key="camera.deviceId"
+        class="px-2 py-1 cursor-pointer"
+        :class="{ 'text-primary': currentCamera === camera.deviceId }"
+        @click="currentCamera = camera.deviceId"
+      >
+        <pre> {{ camera.toJSON() }}</pre>
+      </div>
+    </div>
     <q-btn @click="captureRect" outline color="primary" label="Scan" />
     <!-- <img
       v-if="capturedImg"
@@ -41,7 +51,8 @@ const { videoInputs: cameras } = useDevicesList({
   requestPermissions: true,
   onUpdated() {
     if (!cameras.value.find((i) => i.deviceId === currentCamera.value))
-      currentCamera.value = cameras.value[0]?.deviceId;
+      currentCamera.value = cameras.value[1]?.deviceId;
+    console.log('on update camera', currentCamera.value, cameras.value);
   },
 });
 
