@@ -1,7 +1,11 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
     <q-step :name="1" title="Book" icon="settings" :done="step > 1" class="text-black">
-      <BarcodeDetection @detection-isbn="handleDetectionComplete" v-model:isScanning="isScanning" />
+      <BarcodeDetection
+        v-if="useIsMobile()"
+        @detection-isbn="handleDetectionComplete"
+        v-model:isScanning="isScanning"
+      />
       <q-separator />
       <q-input
         filled
@@ -47,6 +51,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ReferenceEdit from './ReferenceEdit.vue';
 import BarcodeDetection from './BarcodeDetection.vue';
+import { useIsMobile } from 'src/utils/useDeviceInfo';
 
 const step = ref(1);
 const stepperRef = ref();

@@ -53,14 +53,15 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     references.value[type as keyof References] = findReferences as Book[];
   }
 
-  function addQuote(type: string, bookId: string, quote: Quote) {
-    const referenceFound = find(type, bookId);
+  function addQuote(type: string, referenceId: string, quote: Quote) {
+    const referenceFound = find(type, referenceId);
 
     if (referenceFound && referenceFound?.quotes) {
       referenceFound?.quotes.unshift(quote);
     } else {
       referenceFound!.quotes = [quote];
     }
+    findQuotes(type, referenceId);
   }
 
   function findQuotes(type: string, referenceId: string) {
