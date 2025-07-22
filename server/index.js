@@ -1,9 +1,7 @@
 import express from 'express';
-import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fileUpload from 'express-fileupload';
-import vision from '@google-cloud/vision';
 import cors from 'cors';
 
 import routerApi from './router.js';
@@ -21,6 +19,7 @@ app.use(
     credentials: true,
   }),
 );
+app.use(fileUpload());
 
 app.use('/api', routerApi);
 

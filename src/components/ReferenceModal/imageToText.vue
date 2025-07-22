@@ -29,24 +29,17 @@ async function sendToOCR() {
   loading.value = true;
   result.value = '';
 
-  const base64 = await toBase64(image.value);
-
-  const formData = new URLSearchParams();
-  formData.append('apikey', 'K86384102188957'); // Clé publique de test
-  formData.append('language', 'fre'); // ou eng, spa, etc.
-  formData.append('base64Image', String(base64));
-  formData.append('isOverlayRequired', 'false');
+  const formData = new FormData();
+  formData.append('image', image.value);
 
   try {
-    const response = await fetch('https://api.ocr.space/parse/image', {
+    const response = await fetch('http://localhost:3000/api/ocr', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString(),
+      body: formData,
     });
 
     const data = await response.json();
-    result.value = data.ParsedResults?.[0]?.ParsedText || 'Aucun texte reconnu.';
-    newQuote.value!.content = result.value;
+    newQuote.value!.content = data.text;
     emits('next-step');
   } catch (err) {
     result.value = 'Erreur lors de la requête OCR';
@@ -54,15 +47,6 @@ async function sendToOCR() {
   } finally {
     loading.value = false;
   }
-}
-
-function toBase64(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 }
 </script>
 

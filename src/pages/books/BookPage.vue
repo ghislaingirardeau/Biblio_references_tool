@@ -3,7 +3,7 @@
     <q-list v-if="quotes && quotes.length" bordered separator>
       <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
         <q-item-section>
-          <q-item-label>{{ quote.content }}</q-item-label>
+          <q-item-label> <div v-html="quote.content"></div></q-item-label>
           <q-item-label caption>pages: {{ quote.page }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
