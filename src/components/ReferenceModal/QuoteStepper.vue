@@ -1,8 +1,8 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
     <q-step :name="1" title="Quote" icon="settings" :done="step > 1" class="text-black">
-      <VideoToImgCanvas v-model:newQuote="newQuote" @next-step="step = 2" />
-      <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
+      <VideoToImgCanvas v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" />
+      <ImageToText v-else />
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
@@ -12,18 +12,18 @@
     <template v-slot:navigation>
       <q-stepper-navigation>
         <q-btn
-          @click="modalAction"
-          :loading="isSearchingReference"
-          color="primary"
-          :label="step === 2 ? 'Save' : 'Scan'"
-        />
-        <span v-if="step === 1" class="text-black mx-6">OR</span>
-        <q-btn
           v-if="step === 1"
           @click="stepperRef?.next()"
           outline
           color="primary"
           label="Type Quote"
+        />
+        <q-btn
+          v-if="step === 2"
+          @click="saveQuote"
+          :loading="isSearchingReference"
+          color="primary"
+          label="Save"
         />
         <q-btn
           v-if="step > 1"
@@ -46,6 +46,8 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import QuoteEdit from './QuoteEdit.vue';
 import VideoToImgCanvas from './videoToImgCanvas.vue';
+import { useIsMobile } from 'src/utils/useDeviceInfo';
+import ImageToText from './imageToText.vue';
 
 const step = ref(1);
 const stepperRef = ref();
@@ -61,25 +63,12 @@ const newQuote = ref<Quote>({
 const referenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
 
-function modalAction() {
-  if (step.value === 1) {
-    scanImage();
-  } else {
-    saveQuote();
-  }
-}
-
 const route = useRoute();
 
 function saveQuote() {
   const typeRoute = (route.name as string).split('-')[0] as string;
   referenceStore.addQuote(typeRoute, route.params.id as string, newQuote.value);
   modalReferenceStore.reset();
-}
-
-const errorMessage = ref<null | string>(null);
-function scanImage() {
-  console.log('scan image');
 }
 </script>
 

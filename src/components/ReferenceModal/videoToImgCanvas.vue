@@ -13,24 +13,9 @@
       @touchmove.prevent="onDrag"
       @touchend.prevent="stopDrag"
     />
-    <video ref="videoRef" autoplay playsinline />
-    <div>
-      <div
-        v-for="camera of cameras"
-        :key="camera.deviceId"
-        class="px-2 py-1 cursor-pointer"
-        :class="{ 'text-primary': currentCamera === camera.deviceId }"
-        @click="currentCamera = camera.deviceId"
-      >
-        <pre> {{ camera.toJSON() }}</pre>
-      </div>
-    </div>
-    <q-btn @click="captureRect" outline color="primary" label="Scan" />
-    <!-- <img
-      v-if="capturedImg"
-      :src="capturedImg"
-      alt="Captured"
-      style="margin-top: 10px; max-width: 200px" /> -->
+    <video ref="videoRef" style="display: none" autoplay playsinline />
+
+    <q-btn @click="captureRect" color="primary" label="Scan" />
   </div>
 </template>
 
@@ -58,9 +43,7 @@ const { videoInputs: cameras } = useDevicesList({
 const { stream, enabled } = useUserMedia({
   constraints: reactive({
     video: computed(() =>
-      currentCamera.value
-        ? { deviceId: { exact: currentCamera.value } }
-        : { facingMode: { exact: 'environment' } },
+      currentCamera.value ? { deviceId: { exact: currentCamera.value } } : true,
     ),
   }),
 });
@@ -243,7 +226,7 @@ async function captureRect() {
   if (!blob) return;
   const {
     data: { text },
-  } = await Tesseract.recognize(blob, 'eng', {
+  } = await Tesseract.recognize(blob, 'fra', {
     logger: (m) => console.log(m),
   });
   // load the quote
