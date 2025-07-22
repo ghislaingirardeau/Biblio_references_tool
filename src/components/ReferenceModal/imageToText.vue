@@ -33,7 +33,7 @@ async function sendToOCR() {
   formData.append('image', image.value);
 
   try {
-    const response = await fetch(`${process.env.API}/ocrFile'`, {
+    const response = await fetch(`${process.env.API}/ocrFile`, {
       method: 'POST',
       body: formData,
     });
