@@ -45,6 +45,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   function resetFilter() {
     filterReferences.value = null;
+    filteredQuotes.value = null;
   }
 
   function getTitle(type: string, id: string) {
@@ -55,7 +56,26 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const findReferences = references.value[type as keyof References]?.filter(
       (ref) => ref.id !== referenceId,
     );
-    references.value[type as keyof References] = findReferences as Book[] | Article[];
+    if (type === 'books') {
+      references.value.books = findReferences as Book[];
+    } else if (type === 'articles') {
+      references.value.articles = findReferences as Article[];
+    }
+  }
+
+  function update(type: string, reference: Book | Article) {
+    const findReferenceIndex = references.value[type as keyof References]?.findIndex(
+      (ref) => ref.id === reference.id,
+    );
+    if (findReferenceIndex) {
+      references.value[type as keyof References]![findReferenceIndex] = reference;
+    }
+
+    // if (type === 'books') {
+    //   references.value.books = findReferences as Book[];
+    // } else if (type === 'articles') {
+    //   references.value.articles = findReferences as Article[];
+    // }
   }
 
   function addQuote(type: string, referenceId: string, quote: Quote) {
@@ -101,6 +121,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     getTitle,
     add,
     remove,
+    update,
     quotes,
     filteredQuotes,
     addQuote,

@@ -16,11 +16,11 @@ export interface Book {
 
 export interface Article {
   id: string | null;
-  title?: string[];
+  title?: string;
   authors?: string[];
   publisher?: string;
   publishedDate?: string;
-  DOI: string;
+  DOI?: string;
   language?: string;
   quotes?: Quote[];
   volume?: string;

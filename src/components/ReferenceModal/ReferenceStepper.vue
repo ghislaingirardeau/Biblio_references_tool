@@ -11,21 +11,17 @@
         filled
         v-model="identifier"
         label="Reference Identifier (ISBN or DOI)"
-        placeholder="976-xxxxx"
+        placeholder="976-xxxxx OR 10.YYY/XXXXX"
         class="mb-2 mt-2"
       />
       <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <!-- <ReferenceEdit v-model:newReference="newReference" /> -->
-      <EditBookForm
-        v-if="route.params.type === 'books'"
-        v-model:newReference="newReference as Book"
-      />
+      <EditBookForm v-if="route.params.type === 'books'" v-model:newReference="newReference" />
       <EditArticleFrom
         v-if="route.params.type === 'articles'"
-        v-model:newReference="newReference as Article"
+        v-model:newReference="newReference"
       />
     </q-step>
 
@@ -57,7 +53,6 @@ import { useReferencesStore } from 'src/stores/references';
 import type { Article, Book } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ReferenceEdit from './ReferenceEdit.vue';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import EditBookForm from '../Edit/EditBookForm.vue';
@@ -112,7 +107,7 @@ async function findReference() {
           : formatArticleData(result.message);
       referenceFound.id = identifier.value;
       newReference.value = referenceFound;
-      // stepperRef?.value.next();
+      stepperRef?.value.next();
     }
   } catch (error) {
     console.log(error);
@@ -132,7 +127,7 @@ function formatArticleData(article: RawArticle) {
   const publishedDate = article.created.timestamp.toString();
   const formatedArticle = {
     id,
-    title,
+    title: title![0],
     authors: author,
     publishedDate,
     publisher,

@@ -8,19 +8,28 @@
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
-            <q-btn dense flat round icon="edit" />
-            <q-btn dense flat round icon="delete" @click="deleteReference(typeReference.id!)" />
+            <q-btn dense flat round icon="edit" @click="modalEdit(typeReference)" />
+            <q-btn dense flat round icon="delete" @click="modalConfirm(typeReference.id!)" />
           </div>
         </q-item-section>
-      </q-item> </q-list
-  ></q-page>
+      </q-item>
+    </q-list>
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="confirmDelete" />
+    <EditModal
+      v-model:showEditModal="showEditModal"
+      v-model:selectedReference="selectedReference"
+      @confirm-edit="confirmEdit"
+    />
+  </q-page>
 </template>
 
 <script setup lang="ts">
+import ConfirmModal from 'src/components/ConfirmModal.vue';
+import EditModal from 'src/components/EditModal.vue';
 import { useReferencesStore } from 'src/stores/references';
-import type { Book } from 'src/types/books';
+import type { Article, Book } from 'src/types/books';
 import type { References } from 'src/types/references';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { ComputedRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -30,9 +39,15 @@ const route = useRoute();
 
 const type = computed(() => route.params.type);
 
-const typeReferences: ComputedRef<Book[]> = computed(() => {
+const showConfirmModal = ref(false);
+const showEditModal = ref(false);
+
+const selectedReference = ref<Book | Article>({ id: null });
+const selectedId = ref<null | string>(null);
+
+const typeReferences: ComputedRef<Book[] | Article[]> = computed(() => {
   if (Array.isArray(ReferencesStore.filterReferences)) {
-    return ReferencesStore.filterReferences as Book[];
+    return ReferencesStore.filterReferences as Book[] | Article[];
   }
   return ReferencesStore.references[type.value as keyof References] ?? [];
 });
@@ -41,8 +56,24 @@ async function goToQuotes(id: string) {
   await router.push({ name: 'quotes-id', params: { type: type.value, id } });
 }
 
-function deleteReference(id: string) {
-  ReferencesStore.remove(type.value as string, id);
+function modalConfirm(id: string) {
+  showConfirmModal.value = true;
+  selectedId.value = id;
+}
+
+function modalEdit(reference: Article | Book) {
+  showEditModal.value = true;
+  selectedReference.value = reference;
+}
+
+function confirmDelete() {
+  ReferencesStore.remove(type.value as string, selectedId.value!);
+  selectedId.value = null;
+}
+
+function confirmEdit() {
+  ReferencesStore.update(type.value as string, selectedReference.value as Book | Article);
+  selectedReference.value = { id: null };
 }
 </script>
 

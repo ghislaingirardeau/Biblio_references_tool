@@ -1,12 +1,6 @@
 <template>
   <div class="flex q-gutter-y-sm" v-if="newReference">
-    <div v-for="(title, index) in newReference.title" :key="index" class="w-full">
-      <q-input
-        filled
-        v-model="newReference.title![index]"
-        :label="'Title'.concat(': ' + (index + 1))"
-      />
-    </div>
+    <q-input filled v-model="newReference.title" label="Title" />
 
     <div v-for="(author, index) in newReference.authors" :key="index" class="w-full">
       <q-input
