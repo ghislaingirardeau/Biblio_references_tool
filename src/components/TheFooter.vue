@@ -33,7 +33,7 @@ const isLoading = ref(false);
 const message = ref<null | string | undefined>(null);
 
 const isRouteForReferences = computed(() => {
-  return (route.name as string) === 'books' || (route.name as string) === 'articles';
+  return !!route.params.type;
 });
 
 const isRouteQuotes = computed(() => {
@@ -52,7 +52,7 @@ function filter() {
 }
 
 function filterReferences() {
-  message.value = ReferencesStore.filter(route.name as string, query.value);
+  message.value = ReferencesStore.filter(route.params.type as string, query.value);
 }
 
 function filterQuotes() {

@@ -35,10 +35,13 @@ import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
 import { useRoute } from 'vue-router';
 
-const { references } = useReferencesStore();
+const { types } = useReferencesStore();
 
 const menuList = computed(() => {
-  return Object.keys(references).map((ref) => ({ label: ref, to: { name: ref } }));
+  return types.map((ref) => ({
+    label: ref,
+    to: { name: 'references-type', params: { type: ref } },
+  }));
 });
 
 const leftDrawerOpen = ref(false);

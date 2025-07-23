@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 import { useStorage } from '@vueuse/core';
-import type { References } from 'src/types/references';
+import type { References, ReferencesType } from 'src/types/references';
 import type { Book, Quote } from 'src/types/books';
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const references: Ref<References> = useStorage('References', { books: [], articles: [] });
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
+  const types: ReferencesType = ['books', 'articles', 'web'];
 
   const quotes = ref<Quote[] | []>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
@@ -92,6 +93,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   return {
     references,
+    types,
     getTitle,
     add,
     remove,

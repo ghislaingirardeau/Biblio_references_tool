@@ -6,12 +6,17 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'references', component: () => import('pages/IndexPage.vue') },
-      { path: '/books', name: 'books', component: () => import('pages/BooksPage.vue') },
       {
-        path: 'books/:id',
-        name: 'books-id',
-        component: () => import('pages/books/BookPage.vue'),
-        props: (route) => ({ id: route.params.id }),
+        path: '/:type',
+        name: 'references-type',
+        component: () => import('pages/ReferencePage.vue'),
+        props: (route) => ({ type: route.params.type }),
+      },
+      {
+        path: ':type/:id',
+        name: 'quotes-id',
+        component: () => import('pages/quotes/IdPage.vue'),
+        props: (route) => ({ type: route.params.type, id: route.params.id }),
       },
     ],
   },

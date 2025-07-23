@@ -14,6 +14,20 @@ export interface Book {
   quotes?: Quote[];
 }
 
+export interface Article {
+  id: string | null;
+  title?: string;
+  authors?: string[];
+  publisher?: string;
+  publishedDate?: string;
+  DOI: string;
+  language?: string;
+  quotes?: Quote[];
+  volume?: string;
+  issue?: string;
+  page?: string;
+}
+
 interface IndustryIdentifiers {
   type: string;
   identifier: string;

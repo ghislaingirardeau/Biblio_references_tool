@@ -4,3 +4,5 @@ export interface References {
   books?: Book[];
   articles?: Book[];
 }
+
+export type ReferencesType = readonly ['books', 'articles', 'web'];
