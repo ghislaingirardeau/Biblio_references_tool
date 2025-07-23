@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 // Initialise le client Vision
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: path.join(__dirname, '../keys/ocr-image-466705-da5e8a78c3e4.json'), // adapte si nécessaire
+  keyFilename: '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
 });
 
 export async function imgToText(req, res) {
