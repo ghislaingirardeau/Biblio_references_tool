@@ -18,10 +18,10 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <EditBookForm v-if="route.params.type === 'books'" v-model:newReference="newReference" />
+      <EditBookForm v-if="route.params.type === 'books'" v-model:editReference="newReference" />
       <EditArticleFrom
         v-if="route.params.type === 'articles'"
-        v-model:newReference="newReference"
+        v-model:editReference="newReference"
       />
     </q-step>
 

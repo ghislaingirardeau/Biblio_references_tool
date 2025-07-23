@@ -4,11 +4,11 @@
       <q-card-section class="row items-center">
         <EditBookForm
           v-if="$route.params.type === 'books'"
-          v-model:newReference="selectedReference!"
+          v-model:editReference="selectedReference!"
         />
         <EditArticleFrom
           v-if="$route.params.type === 'articles'"
-          v-model:newReference="selectedReference!"
+          v-model:editReference="selectedReference!"
         />
       </q-card-section>
 
