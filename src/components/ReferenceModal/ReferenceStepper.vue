@@ -18,7 +18,15 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <ReferenceEdit v-model:newReference="newReference" />
+      <!-- <ReferenceEdit v-model:newReference="newReference" /> -->
+      <EditBookForm
+        v-if="route.params.type === 'books'"
+        v-model:newReference="newReference as Book"
+      />
+      <EditArticleFrom
+        v-if="route.params.type === 'articles'"
+        v-model:newReference="newReference as Article"
+      />
     </q-step>
 
     <template v-slot:navigation>
@@ -46,21 +54,23 @@
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
-import type { Book } from 'src/types/books';
+import type { Article, Book } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ReferenceEdit from './ReferenceEdit.vue';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
+import EditBookForm from '../Edit/EditBookForm.vue';
+import EditArticleFrom from '../Edit/EditArticleFrom.vue';
 
 const step = ref(1);
 const stepperRef = ref();
 
-const identifier = ref('0299326101');
+const identifier = ref('10.1177/097215091001200110');
 const isSearchingReference = ref(false);
 const isScanning = ref(true);
 
-const newReference = ref<Book>({ id: null });
+const newReference = ref<Book | Article>({ id: null });
 
 const referenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
@@ -76,34 +86,65 @@ async function modalAction() {
 const route = useRoute();
 
 function saveReference() {
-  console.log(route.name);
-  referenceStore.add(route.name as string, newReference.value);
+  referenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
 }
 
 const errorMessage = ref<null | string>(null);
+
+function url() {
+  return route.params.type === 'books'
+    ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1`
+    : `https://api.crossref.org/works/${encodeURIComponent(identifier.value)}`;
+}
 
 async function findReference() {
   try {
     isSearchingReference.value = true;
     errorMessage.value = null;
 
-    const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1`,
-    );
+    const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      console.log(result.items[0].volumeInfo);
-      const referenceFound = result.items[0].volumeInfo as Book;
-      referenceFound.id = referenceFound.industryIdentifiers![0]!.identifier;
+      const referenceFound =
+        route.params.type === 'books'
+          ? (result.items[0].volumeInfo as Book)
+          : formatArticleData(result.message);
+      referenceFound.id = identifier.value;
       newReference.value = referenceFound;
-      stepperRef?.value.next();
+      // stepperRef?.value.next();
     }
   } catch (error) {
     console.log(error);
     errorMessage.value = 'Reference not found';
   }
   isSearchingReference.value = false;
+}
+
+interface RawArticle extends Article {
+  author?: { family: string; given: string }[];
+  created: { timestamp: number };
+}
+
+function formatArticleData(article: RawArticle) {
+  const author = article.author?.map((a) => a.family + ' ' + a.given);
+  const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL } = article;
+  const publishedDate = article.created.timestamp.toString();
+  const formatedArticle = {
+    id,
+    title,
+    authors: author,
+    publishedDate,
+    publisher,
+    DOI,
+    quotes,
+    volume,
+    issue,
+    page,
+    language,
+    URL,
+  };
+  return formatedArticle as Article;
 }
 
 async function handleDetectionComplete(payload: string) {

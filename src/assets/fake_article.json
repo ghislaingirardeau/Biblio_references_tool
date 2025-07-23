@@ -1,0 +1,217 @@
+{
+  "indexed": {
+    "date-parts": [[2025, 7, 23]],
+    "date-time": "2025-07-23T04:26:02Z",
+    "timestamp": 1753244762554,
+    "version": "3.33.0"
+  },
+  "reference-count": 23,
+  "publisher": "SAGE Publications",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [[2010, 12, 23]],
+        "date-time": "2010-12-23T00:00:00Z",
+        "timestamp": 1293062400000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://journals.sagepub.com/page/policies/text-and-data-mining-license"
+    }
+  ],
+  "content-domain": { "domain": ["journals.sagepub.com"], "crossmark-restriction": true },
+  "short-container-title": ["Global Business Review"],
+  "published-print": { "date-parts": [[2011, 2]] },
+  "abstract": "<jats:p> The main aim of this article is to examine the effect of working capital on profitability of Indian firms. We collected data about a sample of 263 non-financial BSE 500 firms listed at the Bombay Stock (BSE) from 2000 to 2008 and evaluated the data using OLS multiple regression. The findings of our study significantly depart from the various international studies conducted in different markets. The results reveal that working capital management and profitability is positively correlated in Indian companies. The study further reveals that inventory of number of days and number of days accounts payable are negatively correlated with a firm’s profitability, whereas number of days accounts receivables and cash conversion period exhibit a positive relationship with corporate profitability. The present study contributes to the existing literature by examining the effect of working capital management on profitability in the context of an emerging capital market such as India. </jats:p>",
+  "DOI": "10.1177/097215091001200110",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [[2010, 12, 23]],
+    "date-time": "2010-12-23T19:31:10Z",
+    "timestamp": 1293132670000
+  },
+  "page": "159-173",
+  "update-policy": "https://doi.org/10.1177/sage-journals-update-policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 191,
+  "title": ["Effect of Working Capital Management on Firm Profitability"],
+  "prefix": "10.1177",
+  "volume": "12",
+  "author": [
+    {
+      "given": "A.K.",
+      "family": "Sharma",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "A.K. Sharma is Associate Professor at the Department of Management Studies, Indian Institute of Technology Roorkee, Roorkee (Uttrakhand), India."
+        }
+      ]
+    },
+    {
+      "given": "Satish",
+      "family": "Kumar",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Satish Kumar (Corresponding Author) is a Research Scholar at the Department of Management Studies, Indian Institute of Technology Roorkee, Roorkee (Uttrakhand), India."
+        }
+      ]
+    }
+  ],
+  "member": "179",
+  "published-online": { "date-parts": [[2010, 12, 23]] },
+  "reference": [
+    {
+      "volume-title": "In the Proceedings of 9th South Asian Management Forum (SAMF)",
+      "author": "Afza, T.",
+      "key": "atypb1"
+    },
+    { "key": "atypb2", "doi-asserted-by": "publisher", "DOI": "10.1111/1468-5957.00008" },
+    { "key": "atypb3", "doi-asserted-by": "publisher", "DOI": "10.1108/10569210480000179" },
+    { "key": "atypb4", "doi-asserted-by": "publisher", "DOI": "10.1108/17439130710738718" },
+    {
+      "key": "atypb5",
+      "volume-title": "Basic Econometrics",
+      "author": "Gujarati, D.N.",
+      "year": "2008",
+      "edition": "4"
+    },
+    {
+      "key": "atypb6",
+      "unstructured": "Horne Van, J.C. \t\t\t\t, &  \t\t\t\t\tWachowicz Jr., J.M. \t\t\t\t (2000). Fundamentals of Financial Management (11th edn),  \t\t\t\t\tPrentice Hall \t\t\t\t."
+    },
+    { "key": "atypb7", "doi-asserted-by": "publisher", "DOI": "10.1007/BF02920497" },
+    {
+      "key": "atypb8",
+      "first-page": "26",
+      "volume": "19",
+      "author": "Lazaridis, I.",
+      "year": "2006",
+      "journal-title": "Journal of Financial Management and Analysis"
+    },
+    {
+      "key": "atypb9",
+      "unstructured": "Luo, M.M. \t\t\t\t,  \t\t\t\t\tLee, J.J. \t\t\t\t, &  \t\t\t\t\tHwang, Y. \t\t\t\t (2009). Cash conversion cycle, firm performance and stock value. Retrieved from www90.homepage.villanova.edu/michael…/ML_CCC_20090420.pdf (accessed on 17 August 2009)."
+    },
+    { "key": "atypb10", "doi-asserted-by": "publisher", "DOI": "10.2139/ssrn.236175" },
+    {
+      "volume-title": "Interactive forecasting univariate and multivariate methods",
+      "year": "1978",
+      "author": "Makridakis, S.",
+      "key": "atypb11"
+    },
+    {
+      "issue": "4",
+      "key": "atypb12",
+      "first-page": "28",
+      "volume": "15",
+      "author": "Nazir, M.S.",
+      "year": "2009",
+      "journal-title": "ICFAI Journal of Applied Finance"
+    },
+    { "key": "atypb13", "doi-asserted-by": "publisher", "DOI": "10.1111/0022-1082.00138" },
+    {
+      "issue": "2",
+      "key": "atypb14",
+      "first-page": "45",
+      "volume": "2",
+      "author": "Padachi, K.",
+      "year": "2006",
+      "journal-title": "International Review of Business Research Papers"
+    },
+    {
+      "issue": "1",
+      "key": "atypb15",
+      "first-page": "279",
+      "volume": "3",
+      "author": "Raheman, A.",
+      "year": "2007",
+      "journal-title": "International Review of Business Research Papers"
+    },
+    { "key": "atypb16", "doi-asserted-by": "publisher", "DOI": "10.3923/ijaef.2008.44.50" },
+    {
+      "issue": "2",
+      "key": "atypb17",
+      "first-page": "37",
+      "volume": "8",
+      "author": "Shin, H.H.",
+      "year": "1998",
+      "journal-title": "Financial Practice and Education"
+    },
+    {
+      "issue": "4",
+      "key": "atypb18",
+      "first-page": "53",
+      "volume": "13",
+      "author": "Soenen, L.A.",
+      "year": "1993",
+      "journal-title": "Journal of Cash Management"
+    },
+    {
+      "key": "atypb19",
+      "first-page": "2",
+      "author": "Talat, A.",
+      "year": "2008",
+      "journal-title": "Proceedings of COMSATS International Conference on Management (CICM)"
+    },
+    {
+      "key": "atypb20",
+      "first-page": "186",
+      "volume": "24",
+      "author": "Uyar, A.",
+      "year": "2009",
+      "journal-title": "International Research Journal of Finance and Economics"
+    },
+    { "key": "atypb21", "doi-asserted-by": "publisher", "DOI": "10.1016/S1042-444X(01)00047-0" },
+    { "key": "atypb22", "doi-asserted-by": "publisher", "DOI": "10.1111/0022-1082.00203" },
+    {
+      "volume-title": "International Symposium on Finance and Accounting (ISFA)",
+      "author": "Zariyawati, M.A",
+      "key": "atypb23"
+    }
+  ],
+  "container-title": ["Global Business Review"],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://journals.sagepub.com/doi/pdf/10.1177/097215091001200110",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://journals.sagepub.com/doi/pdf/10.1177/097215091001200110",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [[2025, 1, 28]],
+    "date-time": "2025-01-28T02:01:55Z",
+    "timestamp": 1738029715000
+  },
+  "score": 1,
+  "resource": {
+    "primary": { "URL": "https://journals.sagepub.com/doi/10.1177/097215091001200110" }
+  },
+  "subtitle": ["Empirical Evidence from India"],
+  "short-title": [],
+  "issued": { "date-parts": [[2010, 12, 23]] },
+  "references-count": 23,
+  "journal-issue": { "issue": "1", "published-print": { "date-parts": [[2011, 2]] } },
+  "alternative-id": ["10.1177/097215091001200110"],
+  "URL": "https://doi.org/10.1177/097215091001200110",
+  "relation": {},
+  "ISSN": ["0972-1509", "0973-0664"],
+  "issn-type": [
+    { "type": "print", "value": "0972-1509" },
+    { "type": "electronic", "value": "0973-0664" }
+  ],
+  "subject": [],
+  "published": { "date-parts": [[2010, 12, 23]] },
+  "id": "10.1177/097215091001200110"
+}

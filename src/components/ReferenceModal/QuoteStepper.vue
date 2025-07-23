@@ -66,8 +66,7 @@ const modalReferenceStore = useModalReferenceStore();
 const route = useRoute();
 
 function saveQuote() {
-  const typeRoute = (route.name as string).split('-')[0] as string;
-  referenceStore.addQuote(typeRoute, route.params.id as string, newQuote.value);
+  referenceStore.addQuote(route.params.type as string, route.params.id as string, newQuote.value);
   modalReferenceStore.reset();
 }
 </script>

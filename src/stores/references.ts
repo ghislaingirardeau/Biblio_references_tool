@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, type Ref } from 'vue';
 import { useStorage } from '@vueuse/core';
 import type { References, ReferencesType } from 'src/types/references';
-import type { Book, Quote } from 'src/types/books';
+import type { Article, Book, Quote } from 'src/types/books';
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const references: Ref<References> = useStorage('References', { books: [], articles: [] });
@@ -12,8 +12,12 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   const quotes = ref<Quote[] | []>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
 
-  function add(type: string, reference: Book) {
-    references.value[type as keyof References]?.unshift(reference);
+  function add(type: string, reference: Book | Article) {
+    if (type === 'books') {
+      (references.value.books as Book[]).unshift(reference as Book);
+    } else if (type === 'articles') {
+      (references.value.articles as Article[]).unshift(reference as Article);
+    }
   }
 
   function find(type: string, id: string) {
@@ -51,7 +55,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const findReferences = references.value[type as keyof References]?.filter(
       (ref) => ref.id !== referenceId,
     );
-    references.value[type as keyof References] = findReferences as Book[];
+    references.value[type as keyof References] = findReferences as Book[] | Article[];
   }
 
   function addQuote(type: string, referenceId: string, quote: Quote) {

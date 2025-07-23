@@ -16,7 +16,7 @@ export interface Book {
 
 export interface Article {
   id: string | null;
-  title?: string;
+  title?: string[];
   authors?: string[];
   publisher?: string;
   publishedDate?: string;
@@ -26,6 +26,7 @@ export interface Article {
   volume?: string;
   issue?: string;
   page?: string;
+  URL?: string;
 }
 
 interface IndustryIdentifiers {
