@@ -1,9 +1,7 @@
-import path from 'path';
 import vision from '@google-cloud/vision';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Initialise le client Vision
 const client = new vision.ImageAnnotatorClient({
