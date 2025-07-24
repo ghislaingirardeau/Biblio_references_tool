@@ -3,12 +3,10 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolorum repellendus ad nam optio. Eaque, impedit? Delectus officia quasi quam doloremque perferendis dolore totam voluptates, nesciunt vel amet, nostrum consequuntur? -->
-
       <q-toolbar-title @click="$router.push('/')">
         {{ mainTitle }}
       </q-toolbar-title>
-      <q-btn v-if="!isRouteHome" dense flat round icon="add" @click="openModal" />
+      <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
     </q-toolbar>
   </q-header>
 </template>
@@ -38,18 +36,18 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const isRouteHome = computed(() => {
-  return route.name === 'references';
+const isRouteReferences = computed(() => {
+  return !!route.params.type;
 });
 
 const mainTitle = computed(() => {
-  if (isRouteHome.value) {
-    return 'References';
-  }
   if (route.params.id) {
     return ReferenceStore.getTitle(route.params.type as string, route.params.id as string);
   }
-  return capitalize(route.params.type as string);
+  if (route.params.type) {
+    return capitalize(route.params.type as string);
+  }
+  return capitalize(route.name as string);
 });
 </script>
 

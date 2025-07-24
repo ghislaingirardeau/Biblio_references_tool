@@ -74,7 +74,7 @@ const ctx = ref<CanvasRenderingContext2D | null>(null);
 const canvasWidth = width.value;
 const canvasWHeight = height.value - 75;
 
-const squareSize = 20;
+const squareSize = 30;
 
 // Rectangle coordinates and size
 const rect = ref({

@@ -29,19 +29,22 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useReferencesStore } from 'src/stores/references';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
 import { useRoute } from 'vue-router';
 
-const { types } = useReferencesStore();
-
 const menuList = computed(() => {
-  return types.map((ref) => ({
-    label: ref,
-    to: { name: 'references-type', params: { type: ref } },
-  }));
+  return [
+    {
+      label: 'Home',
+      to: { name: 'references' },
+    },
+    {
+      label: 'Biblio',
+      to: { name: 'bibliography' },
+    },
+  ];
 });
 
 const leftDrawerOpen = ref(false);
