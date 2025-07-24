@@ -5,6 +5,7 @@
     maximized
     transition-show="slide-up"
     transition-hide="slide-down"
+    @hide="ModalReference.isReadonly = false"
   >
     <q-card>
       <q-card-section class="row items-center">
@@ -31,9 +32,12 @@ import type { Article, Book, Quote } from 'src/types/books';
 import EditArticleFrom from './Edit/EditArticleFrom.vue';
 import EditBookForm from './Edit/EditBookForm.vue';
 import QuoteEdit from './ReferenceModal/QuoteEdit.vue';
+import { useModalReferenceStore } from 'src/stores/modalReferences';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<Book | Article | Quote>('selectedReference');
+
+const ModalReference = useModalReferenceStore();
 </script>
 
 <style scoped></style>

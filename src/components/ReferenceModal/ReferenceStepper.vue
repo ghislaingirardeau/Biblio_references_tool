@@ -1,6 +1,12 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
-    <q-step :name="1" title="Book" icon="settings" :done="step > 1" class="text-black">
+    <q-step
+      :name="1"
+      :title="route.params.type === 'books' ? 'Add Book' : 'Add Article'"
+      icon="settings"
+      :done="step > 1"
+      class="text-black"
+    >
       <BarcodeDetection
         v-if="useIsMobile()"
         @detection-isbn="handleDetectionComplete"
@@ -42,6 +48,13 @@
           color="primary"
           @click="stepperRef?.previous()"
           label="Back"
+          class="q-ml-sm"
+        />
+        <q-btn
+          flat
+          color="primary"
+          @click="modalReferenceStore.reset()"
+          label="Close"
           class="q-ml-sm"
         />
       </q-stepper-navigation>

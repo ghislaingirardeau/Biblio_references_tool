@@ -11,7 +11,7 @@
       v-model:content="editQuote.content"
       theme="snow"
       content-type="html"
-      class="quill-editor w-full border-2 border-gray-200 !mt-0"
+      class="quill-editor w-full border-2 border-gray-200 !mt-0 h-80"
       :readOnly="ModalReference.isReadonly"
     />
   </div>

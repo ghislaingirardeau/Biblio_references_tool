@@ -1,20 +1,23 @@
 <template>
-  <div>
-    <q-file v-model="image" label="Pick one file" filled style="max-width: 300px" />
+  <div class="p-2 flex">
+    <q-file v-model="image" label="Upload image to extract text" filled class="w-72 mr-5" />
+    <q-btn :loading="loading" color="primary" @click="sendToOCR" label="extract text" />
     <q-btn
-      flat
-      :loading="loading"
+      outline
       color="primary"
-      @click="sendToOCR"
-      label="extract text"
-      class="q-ml-sm"
+      @click="modalReferenceStore.reset()"
+      label="Close"
+      class="q-ml-md"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useModalReferenceStore } from 'src/stores/modalReferences';
 import type { Quote } from 'src/types/books';
 import { ref } from 'vue';
+
+const modalReferenceStore = useModalReferenceStore();
 
 const image = ref<File | null>(null);
 const result = ref('');

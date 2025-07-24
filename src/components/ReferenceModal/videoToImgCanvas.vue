@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap justify-center">
+  <div class="relative flex flex-wrap">
     <canvas
       ref="canvasRef"
       :width="canvasWidth"
@@ -15,7 +15,14 @@
     />
     <video ref="videoRef" style="display: none" autoplay playsinline />
 
-    <q-btn @click="captureRect" color="primary" label="Scan" />
+    <q-btn @click="captureRect" color="primary" label="Scan" class="absolute bottom-7 right-7" />
+    <q-btn
+      flat
+      color="primary"
+      @click="modalReferenceStore.reset()"
+      label="Close"
+      class="absolute bottom-7 left-7"
+    />
   </div>
 </template>
 
@@ -23,6 +30,12 @@
 import { useDevicesList, useUserMedia } from '@vueuse/core';
 import type { Quote } from 'src/types/books';
 import { computed, onMounted, onUnmounted, reactive, ref, shallowRef, watchEffect } from 'vue';
+
+import { useWindowSize } from '@vueuse/core';
+import { useModalReferenceStore } from 'src/stores/modalReferences';
+const { width, height } = useWindowSize();
+
+const modalReferenceStore = useModalReferenceStore();
 
 const newQuote = defineModel<Quote>('newQuote');
 const emits = defineEmits(['next-step']);
@@ -58,10 +71,8 @@ watchEffect(() => {
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
 
-const capturedImg = ref<string | null>(null);
-
-const canvasWidth = 300;
-const canvasWHeight = 350;
+const canvasWidth = width.value;
+const canvasWHeight = height.value - 75;
 
 const squareSize = 20;
 
@@ -86,9 +97,9 @@ function drawRect() {
   ctx.value.beginPath();
   ctx.value.rect(rect.value.x, rect.value.y, rect.value.width, rect.value.height);
   ctx.value.lineWidth = rect.value.lineWidth;
-  ctx.value.strokeStyle = 'red';
+  ctx.value.strokeStyle = '#31ccec';
   ctx.value.stroke();
-  ctx.value.fillStyle = 'steelblue';
+  ctx.value.fillStyle = '#31ccec';
   ctx.value.fillRect(
     rect.value.x + rect.value.width - squareSize,
     rect.value.y + rect.value.height - squareSize,

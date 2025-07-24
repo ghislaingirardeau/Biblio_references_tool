@@ -1,37 +1,29 @@
 <template>
-  <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
-    <q-step :name="1" title="Quote" icon="settings" :done="step > 1" class="text-black">
+  <q-stepper v-model="step" ref="stepperRef" color="primary" header-nav animated>
+    <q-step :name="1" title="Scan & Extract" icon="settings" :done="step > 1">
       <VideoToImgCanvas v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" />
-
       <ImageToText v-else v-model:newQuote="newQuote" @next-step="step = 2" />
     </q-step>
 
-    <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
+    <q-step
+      :name="2"
+      title="Type & Edit"
+      icon="create_new_folder"
+      :done="step > 2"
+      class="edit-quote"
+    >
       <QuoteEdit v-model:editQuote="newQuote" />
     </q-step>
 
     <template v-slot:navigation>
-      <q-stepper-navigation>
+      <q-stepper-navigation v-if="step === 2" class="mt-5">
+        <q-btn @click="saveQuote" :loading="isSearchingReference" color="primary" label="Save" />
+        <q-btn flat color="primary" @click="stepperRef?.previous()" label="Back" class="q-ml-sm" />
         <q-btn
-          v-if="step === 1"
-          @click="stepperRef?.next()"
-          outline
-          color="primary"
-          label="Type Quote"
-        />
-        <q-btn
-          v-if="step === 2"
-          @click="saveQuote"
-          :loading="isSearchingReference"
-          color="primary"
-          label="Save"
-        />
-        <q-btn
-          v-if="step > 1"
           flat
           color="primary"
-          @click="stepperRef?.previous()"
-          label="Back"
+          @click="modalReferenceStore.reset()"
+          label="Close"
           class="q-ml-sm"
         />
       </q-stepper-navigation>
@@ -72,4 +64,13 @@ function saveQuote() {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+:deep() {
+  .q-stepper__step-inner {
+    padding: 0px !important;
+  }
+  .edit-quote .q-stepper__step-inner {
+    height: calc(100vh - 150px);
+  }
+}
+</style>
