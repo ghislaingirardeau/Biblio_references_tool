@@ -5,7 +5,11 @@ import type { References, ReferencesType } from 'src/types/references';
 import type { Article, Book, Quote } from 'src/types/books';
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
-  const references: Ref<References> = useStorage('References', { books: [], articles: [] });
+  const references: Ref<References> = useStorage('References', {
+    books: [],
+    articles: [],
+    web: [],
+  });
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
   const types: ReferencesType = ['books', 'articles', 'web'];
 

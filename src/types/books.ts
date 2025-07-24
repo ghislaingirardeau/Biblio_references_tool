@@ -29,6 +29,16 @@ export interface Article {
   URL?: string;
 }
 
+export interface Web {
+  id: string | null;
+  title?: string;
+  authors?: string[];
+  publisher?: string;
+  publishedDate?: string;
+  URL?: string;
+  quotes?: Quote[];
+}
+
 interface IndustryIdentifiers {
   type: string;
   identifier: string;

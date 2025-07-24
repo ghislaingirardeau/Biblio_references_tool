@@ -5,7 +5,7 @@
 
       <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolorum repellendus ad nam optio. Eaque, impedit? Delectus officia quasi quam doloremque perferendis dolore totam voluptates, nesciunt vel amet, nostrum consequuntur? -->
 
-      <q-toolbar-title @click="$router.go(-1)">
+      <q-toolbar-title @click="$router.push('/')">
         {{ mainTitle }}
       </q-toolbar-title>
       <q-btn v-if="!isRouteHome" dense flat round icon="add" @click="openModal" />
