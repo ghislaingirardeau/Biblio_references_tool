@@ -2,13 +2,13 @@
   <q-page class="p-2">
     <q-list v-if="quotes && quotes.length" bordered separator>
       <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
-        <q-item-section>
+        <q-item-section @click="modalEdit(quote, true)">
           <q-item-label> <div class="truncate-2-lines" v-html="quote.content"></div></q-item-label>
           <q-item-label caption>pages: {{ quote.page }}</q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
-            <q-btn dense flat round icon="edit" @click="modalEdit(quote)" />
+            <q-btn dense flat round icon="edit" @click="modalEdit(quote, false)" />
             <q-btn dense flat round icon="delete" @click="deleteQuote(quote.id!)" />
           </div>
         </q-item-section>
@@ -18,18 +18,21 @@
       v-model:showEditModal="showEditModal"
       v-model:selectedReference="selectedQuote as Quote"
       @confirm-edit="confirmEdit"
+      :isReadonly="ModalReference.isReadonly"
     />
   </q-page>
 </template>
 
 <script setup lang="ts">
 import EditModal from 'src/components/EditModal.vue';
+import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
 import type { Quote } from 'src/types/books';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
+const ModalReference = useModalReferenceStore();
 
 const route = useRoute();
 const showEditModal = ref(false);
@@ -46,7 +49,8 @@ function deleteQuote(id: string) {
   console.log('delete quote');
 }
 
-function modalEdit(quote: Quote) {
+function modalEdit(quote: Quote, modeReadonly: boolean) {
+  ModalReference.isReadonly = modeReadonly;
   showEditModal.value = true;
   selectedQuote.value = quote;
 }

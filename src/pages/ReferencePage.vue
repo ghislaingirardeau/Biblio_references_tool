@@ -18,7 +18,6 @@
     <EditModal
       v-model:showEditModal="showEditModal"
       v-model:selectedReference="selectedReference"
-      @confirm-edit="confirmEdit"
     />
   </q-page>
 </template>
@@ -71,10 +70,7 @@ function confirmDelete() {
   selectedId.value = null;
 }
 
-function confirmEdit() {
-  ReferencesStore.update(type.value as string, selectedReference.value as Book | Article);
-  selectedReference.value = { id: null };
-}
+// }
 </script>
 
 <style scoped></style>

@@ -63,21 +63,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
   }
 
-  function update(type: string, reference: Book | Article) {
-    const findReferenceIndex = references.value[type as keyof References]?.findIndex(
-      (ref) => ref.id === reference.id,
-    );
-    if (findReferenceIndex) {
-      references.value[type as keyof References]![findReferenceIndex] = reference;
-    }
-
-    // if (type === 'books') {
-    //   references.value.books = findReferences as Book[];
-    // } else if (type === 'articles') {
-    //   references.value.articles = findReferences as Article[];
-    // }
-  }
-
   function addQuote(type: string, referenceId: string, quote: Quote) {
     const referenceFound = find(type, referenceId);
 
@@ -108,7 +93,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const searchQuotes = quotes.value.filter((quote) =>
       quote.content!.toLowerCase().includes(lowerQuery),
     );
-    console.log(searchQuotes);
     if (searchQuotes.length === 0) {
       return 'Quote not found';
     }
@@ -122,7 +106,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     getTitle,
     add,
     remove,
-    update,
     quotes,
     filteredQuotes,
     addQuote,

@@ -1,5 +1,11 @@
 <template>
-  <q-dialog v-model="showEditModal!" persistent>
+  <q-dialog
+    v-model="showEditModal!"
+    persistent
+    maximized
+    transition-show="slide-up"
+    transition-hide="slide-down"
+  >
     <q-card>
       <q-card-section class="row items-center">
         <EditBookForm
@@ -14,8 +20,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Cancel" outline color="primary" v-close-popup />
-        <q-btn flat label="Save" color="primary" v-close-popup @click="emits('confirm-edit')" />
+        <q-btn flat label="Close" outline color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -29,8 +34,6 @@ import QuoteEdit from './ReferenceModal/QuoteEdit.vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<Book | Article | Quote>('selectedReference');
-
-const emits = defineEmits(['confirm-edit']);
 </script>
 
 <style scoped></style>
