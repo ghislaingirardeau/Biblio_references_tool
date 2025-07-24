@@ -6,12 +6,14 @@
         @detection-isbn="handleDetectionComplete"
         v-model:isScanning="isScanning"
       />
-      <q-separator />
+      <q-separator v-if="useIsMobile()" />
       <q-input
         filled
         v-model="identifier"
         label="Reference Identifier (ISBN or DOI)"
-        placeholder="976-xxxxx OR 10.YYY/XXXXX"
+        :placeholder="
+          route.params.type === 'books' ? '9780299326104' : '10.1177/097215091001200110'
+        "
         class="mb-2 mt-2"
       />
       <span v-if="errorMessage" class="text-red">{{ errorMessage }}</span>
@@ -61,7 +63,7 @@ import EditArticleFrom from '../Edit/EditArticleFrom.vue';
 const step = ref(1);
 const stepperRef = ref();
 
-const identifier = ref('10.1177/097215091001200110');
+const identifier = ref('');
 const isSearchingReference = ref(false);
 const isScanning = ref(true);
 

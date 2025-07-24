@@ -14,4 +14,13 @@ export default boot(({ app, router, redirect }) => {
     const ReferencesStore = useReferencesStore();
     ReferencesStore.resetFilter();
   });
+  router.beforeEach((to, from) => {
+    const ReferencesStore = useReferencesStore();
+    const typeParam = to.params.type;
+    if (!typeParam || ReferencesStore.types.includes(typeParam as 'books' | 'articles' | 'web')) {
+      return;
+    } else {
+      redirect('/');
+    }
+  });
 });

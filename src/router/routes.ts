@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
         path: '/:type',
         name: 'references-type',
         component: () => import('pages/ReferencePage.vue'),
-        props: (route) => ({ type: route.params.type }),
+        props: (route) => ({ type: route.params.type as string }),
       },
       {
         path: ':type/:id',
