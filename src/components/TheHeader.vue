@@ -3,6 +3,8 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
+      <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur dolorum repellendus ad nam optio. Eaque, impedit? Delectus officia quasi quam doloremque perferendis dolore totam voluptates, nesciunt vel amet, nostrum consequuntur? -->
+
       <q-toolbar-title @click="$router.go(-1)">
         {{ mainTitle }}
       </q-toolbar-title>

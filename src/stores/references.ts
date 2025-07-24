@@ -106,8 +106,9 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
     const lowerQuery = query.toLowerCase();
     const searchQuotes = quotes.value.filter((quote) =>
-      quote.content.toLowerCase().includes(lowerQuery),
+      quote.content!.toLowerCase().includes(lowerQuery),
     );
+    console.log(searchQuotes);
     if (searchQuotes.length === 0) {
       return 'Quote not found';
     }

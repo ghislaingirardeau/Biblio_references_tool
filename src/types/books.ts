@@ -35,7 +35,7 @@ interface IndustryIdentifiers {
 }
 
 export interface Quote {
-  id: string;
-  page: string;
-  content: string;
+  id: string | null;
+  page?: string;
+  content?: string;
 }

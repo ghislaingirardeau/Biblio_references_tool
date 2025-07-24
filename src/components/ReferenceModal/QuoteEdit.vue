@@ -1,9 +1,8 @@
 <template>
-  <div class="flex q-gutter-y-sm" v-if="newQuote">
-    <q-input class="w-full" filled v-model="newQuote.page" label="Page" />
-    <!-- <q-input class="w-full" filled v-model="newQuote.content" type="textarea" label="Content" /> -->
+  <div class="flex q-gutter-y-sm" v-if="editQuote">
+    <q-input class="w-full" filled v-model="editQuote.page" label="Page" />
     <QuillEditor
-      v-model:content="newQuote.content"
+      v-model:content="editQuote.content"
       theme="snow"
       content-type="html"
       class="quill-editor w-full border-2 border-gray-200 !mt-0"
@@ -14,7 +13,7 @@
 <script setup lang="ts">
 import type { Quote } from 'src/types/books';
 
-const newQuote = defineModel<Quote>('newQuote');
+const editQuote = defineModel<Quote>('editQuote');
 </script>
 
 <style scoped></style>

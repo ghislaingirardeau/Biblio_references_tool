@@ -2,11 +2,12 @@
   <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
     <q-step :name="1" title="Quote" icon="settings" :done="step > 1" class="text-black">
       <VideoToImgCanvas v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" />
+
       <ImageToText v-else v-model:newQuote="newQuote" @next-step="step = 2" />
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <QuoteEdit v-model:newQuote="newQuote" />
+      <QuoteEdit v-model:editQuote="newQuote" />
     </q-step>
 
     <template v-slot:navigation>
