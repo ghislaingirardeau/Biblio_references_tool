@@ -1,4 +1,25 @@
-import type { Book, Article, Web } from 'src/types/books';
+import type {
+  Book,
+  Article,
+  BookChapter,
+  ConferencePaper,
+  Thesis,
+  WebPage,
+  NewspaperArticle,
+  MagazineArticle,
+  Dataset,
+  Software,
+  Interview,
+  Film,
+  LegalCase,
+  Legislation,
+  Patent,
+  Manuscript,
+  Presentation,
+  Audio,
+  Image,
+  Report,
+} from 'src/types/books';
 
 export interface References {
   books?: {
@@ -14,109 +35,109 @@ export interface References {
     description: string;
   };
   web?: {
-    lists: Web[];
+    lists: WebPage[];
     type: string;
     label: string;
     description: string;
   };
   bookChapter?: {
-    lists: Book[];
+    lists: BookChapter[];
     type: string;
     label: string;
     description: string;
   };
   conferencePaper?: {
-    lists: Book[];
+    lists: ConferencePaper[];
     type: string;
     label: string;
     description: string;
   };
   thesis?: {
-    lists: Book[];
+    lists: Thesis[];
     type: string;
     label: string;
     description: string;
   };
   report?: {
-    lists: Book[];
+    lists: Report[];
     type: string;
     label: string;
     description: string;
   };
   newspaperArticle?: {
-    lists: Book[];
+    lists: NewspaperArticle[];
     type: string;
     label: string;
     description: string;
   };
   magazineArticle?: {
-    lists: Book[];
+    lists: MagazineArticle[];
     type: string;
     label: string;
     description: string;
   };
   dataset?: {
-    lists: Book[];
+    lists: Dataset[];
     type: string;
     label: string;
     description: string;
   };
   software?: {
-    lists: Book[];
+    lists: Software[];
     type: string;
     label: string;
     description: string;
   };
   interview?: {
-    lists: Book[];
+    lists: Interview[];
     type: string;
     label: string;
     description: string;
   };
   film?: {
-    lists: Book[];
+    lists: Film[];
     type: string;
     label: string;
     description: string;
   };
   legalCase?: {
-    lists: Book[];
+    lists: LegalCase[];
     type: string;
     label: string;
     description: string;
   };
   legislation?: {
-    lists: Book[];
+    lists: Legislation[];
     type: string;
     label: string;
     description: string;
   };
   patent?: {
-    lists: Book[];
+    lists: Patent[];
     type: string;
     label: string;
     description: string;
   };
   manuscript?: {
-    lists: Book[];
+    lists: Manuscript[];
     type: string;
     label: string;
     description: string;
   };
   presentation?: {
-    lists: Book[];
+    lists: Presentation[];
     type: string;
     label: string;
     description: string;
   };
   audio?: {
-    lists: Book[];
+    lists: Audio[];
     type: string;
     label: string;
     description: string;
   };
   image?: {
-    lists: Book[];
+    lists: Image[];
     type: string;
     label: string;
     description: string;

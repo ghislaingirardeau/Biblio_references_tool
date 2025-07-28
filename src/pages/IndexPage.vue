@@ -3,8 +3,8 @@
     <q-card
       class="w-full h-24"
       v-for="referenceType in menuTypes"
-      :key="referenceType.label"
-      @click="goTo(referenceType.label)"
+      :key="referenceType.type"
+      @click="goTo(referenceType.type)"
     >
       <q-card-section>
         <div class="text-h6">{{ referenceType.label }}</div>
