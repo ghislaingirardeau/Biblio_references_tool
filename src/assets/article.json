@@ -1,0 +1,266 @@
+{
+  "indexed": {
+    "date-parts": [[2025, 7, 22]],
+    "date-time": "2025-07-22T11:05:57Z",
+    "timestamp": 1753182357198
+  },
+  "reference-count": 34,
+  "publisher": "Springer Science and Business Media LLC",
+  "issue": "1",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": ["J Innov Entrep", "Journal of Innovation and Entrepreneurship"],
+  "published-print": {
+    "date-parts": [[2014]]
+  },
+  "DOI": "10.1186/2192-5372-3-4",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [[2014, 1, 14]],
+    "date-time": "2014-01-14T18:10:17Z",
+    "timestamp": 1389723017000
+  },
+  "page": "4",
+  "source": "Crossref",
+  "is-referenced-by-count": 21,
+  "title": [
+    "Dialectic evolution through the social innovation process: from microcredit to microfinance"
+  ],
+  "prefix": "10.1186",
+  "volume": "3",
+  "author": [
+    {
+      "given": "Arvind",
+      "family": "Ashta",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Mawuli",
+      "family": "Couchoro",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Abu Saleh",
+      "family": "Musa",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "297",
+  "reference": [
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1467-9701.2006.00830.x"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2753/JEI0021-3624430305"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.iimb.2012.11.001"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1541-0072.2001.tb02095.x"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B19",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1539-6975.2010.01404.x"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B21",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1086/343134"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/jid.882"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B25",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1057/palgrave.gpp.2510132"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/jid.1193"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/jid.1192"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/00220380412331322051"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/1467-8268.00060"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/1468-246X.00034"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/00036840500427148"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1142/S1084946710001440"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/jid.972"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/0008-4085.00107"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5465/AMJ.2007.28166119"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.worlddev.2010.08.007"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/rfs/hhp092"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2307/41166407"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B57",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2753/REE1540-496X470302"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B58",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1057/gpp.2009.32"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1287/mnsc.1060.0679"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B62",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1740-8784.2011.00222.x"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B64",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/08985620802176187"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1300/J140v05n01_03"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B76",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1086/503580"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B78",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1475-4991.1999.tb00309.x"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10551-012-1566-1"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1468-0270.2007.00728.x"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1541-0072.2001.tb02091.x"
+    },
+    {
+      "key": "10.1186/2192-5372-3-4-B101",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/1467-7660.00264"
+    },
+    {
+      "key": "-",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1468-0297.2008.02134.x"
+    }
+  ],
+  "container-title": ["Journal of Innovation and Entrepreneurship"],
+  "original-title": [],
+  "language": "en",
+  "deposited": {
+    "date-parts": [[2016, 5, 16]],
+    "date-time": "2016-05-16T17:36:48Z",
+    "timestamp": 1463420208000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://innovation-entrepreneurship.springeropen.com/articles/10.1186/2192-5372-3-4"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [[2014]]
+  },
+  "references-count": 34,
+  "journal-issue": {
+    "issue": "1",
+    "published-print": {
+      "date-parts": [[2014]]
+    }
+  },
+  "alternative-id": ["2192-5372-3-4"],
+  "URL": "https://doi.org/10.1186/2192-5372-3-4",
+  "relation": {},
+  "ISSN": ["2192-5372"],
+  "issn-type": [
+    {
+      "value": "2192-5372",
+      "type": "print"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [[2014]]
+  }
+}

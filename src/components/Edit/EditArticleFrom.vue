@@ -10,6 +10,7 @@
       />
     </div>
     <q-input class="w-full" filled v-model="editReference.publisher" label="Publisher" />
+    <q-input class="w-full" filled v-model="editReference.journal" label="Journal" />
     <q-input class="w-full" filled v-model="editReference.publishedDate" label="Published Date" />
     <q-input class="w-1/2" filled v-model="editReference.volume" label="Volume" />
     <q-input class="w-1/2" filled v-model="editReference.issue" label="Issue" />

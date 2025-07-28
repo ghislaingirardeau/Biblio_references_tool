@@ -1,40 +1,14 @@
 # biblio_tool (my-biblio-tool)
 
-Build quickly your bibliography and add quotes to your references
+## DOI & ISBN search
 
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
-```
+Certain type de références peuvent avoir un DOI et/ou un ISBN, dans la fonction de recherche on va donc intégrer les 2.
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+Recherche d'abord le DOI, si tu ne trouves rien recherche l'ISBN
 
+C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulaire match.
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+### Test ISBN and DOI
 
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+10.1186/2192-5372-3-4
+9780299326104

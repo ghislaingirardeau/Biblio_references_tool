@@ -36,7 +36,7 @@
     <template v-slot:navigation>
       <q-stepper-navigation>
         <q-btn
-          @click="modalAction"
+          @click="modalActionFind"
           :loading="isSearchingReference"
           :disable="useIsMobile() && isScanning && step === 1"
           color="primary"
@@ -72,6 +72,7 @@ import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import EditBookForm from '../Edit/EditBookForm.vue';
 import EditArticleFrom from '../Edit/EditArticleFrom.vue';
+import type { RawArticle } from 'src/types/API';
 
 const step = ref(1);
 const stepperRef = ref();
@@ -82,10 +83,13 @@ const isScanning = ref(true);
 
 const newReference = ref<Book | Article>({ id: null });
 
+const doiRegex = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
+const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/i;
+
 const referenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
 
-async function modalAction() {
+async function modalActionFind() {
   if (step.value === 1) {
     await findReference();
   } else {
@@ -103,7 +107,7 @@ function saveReference() {
 const errorMessage = ref<null | string>(null);
 
 function url() {
-  return route.params.type === 'books'
+  return isbnRegex.test(identifier.value)
     ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1`
     : `https://api.crossref.org/works/${encodeURIComponent(identifier.value)}`;
 }
@@ -116,10 +120,9 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      const referenceFound =
-        route.params.type === 'books'
-          ? (result.items[0].volumeInfo as Book)
-          : formatArticleData(result.message);
+      const referenceFound = isbnRegex.test(identifier.value)
+        ? (result.items[0].volumeInfo as Book)
+        : formatArticleData(result.message);
       referenceFound.id = identifier.value;
       newReference.value = referenceFound;
       stepperRef?.value.next();
@@ -131,19 +134,16 @@ async function findReference() {
   isSearchingReference.value = false;
 }
 
-interface RawArticle extends Article {
-  author?: { family: string; given: string }[];
-  created: { timestamp: number };
-}
-
 function formatArticleData(article: RawArticle) {
   const author = article.author?.map((a) => a.family + ' ' + a.given);
   const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL } = article;
-  const publishedDate = article.created.timestamp.toString();
+  console.log(article['container-title']);
+  const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   const formatedArticle = {
     id,
     title: title![0],
     authors: author,
+    journal: article['container-title'][0],
     publishedDate,
     publisher,
     DOI,

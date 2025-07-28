@@ -29,6 +29,7 @@ export interface Article {
   id: string | null;
   title?: string;
   authors?: string[];
+  journal?: string;
   publisher?: string;
   publishedDate?: string;
   DOI?: string;
