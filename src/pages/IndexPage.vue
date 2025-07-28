@@ -7,8 +7,10 @@
       @click="goTo(referenceType.label)"
     >
       <q-card-section>
-        <div class="text-h6">{{ referenceType.label.toUpperCase() }}</div>
-        <div class="text-subtitle2">Reference counted: {{ referenceType.countRef }}</div>
+        <div class="text-h6">{{ referenceType.label }}</div>
+        <div class="text-subtitle2">
+          {{ referenceType.description }} Total refs: {{ referenceType.countRef }}
+        </div>
       </q-card-section>
     </q-card></q-page
   >
@@ -16,16 +18,17 @@
 
 <script setup lang="ts">
 import { useReferencesStore } from 'src/stores/references';
-import { computed, onMounted, ref } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-const { references, types } = useReferencesStore();
+const { references } = useReferencesStore();
 
 const menuTypes = computed(() => {
-  return types.map((ref) => ({
-    label: ref,
-    countRef: references[ref]?.length,
+  const formatForMenu = Object.values(references).map((ref) => ({
+    ...ref,
+    countRef: ref.lists.length,
   }));
+  return formatForMenu;
 });
 
 const router = useRouter();

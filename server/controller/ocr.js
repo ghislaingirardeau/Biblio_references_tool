@@ -1,11 +1,15 @@
 import vision from '@google-cloud/vision';
 import { fileURLToPath } from 'url';
+import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialise le client Vision
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
+  keyFilename: process.env.DEV
+    ? path.join(__dirname, '../keys/ocr-image-466705-da5e8a78c3e4.json')
+    : '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
 });
 
 export async function imgToText(req, res) {
@@ -20,7 +24,10 @@ export async function imgToText(req, res) {
     const detections = result.textAnnotations;
     const fullText = detections.length > 0 ? detections[0].description : '';
 
-    res.json({ text: fullText });
+    fullText.replaceAll('\n', ' ');
+    const textFormated = fullText.replaceAll('\n', ' ');
+
+    res.json({ text: textFormated });
   } catch (err) {
     console.error(err);
     res.status(500).send('OCR processing failed.');

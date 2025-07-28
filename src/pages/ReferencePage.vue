@@ -48,7 +48,7 @@ const typeReferences: ComputedRef<Book[] | Article[]> = computed(() => {
   if (Array.isArray(ReferencesStore.filterReferences)) {
     return ReferencesStore.filterReferences as Book[] | Article[];
   }
-  return ReferencesStore.references[type.value as keyof References] ?? [];
+  return ReferencesStore.references[type.value as keyof References]?.lists ?? [];
 });
 
 async function goToQuotes(id: string) {

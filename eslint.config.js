@@ -15,7 +15,7 @@ export default defineConfigWithVueTs(
      *
      * ESLint requires "ignores" key to be the only one in this object
      */
-    ignores: ['dist', 'src-pwa'],
+    ignores: ['dist', 'src-pwa', 'src/trash'],
   },
 
   pluginQuasar.configs.recommended(),
