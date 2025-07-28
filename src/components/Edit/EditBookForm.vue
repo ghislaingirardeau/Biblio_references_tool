@@ -1,6 +1,7 @@
 <template>
   <div class="flex q-gutter-y-sm" v-if="editReference">
     <q-input class="w-full" filled v-model="editReference.title" label="Title" />
+    <q-input class="w-full" filled v-model="editReference.subtitle" label="Subtitle" />
 
     <div v-for="(author, index) in editReference.authors" :key="index" class="w-full">
       <q-input

@@ -27,7 +27,9 @@ export interface Book {
 
 export interface Article {
   id: string | null;
+  type?: string;
   title?: string;
+  subtitle?: string;
   authors?: string[];
   journal?: string;
   publisher?: string;

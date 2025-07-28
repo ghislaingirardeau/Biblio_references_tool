@@ -11,4 +11,5 @@ C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulai
 ### Test ISBN and DOI
 
 10.1186/2192-5372-3-4
+10.1177/0309132519898254
 9780299326104

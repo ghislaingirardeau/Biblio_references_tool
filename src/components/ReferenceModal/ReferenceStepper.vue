@@ -120,6 +120,7 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
+      console.log(result);
       const referenceFound = isbnRegex.test(identifier.value)
         ? (result.items[0].volumeInfo as Book)
         : formatArticleData(result.message);
@@ -136,8 +137,8 @@ async function findReference() {
 
 function formatArticleData(article: RawArticle) {
   const author = article.author?.map((a) => a.family + ' ' + a.given);
-  const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL } = article;
-  console.log(article['container-title']);
+  const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL, type } = article;
+  console.log(article);
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   const formatedArticle = {
     id,
@@ -153,6 +154,7 @@ function formatArticleData(article: RawArticle) {
     page,
     language,
     URL,
+    type,
   };
   return formatedArticle as Article;
 }
