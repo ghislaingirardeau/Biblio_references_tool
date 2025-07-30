@@ -13,7 +13,7 @@
           v-if="$route.params.type === 'books' && !$route.params.id"
           v-model:editReference="selectedReference!"
         />
-        <EditArticleFrom
+        <EditArticleForm
           v-if="$route.params.type === 'articles' && !$route.params.id"
           v-model:editReference="selectedReference!"
         />
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import type { Article, Book, Quote } from 'src/types/books';
-import EditArticleFrom from './Edit/EditArticleFrom.vue';
+import EditArticleForm from './Edit/EditArticleForm.vue';
 import EditBookForm from './Edit/EditBookForm.vue';
 import QuoteEdit from './ReferenceModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';

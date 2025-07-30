@@ -168,8 +168,8 @@ export interface Software {
 export interface Interview {
   id: string | null;
   title?: string;
-  interviewee?: string;
-  interviewer?: string;
+  interviewee?: string[];
+  interviewer?: string[];
   date?: string;
   location?: string;
   language?: string;

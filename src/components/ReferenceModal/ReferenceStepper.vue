@@ -1,5 +1,5 @@
 <template>
-  <q-stepper v-model="step" ref="stepperRef" color="primary" animated>
+  <q-stepper v-model="step" ref="stepperRef" color="primary" header-nav animated>
     <q-step
       :name="1"
       :title="route.params.type === 'books' ? 'Add Book' : 'Add Article'"
@@ -27,10 +27,11 @@
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
       <EditBookForm v-if="route.params.type === 'books'" v-model:editReference="newReference" />
-      <EditArticleFrom
+      <EditArticleForm
         v-if="route.params.type === 'articles'"
         v-model:editReference="newReference"
       />
+      <EditForm v-else v-model:editReference="newReference" />
     </q-step>
 
     <template v-slot:navigation>
@@ -65,14 +66,18 @@
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
-import type { Article, Book } from 'src/types/books';
-import { ref } from 'vue';
+import type { Article, Book, Thesis } from 'src/types/books';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import EditBookForm from '../Edit/EditBookForm.vue';
-import EditArticleFrom from '../Edit/EditArticleFrom.vue';
+import EditArticleForm from '../Edit/EditArticleForm.vue';
 import type { RawArticle } from 'src/types/API';
+import EditForm from '../Edit/EditForm.vue';
+import { referencesTemplate } from 'src/utils/useBaseReferences';
+
+const route = useRoute();
 
 const step = ref(1);
 const stepperRef = ref();
@@ -81,13 +86,19 @@ const identifier = ref('');
 const isSearchingReference = ref(false);
 const isScanning = ref(true);
 
-const newReference = ref<Book | Article>({ id: null });
+const newReference = ref<Book | Article | Thesis>({
+  id: null,
+});
 
-const doiRegex = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/i;
 
 const referenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
+
+onMounted(() => {
+  const type = route.params.type as keyof typeof referencesTemplate;
+  newReference.value = referencesTemplate[type].template;
+});
 
 async function modalActionFind() {
   if (step.value === 1) {
@@ -96,8 +107,6 @@ async function modalActionFind() {
     saveReference();
   }
 }
-
-const route = useRoute();
 
 function saveReference() {
   referenceStore.add(route.params.type as string, newReference.value);
