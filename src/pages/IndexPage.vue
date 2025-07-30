@@ -1,7 +1,7 @@
 <template>
   <q-page class="p-2 flex q-gutter-y-sm">
     <q-card
-      class="w-full h-24"
+      class="w-full h-24 cursor-pointer"
       v-for="referenceType in menuTypes"
       :key="referenceType.type"
       @click="goTo(referenceType.type)"
