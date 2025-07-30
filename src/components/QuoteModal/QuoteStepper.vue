@@ -37,10 +37,10 @@ import { useReferencesStore } from 'src/stores/references';
 import type { Quote } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import QuoteEdit from './QuoteEdit.vue';
-import VideoToImgCanvas from './videoToImgCanvas.vue';
+import VideoToImgCanvas from 'src/components/ReferenceModal/videoToImgCanvas.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
-import ImageToText from './imageToText.vue';
+import ImageToText from 'src/components/ReferenceModal/imageToText.vue';
+import QuoteEdit from './QuoteEdit.vue';
 
 const step = ref(1);
 const stepperRef = ref();

@@ -17,7 +17,7 @@ import { storeToRefs } from 'pinia';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { computed, ref } from 'vue';
 import ReferenceStepper from './ReferenceModal/ReferenceStepper.vue';
-import QuoteStepper from './ReferenceModal/QuoteStepper.vue';
+import QuoteStepper from 'src/components/QuoteModal/QuoteStepper.vue';
 
 const modalReferenceStore = useModalReferenceStore();
 const { open } = storeToRefs(modalReferenceStore);

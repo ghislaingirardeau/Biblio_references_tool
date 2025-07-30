@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import type { Article, Book, Quote } from 'src/types/books';
-import QuoteEdit from './ReferenceModal/QuoteEdit.vue';
+import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
 
