@@ -22,11 +22,12 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   function add(type: string, reference: Book | Article) {
-    if (type === 'books') {
-      (references.value.books?.lists as Book[]).unshift(reference as Book);
-    } else if (type === 'articles') {
-      (references.value.articles?.lists as Article[]).unshift(reference as Article);
-    }
+    // if (type === 'books') {
+    //   (references.value.books?.lists as Book[]).unshift(reference as Book);
+    // } else if (type === 'articles') {
+    //   (references.value.articles?.lists as Article[]).unshift(reference as Article);
+    // }
+    references.value[type as keyof References]?.lists.unshift(reference);
   }
 
   function find(type: string, id: string) {

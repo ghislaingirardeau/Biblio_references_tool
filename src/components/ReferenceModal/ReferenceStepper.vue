@@ -95,6 +95,7 @@ onMounted(() => {
 
 async function modalActionFind() {
   if (step.value === 1) {
+    formatIdentifier();
     await findReference();
   } else {
     saveReference();
@@ -102,8 +103,12 @@ async function modalActionFind() {
 }
 
 function saveReference() {
+  if (!newReference.value.id) newReference.value.id = Date.now().toString();
   referenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
+  newReference.value = {
+    id: null,
+  };
 }
 
 const errorMessage = ref<null | string>(null);
@@ -122,7 +127,7 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      newReference.value = { id: identifier.value };
+      newReference.value.id = identifier.value;
       if (isbnRegex.test(identifier.value)) {
         const {
           title,
@@ -136,21 +141,18 @@ async function findReference() {
           infoLink,
           imageLinks,
         } = result.items[0].volumeInfo as Book;
-        newReference.value = Object.assign(
-          {
-            title,
-            subtitle,
-            authors,
-            publisher,
-            publishedDate,
-            pageCount,
-            categories,
-            language,
-            infoLink,
-            imageLinks: imageLinks?.thumbnail,
-          },
-          newReference.value,
-        );
+        newReference.value = Object.assign(newReference.value, {
+          title,
+          subtitle,
+          authors,
+          publisher,
+          ['published-date']: publishedDate,
+          pages: pageCount,
+          categories,
+          language,
+          infoLink,
+          imageLinks: imageLinks?.thumbnail,
+        });
       } else {
         const {
           type,
@@ -166,23 +168,20 @@ async function findReference() {
           DOI,
           URL,
         } = formatArticleData(result.message);
-        newReference.value = Object.assign(
-          {
-            type,
-            title,
-            subtitle,
-            authors,
-            journal,
-            publisher,
-            publishedDate,
-            page,
-            issue,
-            volume,
-            DOI,
-            URL,
-          },
-          newReference.value,
-        );
+        newReference.value = Object.assign(newReference.value, {
+          type,
+          title,
+          subtitle,
+          authors,
+          journal,
+          publisher,
+          ['published-date']: publishedDate,
+          page,
+          issue,
+          volume,
+          DOI,
+          URL,
+        });
       }
     }
 
@@ -192,6 +191,15 @@ async function findReference() {
     errorMessage.value = 'Reference not found';
   }
   isSearchingReference.value = false;
+}
+
+function formatIdentifier() {
+  identifier.value = identifier.value.trim();
+  const isbnFormattedRegex = /^(97(8|9))?[-\s]?\d{1,5}[-\s]?\d{1,7}[-\s]?\d{1,7}[-\s]?[\dX]$/i;
+
+  if (isbnFormattedRegex.test(identifier.value)) {
+    identifier.value = identifier.value.split('-').join('');
+  }
 }
 
 function formatArticleData(article: RawArticle) {

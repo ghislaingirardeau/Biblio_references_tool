@@ -9,7 +9,7 @@
   >
     <q-card>
       <q-card-section class="row items-center">
-        <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedReference! as Quote" />
+        <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedReference!" />
         <ReferenceEdit v-else v-model:editReference="selectedReference!" />
       </q-card-section>
 

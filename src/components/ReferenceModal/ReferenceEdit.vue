@@ -1,7 +1,7 @@
 <template>
   <div class="flex q-gutter-y-sm" v-if="editReference">
     <div
-      v-for="reference in Object.keys(editReference)"
+      v-for="reference in referenceInputsEditable"
       :key="reference"
       class="fit row wrap justify-start items-start content-start"
     >
@@ -11,7 +11,7 @@
             filled
             v-model="(editReference as any)[reference][idx]"
             class="mb-2"
-            :label="`${reference} ${idx + 1}`"
+            :label="`${formatLabel(reference)} ${idx + 1}`"
           />
         </div>
         <q-btn
@@ -26,8 +26,9 @@
         <q-input
           class="w-full"
           filled
+          :disable="reference === 'id'"
           v-model="(editReference as any)[reference]"
-          :label="reference"
+          :label="formatLabel(reference)"
         />
       </div>
     </div>
@@ -35,21 +36,24 @@
 </template>
 
 <script setup lang="ts">
-import type { Thesis } from 'src/types/books';
-import type { References } from 'src/types/references';
-import { referencesTemplate } from 'src/utils/useBaseReferences';
+import { format } from 'quasar';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
-const editReference = defineModel<Thesis>('editReference');
+const editReference = defineModel('editReference');
 
-const route = useRoute();
+const { capitalize } = format;
 
-/* 
-Recuperer le template
-ajoute les boutons de maniere dynamique pour la saisie
-le type doit correspondre au parametre de la page
-*/
+function formatLabel(label: string) {
+  return label
+    .split('-')
+    .map((e) => capitalize(e))
+    .join(' ');
+}
+
+const referenceInputsEditable = computed(() => {
+  const toArray = Object.keys(editReference.value ?? {});
+  return toArray.filter((e) => e !== 'quotes');
+});
 </script>
 
 <style scoped></style>
