@@ -9,15 +9,8 @@
   >
     <q-card>
       <q-card-section class="row items-center">
-        <EditBookForm
-          v-if="$route.params.type === 'books' && !$route.params.id"
-          v-model:editReference="selectedReference!"
-        />
-        <EditArticleForm
-          v-if="$route.params.type === 'articles' && !$route.params.id"
-          v-model:editReference="selectedReference!"
-        />
         <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedReference! as Quote" />
+        <ReferenceEdit v-else v-model:editReference="selectedReference!" />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -29,10 +22,9 @@
 
 <script setup lang="ts">
 import type { Article, Book, Quote } from 'src/types/books';
-import EditArticleForm from './Edit/EditArticleForm.vue';
-import EditBookForm from './Edit/EditBookForm.vue';
 import QuoteEdit from './ReferenceModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
+import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<Book | Article | Quote>('selectedReference');

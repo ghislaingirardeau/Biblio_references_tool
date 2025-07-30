@@ -1,33 +1,55 @@
 <template>
-  <div class="flex q-gutter-y-sm" v-if="newReference">
-    <q-input class="w-full" filled v-model="newReference.title" label="Title" />
-
-    <div v-for="(author, index) in newReference.authors" :key="index" class="w-full">
-      <q-input
-        filled
-        v-model="newReference.authors![index]"
-        :label="'Author'.concat(': ' + (index + 1))"
-      />
+  <div class="flex q-gutter-y-sm" v-if="editReference">
+    <div
+      v-for="reference in Object.keys(editReference)"
+      :key="reference"
+      class="fit row wrap justify-start items-start content-start"
+    >
+      <div v-if="Array.isArray((editReference as any)[reference])" class="w-full">
+        <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="w-full">
+          <q-input
+            filled
+            v-model="(editReference as any)[reference][idx]"
+            class="mb-2"
+            :label="`${reference} ${idx + 1}`"
+          />
+        </div>
+        <q-btn
+          flat
+          color="primary"
+          icon="add"
+          @click="(editReference as any)[reference].push(`New ${reference}`)"
+          :label="`add ${reference}`"
+        />
+      </div>
+      <div v-else class="w-full">
+        <q-input
+          class="w-full"
+          filled
+          v-model="(editReference as any)[reference]"
+          :label="reference"
+        />
+      </div>
     </div>
-    <q-input class="w-full" filled v-model="newReference.subtitle" label="Subtitle" />
-    <q-input class="w-full" filled v-model="newReference.publisher" label="Publisher" />
-    <q-input class="w-full" filled v-model="newReference.publishedDate" label="Published Date" />
-    <q-input class="w-full" filled v-model="newReference.pageCount" type="number" label="Pages" />
-    <q-input
-      class="w-full"
-      filled
-      type="url"
-      v-model="newReference.infoLink"
-      disable
-      label="Info Link"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Book } from 'src/types/books';
+import type { Thesis } from 'src/types/books';
+import type { References } from 'src/types/references';
+import { referencesTemplate } from 'src/utils/useBaseReferences';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const newReference = defineModel<Book>('newReference');
+const editReference = defineModel<Thesis>('editReference');
+
+const route = useRoute();
+
+/* 
+Recuperer le template
+ajoute les boutons de maniere dynamique pour la saisie
+le type doit correspondre au parametre de la page
+*/
 </script>
 
 <style scoped></style>

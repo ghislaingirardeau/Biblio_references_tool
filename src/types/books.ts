@@ -16,7 +16,6 @@ export interface Book {
   authors?: string[];
   publisher?: string;
   publishedDate?: string;
-  industryIdentifiers?: IndustryIdentifiers[];
   pageCount?: number;
   categories?: string[];
   language?: string;

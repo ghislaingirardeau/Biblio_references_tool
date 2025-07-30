@@ -26,12 +26,7 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <EditBookForm v-if="route.params.type === 'books'" v-model:editReference="newReference" />
-      <EditArticleForm
-        v-if="route.params.type === 'articles'"
-        v-model:editReference="newReference"
-      />
-      <EditForm v-else v-model:editReference="newReference" />
+      <ReferenceEdit v-model:editReference="newReference" />
     </q-step>
 
     <template v-slot:navigation>
@@ -71,11 +66,9 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
-import EditBookForm from '../Edit/EditBookForm.vue';
-import EditArticleForm from '../Edit/EditArticleForm.vue';
 import type { RawArticle } from 'src/types/API';
-import EditForm from '../Edit/EditForm.vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
+import ReferenceEdit from './ReferenceEdit.vue';
 
 const route = useRoute();
 
@@ -129,14 +122,71 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
-      const referenceFound = isbnRegex.test(identifier.value)
-        ? (result.items[0].volumeInfo as Book)
-        : formatArticleData(result.message);
-      referenceFound.id = identifier.value;
-      newReference.value = referenceFound;
-      stepperRef?.value.next();
+      newReference.value = { id: identifier.value };
+      if (isbnRegex.test(identifier.value)) {
+        const {
+          title,
+          subtitle,
+          authors,
+          publisher,
+          publishedDate,
+          pageCount,
+          categories,
+          language,
+          infoLink,
+          imageLinks,
+        } = result.items[0].volumeInfo as Book;
+        newReference.value = Object.assign(
+          {
+            title,
+            subtitle,
+            authors,
+            publisher,
+            publishedDate,
+            pageCount,
+            categories,
+            language,
+            infoLink,
+            imageLinks: imageLinks?.thumbnail,
+          },
+          newReference.value,
+        );
+      } else {
+        const {
+          type,
+          title,
+          subtitle,
+          authors,
+          journal,
+          publisher,
+          publishedDate,
+          volume,
+          issue,
+          page,
+          DOI,
+          URL,
+        } = formatArticleData(result.message);
+        newReference.value = Object.assign(
+          {
+            type,
+            title,
+            subtitle,
+            authors,
+            journal,
+            publisher,
+            publishedDate,
+            page,
+            issue,
+            volume,
+            DOI,
+            URL,
+          },
+          newReference.value,
+        );
+      }
     }
+
+    stepperRef?.value.next();
   } catch (error) {
     console.log(error);
     errorMessage.value = 'Reference not found';
