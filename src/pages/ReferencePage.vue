@@ -1,10 +1,23 @@
 <template>
   <q-page class="p-2">
     <q-list v-if="typeReferences && typeReferences.length" bordered separator>
-      <q-item clickable v-ripple v-for="typeReference in typeReferences" :key="typeReference.id!">
-        <q-item-section @click="goToQuotes(typeReference.id!)">
+      <q-item
+        clickable
+        @click="goToQuotes(typeReference.id!)"
+        v-ripple
+        v-for="typeReference in typeReferences"
+        :key="typeReference.id!"
+      >
+        <q-item-section>
           <q-item-label>{{ typeReference.title }} {{ typeReference.id }}</q-item-label>
-          <q-item-label caption>{{ typeReference.authors![0] }}</q-item-label>
+          <q-item-label caption>
+            <span v-for="author in typeReference.authors" :key="author" class="mr-2">{{
+              author
+            }}</span>
+          </q-item-label>
+          <q-item-label v-if="typeReference.URL" class="italic underline">
+            <span @click.stop="goToLink(typeReference.URL)">{{ typeReference.URL }}</span>
+          </q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
@@ -53,6 +66,10 @@ const typeReferences: ComputedRef<Book[] | Article[]> = computed(() => {
 
 async function goToQuotes(id: string) {
   await router.push({ name: 'quotes-id', params: { type: type.value, id } });
+}
+
+function goToLink(link: string) {
+  window.open(link, '_blank');
 }
 
 function modalConfirm(id: string) {

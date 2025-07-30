@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <q-toolbar-title class="cursor-pointer" @click="$router.push('/')">
+      <q-toolbar-title class="cursor-pointer" @click="route.path !== '/' ? $router.go(-1) : null">
         {{ mainTitle }}
       </q-toolbar-title>
       <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />

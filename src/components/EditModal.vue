@@ -8,6 +8,12 @@
     @hide="ModalReference.isReadonly = false"
   >
     <q-card>
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">Edit</div>
+        <q-space />
+        <q-btn icon="close" color="primary" flat round dense v-close-popup />
+      </q-card-section>
+
       <q-card-section class="row items-center">
         <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedReference!" />
         <ReferenceEdit v-else v-model:editReference="selectedReference!" />

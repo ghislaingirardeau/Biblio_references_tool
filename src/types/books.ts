@@ -19,7 +19,7 @@ export interface Book {
   pageCount?: number;
   categories?: string[];
   language?: string;
-  infoLink?: string;
+  URL?: string;
   imageLinks?: { thumbnail: string };
   quotes?: Quote[];
 }

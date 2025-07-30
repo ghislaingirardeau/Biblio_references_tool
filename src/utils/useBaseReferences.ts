@@ -34,7 +34,7 @@ export const referencesTemplate = {
       publisher: '',
       ['published-date']: '',
       pages: '',
-      infoLink: '',
+      URL: '',
     },
   },
   bookChapter: {
@@ -52,7 +52,7 @@ export const referencesTemplate = {
       publisher: '',
       ['published-date']: '',
       pages: '',
-      infoLink: '',
+      URL: '',
     },
   },
   conferencePaper: {

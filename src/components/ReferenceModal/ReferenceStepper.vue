@@ -138,7 +138,7 @@ async function findReference() {
           pageCount,
           categories,
           language,
-          infoLink,
+          URL: infoLink,
           imageLinks,
         } = result.items[0].volumeInfo as Book;
         newReference.value = Object.assign(newReference.value, {
