@@ -16,7 +16,7 @@
     </q-list>
     <EditModal
       v-model:showEditModal="showEditModal"
-      v-model:selectedReference="selectedQuote as Quote"
+      v-model:selectedReference="selectedQuote!"
       @confirm-edit="confirmEdit"
       :isReadonly="ModalReference.isReadonly"
     />
@@ -26,12 +26,12 @@
 <script setup lang="ts">
 import EditModal from 'src/components/EditModal.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import { useReferencesStore } from 'src/stores/references';
+import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/books';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-const ReferencesStore = useReferencesStore();
+const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();
 
 const route = useRoute();
@@ -39,10 +39,10 @@ const showEditModal = ref(false);
 const selectedQuote = ref<Quote | null>(null);
 
 const quotes = computed(() => {
-  if (Array.isArray(ReferencesStore.filteredQuotes)) {
-    return ReferencesStore.filteredQuotes as Quote[];
+  if (Array.isArray(QuotesStore.filteredQuotes)) {
+    return QuotesStore.filteredQuotes as Quote[];
   }
-  return ReferencesStore.quotes ?? [];
+  return QuotesStore.quotes ?? [];
 });
 
 function deleteQuote(id: string) {
@@ -61,7 +61,7 @@ function confirmEdit() {
 }
 
 onMounted(() => {
-  ReferencesStore.findQuotes(route.params.type as string, route.params.id as string);
+  QuotesStore.findQuotes(route.params.type as string, route.params.id as string);
 });
 </script>
 

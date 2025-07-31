@@ -14,19 +14,11 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     return Object.keys(references.value) as Array<keyof References>;
   });
 
-  const quotes = ref<Quote[] | []>([]);
-  const filteredQuotes = ref<Quote[] | null>(null);
-
   function resetReferences() {
     references.value = referencesTemplate;
   }
 
   function add(type: string, reference: Book | Article) {
-    // if (type === 'books') {
-    //   (references.value.books?.lists as Book[]).unshift(reference as Book);
-    // } else if (type === 'articles') {
-    //   (references.value.articles?.lists as Article[]).unshift(reference as Article);
-    // }
     references.value[type as keyof References]?.lists.unshift(reference);
   }
 
@@ -55,7 +47,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   function resetFilter() {
     filterReferences.value = null;
-    filteredQuotes.value = null;
   }
 
   function getTitle(type: string, id: string) {
@@ -73,55 +64,14 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
   }
 
-  function addQuote(type: string, referenceId: string, quote: Quote) {
-    const referenceFound = find(type, referenceId);
-
-    if (referenceFound && referenceFound?.quotes) {
-      referenceFound?.quotes.unshift(quote);
-    } else {
-      referenceFound!.quotes = [quote];
-    }
-    findQuotes(type, referenceId);
-  }
-
-  function findQuotes(type: string, referenceId: string) {
-    const referenceFound = find(type, referenceId);
-
-    if (referenceFound && referenceFound?.quotes) {
-      quotes.value = referenceFound.quotes;
-    } else {
-      quotes.value = [];
-    }
-  }
-
-  function filterQuotes(query: string) {
-    filteredQuotes.value = null;
-    if (!query.trim()) {
-      return;
-    }
-    const lowerQuery = query.toLowerCase();
-    const searchQuotes = quotes.value.filter((quote) =>
-      quote.content!.toLowerCase().includes(lowerQuery),
-    );
-    if (searchQuotes.length === 0) {
-      return 'Quote not found';
-    }
-    filteredQuotes.value = searchQuotes;
-    return null;
-  }
-
   return {
     references,
     referencesTypes,
     getTitle,
     add,
+    find,
     remove,
     resetReferences,
-    quotes,
-    filteredQuotes,
-    addQuote,
-    findQuotes,
-    filterQuotes,
     filterReferences,
     filter,
     resetFilter,

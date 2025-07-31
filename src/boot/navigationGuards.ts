@@ -1,4 +1,5 @@
 import { boot } from 'quasar/wrappers';
+import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
 
 // "async" is optional;
@@ -12,7 +13,9 @@ Pourquoi ? parce que pas de fichier mains.js Vue 3. Donc si on veut ajouter des 
 export default boot(({ app, router, redirect }) => {
   router.afterEach((to, from) => {
     const ReferencesStore = useReferencesStore();
+    const QuotesStore = useQuotesStore();
     ReferencesStore.resetFilter();
+    QuotesStore.resetQuoteFilter();
   });
   router.beforeEach((to, from) => {
     const ReferencesStore = useReferencesStore();

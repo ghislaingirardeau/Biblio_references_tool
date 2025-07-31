@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import { useReferencesStore } from 'src/stores/references';
 import type { Quote } from 'src/types/books';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -40,6 +39,7 @@ import VideoToImgCanvas from 'src/components/ReferenceModal/videoToImgCanvas.vue
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import ImageToText from 'src/components/ReferenceModal/imageToText.vue';
 import QuoteEdit from './QuoteEdit.vue';
+import { useQuotesStore } from 'src/stores/quotes';
 
 const step = ref(1);
 const stepperRef = ref();
@@ -52,13 +52,14 @@ const newQuote = ref<Quote>({
   content: '',
 });
 
-const referenceStore = useReferencesStore();
+const QuotesStore = useQuotesStore();
+
 const modalReferenceStore = useModalReferenceStore();
 
 const route = useRoute();
 
 function saveQuote() {
-  referenceStore.addQuote(route.params.type as string, route.params.id as string, newQuote.value);
+  QuotesStore.addQuote(route.params.type as string, route.params.id as string, newQuote.value);
   modalReferenceStore.reset();
 }
 </script>

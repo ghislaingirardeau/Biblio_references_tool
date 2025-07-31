@@ -94,7 +94,7 @@ const newReference = ref<Book | Article | Thesis>({
 
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/i;
 
-const referenceStore = useReferencesStore();
+const ReferenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
 
 onMounted(() => {
@@ -122,7 +122,7 @@ function modalBackAction() {
 
 function saveReference() {
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
-  referenceStore.add(route.params.type as string, newReference.value);
+  ReferenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
   restoreReferenceBase();
 }

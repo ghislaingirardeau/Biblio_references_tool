@@ -22,11 +22,14 @@
 </template>
 
 <script setup lang="ts">
+import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
+const QuotesStore = useQuotesStore();
+
 const route = useRoute();
 const query = ref('');
 const isLoading = ref(false);
@@ -56,7 +59,7 @@ function filterReferences() {
 }
 
 function filterQuotes() {
-  message.value = ReferencesStore.filterQuotes(query.value);
+  message.value = QuotesStore.filterQuotes(query.value);
 }
 
 watch(
