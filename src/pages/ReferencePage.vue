@@ -16,7 +16,7 @@
             }}</span>
           </q-item-label>
           <q-item-label v-if="typeReference.URL" class="italic underline">
-            <span @click.stop="goToLink(typeReference.URL)">{{ typeReference.URL }}</span>
+            <span @click.stop="goToLink(typeReference.URL)">Check the reference website</span>
           </q-item-label>
         </q-item-section>
         <q-item-section avatar>

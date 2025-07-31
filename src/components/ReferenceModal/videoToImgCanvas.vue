@@ -15,7 +15,12 @@
     />
     <video ref="videoRef" style="display: none" autoplay playsinline />
 
-    <q-btn @click="captureRect" color="primary" label="Scan" class="absolute bottom-7 right-7" />
+    <q-btn
+      @click="captureRectImage"
+      color="primary"
+      label="Scan"
+      class="absolute bottom-7 right-7"
+    />
     <q-btn
       flat
       color="primary"
@@ -29,10 +34,21 @@
 <script setup lang="ts">
 import { useDevicesList, useUserMedia } from '@vueuse/core';
 import type { Quote } from 'src/types/books';
-import { computed, onMounted, onUnmounted, reactive, ref, shallowRef, watchEffect } from 'vue';
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  shallowRef,
+  watch,
+  watchEffect,
+} from 'vue';
 
 import { useWindowSize } from '@vueuse/core';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
+import { screenOrientation } from 'src/utils/useDeviceInfo';
+import { drawRect, drawResizeIcon, drawVideoToCanvas } from 'src/utils/useCanvasDrawer';
 const { width, height } = useWindowSize();
 
 const modalReferenceStore = useModalReferenceStore();
@@ -71,17 +87,17 @@ watchEffect(() => {
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
 
-const canvasWidth = width.value;
-const canvasWHeight = height.value - 75;
+const canvasWidth = computed(() => width.value);
+const canvasWHeight = computed(() => height.value - 75);
 
-const squareSize = 30;
+const squareSize = 70;
 
 // Rectangle coordinates and size
 const rect = ref({
-  x: 0,
+  x: 20,
   y: 20,
-  width: canvasWidth,
-  height: 200,
+  width: canvasWidth.value - 40,
+  height: canvasWHeight.value - 150,
   lineWidth: 5,
 });
 
@@ -90,23 +106,6 @@ let isDragging = false;
 let isResizing = false;
 let offsetX = 0;
 let offsetY = 0;
-
-function drawRect() {
-  if (!ctx.value) return;
-
-  ctx.value.beginPath();
-  ctx.value.rect(rect.value.x, rect.value.y, rect.value.width, rect.value.height);
-  ctx.value.lineWidth = rect.value.lineWidth;
-  ctx.value.strokeStyle = '#31ccec';
-  ctx.value.stroke();
-  ctx.value.fillStyle = '#31ccec';
-  ctx.value.fillRect(
-    rect.value.x + rect.value.width - squareSize,
-    rect.value.y + rect.value.height - squareSize,
-    squareSize,
-    squareSize,
-  );
-}
 
 function startDrag(event: MouseEvent | TouchEvent) {
   let mouseX;
@@ -184,7 +183,7 @@ function onDrag(event: MouseEvent | TouchEvent) {
     rect.value.height = Math.min(Math.max(100, desiredY), canvasRef.value!.height - rect.value.y);
   }
 
-  drawRect();
+  drawRect(ctx, rect, squareSize);
 }
 
 function stopDrag() {
@@ -192,21 +191,8 @@ function stopDrag() {
   isResizing = false;
 }
 
-function drawVideoToCanvas() {
-  const canvas = canvasRef.value;
-  const video = videoRef.value;
-  if (canvas && video) {
-    ctx.value = canvas.getContext('2d')!;
-    ctx.value.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.value.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    drawRect();
-  }
-  requestAnimationFrame(drawVideoToCanvas);
-}
-
 // Capture only the rectangle area from the video
-async function captureRect() {
+async function captureRectImage() {
   const video = videoRef.value;
   if (!video) return;
 
@@ -230,13 +216,17 @@ async function captureRect() {
   );
 
   // Générer une image base64
-  const base64Image = tempCanvas.toDataURL('image/jpeg');
+  const imageBase64 = tempCanvas.toDataURL('image/jpeg');
 
+  await extractQuoteFromImage(imageBase64);
+}
+
+async function extractQuoteFromImage(imageBase64: string) {
   try {
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64: base64Image }),
+      body: JSON.stringify({ imageBase64 }),
     });
 
     const data = await response.json();
@@ -252,9 +242,14 @@ async function captureRect() {
   }
 }
 
+function launchCanvasAnimation() {
+  drawVideoToCanvas(canvasRef, videoRef, ctx, rect, squareSize);
+  requestAnimationFrame(launchCanvasAnimation);
+}
+
 onMounted(() => {
   // prepare canvas for video
-  drawVideoToCanvas();
+  launchCanvasAnimation();
   // start webcam
   enabled.value = true;
 });
@@ -263,6 +258,21 @@ onUnmounted(() => {
   // stop webcam
   enabled.value = false;
 });
+
+// Reset rect canvas on orientation change
+watch(
+  () => screenOrientation.value,
+  (newValue) => {
+    // on change, revert width and height
+    rect.value = {
+      x: 20,
+      y: 20,
+      width: height.value - 40,
+      height: width.value - 200,
+      lineWidth: 5,
+    };
+  },
+);
 </script>
 
 <style scoped></style>
