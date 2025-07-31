@@ -40,7 +40,8 @@ export function drawRect(
     rect.value.y + rect.value.height - squareSize,
     squareSize,
     squareSize,
-    15,
+    10,
+    true,
   );
 
   drawResizeIcon(
@@ -93,7 +94,8 @@ function drawRectCorners(
   y: number,
   width: number,
   height: number,
-  cornerLength = 55,
+  cornerLength = 35,
+  drawBottomRight = false,
   color = '#1976d2',
   lineWidth = 2,
 ) {
@@ -109,18 +111,39 @@ function drawRectCorners(
   ctx.value.lineTo(x + cornerLength, y);
   ctx.value.stroke();
 
+  // Top
+  ctx.value.beginPath();
+  ctx.value.moveTo(x + width / 2, y);
+  ctx.value.lineTo(x + width / 2 + cornerLength, y);
+  ctx.value.lineTo(x + width / 2 - cornerLength, y);
+  ctx.value.stroke();
+
+  // right
+  ctx.value.beginPath();
+  ctx.value.moveTo(x + width, y + height / 2);
+  ctx.value.lineTo(x + width, y + height / 2 + cornerLength);
+  ctx.value.lineTo(x + width, y + height / 2 - cornerLength);
+  ctx.value.stroke();
+
+  // left
+  ctx.value.beginPath();
+  ctx.value.moveTo(x, y + height / 2);
+  ctx.value.lineTo(x, y + height / 2 + cornerLength);
+  ctx.value.lineTo(x, y + height / 2 - cornerLength);
+  ctx.value.stroke();
+
+  // Bottom
+  ctx.value.beginPath();
+  ctx.value.moveTo(x + width / 2, y + height);
+  ctx.value.lineTo(x + width / 2 + cornerLength, y + height);
+  ctx.value.lineTo(x + width / 2 - cornerLength, y + height);
+  ctx.value.stroke();
+
   // Top-right corner
   ctx.value.beginPath();
   ctx.value.moveTo(x + width - cornerLength, y);
   ctx.value.lineTo(x + width, y);
   ctx.value.lineTo(x + width, y + cornerLength);
-  ctx.value.stroke();
-
-  // Bottom-right corner
-  ctx.value.beginPath();
-  ctx.value.moveTo(x + width, y + height - cornerLength);
-  ctx.value.lineTo(x + width, y + height);
-  ctx.value.lineTo(x + width - cornerLength, y + height);
   ctx.value.stroke();
 
   // Bottom-left corner
@@ -129,4 +152,13 @@ function drawRectCorners(
   ctx.value.lineTo(x, y + height);
   ctx.value.lineTo(x, y + height - cornerLength);
   ctx.value.stroke();
+
+  if (drawBottomRight) {
+    // Bottom-right corner
+    ctx.value.beginPath();
+    ctx.value.moveTo(x + width, y + height - cornerLength);
+    ctx.value.lineTo(x + width, y + height);
+    ctx.value.lineTo(x + width - cornerLength, y + height);
+    ctx.value.stroke();
+  }
 }

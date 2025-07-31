@@ -94,9 +94,9 @@ const squareSize = 70;
 
 // Rectangle coordinates and size
 const rect = ref({
-  x: 20,
-  y: 20,
-  width: canvasWidth.value - 40,
+  x: 0,
+  y: 0,
+  width: canvasWidth.value,
   height: canvasWHeight.value - 150,
   lineWidth: 5,
 });
