@@ -5,11 +5,11 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log(process.env.DEV);
+
 // Initialise le client Vision
 const client = new vision.ImageAnnotatorClient({
-  keyFilename: process.env.DEV
-    ? path.join(__dirname, '../keys/ocr-image-466705-da5e8a78c3e4.json')
-    : '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
+  keyFilename: '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
 });
 
 export async function imgToText(req, res) {

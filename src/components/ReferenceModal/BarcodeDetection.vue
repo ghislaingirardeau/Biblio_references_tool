@@ -1,6 +1,6 @@
 <template>
   <div class="flex my-2">
-    <video ref="videoElement" class="rounded-md h-80 w-full" />
+    <video v-if="BarcodeDetector" ref="videoElement" class="rounded-md h-80 w-full" />
     <p class="mt-2 font-bold italic">
       {{ codeBarMessage }}
     </p>
@@ -56,7 +56,7 @@ function stopCamera() {
 
 // Toutes les 3s, on extrait une image de la vidéo
 const getBarcodeFromVideoInterval = useIntervalFn(() => {
-  console.log('useIntervalFn');
+  console.log(BarcodeDetector);
   if (!('BarcodeDetector' in window) || !window.BarcodeDetector) {
     isScanning.value = false;
     return;
