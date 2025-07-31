@@ -2,7 +2,6 @@
 .thumbs.db
 node_modules
 server/keys
-.env
 
 /server/keys
 /src-pwa
