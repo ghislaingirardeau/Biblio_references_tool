@@ -69,9 +69,15 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
-import type { RawArticle } from 'src/types/API';
+import type { RawArticle, RawBook } from 'src/types/API';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import ReferenceEdit from './ReferenceEdit.vue';
+import {
+  formatArticleData,
+  formatBookData,
+  formatIdentifier,
+  formatReportData,
+} from 'src/utils/useFormater';
 
 const route = useRoute();
 
@@ -97,7 +103,7 @@ onMounted(() => {
 
 async function modalActionFind() {
   if (step.value === 1) {
-    formatIdentifier();
+    formatIdentifier(identifier);
     await findReference();
   } else {
     saveReference();
@@ -143,21 +149,14 @@ async function findReference() {
     if (response.ok) {
       const result = await response.json();
       newReference.value.id = identifier.value;
-      if (isbnRegex.test(identifier.value)) {
-        newReference.value = Object.assign(newReference.value, {
-          title: result.items[0].volumeInfo.title,
-          subtitle: result.items[0].volumeInfo.subtitle,
-          authors: result.items[0].volumeInfo.authors,
-          publisher: result.items[0].volumeInfo.publisher,
-          ['published-date']: result.items[0].volumeInfo.publishedDate,
-          pages: result.items[0].volumeInfo.pageCount,
-          categories: result.items[0].volumeInfo.categories,
-          URL: result.items[0].volumeInfo.infoLink,
-          imageLinks: result.items[0].volumeInfo.imageLinks?.thumbnail,
-          language: result.items[0].volumeInfo.language,
-        });
-      } else {
-        formatArticleData(result.message);
+      if (route.params.type === 'books') {
+        formatBookData(result.items[0].volumeInfo, newReference);
+      }
+      if (route.params.type === 'articles') {
+        formatArticleData(result.message, newReference);
+      }
+      if (route.params.type === 'report') {
+        formatReportData(result.message, newReference);
       }
     }
 
@@ -167,36 +166,6 @@ async function findReference() {
     errorMessage.value = 'Reference not found';
   }
   isSearchingReference.value = false;
-}
-
-function formatIdentifier() {
-  identifier.value = identifier.value.trim();
-  const isbnFormattedRegex = /^(97(8|9))?[-\s]?\d{1,5}[-\s]?\d{1,7}[-\s]?\d{1,7}[-\s]?[\dX]$/i;
-
-  if (isbnFormattedRegex.test(identifier.value)) {
-    identifier.value = identifier.value.split('-').join('');
-  }
-}
-
-function formatArticleData(article: RawArticle) {
-  const author = article.author?.map((a) => a.family + ' ' + a.given);
-  const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL, type } = article;
-  console.log(article);
-  const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
-  newReference.value = Object.assign(newReference.value, {
-    type,
-    title,
-    authors: author,
-    journal: article['container-title'][0],
-    publisher,
-    ['published-date']: publishedDate,
-    page,
-    issue,
-    volume,
-    DOI,
-    URL,
-    language,
-  });
 }
 
 async function handleDetectionComplete(payload: string) {
