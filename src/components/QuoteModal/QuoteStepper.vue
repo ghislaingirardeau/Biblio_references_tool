@@ -4,7 +4,6 @@
       <VideoToImgCanvas v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" />
       <ImageToText v-else v-model:newQuote="newQuote" @next-step="step = 2" />
     </q-step>
-
     <q-step
       :name="2"
       title="Type & Edit"
@@ -16,7 +15,7 @@
     </q-step>
 
     <template v-slot:navigation>
-      <q-stepper-navigation v-if="step === 2" class="mt-5">
+      <q-stepper-navigation v-if="step === 2">
         <q-btn @click="saveQuote" :loading="isSearchingReference" color="primary" label="Save" />
         <q-btn flat color="primary" @click="stepperRef?.previous()" label="Back" class="q-ml-sm" />
         <q-btn
@@ -70,7 +69,7 @@ function saveQuote() {
     padding: 0px !important;
   }
   .edit-quote .q-stepper__step-inner {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 220px);
   }
 }
 </style>
