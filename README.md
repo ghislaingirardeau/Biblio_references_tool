@@ -10,6 +10,12 @@ C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulai
 
 ### Test ISBN and DOI
 
+article
 10.1186/2192-5372-3-4
 10.1177/0309132519898254
+
+book
 978-0299326104
+
+report
+10.1787/01820d6d-en

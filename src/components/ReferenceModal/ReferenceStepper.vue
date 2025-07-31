@@ -39,20 +39,23 @@
           :label="step === 2 ? 'Save' : 'Find'"
         />
         <q-btn
-          v-if="step > 1"
+          v-if="step === 1"
+          @click="step = 2"
           flat
+          no-caps
           color="primary"
-          @click="stepperRef?.previous()"
-          label="Back"
+          label="No identifier ?"
           class="q-ml-sm"
         />
         <q-btn
+          v-if="step > 1"
           flat
           color="primary"
-          @click="modalReferenceStore.reset()"
-          label="Close"
+          @click="modalBackAction"
+          label="Back"
           class="q-ml-sm"
         />
+        <q-btn flat color="primary" @click="modalCloseAction" label="Close" class="q-ml-sm" />
       </q-stepper-navigation>
     </template>
   </q-stepper>
@@ -89,8 +92,7 @@ const referenceStore = useReferencesStore();
 const modalReferenceStore = useModalReferenceStore();
 
 onMounted(() => {
-  const type = route.params.type as keyof typeof referencesTemplate;
-  newReference.value = referencesTemplate[type].template;
+  restoreReferenceBase();
 });
 
 async function modalActionFind() {
@@ -102,13 +104,26 @@ async function modalActionFind() {
   }
 }
 
+function modalCloseAction() {
+  modalReferenceStore.reset();
+  restoreReferenceBase();
+}
+
+function modalBackAction() {
+  stepperRef.value.previous();
+  restoreReferenceBase();
+}
+
 function saveReference() {
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
   referenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
-  newReference.value = {
-    id: null,
-  };
+  restoreReferenceBase();
+}
+
+function restoreReferenceBase() {
+  const type = route.params.type as keyof typeof referencesTemplate;
+  newReference.value = JSON.parse(JSON.stringify(referencesTemplate[type].template));
 }
 
 const errorMessage = ref<null | string>(null);
@@ -129,59 +144,20 @@ async function findReference() {
       const result = await response.json();
       newReference.value.id = identifier.value;
       if (isbnRegex.test(identifier.value)) {
-        const {
-          title,
-          subtitle,
-          authors,
-          publisher,
-          publishedDate,
-          pageCount,
-          categories,
-          language,
-          URL: infoLink,
-          imageLinks,
-        } = result.items[0].volumeInfo as Book;
         newReference.value = Object.assign(newReference.value, {
-          title,
-          subtitle,
-          authors,
-          publisher,
-          ['published-date']: publishedDate,
-          pages: pageCount,
-          categories,
-          language,
-          infoLink,
-          imageLinks: imageLinks?.thumbnail,
+          title: result.items[0].volumeInfo.title,
+          subtitle: result.items[0].volumeInfo.subtitle,
+          authors: result.items[0].volumeInfo.authors,
+          publisher: result.items[0].volumeInfo.publisher,
+          ['published-date']: result.items[0].volumeInfo.publishedDate,
+          pages: result.items[0].volumeInfo.pageCount,
+          categories: result.items[0].volumeInfo.categories,
+          URL: result.items[0].volumeInfo.infoLink,
+          imageLinks: result.items[0].volumeInfo.imageLinks?.thumbnail,
+          language: result.items[0].volumeInfo.language,
         });
       } else {
-        const {
-          type,
-          title,
-          subtitle,
-          authors,
-          journal,
-          publisher,
-          publishedDate,
-          volume,
-          issue,
-          page,
-          DOI,
-          URL,
-        } = formatArticleData(result.message);
-        newReference.value = Object.assign(newReference.value, {
-          type,
-          title,
-          subtitle,
-          authors,
-          journal,
-          publisher,
-          ['published-date']: publishedDate,
-          page,
-          issue,
-          volume,
-          DOI,
-          URL,
-        });
+        formatArticleData(result.message);
       }
     }
 
@@ -207,23 +183,20 @@ function formatArticleData(article: RawArticle) {
   const { id, title, publisher, DOI, language, quotes, volume, issue, page, URL, type } = article;
   console.log(article);
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
-  const formatedArticle = {
-    id,
-    title: title![0],
+  newReference.value = Object.assign(newReference.value, {
+    type,
+    title,
     authors: author,
     journal: article['container-title'][0],
-    publishedDate,
     publisher,
-    DOI,
-    quotes,
-    volume,
-    issue,
+    ['published-date']: publishedDate,
     page,
-    language,
+    issue,
+    volume,
+    DOI,
     URL,
-    type,
-  };
-  return formatedArticle as Article;
+    language,
+  });
 }
 
 async function handleDetectionComplete(payload: string) {
