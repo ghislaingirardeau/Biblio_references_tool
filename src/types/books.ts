@@ -1,8 +1,3 @@
-interface IndustryIdentifiers {
-  type: string;
-  identifier: string;
-}
-
 export interface Quote {
   id: string | null;
   page?: string;
@@ -12,6 +7,7 @@ export interface Quote {
 export interface Book {
   id: string | null;
   title?: string;
+  tag?: string[];
   subtitle?: string;
   authors?: string[];
   publisher?: string;
@@ -28,6 +24,7 @@ export interface Article {
   id: string | null;
   type?: string;
   title?: string;
+  tag?: string[];
   subtitle?: string;
   authors?: string[];
   journal?: string;
@@ -46,6 +43,7 @@ export interface Article {
 export interface BookChapter {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   bookTitle?: string;
   editors?: string[];
@@ -61,6 +59,7 @@ export interface BookChapter {
 export interface ConferencePaper {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   conferenceName?: string;
   location?: string;
@@ -75,6 +74,7 @@ export interface ConferencePaper {
 export interface Thesis {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   institution?: string;
   degree?: string;
@@ -88,6 +88,7 @@ export interface Thesis {
 export interface Report {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   institution?: string;
   reportNumber?: string;
@@ -101,6 +102,7 @@ export interface Report {
 export interface WebPage {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   websiteName?: string;
   URL?: string;
@@ -114,6 +116,7 @@ export interface WebPage {
 export interface NewspaperArticle {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   newspaperName?: string;
   publishedDate?: string;
@@ -127,6 +130,7 @@ export interface NewspaperArticle {
 export interface MagazineArticle {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   magazineName?: string;
   issue?: string;
@@ -141,6 +145,7 @@ export interface MagazineArticle {
 export interface Dataset {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   repository?: string;
   DOI?: string;
@@ -154,19 +159,21 @@ export interface Dataset {
 export interface Software {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   version?: string;
   publisher?: string;
   publishedDate?: string;
-  URL?: string;
   language?: string;
   quotes?: Quote[];
+  URL?: string;
 }
 
 // 12. Interview
 export interface Interview {
   id: string | null;
   title?: string;
+  tag?: string[];
   interviewee?: string[];
   interviewer?: string[];
   date?: string;
@@ -180,6 +187,7 @@ export interface Interview {
 export interface Film {
   id: string | null;
   title?: string;
+  tag?: string[];
   director?: string;
   producers?: string[];
   releaseDate?: string;
@@ -193,6 +201,7 @@ export interface Film {
 export interface LegalCase {
   id: string | null;
   title?: string;
+  tag?: string[];
   court?: string;
   decisionDate?: string;
   citation?: string;
@@ -205,6 +214,7 @@ export interface LegalCase {
 export interface Legislation {
   id: string | null;
   title?: string;
+  tag?: string[];
   jurisdiction?: string;
   enactmentDate?: string;
   referenceNumber?: string;
@@ -216,6 +226,7 @@ export interface Legislation {
 export interface Patent {
   id: string | null;
   title?: string;
+  tag?: string[];
   inventors?: string[];
   patentNumber?: string;
   issuingAuthority?: string;
@@ -228,6 +239,7 @@ export interface Patent {
 export interface Manuscript {
   id: string | null;
   title?: string;
+  tag?: string[];
   authors?: string[];
   status?: 'unpublished' | 'in review' | 'in press';
   submissionDate?: string;
@@ -240,6 +252,7 @@ export interface Manuscript {
 export interface Presentation {
   id: string | null;
   title?: string;
+  tag?: string[];
   presenter?: string;
   event?: string;
   location?: string;
@@ -253,6 +266,7 @@ export interface Presentation {
 export interface Audio {
   id: string | null;
   title?: string;
+  tag?: string[];
   speaker?: string;
   publisher?: string;
   releaseDate?: string;
@@ -265,6 +279,7 @@ export interface Audio {
 export interface Image {
   id: string | null;
   title?: string;
+  tag?: string[];
   creator?: string;
   format?: string;
   source?: string;

@@ -6,26 +6,38 @@
       class="fit row wrap justify-start items-start content-start"
     >
       <div v-if="Array.isArray((editReference as any)[reference])" class="w-full">
-        <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="w-full">
-          <q-input
-            filled
-            v-model="(editReference as any)[reference][idx]"
-            class="mb-2"
-            :label="`${formatLabel(reference)} ${idx + 1}`"
+        <div v-if="reference === 'tags'">
+          <q-select
+            v-model="tag"
+            multiple
+            use-chips
+            use-input
+            input-debounce="0"
+            @new-value="createValue"
+            :options="tagsFirstCapitalize"
+            label="Tags"
           />
         </div>
-        <q-btn
-          flat
-          color="primary"
-          icon="add"
-          @click="(editReference as any)[reference].push(`New ${reference}`)"
-          :label="`add ${reference}`"
-        />
+        <div v-else>
+          <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="w-full">
+            <q-input
+              v-model="(editReference as any)[reference][idx]"
+              class="mb-2"
+              :label="`${formatLabel(reference)}`"
+            />
+          </div>
+          <q-btn
+            flat
+            color="primary"
+            icon="add"
+            @click="(editReference as any)[reference].push(`New ${reference}`)"
+            :label="`add ${reference}`"
+          />
+        </div>
       </div>
       <div v-else class="w-full">
         <q-input
           class="w-full"
-          filled
           :disable="reference === 'id'"
           v-model="(editReference as any)[reference]"
           :label="formatLabel(reference)"
@@ -37,11 +49,19 @@
 
 <script setup lang="ts">
 import { format } from 'quasar';
-import { computed } from 'vue';
+import { useTagsStore } from 'src/stores/tags';
+import { computed, ref } from 'vue';
 
 const editReference = defineModel('editReference');
+const TagsStore = useTagsStore();
+
+const tag = ref(null);
 
 const { capitalize } = format;
+
+const tagsFirstCapitalize = computed(() => {
+  return TagsStore.tags.map((tag) => capitalize(tag));
+});
 
 function formatLabel(label: string) {
   return label
@@ -54,6 +74,14 @@ const referenceInputsEditable = computed(() => {
   const toArray = Object.keys(editReference.value ?? {});
   return toArray.filter((e) => e !== 'quotes');
 });
+
+function createValue(
+  val: string,
+  done: (val: string, mode?: 'add-unique' | 'add' | 'toggle') => void,
+) {
+  TagsStore.add(val.toLowerCase());
+  done(capitalize(val.toLowerCase()), 'add-unique');
+}
 </script>
 
 <style scoped></style>

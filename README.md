@@ -1,5 +1,11 @@
 # biblio_tool (my-biblio-tool)
 
+## Documentation
+
+### Reference TAG
+
+Pour donner un tag a une référence et ainsi classer celle-ci dans une catégorie. Par exemple, si je travaille sur 2 projets différents, je peux inclure un tag pour associer la ref à un des 2 projets ou plusieurs projets
+
 ## DOI & ISBN search
 
 Certain type de références peuvent avoir un DOI et/ou un ISBN, dans la fonction de recherche on va donc intégrer les 2.

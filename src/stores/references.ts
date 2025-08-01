@@ -36,7 +36,9 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const findReferences = references.value[type as keyof References]!.lists.filter(
       (reference) =>
         reference.title!.toLowerCase().includes(lowerQuery) ||
-        ('authors' in reference && reference.authors.join(' ').toLowerCase().includes(lowerQuery)),
+        ('authors' in reference &&
+          reference.authors.join(' ').toLowerCase().includes(lowerQuery)) ||
+        reference.tag?.join(' ').toLowerCase().includes(lowerQuery),
     );
     if (findReferences.length === 0) {
       return 'Book not found';
