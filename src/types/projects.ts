@@ -1,11 +1,11 @@
 import type { References } from './references';
 
 export interface Project {
-  id: number;
+  id: string;
   label: string;
-  name: string;
   created_at: number;
   references: References;
+  onEdited: boolean;
 }
 
 export interface Projects {

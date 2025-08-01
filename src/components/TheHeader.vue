@@ -7,7 +7,7 @@
         {{ mainTitle }}
       </q-toolbar-title>
       <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
-      <q-btn v-else dense flat round icon="restore" @click="ReferenceStore.resetReferences()" />
+      <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
     </q-toolbar>
   </q-header>
 </template>
@@ -50,13 +50,9 @@ const mainTitle = computed(() => {
     return ReferenceStore.getTitle(route.params.type as string, route.params.id as string);
   }
   if (route.params.type) {
-    return project.value!.name === 'default'
-      ? capitalize(route.params.type as string)
-      : capitalize(route.params.type as string).concat(` - ${capitalize(project.value!.label)}`);
+    return capitalize(route.params.type as string).concat(` - ${capitalize(project.value!.label)}`);
   }
-  return project.value!.name === 'default'
-    ? capitalize(route.name as string)
-    : capitalize(route.name as string).concat(` - ${capitalize(project.value!.label)}`);
+  return capitalize(route.name as string).concat(` - ${capitalize(project.value!.label)}`);
 });
 </script>
 

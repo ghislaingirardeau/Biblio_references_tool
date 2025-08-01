@@ -20,20 +20,30 @@
           <div v-if="menuItem.detail">
             <q-item
               v-for="project in menuItem.detail"
-              :key="project.name"
+              :key="project.id"
               class="ml-4 cursor-pointer"
             >
               <q-item-section avatar>
                 <q-icon
                   :name="
-                    isCurrentProjectOpened(project.name) ? mdiFolderOpenOutline : mdiFolderOutline
+                    isCurrentProjectOpened(project.id) ? mdiFolderOpenOutline : mdiFolderOutline
                   "
-                  :class="{ 'text-indigo-800': isCurrentProjectOpened(project.name) }"
-                  @click="switchProject(project.name)"
+                  :class="{ 'text-indigo-800': isCurrentProjectOpened(project.id) }"
+                  @click="switchProject(project.id)"
                 />
               </q-item-section>
-              <q-item-section :class="{ 'text-indigo-800': isCurrentProjectOpened(project.name) }">
-                {{ project.label }}
+              <q-item-section :class="{ 'text-indigo-800': isCurrentProjectOpened(project.id) }">
+                <q-input v-if="project.onEdited" v-model="projectNewName" dense>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="mdiCheckCircleOutline"
+                      color="primary"
+                      @click="editProjectName(project.id)"
+                      class="cursor-pointer"
+                    />
+                  </template>
+                </q-input>
+                <span v-else>{{ project.label }}</span>
               </q-item-section>
             </q-item>
           </div>
@@ -57,14 +67,18 @@ import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
 import { useRoute } from 'vue-router';
 import { useProjectsStore } from 'src/stores/projects';
-import { mdiFolderOpenOutline, mdiFolderOutline } from '@quasar/extras/mdi-v7';
+import {
+  mdiCheckCircleOutline,
+  mdiFolderOpenOutline,
+  mdiFolderOutline,
+} from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 
 const ProjectsStore = useProjectsStore();
 const { projectsLabel, currentProject } = storeToRefs(ProjectsStore);
 
-function isCurrentProjectOpened(name: string) {
-  return currentProject.value === name;
+function isCurrentProjectOpened(id: string) {
+  return currentProject.value === id;
 }
 
 const menuList = computed(() => {
@@ -86,6 +100,7 @@ const menuList = computed(() => {
 });
 
 const leftDrawerOpen = ref(false);
+const projectNewName = ref('new project');
 
 const route = useRoute();
 
@@ -94,11 +109,16 @@ const modalMode = computed(() => {
 });
 
 function showModalProject() {
-  console.log('show modal to add projects');
+  ProjectsStore.add('new project');
 }
 
-function switchProject(projectName: string) {
-  currentProject.value = projectName;
+function switchProject(id: string) {
+  currentProject.value = id;
   leftDrawerOpen.value = false;
+}
+
+function editProjectName(id: string) {
+  console.log('name validation', projectNewName.value, id);
+  ProjectsStore.edit(id, projectNewName.value);
 }
 </script>
