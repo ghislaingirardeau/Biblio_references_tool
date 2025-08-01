@@ -21,8 +21,8 @@
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
-            <q-btn dense flat round icon="edit" @click="modalEdit(typeReference)" />
-            <q-btn dense flat round icon="delete" @click="modalConfirm(typeReference.id!)" />
+            <q-btn dense flat round icon="edit" @click.stop="modalEdit(typeReference)" />
+            <q-btn dense flat round icon="delete" @click.stop="modalConfirm(typeReference.id!)" />
           </div>
         </q-item-section>
       </q-item>

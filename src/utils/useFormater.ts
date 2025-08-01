@@ -13,12 +13,12 @@ export function formatIdentifier(identifier: Ref<string>) {
 
 export function formatArticleData(article: RawArticle, newReference: Ref<Book | Article | Thesis>) {
   const author = article.author?.map((a) => a.family + ' ' + a.given);
-  const { title, publisher, DOI, language, volume, issue, page, URL, type } = article;
+  const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL, type } = article;
   console.log(article);
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
     type,
-    title,
+    title: rawTitle![0],
     authors: author,
     journal: article['container-title'][0],
     publisher,

@@ -7,6 +7,7 @@ export interface RawArticle extends Article {
   ['published-print']: {
     ['date-parts']: string[][];
   };
+  rawTitle: string[];
 }
 
 export interface RawBook extends Book {
