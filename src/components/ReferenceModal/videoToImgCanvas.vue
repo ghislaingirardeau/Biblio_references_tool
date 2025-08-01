@@ -91,21 +91,21 @@ const canvasWidth = computed(() => width.value);
 const canvasWHeight = computed(() => height.value - 75);
 
 const squareSize = 70;
-
-// Rectangle coordinates and size
-const rect = ref({
-  x: 0,
-  y: 0,
-  width: canvasWidth.value,
-  height: canvasWHeight.value - 150,
-  lineWidth: 5,
-});
-
 // Drag state
 let isDragging = false;
 let isResizing = false;
 let offsetX = 0;
 let offsetY = 0;
+const captureOffset = 4;
+
+// Rectangle coordinates and size
+const rect = ref({
+  x: captureOffset,
+  y: captureOffset,
+  width: canvasWidth.value - captureOffset * 2,
+  height: canvasWHeight.value - 150,
+  lineWidth: 5,
+});
 
 function startDrag(event: MouseEvent | TouchEvent) {
   let mouseX;
@@ -168,19 +168,23 @@ function onDrag(event: MouseEvent | TouchEvent) {
 
   if (isDragging) {
     // limite les possibilités de x et y
+
     rect.value.x = Math.min(
-      Math.max(0, desiredX), // la valeur minimal sera 0
-      canvasRef.value!.width - rect.value.width, // la valeur max sera canvas - rect widht
+      Math.max(captureOffset, desiredX), // la valeur minimal sera 4
+      canvasRef.value!.width - rect.value.width - captureOffset, // la valeur max sera canvas - rect widht
     );
 
-    rect.value.y = Math.min(Math.max(0, desiredY), canvasRef.value!.height - rect.value.height);
+    rect.value.y = Math.min(Math.max(4, desiredY), canvasRef.value!.height - rect.value.height - 4);
   }
   if (isResizing) {
     rect.value.width = Math.min(
-      Math.max(100, desiredX), // la valeur minimal sera 0
-      canvasRef.value!.width - rect.value.x, // la valeur max sera canvas - rect width
+      Math.max(100 - captureOffset, desiredX), // la valeur minimal sera 4
+      canvasRef.value!.width - rect.value.x - captureOffset, // la valeur max sera canvas - rect width
     );
-    rect.value.height = Math.min(Math.max(100, desiredY), canvasRef.value!.height - rect.value.y);
+    rect.value.height = Math.min(
+      Math.max(100 - captureOffset, desiredY),
+      canvasRef.value!.height - rect.value.y - captureOffset,
+    );
   }
 
   drawRect(ctx, rect, squareSize);

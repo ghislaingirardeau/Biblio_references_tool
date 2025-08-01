@@ -97,7 +97,7 @@ function drawRectCorners(
   cornerLength = 35,
   drawBottomRight = false,
   color = '#1976d2',
-  lineWidth = 2,
+  lineWidth = 4,
 ) {
   if (!ctx.value) return;
 
