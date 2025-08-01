@@ -1,6 +1,8 @@
 <template>
   <q-page class="p-2 flex q-gutter-y-sm">
+    <p v-if="!menuTypes">Loading references...</p>
     <q-card
+      v-else
       class="w-full h-24 cursor-pointer"
       v-for="referenceType in menuTypes"
       :key="referenceType.type"
@@ -12,19 +14,21 @@
           {{ referenceType.description }} Total refs: {{ referenceType.countRef }}
         </div>
       </q-card-section>
-    </q-card></q-page
-  >
+    </q-card>
+  </q-page>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { useReferencesStore } from 'src/stores/references';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-const { references } = useReferencesStore();
+const ReferencesStore = useReferencesStore();
+const { references } = storeToRefs(ReferencesStore);
 
 const menuTypes = computed(() => {
-  const formatForMenu = Object.values(references).map((ref) => ({
+  const formatForMenu = Object.values(references.value)?.map((ref) => ({
     ...ref,
     countRef: ref.lists.length,
   }));

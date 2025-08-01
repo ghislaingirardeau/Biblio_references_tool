@@ -19,9 +19,26 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   const project = computed(() => projects.value.find((p) => p.name === currentProject.value));
 
+  const projectsLabel = computed(() =>
+    projects.value.map((p) => {
+      return { name: p.name, label: p.label };
+    }),
+  );
+
+  function add(name: string, label: string) {
+    projects.value.push({
+      id: Date.now(),
+      label,
+      name,
+      created_at: Date.now(),
+      references: referencesTemplate,
+    });
+  }
+
   return {
     currentProject,
-    projects,
     project,
+    projectsLabel,
+    add,
   };
 });

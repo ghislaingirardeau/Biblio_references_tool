@@ -19,6 +19,7 @@ import { format } from 'quasar';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { storeToRefs } from 'pinia';
 import { useReferencesStore } from 'src/stores/references';
+import { useProjectsStore } from 'src/stores/projects';
 const { capitalize } = format;
 
 const route = useRoute();
@@ -28,6 +29,9 @@ const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 const modalReferenceStore = useModalReferenceStore();
 const ReferenceStore = useReferencesStore();
 const { open } = storeToRefs(modalReferenceStore);
+
+const ProjectsStore = useProjectsStore();
+const { project } = storeToRefs(ProjectsStore);
 
 function openModal() {
   open.value = true;
@@ -46,9 +50,13 @@ const mainTitle = computed(() => {
     return ReferenceStore.getTitle(route.params.type as string, route.params.id as string);
   }
   if (route.params.type) {
-    return capitalize(route.params.type as string);
+    return project.value!.name === 'default'
+      ? capitalize(route.params.type as string)
+      : capitalize(route.params.type as string).concat(` - ${capitalize(project.value!.label)}`);
   }
-  return capitalize(route.name as string);
+  return project.value!.name === 'default'
+    ? capitalize(route.name as string)
+    : capitalize(route.name as string).concat(` - ${capitalize(project.value!.label)}`);
 });
 </script>
 

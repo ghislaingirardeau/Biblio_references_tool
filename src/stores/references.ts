@@ -1,15 +1,15 @@
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
-import { useStorage } from '@vueuse/core';
 import type { References } from 'src/types/references';
 import type { Article, Book } from 'src/types/books';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useProjectsStore } from './projects';
 
 const ProjectsStore = useProjectsStore();
+const { project } = storeToRefs(ProjectsStore);
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
-  const references: Ref<References> = ref(ProjectsStore.project!.references);
+  const references: Ref<References> = computed(() => project.value!.references);
 
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
 
