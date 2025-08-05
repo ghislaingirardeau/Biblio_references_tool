@@ -44,6 +44,13 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }
   }
 
+  function enableEdit(id: string) {
+    const foundProject = projects.value.find((p) => p.id === id);
+    if (foundProject) {
+      foundProject.onEdited = true;
+    }
+  }
+
   function resetProjects() {
     projects.value = [
       {
@@ -62,6 +69,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projectsLabel,
     add,
     edit,
+    enableEdit,
     resetProjects,
   };
 });
