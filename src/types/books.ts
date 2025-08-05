@@ -11,8 +11,8 @@ export interface Book {
   subtitle?: string;
   authors?: string[];
   publisher?: string;
-  publishedDate?: string;
-  pageCount?: number;
+  ['published-date']?: string;
+  pages?: number;
   categories?: string[];
   language?: string;
   URL?: string;
@@ -29,7 +29,7 @@ export interface Article {
   authors?: string[];
   journal?: string;
   publisher?: string;
-  publishedDate?: string;
+  ['published-date']?: string;
   DOI?: string;
   language?: string;
   quotes?: Quote[];

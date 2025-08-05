@@ -12,4 +12,6 @@ export interface RawArticle extends Article {
 
 export interface RawBook extends Book {
   infoLink: string;
+  pageCount: string;
+  publishedDate: string;
 }

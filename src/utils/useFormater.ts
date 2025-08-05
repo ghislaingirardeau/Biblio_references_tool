@@ -54,7 +54,7 @@ export function formatBookData(result: RawBook, newReference: Ref<Book | Article
   newReference.value = Object.assign(newReference.value, {
     title: result.title,
     subtitle: result.subtitle,
-    authors: result.authors,
+    authors: result.authors?.map((a) => a.split(' ').reverse().join(' ')),
     publisher: result.publisher,
     ['published-date']: result.publishedDate,
     pages: result.pageCount,
