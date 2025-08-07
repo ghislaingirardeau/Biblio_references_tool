@@ -1,76 +1,132 @@
 import { defineStore } from 'pinia';
-import type { Citations } from 'src/types/citations';
-import { ref, type Ref } from 'vue';
+import type { Citations, CitationsDetails } from 'src/types/citations';
+import { computed, ref, type Ref } from 'vue';
 
 export const useFormatReferenceStore = defineStore('FormatReferenceStore', () => {
+  const selectedFormat = ref('chicago');
+
+  const formats = ref(['chicago', 'APA']);
+
   const formatCitations = ref<Citations>({
-    books: {
-      title: {
-        tag: 'em',
-        prepend: '',
-        append: '. ',
+    chicago: {
+      books: {
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        publisher: {
+          prepend: '',
+          append: '.',
+        },
+        date: {
+          prepend: '',
+          append: '. ',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+        },
       },
-      publisher: {
-        tag: 'span',
-        prepend: '',
-        append: '. ',
-      },
-      date: {
-        tag: 'span',
-        prepend: '',
-        append: ', ',
-      },
-      author: {
-        tag: 'span',
-        prepend: '',
-        append: ', ',
-      },
-      page: {
-        tag: 'span',
-        append: ' pages.',
-        prepend: '',
+      articles: {
+        title: {
+          prepend: '',
+          append: '.',
+        },
+        publisher: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: ' ',
+        },
+        date: {
+          prepend: '',
+          append: '. ',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+        },
+        page: {
+          append: '.',
+          prepend: ': ',
+        },
+        volume: {
+          prepend: '',
+          append: ' ',
+        },
+        issue: {
+          prepend: '(',
+          append: ')',
+        },
       },
     },
-    articles: {
-      title: {
-        tag: 'span',
-        prepend: '"',
-        append: '". ',
+    APA: {
+      books: {
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '. ',
+        },
+        publisher: {
+          prepend: '',
+          append: '.',
+        },
+        date: {
+          prepend: '(',
+          append: '). ',
+        },
+        author: {
+          prepend: '',
+          append: ', ',
+        },
       },
-      publisher: {
-        tag: 'em',
-        prepend: '',
-        append: ', ',
-      },
-      date: {
-        tag: 'span',
-        prepend: '(',
-        append: '), ',
-      },
-      volume: {
-        tag: 'span',
-        prepend: 'Vol. ',
-        append: ' ',
-      },
-      issue: {
-        tag: 'span',
-        prepend: 'issue ',
-        append: ', ',
-      },
-      author: {
-        tag: 'span',
-        prepend: 'issue ',
-        append: ', ',
-      },
-      page: {
-        tag: 'span',
-        append: '.',
-        prepend: ' pp.',
+      articles: {
+        title: {
+          prepend: '',
+          append: '. ',
+        },
+        publisher: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: ' ',
+        },
+        date: {
+          prepend: '(',
+          append: '). ',
+        },
+        author: {
+          prepend: '',
+          append: ', ',
+        },
+        page: {
+          append: '.',
+          prepend: ', ',
+        },
+        volume: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: ' ',
+        },
+        issue: {
+          prepend: '(',
+          append: ')',
+        },
       },
     },
   });
 
+  const currentFormat = computed(() => {
+    return formatCitations.value[selectedFormat.value as keyof Citations];
+  });
+
   return {
-    formatCitations,
+    currentFormat,
+    selectedFormat,
+    formats,
   };
 });

@@ -1,0 +1,147 @@
+{
+  "styles": {
+    "APA": {
+      "book": {
+        "order": ["authors", "year", "title", "publisher"],
+        "formatting": {
+          "title": "italic"
+        },
+        "punctuation": {
+          "year": " (",
+          "yearSuffix": ").",
+          "titleSuffix": ".",
+          "publisherSuffix": "."
+        }
+      },
+      "article": {
+        "order": ["authors", "year", "title", "journal", "volume", "issue", "page"],
+        "formatting": {
+          "journal": "italic",
+          "title": "none",
+          "volume": "italic"
+        },
+        "punctuation": {
+          "year": " (",
+          "yearSuffix": ").",
+          "titleSuffix": ".",
+          "journalSuffix": ",",
+          "volumeSuffix": "",
+          "issuePrefix": "(",
+          "issueSuffix": ")",
+          "pagePrefix": ", ",
+          "pageSuffix": "."
+        }
+      },
+      "chapter": {
+        "order": ["authors", "year", "title", "editors", "bookTitle", "page", "publisher"],
+        "formatting": {
+          "bookTitle": "italic"
+        },
+        "punctuation": {
+          "year": " (",
+          "yearSuffix": ").",
+          "titleSuffix": ".",
+          "bookTitlePrefix": "In ",
+          "bookTitleSuffix": ",",
+          "pagePrefix": " pp. ",
+          "pageSuffix": ".",
+          "publisherSuffix": "."
+        }
+      },
+      "report": {
+        "order": ["authors", "year", "title", "publisher"],
+        "formatting": {
+          "title": "italic"
+        },
+        "punctuation": {
+          "year": " (",
+          "yearSuffix": ").",
+          "titleSuffix": ".",
+          "publisherSuffix": "."
+        }
+      },
+      "thesis": {
+        "order": ["authors", "year", "title", "type", "institution"],
+        "formatting": {
+          "title": "italic"
+        },
+        "punctuation": {
+          "year": " (",
+          "yearSuffix": ").",
+          "titleSuffix": " [",
+          "typeSuffix": "].",
+          "institutionSuffix": "."
+        }
+      }
+    },
+    "Chicago": {
+      "book": {
+        "order": ["authors", "title", "publisher", "year"],
+        "formatting": {
+          "title": "italic"
+        },
+        "punctuation": {
+          "titleSuffix": ".",
+          "publisherSuffix": ",",
+          "yearSuffix": "."
+        }
+      },
+      "article": {
+        "order": ["authors", "title", "journal", "volume", "issue", "year", "page"],
+        "formatting": {
+          "title": "quotes",
+          "journal": "italic",
+          "volume": "italic"
+        },
+        "punctuation": {
+          "titleSuffix": ".",
+          "journalSuffix": " ",
+          "volumeSuffix": "",
+          "issuePrefix": "no. ",
+          "issueSuffix": " (",
+          "yearSuffix": "): ",
+          "pageSuffix": "."
+        }
+      },
+      "chapter": {
+        "order": ["authors", "title", "bookTitle", "editors", "page", "publisher", "year"],
+        "formatting": {
+          "title": "quotes",
+          "bookTitle": "italic"
+        },
+        "punctuation": {
+          "titleSuffix": ".",
+          "bookTitlePrefix": "In ",
+          "bookTitleSuffix": ",",
+          "pagePrefix": " ",
+          "pageSuffix": ",",
+          "publisherSuffix": ",",
+          "yearSuffix": "."
+        }
+      },
+      "report": {
+        "order": ["authors", "title", "publisher", "year"],
+        "formatting": {
+          "title": "italic"
+        },
+        "punctuation": {
+          "titleSuffix": ".",
+          "publisherSuffix": ",",
+          "yearSuffix": "."
+        }
+      },
+      "thesis": {
+        "order": ["authors", "title", "type", "institution", "year"],
+        "formatting": {
+          "title": "quotes"
+        },
+        "punctuation": {
+          "titleSuffix": ".",
+          "typeSuffix": ",",
+          "institutionSuffix": ",",
+          "yearSuffix": "."
+        }
+      }
+    }
+  }
+}

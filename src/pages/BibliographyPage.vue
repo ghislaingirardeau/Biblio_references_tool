@@ -1,6 +1,7 @@
 <template>
   <q-page class="p-2">
     my biblio display
+    <q-select borderless v-model="selectedFormat" :options="formats" label="Format" class="w-24" />
 
     <div v-for="(referenceType, i) in project?.references" :key="i">
       <div v-if="referenceType?.lists.length">
@@ -32,6 +33,7 @@
         </div>
 
         <CitationsContainer
+          :key="selectedFormat"
           :references="referenceType.lists"
           :referenceType="referenceType!.type"
           @modalEdit="modalEdit"
@@ -49,6 +51,7 @@
 import { storeToRefs } from 'pinia';
 import CitationsContainer from 'src/components/bibliography/CitationsContainer.vue';
 import EditModal from 'src/components/EditModal.vue';
+import { useFormatReferenceStore } from 'src/stores/formatReference';
 import { useProjectsStore } from 'src/stores/projects';
 import type { BibliographicEntry } from 'src/types/references';
 
@@ -56,6 +59,9 @@ import { computed, ref } from 'vue';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
+
+const FormatReferenceStore = useFormatReferenceStore();
+const { selectedFormat, formats } = storeToRefs(FormatReferenceStore);
 
 const formatCitation = ref({
   title: '',

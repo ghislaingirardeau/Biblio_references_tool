@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-for="reference in props.references"
-    :key="reference.id!"
-    @click="$emit('modalEdit', reference)"
-  >
+  <div v-for="reference in props.references" :key="reference.id!">
     <CitationContent :reference="reference" :referenceType="referenceType" />
     <q-btn dense size="sm" flat round icon="edit" @click.stop="$emit('modalEdit', reference)" />
   </div>
