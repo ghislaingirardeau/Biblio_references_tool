@@ -35,7 +35,7 @@ export const referencesTemplate = {
       authors: [''],
       publisher: '',
       ['published-date']: '',
-      pages: '',
+      page: '',
       URL: '',
     },
   },

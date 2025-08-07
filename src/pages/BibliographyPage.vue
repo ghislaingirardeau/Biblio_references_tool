@@ -4,15 +4,38 @@
 
     <div v-for="(referenceType, i) in project?.references" :key="i">
       <div v-if="referenceType?.lists.length">
-        <p class="font-bold p-2">
-          {{ referenceType!.type }}
-        </p>
-        <div v-if="referenceType!.type === 'books'">
-          <BooksItem :references="referenceType.lists" @modalEdit="modalEdit" />
+        <div class="flex flex-center q-gutter-md">
+          <span class="font-bold p-2">
+            {{ referenceType!.type }}
+          </span>
+          <q-select
+            borderless
+            v-model="formatCitation.author"
+            :options="['Uppercase', 'LowerCase']"
+            label="Author"
+            class="w-24"
+          />
+          <q-select
+            borderless
+            v-model="formatCitation.title"
+            :options="['italic', 'bold']"
+            label="Title"
+            class="w-24"
+          />
+          <q-select
+            borderless
+            v-model="formatCitation.page"
+            :options="['pp.', 'p.', 'pages']"
+            label="Pages"
+            class="w-24"
+          />
         </div>
-        <div v-if="referenceType!.type === 'articles'">
-          <ArticlesItem :references="referenceType.lists" @modalEdit="modalEdit" />
-        </div>
+
+        <CitationsContainer
+          :references="referenceType.lists"
+          :referenceType="referenceType!.type"
+          @modalEdit="modalEdit"
+        />
       </div>
     </div>
     <EditModal
@@ -24,20 +47,26 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import ArticlesItem from 'src/components/bibliography/ArticlesItem.vue';
-import BooksItem from 'src/components/bibliography/booksItem.vue';
+import CitationsContainer from 'src/components/bibliography/CitationsContainer.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useProjectsStore } from 'src/stores/projects';
-import type { Article, Book } from 'src/types/books';
+import type { ReferenceContent } from 'src/types/references';
+
 import { computed, ref } from 'vue';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
-const showEditModal = ref(false);
-const selectedReference = ref<Book | Article>({ id: null });
+const formatCitation = ref({
+  title: '',
+  author: '',
+  page: '',
+});
 
-function modalEdit(reference: Article | Book) {
+const showEditModal = ref(false);
+const selectedReference = ref<ReferenceContent>({ id: null });
+
+function modalEdit(reference: ReferenceContent) {
   showEditModal.value = true;
   selectedReference.value = reference;
 }

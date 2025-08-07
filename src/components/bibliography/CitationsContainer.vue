@@ -4,11 +4,7 @@
     :key="reference.id!"
     @click="$emit('modalEdit', reference)"
   >
-    <span v-for="author in reference.authors" :key="author">{{ author }}</span
-    >. <span class="italic">{{ reference.title }}</span
-    >. <span>{{ reference.publisher }}</span
-    >, <span>{{ reference['published-date']?.slice(0, 4) }}</span
-    >, <span>{{ reference.page }}</span> pages.
+    <CitationContent :reference="reference" :referenceType="referenceType" />
     <q-btn dense size="sm" flat round icon="edit" @click.stop="$emit('modalEdit', reference)" />
   </div>
 </template>
@@ -16,8 +12,11 @@
 <script setup lang="ts">
 import type { ReferenceContent } from 'src/types/references';
 
+import CitationContent from './CitationContent.vue';
+
 const props = defineProps<{
   references: ReferenceContent[];
+  referenceType: string;
 }>();
 
 const emits = defineEmits(['modalEdit']);

@@ -4,21 +4,21 @@
     :key="reference.id!"
     @click="$emit('modalEdit', reference)"
   >
-    <span v-for="author in reference.authors" :key="author">{{ author }}</span
-    >. <span>"{{ reference.title }}"</span>. <span class="italic">{{ reference.publisher }}</span
-    >, <span>{{ reference['published-date'] }}</span
-    >, <span> vol. {{ reference.volume }}({{ reference.issue }})</span>, p.
-    <span>{{ reference.page }}</span
-    >.
+    <span v-for="author in reference.authors" :key="author">{{ author }}. </span>
+    <span>{{ reference.title }}. </span><span>{{ reference.publisher }}, </span>
+    <span>{{ reference['published-date'] }}, </span>
+    <span v-if="'volume' in reference"> vol. {{ reference.volume }}({{ reference.issue }}),</span>
+    p. <span v-if="'page' in reference">{{ reference.page }}.</span>
+    <span v-if="'pages' in reference">{{ reference.pages }}.</span>
     <q-btn dense size="sm" flat round icon="edit" @click.stop="$emit('modalEdit', reference)" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Article } from 'src/types/books';
+import type { ReferenceContent } from 'src/types/references';
 
 const props = defineProps<{
-  references: Article[];
+  references: ReferenceContent[];
 }>();
 
 const emits = defineEmits(['modalEdit']);
