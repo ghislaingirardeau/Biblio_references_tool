@@ -1,3 +1,6 @@
 {
-  "extends": "./.quasar/tsconfig.json"
+  "extends": "./.quasar/tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./declarations.d.ts"]
+  }
 }

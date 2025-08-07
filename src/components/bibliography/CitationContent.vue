@@ -137,6 +137,70 @@ const titleTag = computed(() => {
 const publisherTag = computed(() => {
   return formatCitations.value[props.referenceType as keyof Citations]?.publisher?.tag;
 });
+
+import Cite from 'citation-js';
+
+function generateCitation(entry: BibliographicEntry, style: 'apa' | 'chicago'): string {
+  const cslJSON = convertToCSL(entry);
+
+  const cite = new Cite(cslJSON);
+  return cite.format('bibliography', {
+    format: 'text',
+    template: style,
+    lang: 'en-US',
+  });
+}
+
+function convertToCSL(entry: BibliographicEntry): any {
+  return {
+    type: mapType(entry.type!),
+    author: entry.authors!.map((fullName) => {
+      const [first, ...rest] = fullName.split(' ');
+      return { given: first, family: rest.join(' ') };
+    }),
+    issued: { 'date-parts': [[parseInt(entry.date!)]] },
+    title: entry.title,
+    publisher: entry.publisher || entry.source,
+    'container-title': entry.publisher || undefined,
+    volume: entry.volume,
+    issue: entry.issue,
+    page: entry.page,
+    URL: entry.URL,
+    DOI: entry.DOI,
+  };
+}
+
+function mapType(type: string): string {
+  switch (type) {
+    case 'book':
+      return 'book';
+    case 'article':
+      return 'article-journal';
+    case 'report':
+      return 'report';
+    case 'website':
+      return 'webpage';
+    case 'chapter':
+      return 'chapter';
+    default:
+      return 'document';
+  }
+}
+
+const entry: BibliographicEntry = {
+  id: '15',
+  type: 'book',
+  authors: ['John Smith', 'Jane Doe'],
+  date: '2020',
+  title: 'The Theory of Everything',
+  source: 'Oxford University Press',
+};
+
+const apaCitation = generateCitation(entry, 'apa');
+const chicagoCitation = generateCitation(entry, 'chicago');
+
+console.log('APA:', apaCitation);
+console.log('Chicago:', chicagoCitation);
 </script>
 
 <style scoped></style>
