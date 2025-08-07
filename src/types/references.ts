@@ -61,6 +61,7 @@ export interface Quote {
 export interface ReferenceContent {
   id: string | null;
   title?: string;
+  type?: string;
   tag?: string[];
   subtitle?: string;
   authors?: string[];

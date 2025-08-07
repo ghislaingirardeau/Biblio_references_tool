@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import type { Quote } from 'src/types/books';
+import type { Quote } from 'src/types/references';
 import { ref } from 'vue';
 
 const modalReferenceStore = useModalReferenceStore();

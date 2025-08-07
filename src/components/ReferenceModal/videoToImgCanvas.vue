@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { useDevicesList, useUserMedia } from '@vueuse/core';
-import type { Quote } from 'src/types/books';
+import type { Quote } from 'src/types/references';
 import {
   computed,
   onMounted,

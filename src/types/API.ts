@@ -1,6 +1,6 @@
-import type { Article, Book } from './books';
+import type { ReferenceContent } from './references';
 
-export interface RawArticle extends Article {
+export interface RawAPIData extends ReferenceContent {
   author?: { family?: string; given?: string; name?: string }[];
   created: { timestamp: number };
   ['container-title']: string[];
@@ -8,9 +8,6 @@ export interface RawArticle extends Article {
     ['date-parts']: string[][];
   };
   rawTitle: string[];
-}
-
-export interface RawBook extends Book {
   infoLink: string;
   pageCount: string;
   publishedDate: string;

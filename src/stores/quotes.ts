@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
-import type { Quote } from 'src/types/books';
+import type { Quote } from 'src/types/references';
 import { useReferencesStore } from './references';
 
 const { find } = useReferencesStore();

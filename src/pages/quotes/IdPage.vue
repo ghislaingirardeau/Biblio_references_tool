@@ -27,7 +27,7 @@
 import EditModal from 'src/components/EditModal.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useQuotesStore } from 'src/stores/quotes';
-import type { Quote } from 'src/types/books';
+import type { Quote } from 'src/types/references';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
