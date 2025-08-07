@@ -1,5 +1,5 @@
 export interface ReferenceDetails {
-  lists: ReferenceContent[];
+  lists: BibliographicEntry[];
   type: string;
   label: string;
   description: string;
@@ -58,7 +58,7 @@ export interface Quote {
   content?: string;
 }
 
-export interface ReferenceContent {
+export interface BibliographicEntry {
   id: string | null;
   title?: string;
   type?: string;

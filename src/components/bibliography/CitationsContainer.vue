@@ -10,12 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 
 import CitationContent from './CitationContent.vue';
 
 const props = defineProps<{
-  references: ReferenceContent[];
+  references: BibliographicEntry[];
   referenceType: string;
 }>();
 

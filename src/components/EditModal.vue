@@ -27,13 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
-const selectedReference = defineModel<ReferenceContent>('selectedReference');
+const selectedReference = defineModel<BibliographicEntry>('selectedReference');
 
 const ModalReference = useModalReferenceStore();
 </script>

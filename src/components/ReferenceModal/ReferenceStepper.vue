@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import BarcodeDetection from './BarcodeDetection.vue';
@@ -87,7 +87,7 @@ const identifier = ref('');
 const isSearchingReference = ref(false);
 const isScanning = ref(true);
 
-const newReference = ref<ReferenceContent>({
+const newReference = ref<BibliographicEntry>({
   id: null,
 });
 

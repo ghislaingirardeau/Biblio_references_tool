@@ -53,13 +53,13 @@
 </template>
 
 <script setup lang="ts">
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 import { computed, ref } from 'vue';
 import HtmlTag from './HtmlTag.vue';
 import type { Citations } from 'src/types/citations';
 
 const props = defineProps<{
-  reference: ReferenceContent;
+  reference: BibliographicEntry;
   referenceType: string;
 }>();
 

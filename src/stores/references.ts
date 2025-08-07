@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { References } from 'src/types/references';
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useProjectsStore } from './projects';
 
@@ -21,7 +21,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     references.value = referencesTemplate;
   }
 
-  function add(type: string, reference: ReferenceContent) {
+  function add(type: string, reference: BibliographicEntry) {
     references.value[type as keyof References]?.lists.unshift(reference);
   }
 
@@ -63,9 +63,9 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
       (ref) => ref.id !== referenceId,
     );
     if (type === 'books') {
-      references.value.books!.lists = findReferences as ReferenceContent[];
+      references.value.books!.lists = findReferences as BibliographicEntry[];
     } else if (type === 'articles') {
-      references.value.articles!.lists = findReferences as ReferenceContent[];
+      references.value.articles!.lists = findReferences as BibliographicEntry[];
     }
   }
 

@@ -50,7 +50,7 @@ import { storeToRefs } from 'pinia';
 import CitationsContainer from 'src/components/bibliography/CitationsContainer.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useProjectsStore } from 'src/stores/projects';
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 
 import { computed, ref } from 'vue';
 
@@ -64,9 +64,9 @@ const formatCitation = ref({
 });
 
 const showEditModal = ref(false);
-const selectedReference = ref<ReferenceContent>({ id: null });
+const selectedReference = ref<BibliographicEntry>({ id: null });
 
-function modalEdit(reference: ReferenceContent) {
+function modalEdit(reference: BibliographicEntry) {
   showEditModal.value = true;
   selectedReference.value = reference;
 }

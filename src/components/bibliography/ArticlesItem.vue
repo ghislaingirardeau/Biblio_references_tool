@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 
 const props = defineProps<{
-  references: ReferenceContent[];
+  references: BibliographicEntry[];
 }>();
 
 const emits = defineEmits(['modalEdit']);

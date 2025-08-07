@@ -1,5 +1,5 @@
 import type { RawAPIData } from 'src/types/API';
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 
 import type { Ref } from 'vue';
 
@@ -12,7 +12,7 @@ export function formatIdentifier(identifier: Ref<string>) {
   }
 }
 
-export function formatArticleData(article: RawAPIData, newReference: Ref<ReferenceContent>) {
+export function formatArticleData(article: RawAPIData, newReference: Ref<BibliographicEntry>) {
   const author = article.author?.map((a) => a.family + ' ' + a.given);
   const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL, type } = article;
   console.log(article);
@@ -33,7 +33,7 @@ export function formatArticleData(article: RawAPIData, newReference: Ref<Referen
   });
 }
 
-export function formatReportData(article: RawAPIData, newReference: Ref<ReferenceContent>) {
+export function formatReportData(article: RawAPIData, newReference: Ref<BibliographicEntry>) {
   const author = article.author?.map((a) => a.name);
   const { title, publisher, DOI, language, URL, type } = article;
   console.log(article);
@@ -51,7 +51,7 @@ export function formatReportData(article: RawAPIData, newReference: Ref<Referenc
   });
 }
 
-export function formatBookData(result: RawAPIData, newReference: Ref<ReferenceContent>) {
+export function formatBookData(result: RawAPIData, newReference: Ref<BibliographicEntry>) {
   newReference.value = Object.assign(newReference.value, {
     title: result.title,
     subtitle: result.subtitle,

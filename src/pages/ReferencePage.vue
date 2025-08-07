@@ -39,7 +39,7 @@
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useReferencesStore } from 'src/stores/references';
-import type { ReferenceContent } from 'src/types/references';
+import type { BibliographicEntry } from 'src/types/references';
 import type { References } from 'src/types/references';
 import { computed, ref } from 'vue';
 import type { ComputedRef } from 'vue';
@@ -54,12 +54,12 @@ const type = computed(() => route.params.type);
 const showConfirmModal = ref(false);
 const showEditModal = ref(false);
 
-const selectedReference = ref<ReferenceContent>({ id: null });
+const selectedReference = ref<BibliographicEntry>({ id: null });
 const selectedId = ref<null | string>(null);
 
-const typeReferences: ComputedRef<ReferenceContent[]> = computed(() => {
+const typeReferences: ComputedRef<BibliographicEntry[]> = computed(() => {
   if (Array.isArray(ReferencesStore.filterReferences)) {
-    return ReferencesStore.filterReferences as ReferenceContent[];
+    return ReferencesStore.filterReferences as BibliographicEntry[];
   }
   return ReferencesStore.references[type.value as keyof References]?.lists ?? [];
 });
@@ -77,7 +77,7 @@ function modalConfirm(id: string) {
   selectedId.value = id;
 }
 
-function modalEdit(reference: ReferenceContent) {
+function modalEdit(reference: BibliographicEntry) {
   showEditModal.value = true;
   selectedReference.value = reference;
 }

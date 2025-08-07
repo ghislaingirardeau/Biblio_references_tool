@@ -1,6 +1,6 @@
-import type { ReferenceContent } from './references';
+import type { BibliographicEntry } from './references';
 
-export interface RawAPIData extends ReferenceContent {
+export interface RawAPIData extends BibliographicEntry {
   author?: { family?: string; given?: string; name?: string }[];
   created: { timestamp: number };
   ['container-title']: string[];
