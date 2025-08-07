@@ -1,28 +1,5 @@
-import type {
-  Book,
-  Article,
-  BookChapter,
-  ConferencePaper,
-  Thesis,
-  WebPage,
-  NewspaperArticle,
-  MagazineArticle,
-  Dataset,
-  Software,
-  Interview,
-  Film,
-  LegalCase,
-  Legislation,
-  Patent,
-  Manuscript,
-  Presentation,
-  Audio,
-  Image,
-  Report,
-} from 'src/types/books';
-
-export interface ReferenceDetails<T> {
-  lists: T;
+export interface ReferenceDetails {
+  lists: ReferenceContent[];
   type: string;
   label: string;
   description: string;
@@ -30,26 +7,26 @@ export interface ReferenceDetails<T> {
 }
 
 export interface References {
-  books?: ReferenceDetails<Book[]>;
-  articles?: ReferenceDetails<Article[]>;
-  web?: ReferenceDetails<WebPage[]>;
-  bookChapter?: ReferenceDetails<BookChapter[]>;
-  conferencePaper?: ReferenceDetails<ConferencePaper[]>;
-  thesis?: ReferenceDetails<Thesis[]>;
-  report?: ReferenceDetails<Report[]>;
-  newspaperArticle?: ReferenceDetails<NewspaperArticle[]>;
-  magazineArticle?: ReferenceDetails<MagazineArticle[]>;
-  dataset?: ReferenceDetails<Dataset[]>;
-  software?: ReferenceDetails<Software[]>;
-  film?: ReferenceDetails<Film[]>;
-  legalCase?: ReferenceDetails<LegalCase[]>;
-  legislation?: ReferenceDetails<Legislation[]>;
-  presentation?: ReferenceDetails<Presentation[]>;
-  patent?: ReferenceDetails<Patent[]>;
-  manuscript?: ReferenceDetails<Manuscript[]>;
-  interview?: ReferenceDetails<Interview[]>;
-  audio?: ReferenceDetails<Audio[]>;
-  image?: ReferenceDetails<Image[]>;
+  books?: ReferenceDetails;
+  articles?: ReferenceDetails;
+  web?: ReferenceDetails;
+  bookChapter?: ReferenceDetails;
+  conferencePaper?: ReferenceDetails;
+  thesis?: ReferenceDetails;
+  report?: ReferenceDetails;
+  newspaperArticle?: ReferenceDetails;
+  magazineArticle?: ReferenceDetails;
+  dataset?: ReferenceDetails;
+  software?: ReferenceDetails;
+  film?: ReferenceDetails;
+  legalCase?: ReferenceDetails;
+  legislation?: ReferenceDetails;
+  presentation?: ReferenceDetails;
+  patent?: ReferenceDetails;
+  manuscript?: ReferenceDetails;
+  interview?: ReferenceDetails;
+  audio?: ReferenceDetails;
+  image?: ReferenceDetails;
 }
 
 export type ReferencesType = readonly [
@@ -74,3 +51,62 @@ export type ReferencesType = readonly [
   'audio',
   'image',
 ];
+
+export interface Quote {
+  id: string | null;
+  page?: string;
+  content?: string;
+}
+
+export interface ReferenceContent {
+  id: string | null;
+  title?: string;
+  tag?: string[];
+  subtitle?: string;
+  authors?: string[];
+  publisher?: string;
+  ['published-date']?: string;
+  page?: string;
+  categories?: string[];
+  language?: string;
+  URL?: string;
+  imageLinks?: { thumbnail: string };
+  quotes?: Quote[];
+  volume?: string;
+  issue?: string;
+  DOI?: string;
+  bookTitle?: string;
+  editors?: string[];
+  conferenceName?: string;
+  location?: string;
+  institution?: string;
+  degree?: string;
+  reportNumber?: string;
+  websiteName?: string;
+  accessDate?: string;
+  newspaperName?: string;
+  magazineName?: string;
+  repository?: string;
+  version?: string;
+  interviewee?: string[];
+  interviewer?: string[];
+  director?: string;
+  producers?: string[];
+  releaseDate?: string;
+  productionCompany?: string;
+  court?: string;
+  decisionDate?: string;
+  jurisdiction?: string;
+  enactmentDate?: string;
+  referenceNumber?: string;
+  inventors?: string[];
+  patentNumber?: string;
+  issuingAuthority?: string;
+  issueDate?: string;
+  status?: 'unpublished' | 'in review' | 'in press';
+  presenter?: string;
+  event?: string;
+  creator?: string;
+  format?: string;
+  source?: string;
+}

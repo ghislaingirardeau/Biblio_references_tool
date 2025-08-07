@@ -1,5 +1,6 @@
 import type { RawArticle, RawBook } from 'src/types/API';
-import type { Article, Book, Thesis } from 'src/types/books';
+import type { ReferenceContent } from 'src/types/references';
+
 import type { Ref } from 'vue';
 
 export function formatIdentifier(identifier: Ref<string>) {
@@ -11,7 +12,7 @@ export function formatIdentifier(identifier: Ref<string>) {
   }
 }
 
-export function formatArticleData(article: RawArticle, newReference: Ref<Book | Article | Thesis>) {
+export function formatArticleData(article: RawArticle, newReference: Ref<ReferenceContent>) {
   const author = article.author?.map((a) => a.family + ' ' + a.given);
   const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL, type } = article;
   console.log(article);
@@ -32,7 +33,7 @@ export function formatArticleData(article: RawArticle, newReference: Ref<Book | 
   });
 }
 
-export function formatReportData(article: RawArticle, newReference: Ref<Book | Article | Thesis>) {
+export function formatReportData(article: RawArticle, newReference: Ref<ReferenceContent>) {
   const author = article.author?.map((a) => a.name);
   const { title, publisher, DOI, language, URL, type } = article;
   console.log(article);
@@ -50,14 +51,14 @@ export function formatReportData(article: RawArticle, newReference: Ref<Book | A
   });
 }
 
-export function formatBookData(result: RawBook, newReference: Ref<Book | Article | Thesis>) {
+export function formatBookData(result: RawBook, newReference: Ref<ReferenceContent>) {
   newReference.value = Object.assign(newReference.value, {
     title: result.title,
     subtitle: result.subtitle,
     authors: result.authors?.map((a) => a.split(' ').reverse().join(' ')),
     publisher: result.publisher,
     ['published-date']: result.publishedDate,
-    pages: result.pageCount,
+    page: result.pageCount,
     categories: result.categories,
     URL: result.infoLink,
     imageLinks: result.imageLinks?.thumbnail,

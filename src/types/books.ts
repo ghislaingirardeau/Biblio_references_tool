@@ -12,12 +12,13 @@ export interface Book {
   authors?: string[];
   publisher?: string;
   ['published-date']?: string;
-  pages?: number;
+  page?: number;
   categories?: string[];
   language?: string;
   URL?: string;
   imageLinks?: { thumbnail: string };
   quotes?: Quote[];
+  journal?: string;
 }
 
 export interface Article {
