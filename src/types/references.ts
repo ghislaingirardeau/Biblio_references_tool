@@ -66,7 +66,6 @@ export interface BibliographicEntry {
   subtitle?: string;
   authors?: string[];
   publisher?: string;
-  ['published-date']?: string;
   date?: string;
   page?: string;
   categories?: string[];

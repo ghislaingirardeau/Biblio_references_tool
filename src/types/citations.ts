@@ -8,7 +8,7 @@ export interface Citations {
   [key: string]: {
     title?: Format;
     publisher?: Format;
-    publisheDate?: Format;
+    date?: Format;
     volume?: Format;
     issue?: Format;
     author?: Format;

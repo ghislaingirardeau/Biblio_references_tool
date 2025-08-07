@@ -6,7 +6,7 @@
   >
     <span v-for="author in reference.authors" :key="author">{{ author }}. </span>
     <span>{{ reference.title }}. </span><span>{{ reference.publisher }}, </span>
-    <span>{{ reference['published-date'] }}, </span>
+    <span>{{ reference.date }}, </span>
     <span v-if="'volume' in reference"> vol. {{ reference.volume }}({{ reference.issue }}),</span>
     p. <span v-if="'page' in reference">{{ reference.page }}.</span>
     <span v-if="'pages' in reference">{{ reference.pages }}.</span>
