@@ -6,6 +6,7 @@ interface Style {
 }
 
 export interface CitationsDetails {
+  order: string[];
   title?: Style;
   publisher?: Style;
   date?: Style;
@@ -23,4 +24,5 @@ export interface TypeCitation {
 export interface Citations {
   chicago: TypeCitation;
   APA: TypeCitation;
+  MLA: TypeCitation;
 }

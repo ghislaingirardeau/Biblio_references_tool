@@ -5,11 +5,12 @@ import { computed, ref, type Ref } from 'vue';
 export const useFormatReferenceStore = defineStore('FormatReferenceStore', () => {
   const selectedFormat = ref('chicago');
 
-  const formats = ref(['chicago', 'APA']);
+  const formats = ref(['chicago', 'APA', 'MLA']);
 
   const formatCitations = ref<Citations>({
     chicago: {
       books: {
+        order: ['authors', 'year', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -30,9 +31,10 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       articles: {
+        order: ['authors', 'year', 'title', 'journal', 'volume', 'issue', 'page', 'doi'],
         title: {
-          prepend: '',
-          append: '.',
+          prepend: '"',
+          append: '".',
         },
         publisher: {
           tagStart: '<em>',
@@ -64,6 +66,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
     },
     APA: {
       books: {
+        order: ['authors', 'year', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -80,10 +83,11 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
         author: {
           prepend: '',
-          append: ', ',
+          append: '. ',
         },
       },
       articles: {
+        order: ['authors', 'year', 'title', 'journal', 'volume', 'issue', 'page', 'doi'],
         title: {
           prepend: '',
           append: '. ',
@@ -92,7 +96,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
-          append: ' ',
+          append: ', ',
         },
         date: {
           prepend: '(',
@@ -115,6 +119,62 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         issue: {
           prepend: '(',
           append: ')',
+        },
+      },
+    },
+    MLA: {
+      books: {
+        order: ['authors', 'title', 'publisher', 'year'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        publisher: {
+          prepend: '',
+          append: '.',
+        },
+        date: {
+          prepend: '',
+          append: '. ',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+        },
+      },
+      articles: {
+        order: ['authors', 'title', 'journal', 'volume', 'issue', 'year', 'page'],
+        title: {
+          prepend: '"',
+          append: '".',
+        },
+        publisher: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: ', ',
+        },
+        date: {
+          prepend: '',
+          append: ', ',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+        },
+        page: {
+          append: '.',
+          prepend: 'pp. ',
+        },
+        volume: {
+          prepend: 'vol. ',
+          append: ', ',
+        },
+        issue: {
+          prepend: 'no. ',
+          append: ', ',
         },
       },
     },

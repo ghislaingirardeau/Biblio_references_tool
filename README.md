@@ -41,3 +41,9 @@ Smith, John A. 2020. _Annual Research Report 2020_. Report no. 123. NASA. https:
 Smith, J. A. (2020). _The theory of everything_. Oxford University Press.
 Smith, J. A. (2020). Exploring black holes. _Astrophysics Journal, 50_(2), 100–115. https://doi.org/10.1234/abc123
 Smith, J. A. (2020). _Annual research report 2020_ (Report No. 123). NASA. https://nasa.gov/report123
+
+#### MLA
+
+Smith, John A. _The Theory of Everything_. Oxford University Press, 2020.
+Smith, John A. “Exploring Black Holes.” _Astrophysics Journal_, vol. 50, no. 2, 2020, pp. 100–115.
+Smith, John A. _Annual Research Report 2020_. NASA, 2020. https://nasa.gov/report123.
