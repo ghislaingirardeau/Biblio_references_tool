@@ -10,7 +10,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
   const formatCitations = ref<Citations>({
     chicago: {
       books: {
-        order: ['authors', 'year', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -31,7 +31,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       articles: {
-        order: ['authors', 'year', 'title', 'journal', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
         title: {
           prepend: '"',
           append: '".',
@@ -66,7 +66,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
     },
     APA: {
       books: {
-        order: ['authors', 'year', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -87,7 +87,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       articles: {
-        order: ['authors', 'year', 'title', 'journal', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
         title: {
           prepend: '',
           append: '. ',
@@ -104,7 +104,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
         author: {
           prepend: '',
-          append: ', ',
+          append: '. ',
         },
         page: {
           append: '.',
@@ -124,7 +124,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
     },
     MLA: {
       books: {
-        order: ['authors', 'title', 'publisher', 'year'],
+        order: ['author', 'title', 'publisher', 'date'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -141,11 +141,11 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
         author: {
           prepend: '',
-          append: '.',
+          append: '. ',
         },
       },
       articles: {
-        order: ['authors', 'title', 'journal', 'volume', 'issue', 'year', 'page'],
+        order: ['author', 'title', 'publisher', 'volume', 'issue', 'date', 'page'],
         title: {
           prepend: '"',
           append: '".',
@@ -162,7 +162,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
         author: {
           prepend: '',
-          append: '.',
+          append: '. ',
         },
         page: {
           append: '.',

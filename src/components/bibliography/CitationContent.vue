@@ -40,8 +40,8 @@
     >{{ reference.page
     }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.page?.append }}</span>
   </HtmlTag> -->
-  <p>{{ citationHtml }}</p>
-  <p v-html="citationHtml"></p>
+  <p>{{ orderCitation }}</p>
+  <p v-html="orderCitation"></p>
 </template>
 
 <script setup lang="ts">
@@ -49,7 +49,13 @@ import type { BibliographicEntry } from 'src/types/references';
 import { computed, onMounted, ref } from 'vue';
 import HtmlTag from './HtmlTag.vue';
 import { useFormatReferenceStore } from 'src/stores/formatReference';
-import type { Citations, CitationsDetails, TypeCitation } from 'src/types/citations';
+import type {
+  CitationHtmlMap,
+  Citations,
+  CitationsDetails,
+  CitationsProperties,
+  TypeCitation,
+} from 'src/types/citations';
 
 const { currentFormat } = useFormatReferenceStore();
 
@@ -102,16 +108,26 @@ const page = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
 });
 
-const citationHtml = computed(() => {
-  return (
-    authors.value +
-    date.value +
-    title.value +
-    publisher.value +
-    volume.value +
-    issue.value +
-    page.value
-  );
+const citationHtml = computed<CitationHtmlMap>(() => {
+  return {
+    author: authors.value,
+    date: date.value,
+    title: title.value,
+    publisher: publisher.value,
+    volume: volume.value,
+    issue: issue.value,
+    page: page.value,
+  };
+});
+
+const orderCitation = computed(() => {
+  let htmlContent = '';
+  for (const element of currentFormat[props.referenceType as keyof TypeCitation].order) {
+    if (element in citationHtml.value) {
+      htmlContent += citationHtml.value[element as keyof CitationHtmlMap] ?? '';
+    }
+  }
+  return htmlContent;
 });
 
 /* ------------------- */
