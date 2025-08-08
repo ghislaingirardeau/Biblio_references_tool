@@ -4,7 +4,9 @@
     :key="reference.id!"
     @click="$emit('modalEdit', reference)"
   >
-    <span v-for="author in reference.authors" :key="author">{{ author }}</span
+    <span v-for="(author, i) in reference.authors" :key="author.lastname + i">{{
+      author.lastname + ' ' + author.firstname
+    }}</span
     >. <span class="italic">{{ reference.title }}</span
     >. <span>{{ reference.publisher }}</span
     >, <span>{{ reference.date?.slice(0, 4) }}</span

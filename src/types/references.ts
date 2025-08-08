@@ -58,13 +58,18 @@ export interface Quote {
   content?: string;
 }
 
+export interface Authors {
+  firstname: string;
+  lastname: string;
+}
+
 export interface BibliographicEntry {
   id: string | null;
   title?: string;
   type?: string;
   tag?: string[];
   subtitle?: string;
-  authors?: string[];
+  authors?: Authors[];
   publisher?: string;
   date?: string;
   page?: string;

@@ -19,18 +19,25 @@
           />
         </div>
         <div v-else>
-          <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="w-full">
+          <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="flex">
             <q-input
-              v-model="(editReference as any)[reference][idx]"
-              class="mb-2"
-              :label="`${formatLabel(reference)}`"
+              v-model="(editReference as any)[reference][idx].firstname"
+              class="mb-2 w-1/2"
+              :label="`${formatLabel(reference + (idx + 1) + ' ' + 'First name')}`"
+            />
+            <q-input
+              v-model="(editReference as any)[reference][idx].lastname"
+              class="mb-2 w-1/2"
+              :label="`${formatLabel(reference + (idx + 1) + ' ' + 'Last name')}`"
             />
           </div>
           <q-btn
             flat
             color="primary"
             icon="add"
-            @click="(editReference as any)[reference].push(`New ${reference}`)"
+            @click="
+              (editReference as any)[reference].push({ firstname: 'hello', lastname: 'world' })
+            "
             :label="`add ${reference}`"
           />
         </div>

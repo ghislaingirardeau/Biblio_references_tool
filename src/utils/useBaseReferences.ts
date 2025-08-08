@@ -9,7 +9,12 @@ export const referencesTemplate = {
       tags: [''],
       type: '',
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       subtitle: '',
       journal: '',
       publisher: '',
@@ -32,7 +37,12 @@ export const referencesTemplate = {
       tags: [''],
       title: '',
       subtitle: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       publisher: '',
       date: '',
       page: '',
@@ -49,7 +59,12 @@ export const referencesTemplate = {
       tags: [''],
       title: '',
       subtitle: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       ['chapter-title']: '',
       ['chapter-authors']: [''],
       publisher: '',
@@ -67,7 +82,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       conferenceName: '',
       location: '',
       date: '',
@@ -84,7 +104,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -101,7 +126,12 @@ export const referencesTemplate = {
       tags: [''],
       type: '',
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       journal: '',
       publisher: '',
       date: '',
@@ -119,7 +149,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       websiteName: '',
       date: '',
       URL: '',
@@ -135,7 +170,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       newspaperName: '',
       page: '',
       date: '',
@@ -151,7 +191,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       magazineName: '',
       issue: '',
       date: '',
@@ -167,7 +212,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       repository: '',
       DOI: '',
       date: '',
@@ -183,7 +233,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       version: '',
       publisher: '',
       date: '',
@@ -199,8 +254,18 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      interviewee: [''],
-      interviewer: [''],
+      interviewee: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
+      interviewer: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       date: '',
       location: '',
       URL: '',
@@ -215,7 +280,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -230,7 +300,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -245,7 +320,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -260,7 +340,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -275,7 +360,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       status: '',
       submissionDate: '',
       URL: '',
@@ -290,7 +380,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      presenter: [''],
+      presenter: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       event: '',
       location: '',
       date: '',
@@ -306,7 +401,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',
@@ -321,7 +421,12 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      authors: [''],
+      authors: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       institution: '',
       degree: '',
       date: '',

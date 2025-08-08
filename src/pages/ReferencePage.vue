@@ -11,9 +11,12 @@
         <q-item-section>
           <q-item-label>{{ typeReference.title }} {{ typeReference.id }}</q-item-label>
           <q-item-label caption>
-            <span v-for="author in typeReference.authors" :key="author" class="mr-2">{{
-              author
-            }}</span>
+            <span
+              v-for="(author, i) in typeReference.authors"
+              :key="author.lastname + i"
+              class="mr-2"
+              >{{ author.lastname + ' ' + author.firstname }}</span
+            >
           </q-item-label>
           <q-item-label v-if="typeReference.URL" class="italic underline">
             <span @click.stop="goToLink(typeReference.URL)">Check the reference website</span>

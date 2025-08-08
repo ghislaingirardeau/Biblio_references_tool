@@ -5,13 +5,20 @@ interface Style {
   prepend?: string;
 }
 
+interface StyleAuthor extends Style {
+  initials?: boolean;
+  linkAuthors?: string;
+  appendAuthors?: string;
+  etAl?: string;
+}
+
 export interface CitationsProperties {
   title?: Style;
   publisher?: Style;
   date?: Style;
   volume?: Style;
   issue?: Style;
-  author?: Style;
+  author?: StyleAuthor;
   page?: Style;
   URL?: Style;
   DOI?: Style;
@@ -28,7 +35,7 @@ export interface CitationsDetails {
   date?: Style;
   volume?: Style;
   issue?: Style;
-  author?: Style;
+  author?: StyleAuthor;
   page?: Style;
 }
 

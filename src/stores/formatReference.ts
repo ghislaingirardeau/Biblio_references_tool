@@ -28,6 +28,8 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '.',
+          initials: false,
+          linkAuthors: ', and ',
         },
       },
       articles: {
@@ -49,6 +51,8 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '.',
+          initials: false,
+          linkAuthors: ', and ',
         },
         page: {
           append: '.',
@@ -84,6 +88,8 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '. ',
+          initials: true,
+          linkAuthors: ', & ',
         },
       },
       articles: {
@@ -105,6 +111,8 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '. ',
+          initials: true,
+          linkAuthors: ', & ',
         },
         page: {
           append: '.',
@@ -133,7 +141,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
         publisher: {
           prepend: '',
-          append: '.',
+          append: ',',
         },
         date: {
           prepend: '',
@@ -142,6 +150,9 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '. ',
+          initials: false,
+          linkAuthors: ', and ',
+          etAl: ', et al. ',
         },
       },
       articles: {
@@ -163,6 +174,9 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         author: {
           prepend: '',
           append: '. ',
+          initials: false,
+          linkAuthors: ', and ',
+          etAl: ', et al. ',
         },
         page: {
           append: '.',
