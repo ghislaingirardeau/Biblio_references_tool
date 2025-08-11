@@ -79,6 +79,7 @@ export default defineConfigWithVueTs(
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/await-thenable': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
+      'no-unsafe-optional-chaining': 'off',
 
       // in plain CommonJS modules, you can't use `import foo = require('foo')` to pass this rule, so it has to be disabled
       '@typescript-eslint/no-var-requires': 'off',

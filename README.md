@@ -34,28 +34,24 @@ report
 
 #### Chicago
 
-Smith, John A. 2020. _The Theory of Everything_. Oxford University Press.
-Smith, John A. 2020. “Exploring Black Holes.” _Astrophysics Journal_ 50 (2): 100–115. https://doi.org/10.1234/abc123.
-Smith, John A. 2020. _Annual Research Report 2020_. Report no. 123. NASA. https://nasa.gov/report123.
+Baird, Ian G. 2020. Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press.
 
-De Saint-Exupéry, Antoine. The Little Prince: Le Petit Prince. Createspace Independent Publishing Platform, 2015.
+Dorkenoo, Kelly, and Phasy Res. 2025. “On The Production of Climate-related Loss: Land Dispossession, Indebtedness, and Climate Change in Northeastern Cambodia.” The Journal of Peasant Studies, August, 1–30. https://doi.org/10.1080/03066150.2025.2528861.
 
-Brickell, Katherine, Sabina Lawreniuk, Theavy Chhom, Reach Mony, Hengvotey So, and Lauren McCarthy. “‘Worn out’: debt discipline, hunger, and the gendered contingencies of the COVID-19 pandemic amongst Cambodian garment workers.” Social & Cultural Geography 24, no. 3–4 (April 6, 2022): 600–619. https://doi.org/10.1080/14649365.2022.2055778.
+Ashta, Arvind, Mawuli Couchoro, and Abu Saleh Musa. 2014. “Dialectic evolution through the social innovation process: from microcredit to microfinance.” Journal of Innovation and Entrepreneurship 3 (1): 4. https://doi.org/10.1186/2192-5372-3-4.
 
 #### APA
 
-Smith, J. A. (2020). _The theory of everything_. Oxford University Press.
-Smith, J. A. (2020). Exploring black holes. _Astrophysics Journal, 50_(2), 100–115. https://doi.org/10.1234/abc123
-Smith, J. A. (2020). _Annual research report 2020_ (Report No. 123). NASA. https://nasa.gov/report123
+Baird, I. G. (2020). Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press.
 
-Brickell, K., Lawreniuk, S., Chhom, T., Mony, R., So, H., & McCarthy, L. (2022). ‘Worn out’: debt discipline, hunger, and the gendered contingencies of the COVID-19 pandemic amongst Cambodian garment workers. Social & Cultural Geography, 24(3–4), 600–619. https://doi.org/10.1080/14649365.2022.2055778
+Dorkenoo, K., & Res, P. (2025). On The Production of Climate-related Loss: Land Dispossession, Indebtedness, and Climate Change in Northeastern Cambodia. The Journal of Peasant Studies, 1–30. https://doi.org/10.1080/03066150.2025.2528861
+
+Ashta, A., Couchoro, M., & Musa, A. S. (2014). Dialectic evolution through the social innovation process: from microcredit to microfinance. Journal of Innovation and Entrepreneurship, 3(1), 4. https://doi.org/10.1186/2192-5372-3-4
 
 #### MLA
 
-Smith, John A. _The Theory of Everything_. Oxford University Press, 2020.
-Smith, John A. “Exploring Black Holes.” _Astrophysics Journal_, vol. 50, no. 2, 2020, pp. 100–115.
-Smith, John A. _Annual Research Report 2020_. NASA, 2020. https://nasa.gov/report123.
+Baird, Ian G. Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press, 2020.
 
-De Saint-Exupéry, Antoine. The Little Prince: Le Petit Prince. Createspace Independent Publishing Platform, 2015.
+Dorkenoo, Kelly, and Phasy Res. “On The Production of Climate-related Loss: Land Dispossession, Indebtedness, and Climate Change in Northeastern Cambodia.” The Journal of Peasant Studies, Aug. 2025, pp. 1–30. https://doi.org/10.1080/03066150.2025.2528861.
 
-Brickell, Katherine, et al. “‘Worn out’: debt discipline, hunger, and the gendered contingencies of the COVID-19 pandemic amongst Cambodian garment workers.” Social & Cultural Geography, vol. 24, no. 3–4, Apr. 2022, pp. 600–19. https://doi.org/10.1080/14649365.2022.2055778.
+Ashta, Arvind, et al. “Dialectic evolution through the social innovation process: from microcredit to microfinance.” Journal of Innovation and Entrepreneurship, vol. 3, no. 1, Jan. 2014, p. 4. https://doi.org/10.1186/2192-5372-3-4.

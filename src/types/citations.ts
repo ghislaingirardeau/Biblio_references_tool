@@ -6,10 +6,12 @@ interface Style {
 }
 
 interface StyleAuthor extends Style {
-  initials?: boolean;
-  linkAuthors?: string;
+  initials: boolean;
+  linkName: string;
+  lastAuthor: string;
   appendAuthors?: string;
   etAl?: string;
+  reverseName: boolean;
 }
 
 export interface CitationsProperties {
@@ -18,7 +20,7 @@ export interface CitationsProperties {
   date?: Style;
   volume?: Style;
   issue?: Style;
-  author?: StyleAuthor;
+  author: StyleAuthor;
   page?: Style;
   URL?: Style;
   DOI?: Style;
