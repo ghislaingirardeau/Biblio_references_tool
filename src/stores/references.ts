@@ -40,7 +40,11 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
       (reference) =>
         reference.title!.toLowerCase().includes(lowerQuery) ||
         ('authors' in reference &&
-          reference.authors.join(' ').toLowerCase().includes(lowerQuery)) ||
+          reference.authors
+            .map((a) => a.firstname + ' ' + a.lastname)
+            .join(' ')
+            .toLowerCase()
+            .includes(lowerQuery)) ||
         reference.tag?.join(' ').toLowerCase().includes(lowerQuery),
     );
     if (findReferences.length === 0) {
