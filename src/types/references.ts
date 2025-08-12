@@ -71,6 +71,7 @@ export interface BibliographicEntry {
   subtitle?: string;
   authors?: Authors[];
   publisher?: string;
+  journal?: string;
   date?: string;
   page?: string;
   categories?: string[];

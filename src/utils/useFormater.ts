@@ -43,6 +43,7 @@ export function formatReportData(article: DoiAPIData, newReference: Ref<Bibliogr
       lastname: a.name,
     };
   });
+  console.log(article);
   const { title: rawTitle, publisher, DOI, language, URL, type } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {

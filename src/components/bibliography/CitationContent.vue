@@ -1,45 +1,4 @@
 <template>
-  <!-- Authors -->
-  <!-- <span v-for="author in reference.authors" :key="author">{{ author }}. </span> -->
-
-  <!-- <HtmlTag tag="span"
-    ><span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.date?.prepend }}</span
-    >{{ reference.date?.toString().slice(0, 4) || 'n.d'
-    }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.date?.append }}</span>
-  </HtmlTag>
-
-  <HtmlTag :tag="titleTag!"
-    ><span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.title?.prepend }}</span
-    >{{ reference.title
-    }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.title?.append }}</span>
-  </HtmlTag>
-
-  <HtmlTag :tag="publisherTag!"
-    ><span>{{
-      currentFormat[props.referenceType as keyof CitationsDetails]?.publisher?.prepend
-    }}</span
-    >{{ reference.publisher
-    }}<span>{{
-      currentFormat[props.referenceType as keyof CitationsDetails]?.publisher?.append
-    }}</span>
-  </HtmlTag>
-
-  <HtmlTag v-if="'volume' in reference" tag="span"
-    ><span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.volume?.prepend }}</span
-    >{{ reference.volume
-    }}<span>{{
-      currentFormat[props.referenceType as keyof CitationsDetails]?.volume?.append
-    }}</span>
-    <span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.issue?.prepend }}</span
-    >{{ reference.issue
-    }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.issue?.append }}</span>
-  </HtmlTag>
-
-  <HtmlTag tag="span"
-    ><span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.page?.prepend }}</span
-    >{{ reference.page
-    }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.page?.append }}</span>
-  </HtmlTag> -->
   <p v-html="orderCitation"></p>
 </template>
 
@@ -61,6 +20,8 @@ const props = defineProps<{
 }>();
 
 const authors = computed(() => {
+  if (!props.reference.authors) return '';
+
   const formatAuthorsName = props.reference.authors?.map((author, i, a) => {
     // get formaters
     const {
@@ -118,11 +79,11 @@ const authors = computed(() => {
 
   // If format with et al.
   if (
-    props.reference.authors!.length > 2 &&
+    props.reference.authors.length > 2 &&
     currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl
   ) {
     const firstThreeAuthors = formatAuthorsName?.slice(0, 1);
-    firstThreeAuthors!.push(
+    firstThreeAuthors.push(
       `${currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl}`,
     );
     return `${firstThreeAuthors?.join('')}`;
@@ -140,7 +101,15 @@ const title = computed(() => {
 });
 
 const publisher = computed(() => {
-  return `${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.prepend}${props.reference.publisher}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagEnd || ''}`;
+  return !props.reference.publisher
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.prepend}${props.reference.publisher}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagEnd || ''}`;
+});
+
+const journal = computed(() => {
+  return !props.reference.journal
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.journal?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.journal?.prepend}${props.reference.journal}${currentFormat[props.referenceType as keyof TypeCitation]?.journal?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.journal?.tagEnd || ''}`;
 });
 
 const volume = computed(() => {
@@ -161,15 +130,23 @@ const page = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
 });
 
+const URL = computed(() => {
+  return !props.reference.URL
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.prepend}${props.reference.URL}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.tagEnd || ''}`;
+});
+
 const citationHtml = computed<CitationHtmlMap>(() => {
   return {
     author: authors.value,
     date: date.value,
     title: title.value,
     publisher: publisher.value,
+    journal: journal.value,
     volume: volume.value,
     issue: issue.value,
     page: page.value,
+    URL: URL.value,
   };
 });
 

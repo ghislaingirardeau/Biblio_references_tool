@@ -19,6 +19,7 @@ interface StyleAuthor extends Style {
 export interface CitationsProperties {
   title?: Style;
   publisher?: Style;
+  journal?: Style;
   date?: Style;
   volume?: Style;
   issue?: Style;
@@ -36,16 +37,29 @@ export interface CitationsDetails {
   order: string[];
   title?: Style;
   publisher?: Style;
+  journal?: Style;
   date?: Style;
   volume?: Style;
   issue?: Style;
   author?: StyleAuthor;
   page?: Style;
+  URL?: Style;
+  reportNumber?: Style;
+  accessDate?: Style;
+  newspaperName?: Style;
+  magazineName?: Style;
 }
 
 export interface TypeCitation {
   books: CitationsDetails;
   articles: CitationsDetails;
+  web: CitationsDetails;
+  bookChapter: CitationsDetails;
+  conferencePaper: CitationsDetails;
+  thesis: CitationsDetails;
+  report: CitationsDetails;
+  newspaperArticle: CitationsDetails;
+  magazineArticle: CitationsDetails;
 }
 
 export interface Citations {
