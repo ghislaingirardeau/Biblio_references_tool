@@ -1,7 +1,12 @@
 <template>
   <div v-for="reference in props.references" :key="reference.id!">
-    <CitationContent :reference="reference" :referenceType="referenceType" />
-    <q-btn dense size="sm" flat round icon="edit" @click.stop="$emit('modalEdit', reference)" />
+    <CitationContent
+      :reference="reference"
+      :referenceType="referenceType"
+      @click.stop="$emit('modalEdit', reference)"
+      class="cursor-pointer"
+    />
+    <!-- <q-btn dense size="sm" flat round icon="edit" @click.stop="$emit('modalEdit', reference)" /> -->
   </div>
 </template>
 
