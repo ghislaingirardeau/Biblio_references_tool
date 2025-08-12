@@ -40,22 +40,18 @@
     >{{ reference.page
     }}<span>{{ currentFormat[props.referenceType as keyof CitationsDetails]?.page?.append }}</span>
   </HtmlTag> -->
-  <p>{{ orderCitation }}</p>
   <p v-html="orderCitation"></p>
 </template>
 
 <script setup lang="ts">
 import type { BibliographicEntry } from 'src/types/references';
-import { computed, onMounted, ref } from 'vue';
-import HtmlTag from './HtmlTag.vue';
+import { computed } from 'vue';
 import { useFormatReferenceStore } from 'src/stores/formatReference';
-import type {
-  CitationHtmlMap,
-  Citations,
-  CitationsDetails,
-  CitationsProperties,
-  TypeCitation,
-} from 'src/types/citations';
+import type { CitationHtmlMap, TypeCitation } from 'src/types/citations';
+import { format } from 'quasar';
+import { formatFirstAuthor, formatFirstNames } from 'src/utils/useBibliographyFormater';
+
+const { capitalize } = format;
 
 const { currentFormat, selectedFormat } = useFormatReferenceStore();
 
@@ -64,96 +60,79 @@ const props = defineProps<{
   referenceType: string;
 }>();
 
-function formatFirstNames(array: string[], initials: boolean) {
-  const result = array.map((n, i, a) => {
-    // if name is already initial format return only letter
-    const regexInitial = /[a-zA-Z]\./;
-    if (regexInitial.test(n)) return n.slice(0, 1);
-
-    // if more than one name, and initial add ponctuation
-    if (i > 0) {
-      if (initials) {
-        return n.slice(0, 1) + '.';
-      }
-    }
-    if (initials) {
-      return n.slice(0, 1) + '.';
-    }
-    return n;
-  });
-
-  return result;
-}
-
-function formatFirstAuthor(author: { firstname: string; lastname: string }) {
-  const firstname = formatFirstNames(
-    author.firstname.split(' '),
-    currentFormat[props.referenceType as keyof TypeCitation]?.author?.initials || false,
-  );
-  return author.lastname + ', ' + firstname.join(' ');
-}
-
 const authors = computed(() => {
   const formatAuthorsName = props.reference.authors?.map((author, i, a) => {
-    // if ONE author
+    // get formaters
+    const {
+      isInitial,
+      reverseName,
+      linkBetweenFirstname,
+      linkLastAuthor,
+      linkFirstAuthorName,
+      nameIsUpperCase,
+    } = currentFormat[props.referenceType as keyof TypeCitation]?.author ?? {};
+
+    author.lastname = nameIsUpperCase
+      ? author.lastname.toUpperCase()
+      : capitalize(author.lastname.toLowerCase());
+
+    // if ONE author, all format mode is the same
     if (i === 0) {
-      return formatFirstAuthor(author);
+      return formatFirstAuthor(author, isInitial || false, linkFirstAuthorName!);
     }
 
     // If MULTIPLE authors
-
-    // get formaters
-    const { initials, reverseName, linkName, lastAuthor } =
-      currentFormat[props.referenceType as keyof TypeCitation]?.author ?? {};
-
-    let replace = [
+    let formatAuthorName = [
       author.lastname,
-      ...formatFirstNames(author.firstname.split(' '), initials || false),
+      ...formatFirstNames(author.firstname.split(' '), isInitial || false),
     ];
 
-    // After the main author (first one), concat a linkname to lastName (ex: APA [, ], MLA [ ] )
-    if (i > 0 && replace[0]) {
-      reverseName ? replace.reverse() : null;
-      replace = replace.map((e, i, a) => {
+    // After the main author (first one), concat a ponctuation link to lastName (ex: APA [, ], MLA [ ] )
+    if (i > 0 && formatAuthorName[0]) {
+      // the others authors names is reverse ?
+      reverseName ? formatAuthorName.reverse() : null;
+
+      // for each firstname (multiple first name), add the link name
+      formatAuthorName = formatAuthorName.map((name, i, a) => {
         const regex = /[a-zA-Z]+/;
-        const hasFirstname = regex.test(e);
-        if (e && i < a.length - 1) {
-          e = hasFirstname ? e.concat(linkName as string) : e;
+        const hasFirstname = regex.test(name);
+        if (name && i < a.length - 1) {
+          name = hasFirstname ? name.concat(linkBetweenFirstname as string) : name;
         }
-        return e;
+        return name;
       });
     }
 
+    // if 3 authors or more, add coma between each names, will not apply if only 2 names !
     if (i > 0 && i !== a.length - 1) {
-      replace.splice(0, 0, ', ');
+      formatAuthorName.splice(0, 0, ', ');
     }
 
     // on LAST author, add last author special ending
     if (i > 0 && i === a.length - 1) {
-      replace.splice(0, 0, `${lastAuthor}`);
+      formatAuthorName.splice(0, 0, `${linkLastAuthor}`);
     }
 
-    return replace.join('');
+    return formatAuthorName.join('');
   });
 
-  // If 3 authors and etAl as existing property
-  //TODO: if adding a custom format propery, only need to add etAl in
-  // if (
-  //   props.reference.authors!.length > 3 &&
-  //   currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl
-  // ) {
-  //   const firstThreeAuthors = formatAuthorsName?.slice(0, 1);
-  //   firstThreeAuthors!.push(
-  //     `${currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl}`,
-  //   );
-  //   return `${firstThreeAuthors?.join('')}`;
-  // }
+  // If format with et al.
+  if (
+    props.reference.authors!.length > 2 &&
+    currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl
+  ) {
+    const firstThreeAuthors = formatAuthorsName?.slice(0, 1);
+    firstThreeAuthors!.push(
+      `${currentFormat[props.referenceType as keyof TypeCitation]?.author?.etAl}`,
+    );
+    return `${firstThreeAuthors?.join('')}`;
+  }
 
   return `${formatAuthorsName?.join('')}${currentFormat[props.referenceType as keyof TypeCitation]?.author?.append}`;
 });
 
 const date = computed(() => {
-  return ` ${currentFormat[props.referenceType as keyof TypeCitation]?.date?.prepend}${props.reference.date?.toString().slice(0, 4) || 'n.d'}${currentFormat[props.referenceType as keyof TypeCitation]?.date?.append}`;
+  return `${currentFormat[props.referenceType as keyof TypeCitation]?.date?.prepend}${props.reference.date?.toString().slice(0, 4) || 'n.d'}${currentFormat[props.referenceType as keyof TypeCitation]?.date?.append}`;
 });
 
 const title = computed(() => {
@@ -161,7 +140,7 @@ const title = computed(() => {
 });
 
 const publisher = computed(() => {
-  return ` ${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagStart || ''}${props.reference.publisher}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagEnd || ''}`;
+  return `${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.prepend}${props.reference.publisher}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.publisher?.tagEnd || ''}`;
 });
 
 const volume = computed(() => {

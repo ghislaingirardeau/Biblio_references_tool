@@ -1,6 +1,5 @@
 <template>
   <q-page class="p-2">
-    my biblio display
     <q-select borderless v-model="selectedFormat" :options="formats" label="Format" class="w-24" />
 
     <div v-for="(referenceType, i) in project?.references" :key="i">
@@ -9,7 +8,8 @@
           <span class="font-bold p-2">
             {{ referenceType!.type }}
           </span>
-          <q-select
+          <!-- FOR CUSTOM FORMAT -->
+          <!-- <q-select
             borderless
             v-model="formatCitation.author"
             :options="['Uppercase', 'LowerCase']"
@@ -29,7 +29,7 @@
             :options="['pp.', 'p.', 'pages']"
             label="Pages"
             class="w-24"
-          />
+          /> -->
         </div>
 
         <CitationsContainer

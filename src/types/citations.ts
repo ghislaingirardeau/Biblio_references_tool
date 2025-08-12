@@ -6,12 +6,14 @@ interface Style {
 }
 
 interface StyleAuthor extends Style {
-  initials: boolean;
-  linkName: string;
-  lastAuthor: string;
+  isInitial: boolean;
+  linkBetweenFirstname: string;
+  linkFirstAuthorName: string;
+  linkLastAuthor: string;
   appendAuthors?: string;
-  etAl?: string;
+  etAl?: string; // if want to apply et al., just need to add property
   reverseName: boolean;
+  nameIsUpperCase: boolean;
 }
 
 export interface CitationsProperties {
@@ -50,4 +52,5 @@ export interface Citations {
   chicago: TypeCitation;
   APA: TypeCitation;
   MLA: TypeCitation;
+  custom: TypeCitation;
 }
