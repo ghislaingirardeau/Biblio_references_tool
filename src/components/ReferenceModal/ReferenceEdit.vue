@@ -22,13 +22,20 @@
           <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="flex">
             <q-input
               v-model="(editReference as any)[reference][idx].firstname"
-              class="mb-2 w-1/2"
-              :label="`${formatLabel(reference + (idx + 1) + ' ' + 'First name')}`"
+              class="mb-2 flex-1"
+              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'First name')}`"
             />
             <q-input
               v-model="(editReference as any)[reference][idx].lastname"
-              class="mb-2 w-1/2"
-              :label="`${formatLabel(reference + (idx + 1) + ' ' + 'Last name')}`"
+              class="mb-2 flex-1"
+              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'Last name')}`"
+            />
+            <q-btn
+              flat
+              color="primary"
+              :icon="mdiCloseCircleOutline"
+              @click="(editReference as any)[reference].splice(idx, 1)"
+              class="mb-2"
             />
           </div>
           <q-btn
@@ -55,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCloseCircleOutline } from '@quasar/extras/mdi-v7';
 import { format } from 'quasar';
 import { useTagsStore } from 'src/stores/tags';
 import { computed, ref } from 'vue';
