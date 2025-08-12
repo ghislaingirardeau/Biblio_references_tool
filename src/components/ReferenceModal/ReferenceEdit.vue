@@ -22,20 +22,21 @@
           <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="flex">
             <q-input
               v-model="(editReference as any)[reference][idx].firstname"
-              class="mb-2 flex-1"
+              class="mb-2 mr-2 flex-1"
               :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'First name')}`"
             />
             <q-input
               v-model="(editReference as any)[reference][idx].lastname"
-              class="mb-2 flex-1"
+              class="mb-2 mr-2 flex-1"
               :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'Last name')}`"
             />
             <q-btn
+              v-if="idx > 0"
               flat
               color="primary"
               :icon="mdiCloseCircleOutline"
               @click="(editReference as any)[reference].splice(idx, 1)"
-              class="mb-2"
+              class="mb-2 mr-2"
             />
           </div>
           <q-btn
