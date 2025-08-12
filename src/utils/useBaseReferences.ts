@@ -66,7 +66,12 @@ export const referencesTemplate = {
         },
       ],
       ['chapter-title']: '',
-      ['chapter-authors']: [''],
+      ['chapter-authors']: [
+        {
+          firstname: '',
+          lastname: '',
+        },
+      ],
       publisher: '',
       date: '',
       pages: '',

@@ -16,26 +16,12 @@ interface StyleAuthor extends Style {
   nameIsUpperCase: boolean;
 }
 
-export interface CitationsProperties {
-  title?: Style;
-  publisher?: Style;
-  journal?: Style;
-  date?: Style;
-  volume?: Style;
-  issue?: Style;
-  author: StyleAuthor;
-  page?: Style;
-  URL?: Style;
-  DOI?: Style;
-}
-
-export type CitationHtmlMap = {
-  [K in keyof CitationsProperties]?: string;
-};
-
 export interface CitationsDetails {
   order: string[];
   title?: Style;
+  ['chapter-title']?: Style;
+  ['chapter-authors']?: Style;
+  pages?: Style;
   publisher?: Style;
   journal?: Style;
   date?: Style;
@@ -44,11 +30,16 @@ export interface CitationsDetails {
   author?: StyleAuthor;
   page?: Style;
   URL?: Style;
+  DOI?: Style;
   reportNumber?: Style;
   accessDate?: Style;
   newspaperName?: Style;
   magazineName?: Style;
 }
+
+export type CitationHtmlMap = {
+  [K in keyof CitationsDetails]?: string;
+};
 
 export interface TypeCitation {
   books: CitationsDetails;

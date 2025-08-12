@@ -103,12 +103,28 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
+        order: [
+          'chapter-authors',
+          'date',
+          'chapter-title',
+          'title',
+          'author',
+          'pages',
+          'publisher',
+        ],
+        ['chapter-title']: {
+          prepend: '"',
+          append: '." ',
+        },
+        ['chapter-authors']: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
+        },
+        title: {
+          prepend: 'In ',
+          append: ', edited by ',
         },
         publisher: {
           prepend: ' ',
@@ -117,6 +133,10 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         date: {
           prepend: ' ',
           append: '. ',
+        },
+        pages: {
+          prepend: ' ',
+          append: '.',
         },
         author: {
           prepend: '',
@@ -372,30 +392,48 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        order: [
+          'chapter-authors',
+          'date',
+          'chapter-title',
+          'author',
+          'title',
+          'pages',
+          'publisher',
+        ],
+        ['chapter-title']: {
+          prepend: '',
+          append: '. In ',
+        },
+        ['chapter-authors']: {
           prepend: '',
           append: '.',
+        },
+        title: {
+          prepend: ' ',
+          append: ' ',
         },
         publisher: {
           prepend: ' ',
           append: '.',
         },
         date: {
-          prepend: ' ',
-          append: '. ',
+          prepend: ' (',
+          append: '). ',
+        },
+        pages: {
+          prepend: ' (pp. ',
+          append: ').',
         },
         author: {
           prepend: '',
-          append: '.',
-          isInitial: false,
+          append: ',',
+          isInitial: true,
+          linkBetweenFirstname: ', ',
           linkFirstAuthorName: ', ',
-          linkLastAuthor: ', and ',
-          linkBetweenFirstname: ' ',
+          linkLastAuthor: ', & ',
           nameIsUpperCase: false,
-          reverseName: true,
+          reverseName: false,
         },
       },
       conferencePaper: {
@@ -641,24 +679,42 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        order: [
+          'chapter-authors',
+          'chapter-title',
+          'title',
+          'author',
+          'date',
+          'publisher',
+          'pages',
+        ],
+        ['chapter-title']: {
+          prepend: '"',
+          append: '." ',
+        },
+        ['chapter-authors']: {
           prepend: '',
           append: '.',
+        },
+        title: {
+          prepend: ' ',
+          append: ', edited by ',
         },
         publisher: {
           prepend: ' ',
-          append: '.',
+          append: ',',
         },
         date: {
-          prepend: ' ',
-          append: '. ',
+          prepend: '',
+          append: ', ',
+        },
+        pages: {
+          prepend: 'pp. ',
+          append: '.',
         },
         author: {
           prepend: '',
-          append: '.',
+          append: ', ',
           isInitial: false,
           linkFirstAuthorName: ', ',
           linkLastAuthor: ', and ',

@@ -70,10 +70,13 @@ export interface BibliographicEntry {
   tag?: string[];
   subtitle?: string;
   authors?: Authors[];
+  ['chapter-title']?: string;
+  ['chapter-authors']?: Authors[];
   publisher?: string;
   journal?: string;
   date?: string;
   page?: string;
+  pages?: string;
   categories?: string[];
   language?: string;
   URL?: string;

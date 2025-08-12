@@ -92,6 +92,77 @@ const authors = computed(() => {
   return `${formatAuthorsName?.join('')}${currentFormat[props.referenceType as keyof TypeCitation]?.author?.append}`;
 });
 
+//TODO: main author, append différement + prénom puis nom => doit avoir sa propre logique ??
+const chapAuthors = computed(() => {
+  if (!props.reference['chapter-authors']) return '';
+
+  // get formaters
+  const {
+    isInitial,
+    reverseName,
+    linkBetweenFirstname,
+    linkLastAuthor,
+    linkFirstAuthorName,
+    nameIsUpperCase,
+    etAl,
+    append,
+  } = currentFormat[props.referenceType as keyof TypeCitation]?.author ?? {};
+
+  const formatAuthorsName = props.reference['chapter-authors']?.map((author, i, a) => {
+    author.lastname = nameIsUpperCase
+      ? author.lastname.toUpperCase()
+      : capitalize(author.lastname.toLowerCase());
+
+    // if ONE author, all format mode is the same
+    if (i === 0) {
+      return formatFirstAuthor(author, isInitial || false, linkFirstAuthorName!);
+    }
+
+    // If MULTIPLE authors
+    let formatAuthorName = [
+      author.lastname,
+      ...formatFirstNames(author.firstname.split(' '), isInitial || false),
+    ];
+
+    // After the main author (first one), concat a ponctuation link to lastName (ex: APA [, ], MLA [ ] )
+    if (i > 0 && formatAuthorName[0]) {
+      // the others authors names is reverse ?
+      reverseName ? formatAuthorName.reverse() : null;
+
+      // for each firstname (multiple first name), add the link name
+      formatAuthorName = formatAuthorName.map((name, i, a) => {
+        const regex = /[a-zA-Z]+/;
+        const hasFirstname = regex.test(name);
+        if (name && i < a.length - 1) {
+          name = hasFirstname ? name.concat(linkBetweenFirstname as string) : name;
+        }
+        return name;
+      });
+    }
+
+    // if 3 authors or more, add coma between each names, will not apply if only 2 names !
+    if (i > 0 && i !== a.length - 1) {
+      formatAuthorName.splice(0, 0, ', ');
+    }
+
+    // on LAST author, add last author special ending
+    if (i > 0 && i === a.length - 1) {
+      formatAuthorName.splice(0, 0, `${linkLastAuthor}`);
+    }
+
+    return formatAuthorName.join('');
+  });
+
+  // If format with et al.
+  if (props.reference['chapter-authors'].length > 2 && etAl) {
+    const firstThreeAuthors = formatAuthorsName?.slice(0, 1);
+    firstThreeAuthors.push(`${etAl}`);
+    return `${firstThreeAuthors?.join('')}`;
+  }
+
+  return `${formatAuthorsName?.join('')}${append}`;
+});
+
 const date = computed(() => {
   return `${currentFormat[props.referenceType as keyof TypeCitation]?.date?.prepend}${props.reference.date?.toString().slice(0, 4) || 'n.d'}${currentFormat[props.referenceType as keyof TypeCitation]?.date?.append}`;
 });
@@ -130,6 +201,19 @@ const page = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
 });
 
+const chapterTitle = computed(() => {
+  console.log(props.reference['chapter-title']);
+  return !props.reference['chapter-title']
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]['chapter-title']?.prepend}${props.reference['chapter-title']}${currentFormat[props.referenceType as keyof TypeCitation]['chapter-title']?.append}`;
+});
+
+const pages = computed(() => {
+  return !props.reference.pages
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.pages?.prepend}${props.reference.pages}${currentFormat[props.referenceType as keyof TypeCitation]?.pages?.append}`;
+});
+
 const URL = computed(() => {
   return !props.reference.URL
     ? ''
@@ -146,6 +230,9 @@ const citationHtml = computed<CitationHtmlMap>(() => {
     volume: volume.value,
     issue: issue.value,
     page: page.value,
+    pages: pages.value,
+    ['chapter-title']: chapterTitle.value,
+    ['chapter-authors']: chapAuthors.value,
     URL: URL.value,
   };
 });

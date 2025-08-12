@@ -148,7 +148,7 @@ async function findReference() {
     if (response.ok) {
       const result = await response.json();
       newReference.value.id = identifier.value;
-      if (route.params.type === 'books') {
+      if (route.params.type === 'books' || route.params.type === 'bookChapter') {
         formatBookData(result.items[0].volumeInfo, newReference);
       }
       if (route.params.type === 'articles') {
