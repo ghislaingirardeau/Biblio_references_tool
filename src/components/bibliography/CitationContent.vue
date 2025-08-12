@@ -93,8 +93,8 @@ const authors = computed(() => {
 });
 
 //TODO: main author, append différement + prénom puis nom => doit avoir sa propre logique ??
-const chapAuthors = computed(() => {
-  if (!props.reference['chapter-authors']) return '';
+const mainAuthors = computed(() => {
+  if (!props.reference['main-authors']) return '';
 
   // get formaters
   const {
@@ -108,7 +108,7 @@ const chapAuthors = computed(() => {
     append,
   } = currentFormat[props.referenceType as keyof TypeCitation]?.author ?? {};
 
-  const formatAuthorsName = props.reference['chapter-authors']?.map((author, i, a) => {
+  const formatAuthorsName = props.reference['main-authors']?.map((author, i, a) => {
     author.lastname = nameIsUpperCase
       ? author.lastname.toUpperCase()
       : capitalize(author.lastname.toLowerCase());
@@ -154,7 +154,7 @@ const chapAuthors = computed(() => {
   });
 
   // If format with et al.
-  if (props.reference['chapter-authors'].length > 2 && etAl) {
+  if (props.reference['main-authors'].length > 2 && etAl) {
     const firstThreeAuthors = formatAuthorsName?.slice(0, 1);
     firstThreeAuthors.push(`${etAl}`);
     return `${firstThreeAuthors?.join('')}`;
@@ -201,11 +201,11 @@ const page = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
 });
 
-const chapterTitle = computed(() => {
-  console.log(props.reference['chapter-title']);
-  return !props.reference['chapter-title']
+const mainTitle = computed(() => {
+  console.log(props.reference['main-title']);
+  return !props.reference['main-title']
     ? ''
-    : `${currentFormat[props.referenceType as keyof TypeCitation]['chapter-title']?.prepend}${props.reference['chapter-title']}${currentFormat[props.referenceType as keyof TypeCitation]['chapter-title']?.append}`;
+    : `${currentFormat[props.referenceType as keyof TypeCitation]['main-title']?.prepend}${props.reference['main-title']}${currentFormat[props.referenceType as keyof TypeCitation]['main-title']?.append}`;
 });
 
 const pages = computed(() => {
@@ -231,8 +231,8 @@ const citationHtml = computed<CitationHtmlMap>(() => {
     issue: issue.value,
     page: page.value,
     pages: pages.value,
-    ['chapter-title']: chapterTitle.value,
-    ['chapter-authors']: chapAuthors.value,
+    ['main-title']: mainTitle.value,
+    ['main-authors']: mainAuthors.value,
     URL: URL.value,
   };
 });

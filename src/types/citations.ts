@@ -19,8 +19,8 @@ interface StyleAuthor extends Style {
 export interface CitationsDetails {
   order: string[];
   title?: Style;
-  ['chapter-title']?: Style;
-  ['chapter-authors']?: Style;
+  ['main-title']?: Style;
+  ['main-authors']?: Style;
   pages?: Style;
   publisher?: Style;
   journal?: Style;

@@ -103,28 +103,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: [
-          'chapter-authors',
-          'date',
-          'chapter-title',
-          'title',
-          'author',
-          'pages',
-          'publisher',
-        ],
-        ['chapter-title']: {
-          prepend: '"',
-          append: '." ',
+        order: ['author', 'date', 'title', 'main-title', 'main-authors', 'pages', 'publisher'],
+        ['main-title']: {
+          prepend: 'In ',
+          append: ', edited by ',
         },
-        ['chapter-authors']: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        ['main-authors']: {
           prepend: '',
           append: '.',
         },
         title: {
-          prepend: 'In ',
-          append: ', edited by ',
+          prepend: '"',
+          append: '." ',
         },
         publisher: {
           prepend: ' ',
@@ -392,26 +382,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: [
-          'chapter-authors',
-          'date',
-          'chapter-title',
-          'author',
-          'title',
-          'pages',
-          'publisher',
-        ],
-        ['chapter-title']: {
-          prepend: '',
-          append: '. In ',
+        order: ['author', 'date', 'title', 'main-authors', 'main-title', 'pages', 'publisher'],
+        ['main-title']: {
+          prepend: ' ',
+          append: '',
         },
-        ['chapter-authors']: {
+        ['main-authors']: {
           prepend: '',
           append: '.',
         },
         title: {
-          prepend: ' ',
-          append: ' ',
+          prepend: '',
+          append: '. In ',
         },
         publisher: {
           prepend: ' ',
@@ -679,30 +661,22 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       bookChapter: {
-        order: [
-          'chapter-authors',
-          'chapter-title',
-          'title',
-          'author',
-          'date',
-          'publisher',
-          'pages',
-        ],
-        ['chapter-title']: {
-          prepend: '"',
-          append: '." ',
+        order: ['author', 'title', 'main-title', 'main-authors', 'date', 'publisher', 'pages'],
+        ['main-title']: {
+          prepend: ' ',
+          append: ', edited by ',
         },
-        ['chapter-authors']: {
+        ['main-authors']: {
           prepend: '',
           append: '.',
         },
         title: {
-          prepend: ' ',
-          append: ', edited by ',
+          prepend: '"',
+          append: '." ',
         },
         publisher: {
           prepend: ' ',
-          append: ',',
+          append: ', ',
         },
         date: {
           prepend: '',

@@ -70,8 +70,8 @@ export interface BibliographicEntry {
   tag?: string[];
   subtitle?: string;
   authors?: Authors[];
-  ['chapter-title']?: string;
-  ['chapter-authors']?: Authors[];
+  ['main-title']?: string;
+  ['main-authors']?: Authors[];
   publisher?: string;
   journal?: string;
   date?: string;
