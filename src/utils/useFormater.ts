@@ -40,6 +40,7 @@ export function formatArticleData(article: DoiAPIData, newReference: Ref<Bibliog
 export function formatReportData(article: DoiAPIData, newReference: Ref<BibliographicEntry>) {
   const author = article.author?.map((a) => {
     return {
+      firstname: '',
       lastname: a.name,
     };
   });

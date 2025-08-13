@@ -93,7 +93,7 @@ export const referencesTemplate = {
           lastname: '',
         },
       ],
-      conferenceName: '',
+      name: '',
       location: '',
       date: '',
       page: '',
@@ -160,7 +160,7 @@ export const referencesTemplate = {
           lastname: '',
         },
       ],
-      websiteName: '',
+      name: '',
       date: '',
       URL: '',
       accessDate: '',
@@ -181,7 +181,7 @@ export const referencesTemplate = {
           lastname: '',
         },
       ],
-      newspaperName: '',
+      name: '',
       page: '',
       date: '',
       URL: '',
@@ -202,29 +202,8 @@ export const referencesTemplate = {
           lastname: '',
         },
       ],
-      magazineName: '',
+      name: '',
       issue: '',
-      date: '',
-      URL: '',
-    },
-  },
-  dataset: {
-    lists: [],
-    type: 'dataset',
-    label: 'Dataset',
-    description: 'A published or archived dataset used in research.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      repository: '',
-      DOI: '',
       date: '',
       URL: '',
     },
@@ -250,72 +229,7 @@ export const referencesTemplate = {
       URL: '',
     },
   },
-  interview: {
-    lists: [],
-    type: 'interview',
-    label: 'Interview',
-    description: 'A personal or published interview used as a source.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      interviewee: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      interviewer: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      date: '',
-      location: '',
-      URL: '',
-    },
-  },
-  film: {
-    lists: [],
-    type: 'film',
-    label: 'Film or Video',
-    description: 'A film, video, or documentary referenced in the research.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      institution: '',
-      degree: '',
-      date: '',
-    },
-  },
-  legalCase: {
-    lists: [],
-    type: 'legalCase',
-    label: 'Legal Case',
-    description: 'A legal decision or court case.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      institution: '',
-      degree: '',
-      date: '',
-    },
-  },
+
   legislation: {
     lists: [],
     type: 'legislation',
@@ -336,26 +250,7 @@ export const referencesTemplate = {
       date: '',
     },
   },
-  patent: {
-    lists: [],
-    type: 'patent',
-    label: 'Patent',
-    description: 'A government-issued patent document.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      institution: '',
-      degree: '',
-      date: '',
-    },
-  },
+
   manuscript: {
     lists: [],
     type: 'manuscript',
@@ -385,7 +280,7 @@ export const referencesTemplate = {
       id: null,
       tags: [''],
       title: '',
-      presenter: [
+      authors: [
         {
           firstname: '',
           lastname: '',
@@ -395,46 +290,6 @@ export const referencesTemplate = {
       location: '',
       date: '',
       URL: '',
-    },
-  },
-  audio: {
-    lists: [],
-    type: 'audio',
-    label: 'Audio Recording',
-    description: 'A recorded audio source, such as a podcast.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      institution: '',
-      degree: '',
-      date: '',
-    },
-  },
-  image: {
-    lists: [],
-    type: 'image',
-    label: 'Image or Figure',
-    description: 'A visual source such as a photo, painting, or diagram.',
-    template: {
-      id: null,
-      tags: [''],
-      title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      institution: '',
-      degree: '',
-      date: '',
     },
   },
 };

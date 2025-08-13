@@ -16,17 +16,11 @@ export interface References {
   report?: ReferenceDetails;
   newspaperArticle?: ReferenceDetails;
   magazineArticle?: ReferenceDetails;
-  dataset?: ReferenceDetails;
   software?: ReferenceDetails;
-  film?: ReferenceDetails;
-  legalCase?: ReferenceDetails;
   legislation?: ReferenceDetails;
   presentation?: ReferenceDetails;
-  patent?: ReferenceDetails;
   manuscript?: ReferenceDetails;
   interview?: ReferenceDetails;
-  audio?: ReferenceDetails;
-  image?: ReferenceDetails;
 }
 
 export type ReferencesType = readonly [
@@ -39,17 +33,11 @@ export type ReferencesType = readonly [
   'report',
   'newspaperArticle',
   'magazineArticle',
-  'dataset',
   'software',
-  'interview',
-  'film',
-  'legalCase',
+
   'legislation',
-  'patent',
   'manuscript',
   'presentation',
-  'audio',
-  'image',
 ];
 
 export interface Quote {
@@ -85,38 +73,11 @@ export interface BibliographicEntry {
   volume?: string;
   issue?: string;
   DOI?: string;
-  bookTitle?: string;
-  editors?: string[];
-  conferenceName?: string;
   location?: string;
   institution?: string;
   degree?: string;
-  reportNumber?: string;
-  websiteName?: string;
   accessDate?: string;
-  newspaperName?: string;
-  magazineName?: string;
-  repository?: string;
   version?: string;
-  interviewee?: string[];
-  interviewer?: string[];
-  director?: string;
-  producers?: string[];
-  releaseDate?: string;
-  productionCompany?: string;
-  court?: string;
-  decisionDate?: string;
-  jurisdiction?: string;
-  enactmentDate?: string;
-  referenceNumber?: string;
-  inventors?: string[];
-  patentNumber?: string;
-  issuingAuthority?: string;
-  issueDate?: string;
   status?: 'unpublished' | 'in review' | 'in press';
-  presenter?: string;
   event?: string;
-  creator?: string;
-  format?: string;
-  source?: string;
 }
