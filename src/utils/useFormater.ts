@@ -83,3 +83,30 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
     language,
   });
 }
+
+export function formatConferenceData(article: DoiAPIData, newReference: Ref<BibliographicEntry>) {
+  const author = article.author?.map((a) => {
+    return {
+      firstname: a.given,
+      lastname: a.family,
+    };
+  });
+  console.log(article);
+  const { title, publisher, DOI, language, URL, type, event, page } = article;
+  const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
+  const start = event?.start?.['date-parts']?.[0]?.[0];
+  const end = event?.end?.['date-parts']?.[0]?.[0];
+  newReference.value = Object.assign(newReference.value, {
+    type,
+    title: title[0],
+    authors: author,
+    location: event?.location || '',
+    publisher,
+    date: publishedDate,
+    name: event?.name || '',
+    DOI,
+    URL,
+    language,
+    page,
+  });
+}

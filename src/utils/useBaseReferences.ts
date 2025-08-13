@@ -95,6 +95,7 @@ export const referencesTemplate = {
       ],
       name: '',
       location: '',
+      publisher: '',
       date: '',
       page: '',
       URL: '',

@@ -74,6 +74,7 @@ import ReferenceEdit from './ReferenceEdit.vue';
 import {
   formatArticleData,
   formatBookData,
+  formatConferenceData,
   formatIdentifier,
   formatReportData,
 } from 'src/utils/useFormater';
@@ -156,6 +157,9 @@ async function findReference() {
       }
       if (route.params.type === 'report') {
         formatReportData(result.message, newReference);
+      }
+      if (route.params.type === 'conferencePaper') {
+        formatConferenceData(result.message, newReference);
       }
     }
 

@@ -16,21 +16,28 @@ C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulai
 
 ### Test ISBN and DOI
 
-article
+### article
+
 10.1186/2192-5372-3-4
 10.1177/0309132519898254
 10.1080/03066150.2025.2528861
 10.1080/14649365.2022.2055778
 
-book
+#### book
+
 978-0299326104
 9781522968122
 8408052942
 
-report
+#### report
+
 10.1787/01820d6d-en
 
-book chapter
+#### book chapter
+
+#### conference paper
+
+10.1109/ICE.2019.8792640
 
 ### Add type reference
 

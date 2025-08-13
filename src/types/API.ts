@@ -23,6 +23,12 @@ export interface DoiAPIData {
   DOI: string;
   URL: string;
   language: string;
+  event?: {
+    start: { ['date-parts']: string[][] };
+    end: { ['date-parts']: string[][] };
+    location: string;
+    name: string;
+  };
 }
 
 export interface IsbnAPIData {
