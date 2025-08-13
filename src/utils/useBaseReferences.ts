@@ -101,11 +101,11 @@ export const referencesTemplate = {
       URL: '',
     },
   },
-  thesis: {
+  dissertation: {
     lists: [],
-    type: 'thesis',
-    label: 'Thesis or Dissertation',
-    description: 'An academic dissertation or thesis submitted for a degree.',
+    type: 'dissertation',
+    label: 'Dissertation or Thesis',
+    description: 'An academic dissertation or dissertation submitted for a degree.',
     template: {
       id: null,
       tags: [''],

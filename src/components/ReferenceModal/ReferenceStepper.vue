@@ -162,7 +162,7 @@ async function findReference() {
         formatConferenceData(result.message, newReference);
       }
       // DOI for dissertation do not found on CrossRef
-      // if (route.params.type === 'thesis') {
+      // if (route.params.type === 'dissertation') {
       //   console.log(result.message);
       // }
     }

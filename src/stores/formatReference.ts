@@ -179,7 +179,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
-      thesis: {
+      dissertation: {
         order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
@@ -450,7 +450,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
-      thesis: {
+      dissertation: {
         order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
@@ -721,7 +721,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
-      thesis: {
+      dissertation: {
         order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
@@ -980,7 +980,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
-      thesis: {
+      dissertation: {
         order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',

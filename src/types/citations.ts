@@ -47,7 +47,7 @@ export interface TypeCitation {
   web: CitationsDetails;
   bookChapter: CitationsDetails;
   conferencePaper: CitationsDetails;
-  thesis: CitationsDetails;
+  dissertation: CitationsDetails;
   report: CitationsDetails;
   newspaperArticle: CitationsDetails;
 }

@@ -60,7 +60,7 @@
           "publisherSuffix": "."
         }
       },
-      "thesis": {
+      "dissertation": {
         "order": ["authors", "year", "title", "type", "institution"],
         "formatting": {
           "title": "italic"
@@ -130,7 +130,7 @@
           "yearSuffix": "."
         }
       },
-      "thesis": {
+      "dissertation": {
         "order": ["authors", "title", "type", "institution", "year"],
         "formatting": {
           "title": "quotes"

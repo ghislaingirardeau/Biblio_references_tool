@@ -39,7 +39,7 @@ C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulai
 
 10.1109/ICE.2019.8792640
 
-#### thesis
+#### dissertation
 
 10.25772/0H24-X154
 
@@ -79,7 +79,7 @@ Doe, Jane B. 2021. "Quantum Realities." In Advances in Modern Physics, edited by
 
 Heinzelmann, Nicolai, and Guido H. Baltes. 2019. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName 1 (June): 1–9. https://doi.org/10.1109/ice.2019.8792640.
 
-##### thesis
+##### dissertation
 
 Johnson, Michael T. 2019. Machine Learning Approaches for Climate Prediction. PhD diss., University of California, Berkeley. https://doi.org/10.1234/mlcp2019.
 
@@ -97,7 +97,7 @@ Doe, J. B. (2021). Quantum realities. In J. A. Smith & E. R. Lee (Eds.), Advance
 
 Heinzelmann, N., & Baltes, G. H. (2019). In search of synergies between corporate entrepreneurship activities: a literature review and research agenda. journalName, 1, 1–9. https://doi.org/10.1109/ice.2019.8792640
 
-##### thesis
+##### dissertation
 
 Johnson, M. T. (2019). Machine learning approaches for climate prediction (Doctoral dissertation, University of California, Berkeley). https://doi.org/10.1234/mlcp2019
 
@@ -115,6 +115,6 @@ Doe, Jane B. "Quantum Realities." Advances in Modern Physics, edited by John A. 
 
 Heinzelmann, Nicolai, and Guido H. Baltes. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName, vol. 1, June 2019, pp. 1–9. https://doi.org/10.1109/ice.2019.8792640.
 
-##### thesis
+##### dissertation
 
 Porter, Carolyn. “DANTE GABRIEL ROSSETTI AND THE ITALIAN RENAISSANCE: ENVISIONING AESTHETIC BEAUTY AND THE PAST THROUGH IMAGES OF WOMEN.” journalName, Jan. 2010, https://doi.org/10.25772/0h24-x154.

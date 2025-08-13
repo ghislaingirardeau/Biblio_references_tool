@@ -164,7 +164,7 @@ const mainAuthors = computed(() => {
 });
 
 const date = computed(() => {
-  return `${currentFormat[props.referenceType as keyof TypeCitation]?.date?.prepend}${props.reference.date?.toString().slice(0, 4) || 'n.d'}${currentFormat[props.referenceType as keyof TypeCitation]?.date?.append}`;
+  return `${currentFormat[props.referenceType as keyof TypeCitation]?.date?.prepend}${props.reference.date?.toString() || 'n.d'}${currentFormat[props.referenceType as keyof TypeCitation]?.date?.append}`;
 });
 
 const title = computed(() => {

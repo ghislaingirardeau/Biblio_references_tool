@@ -20,9 +20,9 @@
     "description": "A paper presented at a conference or symposium."
   },
   {
-    "type": "thesis",
-    "label": "Thesis or Dissertation",
-    "description": "An academic dissertation or thesis submitted for a degree."
+    "type": "dissertation",
+    "label": "dissertation or Dissertation",
+    "description": "An academic dissertation or dissertation submitted for a degree."
   },
   {
     "type": "report",

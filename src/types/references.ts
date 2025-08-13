@@ -12,7 +12,7 @@ export interface References {
   web?: ReferenceDetails;
   bookChapter?: ReferenceDetails;
   conferencePaper?: ReferenceDetails;
-  thesis?: ReferenceDetails;
+  dissertation?: ReferenceDetails;
   report?: ReferenceDetails;
   newspaperArticle?: ReferenceDetails;
   magazineArticle?: ReferenceDetails;
@@ -29,7 +29,7 @@ export type ReferencesType = readonly [
   'web',
   'bookChapter',
   'conferencePaper',
-  'thesis',
+  'dissertation',
   'report',
   'newspaperArticle',
   'magazineArticle',
