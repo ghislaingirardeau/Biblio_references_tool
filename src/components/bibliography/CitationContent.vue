@@ -195,12 +195,6 @@ const issue = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.issue?.prepend}${props.reference.issue}${currentFormat[props.referenceType as keyof TypeCitation]?.issue?.append}`;
 });
 
-const page = computed(() => {
-  return !props.reference.page || !currentFormat[props.referenceType as keyof TypeCitation].page
-    ? ''
-    : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
-});
-
 const mainTitle = computed(() => {
   console.log(props.reference['main-title']);
   return !props.reference['main-title']
@@ -214,10 +208,28 @@ const pages = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.pages?.prepend}${props.reference.pages}${currentFormat[props.referenceType as keyof TypeCitation]?.pages?.append}`;
 });
 
+const page = computed(() => {
+  return !props.reference.page || !currentFormat[props.referenceType as keyof TypeCitation].page
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.page?.prepend}${props.reference.page}${currentFormat[props.referenceType as keyof TypeCitation]?.page?.append}`;
+});
+
 const URL = computed(() => {
   return !props.reference.URL
     ? ''
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.prepend}${props.reference.URL}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.URL?.tagEnd || ''}`;
+});
+
+const name = computed(() => {
+  return !props.reference.name
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.name?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.name?.prepend}${props.reference.name}${currentFormat[props.referenceType as keyof TypeCitation]?.name?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.name?.tagEnd || ''}`;
+});
+
+const location = computed(() => {
+  return !props.reference.location
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.location?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.prepend}${props.reference.location}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.tagEnd || ''}`;
 });
 
 const citationHtml = computed<CitationHtmlMap>(() => {
@@ -234,6 +246,8 @@ const citationHtml = computed<CitationHtmlMap>(() => {
     ['main-title']: mainTitle.value,
     ['main-authors']: mainAuthors.value,
     URL: URL.value,
+    name: name.value,
+    location: location.value,
   };
 });
 

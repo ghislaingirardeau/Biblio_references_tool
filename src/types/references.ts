@@ -73,6 +73,7 @@ export interface BibliographicEntry {
   volume?: string;
   issue?: string;
   DOI?: string;
+  name?: string;
   location?: string;
   institution?: string;
   degree?: string;

@@ -53,15 +53,27 @@ book, article, report done !
 
 #### Chicago
 
+##### book
+
 Baird, Ian G. 2020. Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press.
+
+##### article
 
 Dorkenoo, Kelly, and Phasy Res. 2025. “On The Production of Climate-related Loss: Land Dispossession, Indebtedness, and Climate Change in Northeastern Cambodia.” The Journal of Peasant Studies, August, 1–30. https://doi.org/10.1080/03066150.2025.2528861.
 
 Ashta, Arvind, Mawuli Couchoro, and Abu Saleh Musa. 2014. “Dialectic evolution through the social innovation process: from microcredit to microfinance.” Journal of Innovation and Entrepreneurship 3 (1): 4. https://doi.org/10.1186/2192-5372-3-4.
 
+##### report
+
 _PISA 2022 Technical report_. 2024. _Programme for International Student Assessment/Internationale Schulleistungsstudie_. https://doi.org/10.1787/01820d6d-en.
 
+##### book chapter
+
 Doe, Jane B. 2021. "Quantum Realities." In Advances in Modern Physics, edited by John A. Smith and Emily R. Lee, 101–125. New York: Oxford University Press. https://doi.org/10.1234/qm2021.
+
+#### conference paper
+
+Heinzelmann, Nicolai, and Guido H. Baltes. 2019. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName 1 (June): 1–9. https://doi.org/10.1109/ice.2019.8792640.
 
 #### APA
 
@@ -75,6 +87,8 @@ PISA 2022 Technical report. (2024). In _Programme for international student asse
 
 Doe, J. B. (2021). Quantum realities. In J. A. Smith & E. R. Lee (Eds.), Advances in modern physics (pp. 101–125). Oxford University Press. https://doi.org/10.1234/qm2021
 
+Heinzelmann, N., & Baltes, G. H. (2019). In search of synergies between corporate entrepreneurship activities: a literature review and research agenda. journalName, 1, 1–9. https://doi.org/10.1109/ice.2019.8792640
+
 #### MLA
 
 Baird, Ian G. Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press, 2020.
@@ -86,3 +100,5 @@ Ashta, Arvind, et al. “Dialectic evolution through the social innovation proce
 “PISA 2022 Technical report.” _Programme for international student assessment/Internationale Schulleistungsstudie_, 2024, https://doi.org/10.1787/01820d6d-en.
 
 Doe, Jane B. "Quantum Realities." Advances in Modern Physics, edited by John A. Smith and Emily R. Lee, Oxford University Press, 2021, pp. 101-125. https://doi.org/10.1234/qm2021.
+
+Heinzelmann, Nicolai, and Guido H. Baltes. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName, vol. 1, June 2019, pp. 1–9. https://doi.org/10.1109/ice.2019.8792640.

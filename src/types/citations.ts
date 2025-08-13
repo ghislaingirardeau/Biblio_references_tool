@@ -31,6 +31,8 @@ export interface CitationsDetails {
   page?: Style;
   URL?: Style;
   DOI?: Style;
+  name?: Style;
+  location?: Style;
   reportNumber?: Style;
   accessDate?: Style;
   newspaperName?: Style;
@@ -50,7 +52,6 @@ export interface TypeCitation {
   thesis: CitationsDetails;
   report: CitationsDetails;
   newspaperArticle: CitationsDetails;
-  magazineArticle: CitationsDetails;
 }
 
 export interface Citations {

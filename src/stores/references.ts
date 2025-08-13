@@ -66,11 +66,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const findReferences = references.value[type as keyof References]?.lists.filter(
       (ref) => ref.id !== referenceId,
     );
-    if (type === 'books') {
-      references.value.books!.lists = findReferences as BibliographicEntry[];
-    } else if (type === 'articles') {
-      references.value.articles!.lists = findReferences as BibliographicEntry[];
-    }
+    references.value[type as keyof References]!.lists = findReferences as BibliographicEntry[];
   }
 
   return {

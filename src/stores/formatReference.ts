@@ -140,13 +140,22 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       conferencePaper: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'name', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
+        name: {
+          append: '',
+          prepend: '',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+
         publisher: {
           prepend: ' ',
           append: '.',
@@ -231,33 +240,6 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
-          prepend: '',
-          append: '.',
-        },
-        publisher: {
-          prepend: ' ',
-          append: '.',
-        },
-        date: {
-          prepend: ' ',
-          append: '. ',
-        },
-        author: {
-          prepend: '',
-          append: '.',
-          isInitial: false,
-          linkFirstAuthorName: ', ',
-          linkLastAuthor: ', and ',
-          linkBetweenFirstname: ' ',
-          nameIsUpperCase: false,
-          reverseName: true,
-        },
-      },
-      magazineArticle: {
         order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
@@ -419,13 +401,22 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       conferencePaper: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'name', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
+        name: {
+          append: '',
+          prepend: '',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+
         publisher: {
           prepend: ' ',
           append: '.',
@@ -510,33 +501,6 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
-          prepend: '',
-          append: '.',
-        },
-        publisher: {
-          prepend: ' ',
-          append: '.',
-        },
-        date: {
-          prepend: ' ',
-          append: '. ',
-        },
-        author: {
-          prepend: '',
-          append: '.',
-          isInitial: false,
-          linkFirstAuthorName: ', ',
-          linkLastAuthor: ', and ',
-          linkBetweenFirstname: ' ',
-          nameIsUpperCase: false,
-          reverseName: true,
-        },
-      },
-      magazineArticle: {
         order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
@@ -698,7 +662,16 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       conferencePaper: {
-        order: ['author', 'date', 'title', 'publisher'],
+        name: {
+          append: '',
+          prepend: '',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+
+        order: ['author', 'name', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -789,33 +762,6 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
-          prepend: '',
-          append: '.',
-        },
-        publisher: {
-          prepend: ' ',
-          append: '.',
-        },
-        date: {
-          prepend: ' ',
-          append: '. ',
-        },
-        author: {
-          prepend: '',
-          append: '.',
-          isInitial: false,
-          linkFirstAuthorName: ', ',
-          linkLastAuthor: ', and ',
-          linkBetweenFirstname: ' ',
-          nameIsUpperCase: false,
-          reverseName: true,
-        },
-      },
-      magazineArticle: {
         order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
@@ -965,13 +911,22 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       conferencePaper: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'name', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
+        name: {
+          append: '',
+          prepend: '',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+
         publisher: {
           prepend: ' ',
           append: '.',
@@ -1058,33 +1013,6 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
-        title: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
-          prepend: '',
-          append: '.',
-        },
-        publisher: {
-          prepend: ' ',
-          append: '.',
-        },
-        date: {
-          prepend: ' ',
-          append: '. ',
-        },
-        author: {
-          prepend: '',
-          append: '.',
-          isInitial: false,
-          linkFirstAuthorName: ', ',
-          linkLastAuthor: ', and ',
-          linkBetweenFirstname: ' ',
-          nameIsUpperCase: false,
-          reverseName: true,
-        },
-      },
-      magazineArticle: {
         order: ['author', 'date', 'title', 'publisher'],
         title: {
           tagStart: '<em>',

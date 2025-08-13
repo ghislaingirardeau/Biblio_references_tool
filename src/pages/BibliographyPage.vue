@@ -6,7 +6,7 @@
       <div v-if="referenceType?.lists.length">
         <div class="flex flex-center q-gutter-md">
           <span class="font-bold p-2">
-            {{ referenceType!.type }}
+            {{ referenceType!.label }}
           </span>
           <!-- FOR CUSTOM FORMAT -->
           <!-- <q-select
