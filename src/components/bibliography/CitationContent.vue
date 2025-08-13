@@ -232,6 +232,18 @@ const location = computed(() => {
     : `${currentFormat[props.referenceType as keyof TypeCitation]?.location?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.prepend}${props.reference.location}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.location?.tagEnd || ''}`;
 });
 
+const institution = computed(() => {
+  return !props.reference.institution
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.institution?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.institution?.prepend}${props.reference.institution}${currentFormat[props.referenceType as keyof TypeCitation]?.institution?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.institution?.tagEnd || ''}`;
+});
+
+const degree = computed(() => {
+  return !props.reference.degree
+    ? ''
+    : `${currentFormat[props.referenceType as keyof TypeCitation]?.degree?.tagStart || ''}${currentFormat[props.referenceType as keyof TypeCitation]?.degree?.prepend}${props.reference.degree}${currentFormat[props.referenceType as keyof TypeCitation]?.degree?.append}${currentFormat[props.referenceType as keyof TypeCitation]?.degree?.tagEnd || ''}`;
+});
+
 const citationHtml = computed<CitationHtmlMap>(() => {
   return {
     author: authors.value,
@@ -248,6 +260,8 @@ const citationHtml = computed<CitationHtmlMap>(() => {
     URL: URL.value,
     name: name.value,
     location: location.value,
+    institution: institution.value,
+    degree: degree.value,
   };
 });
 

@@ -33,10 +33,8 @@ export interface CitationsDetails {
   DOI?: Style;
   name?: Style;
   location?: Style;
-  reportNumber?: Style;
-  accessDate?: Style;
-  newspaperName?: Style;
-  magazineName?: Style;
+  institution?: Style;
+  degree?: Style;
 }
 
 export type CitationHtmlMap = {

@@ -161,6 +161,10 @@ async function findReference() {
       if (route.params.type === 'conferencePaper') {
         formatConferenceData(result.message, newReference);
       }
+      // DOI for dissertation do not found on CrossRef
+      // if (route.params.type === 'thesis') {
+      //   console.log(result.message);
+      // }
     }
 
     stepperRef?.value.next();

@@ -39,6 +39,10 @@ C'est à l'utilisateur de bien choisir sa catégorie pour qu'ensuite le formulai
 
 10.1109/ICE.2019.8792640
 
+#### thesis
+
+10.25772/0H24-X154
+
 ### Add type reference
 
 book, article, report done !
@@ -102,3 +106,6 @@ Ashta, Arvind, et al. “Dialectic evolution through the social innovation proce
 Doe, Jane B. "Quantum Realities." Advances in Modern Physics, edited by John A. Smith and Emily R. Lee, Oxford University Press, 2021, pp. 101-125. https://doi.org/10.1234/qm2021.
 
 Heinzelmann, Nicolai, and Guido H. Baltes. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName, vol. 1, June 2019, pp. 1–9. https://doi.org/10.1109/ice.2019.8792640.
+
+thesis
+Porter, Carolyn. “DANTE GABRIEL ROSSETTI AND THE ITALIAN RENAISSANCE: ENVISIONING AESTHETIC BEAUTY AND THE PAST THROUGH IMAGES OF WOMEN.” journalName, Jan. 2010, https://doi.org/10.25772/0h24-x154.

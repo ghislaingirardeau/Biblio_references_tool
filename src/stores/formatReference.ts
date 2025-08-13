@@ -176,18 +176,20 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       thesis: {
-        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
           append: '".',
         },
-        publisher: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
-          prepend: ' ',
-          append: ' ',
-        },
         date: {
+          prepend: ' ',
+          append: '. ',
+        },
+        institution: {
+          prepend: ' ',
+          append: '. ',
+        },
+        degree: {
           prepend: ' ',
           append: '. ',
         },
@@ -437,16 +439,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       thesis: {
-        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
           append: '".',
         },
-        publisher: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        institution: {
           prepend: ' ',
-          append: ' ',
+          append: '. ',
+        },
+        degree: {
+          prepend: ' ',
+          append: '. ',
         },
         date: {
           prepend: ' ',
@@ -698,16 +702,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       thesis: {
-        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
           append: '".',
         },
-        publisher: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        institution: {
           prepend: ' ',
-          append: ' ',
+          append: '. ',
+        },
+        degree: {
+          prepend: ' ',
+          append: '. ',
         },
         date: {
           prepend: ' ',
@@ -947,16 +953,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       thesis: {
-        order: ['author', 'date', 'title', 'publisher', 'volume', 'issue', 'page', 'doi'],
+        order: ['author', 'date', 'title', 'degree', 'institution', 'doi', 'url'],
         title: {
           prepend: '"',
           append: '".',
         },
-        publisher: {
-          tagStart: '<em>',
-          tagEnd: '</em>',
+        institution: {
           prepend: ' ',
-          append: ' ',
+          append: '. ',
+        },
+        degree: {
+          prepend: ' ',
+          append: '. ',
         },
         date: {
           prepend: ' ',
