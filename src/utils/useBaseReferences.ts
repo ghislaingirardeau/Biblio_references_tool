@@ -267,7 +267,7 @@ export const referencesTemplate = {
         },
       ],
       status: '',
-      submissionDate: '',
+      location: '',
       URL: '',
     },
   },

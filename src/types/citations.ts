@@ -33,6 +33,7 @@ export interface CitationsDetails {
   DOI?: Style;
   name?: Style;
   location?: Style;
+  status?: Style;
   institution?: Style;
   degree?: Style;
 }
@@ -50,6 +51,7 @@ export interface TypeCitation {
   dissertation: CitationsDetails;
   report: CitationsDetails;
   newspaperArticle: CitationsDetails;
+  manuscript: CitationsDetails;
 }
 
 export interface Citations {

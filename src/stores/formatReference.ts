@@ -144,7 +144,7 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       conferencePaper: {
-        order: ['author', 'name', 'date', 'title', 'publisher'],
+        order: ['author', 'name', 'date', 'title', 'publisher', 'location'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
@@ -159,7 +159,6 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           prepend: '',
           append: '',
         },
-
         publisher: {
           prepend: ' ',
           append: '.',
@@ -207,17 +206,13 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           nameIsUpperCase: false,
           reverseName: true,
         },
-        page: {
+        URL: {
           append: '.',
           prepend: ': ',
         },
-        volume: {
+        DOI: {
           prepend: '',
           append: ' ',
-        },
-        issue: {
-          prepend: '(',
-          append: ')',
         },
       },
       report: {
@@ -264,6 +259,41 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         URL: {
           prepend: ' ',
           append: '.',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+          isInitial: false,
+          linkFirstAuthorName: ', ',
+          linkLastAuthor: ', and ',
+          linkBetweenFirstname: ' ',
+          nameIsUpperCase: false,
+          reverseName: true,
+        },
+      },
+      manuscript: {
+        order: ['author', 'title', 'date', 'status', 'location', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        status: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
         author: {
           prepend: '',
@@ -478,17 +508,13 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           nameIsUpperCase: false,
           reverseName: true,
         },
-        page: {
+        URL: {
           append: '.',
           prepend: ': ',
         },
-        volume: {
+        DOI: {
           prepend: '',
           append: ' ',
-        },
-        issue: {
-          prepend: '(',
-          append: ')',
         },
       },
       report: {
@@ -535,6 +561,41 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         URL: {
           prepend: ' ',
           append: '.',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+          isInitial: false,
+          linkFirstAuthorName: ', ',
+          linkLastAuthor: ', and ',
+          linkBetweenFirstname: ' ',
+          nameIsUpperCase: false,
+          reverseName: true,
+        },
+      },
+      manuscript: {
+        order: ['author', 'title', 'date', 'status', 'location', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        status: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
         author: {
           prepend: '',
@@ -749,17 +810,13 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           nameIsUpperCase: false,
           reverseName: true,
         },
-        page: {
+        URL: {
           append: '.',
           prepend: ': ',
         },
-        volume: {
+        DOI: {
           prepend: '',
           append: ' ',
-        },
-        issue: {
-          prepend: '(',
-          append: ')',
         },
       },
       report: {
@@ -806,6 +863,41 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         URL: {
           prepend: ' ',
           append: '.',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+          isInitial: false,
+          linkFirstAuthorName: ', ',
+          linkLastAuthor: ', and ',
+          linkBetweenFirstname: ' ',
+          nameIsUpperCase: false,
+          reverseName: true,
+        },
+      },
+      manuscript: {
+        order: ['author', 'title', 'date', 'status', 'location', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        status: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
         author: {
           prepend: '',
@@ -1008,17 +1100,13 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           nameIsUpperCase: false,
           reverseName: true,
         },
-        page: {
+        URL: {
           append: '.',
           prepend: ': ',
         },
-        volume: {
+        DOI: {
           prepend: '',
           append: ' ',
-        },
-        issue: {
-          prepend: '(',
-          append: ')',
         },
       },
       report: {
@@ -1067,6 +1155,41 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         URL: {
           prepend: ' ',
           append: '.',
+        },
+        author: {
+          prepend: '',
+          append: '.',
+          isInitial: false,
+          linkFirstAuthorName: ', ',
+          linkLastAuthor: ', and ',
+          linkBetweenFirstname: ' ',
+          nameIsUpperCase: false,
+          reverseName: true,
+        },
+      },
+      manuscript: {
+        order: ['author', 'title', 'date', 'status', 'location', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        status: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
         author: {
           prepend: '',
