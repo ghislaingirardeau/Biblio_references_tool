@@ -74,6 +74,7 @@ export interface BibliographicEntry {
   DOI?: string;
   name?: string;
   location?: string;
+  source?: string;
   institution?: string;
   degree?: string;
   accessDate?: string;

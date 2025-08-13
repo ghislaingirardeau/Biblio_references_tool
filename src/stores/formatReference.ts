@@ -306,6 +306,31 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
+      legislation: {
+        order: ['location', 'date', 'title', 'source', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        source: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
+        },
+      },
     },
     APA: {
       books: {
@@ -606,6 +631,31 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           linkBetweenFirstname: ' ',
           nameIsUpperCase: false,
           reverseName: true,
+        },
+      },
+      legislation: {
+        order: ['location', 'date', 'title', 'source', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        source: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
       },
     },
@@ -910,6 +960,31 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           reverseName: true,
         },
       },
+      legislation: {
+        order: ['location', 'date', 'title', 'source', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        source: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
+        },
+      },
     },
     custom: {
       books: {
@@ -1200,6 +1275,31 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
           linkBetweenFirstname: ' ',
           nameIsUpperCase: false,
           reverseName: true,
+        },
+      },
+      legislation: {
+        order: ['location', 'date', 'title', 'source', 'URL'],
+        title: {
+          tagStart: '<em>',
+          tagEnd: '</em>',
+          prepend: '',
+          append: '.',
+        },
+        location: {
+          prepend: '',
+          append: '',
+        },
+        source: {
+          prepend: ' ',
+          append: '.',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        date: {
+          prepend: ' ',
+          append: '. ',
         },
       },
     },

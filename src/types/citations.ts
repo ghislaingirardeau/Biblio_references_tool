@@ -35,6 +35,7 @@ export interface CitationsDetails {
   location?: Style;
   status?: Style;
   institution?: Style;
+  source?: Style;
   degree?: Style;
 }
 
@@ -52,6 +53,7 @@ export interface TypeCitation {
   report: CitationsDetails;
   newspaperArticle: CitationsDetails;
   manuscript: CitationsDetails;
+  legislation: CitationsDetails;
 }
 
 export interface Citations {

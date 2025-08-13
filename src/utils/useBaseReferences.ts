@@ -245,9 +245,10 @@ export const referencesTemplate = {
           lastname: '',
         },
       ],
-      institution: '',
-      degree: '',
+      source: '',
+      location: '',
       date: '',
+      URL: '',
     },
   },
 
