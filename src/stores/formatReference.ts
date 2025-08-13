@@ -246,20 +246,24 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
-          prepend: ' ',
-          append: '.',
+        name: {
+          append: '',
+          prepend: '',
         },
         date: {
           prepend: ' ',
           append: '. ',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
         },
         author: {
           prepend: '',
@@ -513,20 +517,24 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
-          prepend: ' ',
-          append: '.',
+        name: {
+          append: '',
+          prepend: '',
         },
         date: {
           prepend: ' ',
           append: '. ',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
         },
         author: {
           prepend: '',
@@ -780,20 +788,24 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
-          prepend: ' ',
-          append: '.',
+        name: {
+          append: '',
+          prepend: '',
         },
         date: {
           prepend: ' ',
           append: '. ',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
         },
         author: {
           prepend: '',
@@ -1037,20 +1049,24 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       newspaperArticle: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
-          prepend: ' ',
-          append: '.',
+        name: {
+          append: '',
+          prepend: '',
         },
         date: {
           prepend: ' ',
           append: '. ',
+        },
+        URL: {
+          prepend: ' ',
+          append: '.',
         },
         author: {
           prepend: '',

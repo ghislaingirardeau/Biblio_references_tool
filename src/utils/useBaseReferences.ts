@@ -183,7 +183,6 @@ export const referencesTemplate = {
         },
       ],
       name: '',
-      page: '',
       date: '',
       URL: '',
     },

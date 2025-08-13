@@ -81,6 +81,7 @@ const tagsFirstCapitalize = computed(() => {
 });
 
 function formatLabel(label: string) {
+  console.log(editReference.value);
   return label
     .split('-')
     .map((e) => capitalize(e))
