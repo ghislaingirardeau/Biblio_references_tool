@@ -76,14 +76,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       web: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        name: {
           prepend: ' ',
           append: '.',
         },
@@ -339,14 +343,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       web: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        name: {
           prepend: ' ',
           append: '.',
         },
@@ -602,14 +610,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       web: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        name: {
           prepend: ' ',
           append: '.',
         },
@@ -863,14 +875,18 @@ export const useFormatReferenceStore = defineStore('FormatReferenceStore', () =>
         },
       },
       web: {
-        order: ['author', 'date', 'title', 'publisher'],
+        order: ['author', 'date', 'title', 'name', 'URL'],
         title: {
           tagStart: '<em>',
           tagEnd: '</em>',
           prepend: '',
           append: '.',
         },
-        publisher: {
+        URL: {
+          prepend: ' ',
+          append: '.',
+        },
+        name: {
           prepend: ' ',
           append: '.',
         },

@@ -28,7 +28,8 @@
             <q-input
               v-model="(editReference as any)[reference][idx].lastname"
               class="mb-2 mr-2 flex-1"
-              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'Last name')}`"
+              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'Last name')} *`"
+              :rules="[(val) => !!val || 'Field is required']"
             />
             <q-btn
               v-if="idx > 0"

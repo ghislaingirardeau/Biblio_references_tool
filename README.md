@@ -75,9 +75,13 @@ _PISA 2022 Technical report_. 2024. _Programme for International Student Assessm
 
 Doe, Jane B. 2021. "Quantum Realities." In Advances in Modern Physics, edited by John A. Smith and Emily R. Lee, 101–125. New York: Oxford University Press. https://doi.org/10.1234/qm2021.
 
-#### conference paper
+##### conference paper
 
 Heinzelmann, Nicolai, and Guido H. Baltes. 2019. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName 1 (June): 1–9. https://doi.org/10.1109/ice.2019.8792640.
+
+##### thesis
+
+Johnson, Michael T. 2019. Machine Learning Approaches for Climate Prediction. PhD diss., University of California, Berkeley. https://doi.org/10.1234/mlcp2019.
 
 #### APA
 
@@ -93,6 +97,10 @@ Doe, J. B. (2021). Quantum realities. In J. A. Smith & E. R. Lee (Eds.), Advance
 
 Heinzelmann, N., & Baltes, G. H. (2019). In search of synergies between corporate entrepreneurship activities: a literature review and research agenda. journalName, 1, 1–9. https://doi.org/10.1109/ice.2019.8792640
 
+##### thesis
+
+Johnson, M. T. (2019). Machine learning approaches for climate prediction (Doctoral dissertation, University of California, Berkeley). https://doi.org/10.1234/mlcp2019
+
 #### MLA
 
 Baird, Ian G. Rise of the Brao: Ethnic Minorities in Northeastern Cambodia during Vietnamese Occupation. University of Wisconsin Press, 2020.
@@ -107,5 +115,6 @@ Doe, Jane B. "Quantum Realities." Advances in Modern Physics, edited by John A. 
 
 Heinzelmann, Nicolai, and Guido H. Baltes. “In search of synergies between corporate entrepreneurship activities: a literature review and research agenda.” journalName, vol. 1, June 2019, pp. 1–9. https://doi.org/10.1109/ice.2019.8792640.
 
-thesis
+##### thesis
+
 Porter, Carolyn. “DANTE GABRIEL ROSSETTI AND THE ITALIAN RENAISSANCE: ENVISIONING AESTHETIC BEAUTY AND THE PAST THROUGH IMAGES OF WOMEN.” journalName, Jan. 2010, https://doi.org/10.25772/0h24-x154.

@@ -34,7 +34,6 @@ export type ReferencesType = readonly [
   'newspaperArticle',
   'magazineArticle',
   'software',
-
   'legislation',
   'manuscript',
   'presentation',

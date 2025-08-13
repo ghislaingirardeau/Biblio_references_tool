@@ -22,5 +22,6 @@ export function formatFirstAuthor(
   ponctuation: string,
 ) {
   const firstname = formatFirstNames(author.firstname.split(' '), isInitial);
-  return author.lastname + ponctuation + firstname.join(' ');
+  // if firstname is empty string '' or null, only return lastname
+  return !firstname[0] ? author.lastname : author.lastname + ponctuation + firstname.join(' ');
 }

@@ -196,7 +196,6 @@ const issue = computed(() => {
 });
 
 const mainTitle = computed(() => {
-  console.log(props.reference['main-title']);
   return !props.reference['main-title']
     ? ''
     : `${currentFormat[props.referenceType as keyof TypeCitation]['main-title']?.prepend}${props.reference['main-title']}${currentFormat[props.referenceType as keyof TypeCitation]['main-title']?.append}`;
