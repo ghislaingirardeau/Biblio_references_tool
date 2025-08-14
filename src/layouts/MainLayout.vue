@@ -31,8 +31,8 @@
                   :readonly="!project.onEdited"
                   @blur="editProject(project.id, project.label)"
                   @keyup.enter="$event.target.blur()"
-                  @click="switchProject(project.id)"
-                  :class="{ 'menu-projects-input': !isCurrentProjectOpened(project.id) }"
+                  @click="!project.onEdited ? switchProject(project.id) : null"
+                  :class="{ 'menu-projects-input': !project.onEdited }"
                 >
                   <template v-slot:prepend>
                     <q-icon
@@ -41,15 +41,32 @@
                       "
                       :class="{ 'cursor-pointer': !isCurrentProjectOpened(project.id) }"
                       :color="isCurrentProjectOpened(project.id) ? 'primary' : 'grey-6'"
-                      @click="switchProject(project.id)"
+                      @click="!project.onEdited ? switchProject(project.id) : null"
                     />
                   </template>
                   <template v-slot:append>
                     <q-icon
-                      :name="project.onEdited ? mdiCheckCircleOutline : mdiFolderEditOutline"
+                      v-if="project.onEdited"
+                      :name="mdiCheckCircleOutline"
                       color="primary"
                       class="cursor-pointer"
-                      @click="handleActions(project.onEdited, project.id, project.label, index)"
+                      @click="editProject(project.id, project.label)"
+                    />
+                    <q-icon
+                      v-else
+                      :name="mdiFolderEditOutline"
+                      color="primary"
+                      class="cursor-pointer"
+                      @click="
+                        handleActions(project.onEdited, project.id, project.label, index, $event)
+                      "
+                    />
+                    <q-icon
+                      v-if="index > 0"
+                      :name="mdiMinus"
+                      :color="project.onEdited ? 'grey-6' : 'negative'"
+                      class="cursor-pointer"
+                      @click="!project.onEdited ? ProjectsStore.remove(project.id) : null"
                     />
                   </template>
                 </q-input>
@@ -70,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
@@ -81,6 +98,7 @@ import {
   mdiFolderEditOutline,
   mdiFolderOpenOutline,
   mdiFolderOutline,
+  mdiMinus,
 } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { useTemplateRefsList } from '@vueuse/core';
@@ -131,17 +149,9 @@ function switchProject(id: string) {
   leftDrawerOpen.value = false;
 }
 
-function handleActions(onEdited: boolean, id: string, label: string, index: number) {
-  console.log('handle action', onEdited);
-  if (!onEdited) {
-    isProjectOnEditing.value = true;
-    ProjectsStore.enableEdit(id);
-    setTimeout(() => {
-      inputRefs.value[index]?.focus();
-    }, 50);
-  } else {
-    inputRefs.value[index]?.blur();
-  }
+function handleActions(onEdited: boolean, id: string, label: string, index: number, e: Event) {
+  isProjectOnEditing.value = true;
+  ProjectsStore.enableEdit(id);
 }
 
 function editProject(id: string, label: string) {

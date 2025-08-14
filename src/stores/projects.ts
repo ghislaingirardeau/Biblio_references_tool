@@ -51,6 +51,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }
   }
 
+  function remove(id: string) {
+    projects.value = projects.value.filter((p) => p.id !== id);
+  }
+
   function resetProjects() {
     projects.value = [
       {
@@ -69,6 +73,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projectsLabel,
     add,
     edit,
+    remove,
     enableEdit,
     resetProjects,
   };
