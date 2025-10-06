@@ -87,6 +87,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   return {
     currentProject,
+    projects,
     project,
     projectsLabel,
     add,

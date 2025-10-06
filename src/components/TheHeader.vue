@@ -8,6 +8,7 @@
       </q-toolbar-title>
       <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
       <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
+      <AuthentificationWidget />
     </q-toolbar>
   </q-header>
 </template>
@@ -20,6 +21,7 @@ import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { storeToRefs } from 'pinia';
 import { useReferencesStore } from 'src/stores/references';
 import { useProjectsStore } from 'src/stores/projects';
+import AuthentificationWidget from './AuthentificationWidget.vue';
 const { capitalize } = format;
 
 const route = useRoute();
