@@ -9,7 +9,7 @@
         <q-item-section avatar>
           <div class="flex">
             <q-btn dense flat round icon="edit" @click="modalEdit(quote, false)" />
-            <q-btn dense flat round icon="delete" @click="deleteQuote(quote.id!)" />
+            <q-btn dense flat round icon="delete" @click="askConfirmation(quote.id!)" />
           </div>
         </q-item-section>
       </q-item>
@@ -20,10 +20,12 @@
       @confirm-edit="confirmEdit"
       :isReadonly="ModalReference.isReadonly"
     />
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="deleteQuote" />
   </q-page>
 </template>
 
 <script setup lang="ts">
+import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useQuotesStore } from 'src/stores/quotes';
@@ -37,6 +39,8 @@ const ModalReference = useModalReferenceStore();
 const route = useRoute();
 const showEditModal = ref(false);
 const selectedQuote = ref<Quote | null>(null);
+const showConfirmModal = ref(false);
+const selectedQuoteId = ref<null | string>(null);
 
 const quotes = computed(() => {
   if (Array.isArray(QuotesStore.filteredQuotes)) {
@@ -45,8 +49,20 @@ const quotes = computed(() => {
   return QuotesStore.quotes ?? [];
 });
 
-function deleteQuote(id: string) {
-  console.log('delete quote');
+function askConfirmation(id: string) {
+  showConfirmModal.value = true;
+  selectedQuoteId.value = id;
+}
+
+function deleteQuote() {
+  selectedQuoteId.value
+    ? QuotesStore.removeQuote(
+        route.params.type as string,
+        route.params.id as string,
+        selectedQuoteId.value,
+      )
+    : null;
+  selectedQuoteId.value = null;
 }
 
 function modalEdit(quote: Quote, modeReadonly: boolean) {
@@ -56,7 +72,6 @@ function modalEdit(quote: Quote, modeReadonly: boolean) {
 }
 
 function confirmEdit() {
-  console.log('update store quote');
   selectedQuote.value = null;
 }
 

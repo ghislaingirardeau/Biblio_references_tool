@@ -24,6 +24,16 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     findQuotes(type, referenceId);
   }
 
+  function removeQuote(type: string, referenceId: string, quoteId: string) {
+    const referenceFound = find(type, referenceId);
+
+    if (referenceFound && referenceFound?.quotes) {
+      referenceFound.quotes = referenceFound?.quotes?.filter((q) => q.id !== quoteId);
+    }
+
+    findQuotes(type, referenceId);
+  }
+
   function findQuotes(type: string, referenceId: string) {
     const referenceFound = find(type, referenceId);
 
@@ -57,5 +67,6 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     findQuotes,
     filterQuotes,
     resetQuoteFilter,
+    removeQuote,
   };
 });

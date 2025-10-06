@@ -50,7 +50,7 @@ const newQuote = ref<Quote>({
   id: Date.now().toString(),
   page: '0',
   content: '',
-  tag: '',
+  tag: null,
 });
 
 const QuotesStore = useQuotesStore();
