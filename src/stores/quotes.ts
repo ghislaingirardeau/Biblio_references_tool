@@ -50,8 +50,10 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
       return;
     }
     const lowerQuery = query.toLowerCase();
-    const searchQuotes = quotes.value.filter((quote) =>
-      quote.content!.toLowerCase().includes(lowerQuery),
+    const searchQuotes = quotes.value.filter(
+      (quote) =>
+        quote.content!.toLowerCase().includes(lowerQuery) ||
+        quote.tag!.map((q) => q.toLowerCase()).includes(lowerQuery),
     );
     if (searchQuotes.length === 0) {
       return 'Quote not found';

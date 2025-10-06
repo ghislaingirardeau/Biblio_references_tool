@@ -3,8 +3,28 @@
     <q-list v-if="quotes && quotes.length" bordered separator>
       <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
         <q-item-section @click="modalEdit(quote, true)">
-          <q-item-label> <div class="truncate-2-lines" v-html="quote.content"></div></q-item-label>
-          <q-item-label caption>pages: {{ quote.page }}</q-item-label>
+          <q-item-label>
+            <div class="truncate-2-lines" v-html="quote.content"></div>
+          </q-item-label>
+          <q-item-label caption
+            >pages: {{ quote.page }}
+            <q-chip
+              v-for="tag in quote.tag"
+              :key="tag"
+              size="sm"
+              outline
+              square
+              color="primary"
+              text-color="white"
+              icon="bookmark"
+            >
+              {{ tag }}
+            </q-chip></q-item-label
+          >
+
+          <!-- <q-item-label v-if="quote.tag?.length" caption
+            >tag: {{ quote.tag.join('-') }}</q-item-label
+          > -->
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
@@ -80,13 +100,18 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.truncate-2-lines {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: 3em; /* Adjust based on line-height */
+<style scoped lang="scss">
+:deep() {
+  .truncate-2-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3em; /* Adjust based on line-height */
+    & p {
+      margin-bottom: 8px;
+    }
+  }
 }
 </style>
