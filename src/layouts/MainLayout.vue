@@ -63,10 +63,10 @@
                     />
                     <q-icon
                       v-if="index > 0"
-                      :name="mdiMinus"
+                      :name="mdiTrashCan"
                       :color="project.onEdited ? 'grey-6' : 'negative'"
                       class="cursor-pointer"
-                      @click="!project.onEdited ? ProjectsStore.remove(project.id) : null"
+                      @click="askConfirmation(project.onEdited, project.id)"
                     />
                   </template>
                 </q-input>
@@ -83,6 +83,7 @@
 
     <TheFooter />
     <ReferenceModal :modalMode="modalMode" />
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="deleteProject" />
   </q-layout>
 </template>
 
@@ -99,15 +100,19 @@ import {
   mdiFolderOpenOutline,
   mdiFolderOutline,
   mdiMinus,
+  mdiTrashCan,
 } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { useTemplateRefsList } from '@vueuse/core';
+import ConfirmModal from 'src/components/ConfirmModal.vue';
 
 const ProjectsStore = useProjectsStore();
 const { projectsLabel, currentProject } = storeToRefs(ProjectsStore);
 
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
 const isProjectOnEditing = ref(false);
+const showConfirmModal = ref(false);
+const selectedFolder = ref<null | string>(null);
 
 function isCurrentProjectOpened(id: string) {
   return currentProject.value === id;
@@ -152,6 +157,17 @@ function switchProject(id: string) {
 function handleActions(onEdited: boolean, id: string, label: string, index: number, e: Event) {
   isProjectOnEditing.value = true;
   ProjectsStore.enableEdit(id);
+}
+
+function askConfirmation(onEdited: boolean, id: string) {
+  if (onEdited) return;
+  showConfirmModal.value = true;
+  selectedFolder.value = id;
+}
+
+function deleteProject() {
+  selectedFolder.value ? ProjectsStore.remove(selectedFolder.value) : null;
+  selectedFolder.value = null;
 }
 
 function editProject(id: string, label: string) {
