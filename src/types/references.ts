@@ -43,6 +43,7 @@ export interface Quote {
   id: string | null;
   page?: string;
   content?: string;
+  tag?: string;
 }
 
 export interface Authors {

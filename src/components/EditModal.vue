@@ -15,7 +15,7 @@
       </q-card-section>
 
       <q-card-section class="row items-center">
-        <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedReference!" />
+        <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedQuote!" />
         <ReferenceEdit v-else v-model:editReference="selectedReference!" />
       </q-card-section>
 
@@ -27,13 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import type { BibliographicEntry } from 'src/types/references';
+import type { BibliographicEntry, Quote } from 'src/types/references';
 import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<BibliographicEntry>('selectedReference');
+const selectedQuote = defineModel<Quote>('selectedQuote');
 
 const ModalReference = useModalReferenceStore();
 </script>

@@ -16,7 +16,7 @@
     </q-list>
     <EditModal
       v-model:showEditModal="showEditModal"
-      v-model:selectedReference="selectedQuote!"
+      v-model:selectedQuote="selectedQuote!"
       @confirm-edit="confirmEdit"
       :isReadonly="ModalReference.isReadonly"
     />
