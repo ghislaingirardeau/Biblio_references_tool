@@ -30,27 +30,27 @@
 
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import { useTagsStore } from 'src/stores/tags';
 import type { Quote } from 'src/types/references';
 import { computed, ref } from 'vue';
 import { format } from 'quasar';
+import { useProjectsStore } from 'src/stores/projects';
 
 const editQuote = defineModel<Quote>('editQuote');
 
 const { capitalize } = format;
 
 const ModalReference = useModalReferenceStore();
-const TagsStore = useTagsStore();
+const ProjectsStore = useProjectsStore();
 
 const tagsFirstCapitalize = computed(() => {
-  return TagsStore.tagsQuote.map((tag) => capitalize(tag));
+  return ProjectsStore.project?.tags.quotes.map((tag) => capitalize(tag));
 });
 
 function createValue(
   val: string,
   done: (val: string, mode?: 'add-unique' | 'add' | 'toggle') => void,
 ) {
-  TagsStore.addTagQuote(val.toLowerCase());
+  ProjectsStore.addTagToProject('quotes', val.toLowerCase());
   done(capitalize(val.toLowerCase()), 'add-unique');
 }
 </script>

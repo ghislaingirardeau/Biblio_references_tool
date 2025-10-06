@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Project, Projects } from 'src/types/projects';
+import type { Project, Projects, Tags } from 'src/types/projects';
 import { computed, ref, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
@@ -13,6 +13,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
       created_at: Date.now(),
       references: referencesTemplate,
       onEdited: false,
+      tags: {
+        references: [],
+        quotes: [],
+      },
     },
   ]);
 
@@ -33,6 +37,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
       created_at: Date.now(),
       references: referencesTemplate,
       onEdited: true,
+      tags: {
+        references: [],
+        quotes: [],
+      },
     });
   }
 
@@ -42,6 +50,12 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
       foundProject.label = label;
       foundProject.onEdited = false;
     }
+  }
+
+  function addTagToProject(type: 'references' | 'quotes', tag: string) {
+    const foundProject = projects.value.find((p) => p.id === currentProject.value);
+    console.log(foundProject);
+    foundProject?.tags?.[type as keyof Tags].unshift(tag);
   }
 
   function enableEdit(id: string) {
@@ -63,6 +77,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
         created_at: Date.now(),
         references: referencesTemplate,
         onEdited: false,
+        tags: {
+          references: [],
+          quotes: [],
+        },
       },
     ];
   }
@@ -76,5 +94,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     remove,
     enableEdit,
     resetProjects,
+    addTagToProject,
   };
 });

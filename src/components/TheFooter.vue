@@ -6,7 +6,7 @@
           square
           filled
           v-model="query"
-          :placeholder="`Filter by ${isRouteQuotes ? 'quotes content' : 'title, author or tag'}`"
+          :placeholder="`Filter by ${isRouteQuotes ? 'quotes content or tag' : 'title, author or tag'}`"
           :loading="isLoading"
           :disable="isLoading"
           @keyup.enter="filter"

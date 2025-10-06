@@ -66,18 +66,18 @@
 <script setup lang="ts">
 import { mdiCloseCircleOutline } from '@quasar/extras/mdi-v7';
 import { format } from 'quasar';
-import { useTagsStore } from 'src/stores/tags';
+import { useProjectsStore } from 'src/stores/projects';
 import { computed, ref } from 'vue';
 
 const editReference = defineModel('editReference');
-const TagsStore = useTagsStore();
+const ProjectsStore = useProjectsStore();
 
 const tag = ref(null);
 
 const { capitalize } = format;
 
 const tagsFirstCapitalize = computed(() => {
-  return TagsStore.tags.map((tag) => capitalize(tag));
+  return ProjectsStore.project!.tags.references.map((tag) => capitalize(tag));
 });
 
 function formatLabel(label: string) {
@@ -97,7 +97,7 @@ function createValue(
   val: string,
   done: (val: string, mode?: 'add-unique' | 'add' | 'toggle') => void,
 ) {
-  TagsStore.add(val.toLowerCase());
+  ProjectsStore.addTagToProject('references', val.toLowerCase());
   done(capitalize(val.toLowerCase()), 'add-unique');
 }
 </script>
