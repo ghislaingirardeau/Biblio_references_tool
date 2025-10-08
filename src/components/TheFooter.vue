@@ -1,13 +1,17 @@
 <template>
-  <q-footer elevated class="bg-grey-8 text-white">
-    <q-toolbar>
+  <q-footer elevated class="flex flex-center">
+    <q-toolbar class="my-2">
       <q-toolbar-title v-if="isRouteForReferences || isRouteQuotes">
         <q-input
           square
           filled
           v-model="query"
-          :placeholder="`Filter by ${isRouteQuotes ? 'quotes content or tag' : 'title, author or tag'}`"
+          class="sm:w-1/3"
+          :placeholder="`Filter ${isRouteQuotes ? 'quotes by content or tag' : 'by title, author or tag'}`"
+          :label="`Filter ${isRouteQuotes ? 'quotes by content or tag' : 'by title, author or tag'}`"
           :loading="isLoading"
+          color="primary"
+          bg-color="white"
           :disable="isLoading"
           @keyup.enter="filter"
         >

@@ -1,20 +1,27 @@
 <template>
   <q-page class="p-2">
+    <q-toggle v-model="isQuoteExpanded" color="primary" label="Expand quote" left-label />
     <q-list v-if="quotes && quotes.length" bordered separator>
-      <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
-        <q-item-section @click="modalEdit(quote, true)">
+      <q-item
+        clickable
+        v-ripple
+        v-for="quote in quotes"
+        :key="quote.id!"
+        class="flex-col md:!flex-row items-start"
+      >
+        <q-item-section @click="modalEdit(quote, true)" class="!flex-grow">
           <q-item-label>
-            <div class="truncate-2-lines" v-html="quote.content"></div>
+            <div :class="{ 'truncate-2-lines': !isQuoteExpanded }" v-html="quote.content"></div>
           </q-item-label>
           <q-item-label caption
-            >pages: {{ quote.page }}
+            >Pages: {{ quote.page }}
             <q-chip
               v-for="tag in quote.tag"
               :key="tag"
               size="sm"
               outline
               square
-              color="primary"
+              color="secondary"
               text-color="white"
               icon="bookmark"
             >
@@ -26,10 +33,26 @@
             >tag: {{ quote.tag.join('-') }}</q-item-label
           > -->
         </q-item-section>
-        <q-item-section avatar>
+        <q-item-section class="flex-none">
           <div class="flex">
-            <q-btn dense flat round icon="edit" @click="modalEdit(quote, false)" />
-            <q-btn dense flat round icon="delete" @click="askConfirmation(quote.id!)" />
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              :icon="mdiContentCopy"
+              @click="copy(quote.content!.replace(/<[^>]+>/g, ''))"
+            />
+
+            <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)" />
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              icon="delete"
+              @click="askConfirmation(quote.id!)"
+            />
           </div>
         </q-item-section>
       </q-item>
@@ -45,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiContentCopy } from '@quasar/extras/mdi-v7';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
@@ -52,15 +76,19 @@ import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/references';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useClipboard } from '@vueuse/core';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();
+
+const { text, copy, copied, isSupported } = useClipboard();
 
 const route = useRoute();
 const showEditModal = ref(false);
 const selectedQuote = ref<Quote | null>(null);
 const showConfirmModal = ref(false);
 const selectedQuoteId = ref<null | string>(null);
+const isQuoteExpanded = ref(true);
 
 const quotes = computed(() => {
   if (Array.isArray(QuotesStore.filteredQuotes)) {
