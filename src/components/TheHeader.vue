@@ -9,6 +9,7 @@
       <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
       <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
       <AuthentificationWidget />
+      <SaveWidget />
     </q-toolbar>
   </q-header>
 </template>
@@ -22,6 +23,7 @@ import { storeToRefs } from 'pinia';
 import { useReferencesStore } from 'src/stores/references';
 import { useProjectsStore } from 'src/stores/projects';
 import AuthentificationWidget from './AuthentificationWidget.vue';
+import SaveWidget from './SaveWidget.vue';
 const { capitalize } = format;
 
 const route = useRoute();
