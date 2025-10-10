@@ -22,7 +22,6 @@ export default boot(({ app, router, redirect, store }) => {
     const ReferencesStore = useReferencesStore();
     // verifie si un utilisateur est deja connecté, sinon redirige vers la route "guest"
     const Auth = useAuth();
-    console.log(Auth.user);
     if (!Auth.user && to.name !== 'guest') {
       redirect('/guest');
     }

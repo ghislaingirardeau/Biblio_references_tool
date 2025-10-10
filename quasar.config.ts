@@ -57,6 +57,12 @@ export default defineConfig((ctx) => {
         API: ctx.dev
           ? 'http://localhost:3000/api'
           : 'https://biblio-references-tool.onrender.com/api',
+        APIKEY: process.env.APIKEY,
+        AUTH_DOMAIN: process.env.AUTH_DOMAIN,
+        PROJECT_ID: process.env.PROJECT_ID,
+        STORAGE_BUCKET: process.env.STORAGE_BUCKET,
+        MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
+        APP_ID: process.env.APP_ID,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
