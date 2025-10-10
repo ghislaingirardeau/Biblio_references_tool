@@ -6,8 +6,9 @@
     :icon="mdiContentSave"
     round
     :loading="isSaving"
-    @click="saveToFirestore"
+    @click="saveData"
   >
+    <q-badge v-if="userHasToSave" color="red" floating>!</q-badge>
   </q-btn>
 </template>
 
@@ -15,14 +16,18 @@
 import { mdiContentSave } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { useAuth } from 'src/stores/auth';
+import { useProjectsStore } from 'src/stores/projects';
 import { saveDataFirestore } from 'src/utils/useFirestore';
 import { ref } from 'vue';
 
 const auth = useAuth();
 const { user } = storeToRefs(auth);
+const ProjectsStore = useProjectsStore();
+const { userHasToSave } = storeToRefs(ProjectsStore);
+
 const isSaving = ref(false);
 
-async function saveToFirestore() {
+async function saveData() {
   try {
     isSaving.value = true;
     await saveDataFirestore();

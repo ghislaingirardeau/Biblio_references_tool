@@ -25,7 +25,6 @@ export const useAuth = defineStore(
         loggedOut.value = false;
         // Exécuter du code async sans rendre le callback async
         void (async () => {
-          console.log('launch set store');
           await setUserFirestore();
         })();
       } else {

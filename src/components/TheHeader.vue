@@ -8,6 +8,7 @@
       </q-toolbar-title>
       <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
       <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
+
       <AuthentificationWidget />
       <SaveWidget />
     </q-toolbar>

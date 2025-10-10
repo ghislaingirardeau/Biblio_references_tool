@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { Project, Projects, Tags } from 'src/types/projects';
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
 
@@ -21,6 +21,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   ]);
 
   const currentProject = ref(projects.value[0]!.id);
+  const userHasToSave = ref(false);
 
   const project = computed(() => projects.value.find((p) => p.id === currentProject.value));
 
@@ -42,6 +43,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
         quotes: [],
       },
     });
+  }
+
+  function loadProjectsFromFirestore(projectsFromFirestore: Project[]) {
+    projects.value = projectsFromFirestore;
   }
 
   function edit(id: string, label: string) {
@@ -85,16 +90,27 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     ];
   }
 
+  watch(
+    () => projects.value,
+    () => {
+      console.log('has to save');
+      userHasToSave.value = true;
+    },
+    { deep: true },
+  );
+
   return {
     currentProject,
     projects,
     project,
     projectsLabel,
+    loadProjectsFromFirestore,
     add,
     edit,
     remove,
     enableEdit,
     resetProjects,
     addTagToProject,
+    userHasToSave,
   };
 });
