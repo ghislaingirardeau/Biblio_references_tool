@@ -8,6 +8,7 @@
       class="q-ml-sm text-white"
       @click="showConfirmModal = true"
     >
+      <q-tooltip class="" :offset="[10, 10]"> Logout </q-tooltip>
     </q-btn>
     <q-btn
       v-else

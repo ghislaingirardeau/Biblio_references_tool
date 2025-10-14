@@ -9,6 +9,7 @@
     @click="saveData"
   >
     <q-badge v-if="userHasToSave" color="red" floating>!</q-badge>
+    <q-tooltip class="" :offset="[10, 10]"> Save </q-tooltip>
   </q-btn>
 </template>
 

@@ -48,9 +48,13 @@
               color="primary"
               :icon="mdiContentCopy"
               @click="copy(quote.content!.replace(/<[^>]+>/g, ''))"
-            />
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Copy </q-tooltip>
+            </q-btn>
 
-            <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)" />
+            <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)">
+              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
+            </q-btn>
             <q-btn
               dense
               flat
@@ -58,18 +62,25 @@
               color="primary"
               icon="delete"
               @click="askConfirmation(quote.id!)"
-            />
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
+            </q-btn>
           </div>
         </q-item-section>
       </q-item>
     </q-list>
+
     <div v-else>No quote saved !</div>
+
+    <AddWidget />
+
     <EditModal
       v-model:showEditModal="showEditModal"
       v-model:selectedQuote="selectedQuote!"
       @confirm-edit="confirmEdit"
       :isReadonly="ModalReference.isReadonly"
     />
+
     <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="deleteQuote">
       <template v-slot:message> Are you sure to delete this quote ? </template>
     </ConfirmModal>
@@ -86,6 +97,8 @@ import type { Quote } from 'src/types/references';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useClipboard } from '@vueuse/core';
+import { storeToRefs } from 'pinia';
+import AddWidget from 'src/components/AddWidget.vue';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();

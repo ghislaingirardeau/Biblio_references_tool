@@ -6,7 +6,7 @@
       <q-toolbar-title class="cursor-pointer" @click="route.path !== '/' ? $router.go(-1) : null">
         {{ mainTitle }}
       </q-toolbar-title>
-      <q-btn v-if="isRouteReferences" dense round icon="add" @click="openModal" />
+
       <!-- <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
       <SaveWidget />
@@ -39,17 +39,9 @@ const { open } = storeToRefs(modalReferenceStore);
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
-function openModal() {
-  open.value = true;
-}
-
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
-
-const isRouteReferences = computed(() => {
-  return !!route.params.type;
-});
 
 const mainTitle = computed(() => {
   let title = capitalize(project.value!.label).concat(` - ${capitalize(route.name as string)}`);

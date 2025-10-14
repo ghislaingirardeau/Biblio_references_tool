@@ -31,7 +31,9 @@
               color="primary"
               icon="edit"
               @click.stop="modalEdit(typeReference)"
-            />
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
+            </q-btn>
             <q-btn
               dense
               flat
@@ -39,12 +41,16 @@
               color="primary"
               icon="delete"
               @click.stop="modalConfirm(typeReference.id!)"
-            />
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
+            </q-btn>
           </div>
         </q-item-section>
       </q-item>
     </q-list>
     <div v-else>No reference saved !</div>
+
+    <AddWidget />
 
     <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="confirmDelete"
       ><template v-slot:message>
@@ -59,8 +65,11 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import AddWidget from 'src/components/AddWidget.vue';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
+import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
 import type { BibliographicEntry } from 'src/types/references';
 import type { References } from 'src/types/references';
