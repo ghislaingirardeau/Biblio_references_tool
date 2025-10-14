@@ -35,6 +35,7 @@ const menuTypes = computed(() => {
     ...ref,
     countRef: ref.lists.length,
   }));
+  formatForMenu.sort((a, b) => b.countRef - a.countRef);
   return formatForMenu;
 });
 

@@ -103,8 +103,8 @@ function modalEdit(reference: BibliographicEntry) {
   selectedReference.value = reference;
 }
 
-function confirmDelete() {
-  ReferencesStore.remove(type.value as string, selectedId.value!);
+async function confirmDelete() {
+  await ReferencesStore.remove(type.value as string, selectedId.value!);
   selectedId.value = null;
 }
 

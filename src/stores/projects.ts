@@ -3,6 +3,7 @@ import type { Project, Projects, Tags } from 'src/types/projects';
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
+import { saveDataFirestore } from 'src/utils/useFirestore';
 
 export const useProjectsStore = defineStore('ProjectsStore', () => {
   const projects: Ref<Project[]> = useStorage('projects', [
@@ -31,7 +32,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }),
   );
 
-  function add(label: string) {
+  async function add(label: string) {
     projects.value.push({
       id: `Project-${Date.now()}`,
       label,
@@ -43,6 +44,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
         quotes: [],
       },
     });
+    await saveDataFirestore();
   }
 
   function loadProjectsFromFirestore(projectsFromFirestore: Project[]) {
@@ -59,7 +61,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   function addTagToProject(type: 'references' | 'quotes', tag: string) {
     const foundProject = projects.value.find((p) => p.id === currentProject.value);
-    console.log(foundProject);
     foundProject?.tags?.[type as keyof Tags].unshift(tag);
   }
 
@@ -70,8 +71,9 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }
   }
 
-  function remove(id: string) {
+  async function remove(id: string) {
     projects.value = projects.value.filter((p) => p.id !== id);
+    await saveDataFirestore();
   }
 
   function resetProjects() {

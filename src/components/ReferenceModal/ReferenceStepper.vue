@@ -106,7 +106,7 @@ async function modalActionFind() {
     formatIdentifier(identifier);
     await findReference();
   } else {
-    saveReference();
+    await saveReference();
   }
 }
 
@@ -120,9 +120,9 @@ function modalBackAction() {
   restoreReferenceBase();
 }
 
-function saveReference() {
+async function saveReference() {
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
-  ReferenceStore.add(route.params.type as string, newReference.value);
+  await ReferenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
   restoreReferenceBase();
 }

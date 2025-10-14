@@ -59,8 +59,12 @@ const modalReferenceStore = useModalReferenceStore();
 
 const route = useRoute();
 
-function saveQuote() {
-  QuotesStore.addQuote(route.params.type as string, route.params.id as string, newQuote.value);
+async function saveQuote() {
+  await QuotesStore.addQuote(
+    route.params.type as string,
+    route.params.id as string,
+    newQuote.value,
+  );
   modalReferenceStore.reset();
 }
 </script>

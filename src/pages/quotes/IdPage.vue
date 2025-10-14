@@ -104,9 +104,9 @@ function askConfirmation(id: string) {
   selectedQuoteId.value = id;
 }
 
-function deleteQuote() {
+async function deleteQuote() {
   selectedQuoteId.value
-    ? QuotesStore.removeQuote(
+    ? await QuotesStore.removeQuote(
         route.params.type as string,
         route.params.id as string,
         selectedQuoteId.value,

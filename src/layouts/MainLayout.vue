@@ -146,8 +146,8 @@ const modalMode = computed(() => {
   return route.params?.id ? 'quote' : 'reference';
 });
 
-function showModalProject() {
-  ProjectsStore.add('new project');
+async function showModalProject() {
+  await ProjectsStore.add('new project');
 }
 
 function switchProject(id: string) {
@@ -167,8 +167,8 @@ function askConfirmation(onEdited: boolean, id: string) {
   selectedFolder.value = id;
 }
 
-function deleteProject() {
-  selectedFolder.value ? ProjectsStore.remove(selectedFolder.value) : null;
+async function deleteProject() {
+  selectedFolder.value ? await ProjectsStore.remove(selectedFolder.value) : null;
   selectedFolder.value = null;
 }
 
