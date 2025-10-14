@@ -44,7 +44,11 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="confirmDelete" />
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="confirmDelete"
+      ><template v-slot:message>
+        Are you sure to delete this reference ? It will delete the quotes associated with !
+      </template>
+    </ConfirmModal>
     <EditModal
       v-model:showEditModal="showEditModal"
       v-model:selectedReference="selectedReference"

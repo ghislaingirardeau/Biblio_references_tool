@@ -63,7 +63,9 @@
       @confirm-edit="confirmEdit"
       :isReadonly="ModalReference.isReadonly"
     />
-    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="deleteQuote" />
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="deleteQuote">
+      <template v-slot:message> Are you sure to delete this quote ? </template>
+    </ConfirmModal>
   </q-page>
 </template>
 

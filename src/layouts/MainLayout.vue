@@ -83,7 +83,9 @@
 
     <TheFooter />
     <ReferenceModal :modalMode="modalMode" />
-    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm-delete="deleteProject" />
+    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="deleteProject"
+      ><template v-slot:message> Are you sure to delete this project ? </template>
+    </ConfirmModal>
   </q-layout>
 </template>
 
