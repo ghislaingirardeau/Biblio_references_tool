@@ -20,6 +20,8 @@
       color="primary"
       label="Scan"
       class="absolute bottom-7 right-7"
+      :loading="isSaving"
+      :disable="isSaving"
     />
     <q-btn
       flat
@@ -49,6 +51,7 @@ import { useWindowSize } from '@vueuse/core';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { screenOrientation } from 'src/utils/useDeviceInfo';
 import { drawRect, drawResizeIcon, drawVideoToCanvas } from 'src/utils/useCanvasDrawer';
+import { Notify } from 'quasar';
 const { width, height } = useWindowSize();
 
 const modalReferenceStore = useModalReferenceStore();
@@ -58,6 +61,8 @@ const emits = defineEmits(['next-step']);
 
 const currentCamera = shallowRef<string>();
 const videoRef = ref<HTMLVideoElement | null>(null);
+
+const isSaving = ref(false);
 
 /* ******** Set webcam & permission ******** */
 const { videoInputs: cameras } = useDevicesList({
@@ -227,6 +232,7 @@ async function captureRectImage() {
 
 async function extractQuoteFromImage(imageBase64: string) {
   try {
+    isSaving.value = true;
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -243,7 +249,14 @@ async function extractQuoteFromImage(imageBase64: string) {
     enabled.value = false;
   } catch (error) {
     console.error('Erreur OCR:', error);
+    Notify.create({
+      message: 'Error: extracting text.',
+      color: 'negative',
+      icon: 'system_update',
+      timeout: 3000,
+    });
   }
+  isSaving.value = false;
 }
 
 function launchCanvasAnimation() {

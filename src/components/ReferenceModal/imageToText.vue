@@ -11,7 +11,13 @@
       @cropend="cropImage"
     >
     </vue-cropper>
-    <q-btn :loading="loading" color="primary" @click="sendToOCR" label="extract text" />
+    <q-btn
+      :loading="loading"
+      :disable="loading"
+      color="primary"
+      @click="sendToOCR"
+      label="extract text"
+    />
     <q-btn
       outline
       color="primary"
@@ -29,6 +35,7 @@ import { ref, watch } from 'vue';
 
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
+import { Notify } from 'quasar';
 
 const modalReferenceStore = useModalReferenceStore();
 
@@ -37,7 +44,6 @@ const image = ref<File | null>(null);
 const cropper = ref<any>(null);
 const imageCropped = ref<ImageData | null>(null);
 
-const result = ref('');
 const loading = ref(false);
 
 const newQuote = defineModel<Quote>('newQuote');
@@ -64,6 +70,7 @@ function cropImage() {
 
 async function sendToOCR() {
   try {
+    loading.value = true;
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -76,8 +83,12 @@ async function sendToOCR() {
 
     emits('next-step');
   } catch (err) {
-    result.value = 'Erreur lors de la requête OCR';
-    console.error(err);
+    Notify.create({
+      message: 'Error: extracting text.',
+      color: 'negative',
+      icon: 'system_update',
+      timeout: 3000,
+    });
   } finally {
     loading.value = false;
   }
