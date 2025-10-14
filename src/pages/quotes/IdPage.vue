@@ -1,6 +1,12 @@
 <template>
   <q-page class="p-2">
-    <q-toggle v-model="isQuoteExpanded" color="primary" label="Expand quote" left-label />
+    <q-toggle
+      v-if="quotes && quotes.length"
+      v-model="isQuoteExpanded"
+      color="primary"
+      label="Expand quote"
+      left-label
+    />
     <q-list v-if="quotes && quotes.length" bordered separator>
       <q-item
         clickable
@@ -57,6 +63,7 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <div v-else>No quote saved !</div>
     <EditModal
       v-model:showEditModal="showEditModal"
       v-model:selectedQuote="selectedQuote!"

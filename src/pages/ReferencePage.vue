@@ -9,7 +9,7 @@
         :key="typeReference.id!"
       >
         <q-item-section>
-          <q-item-label>{{ typeReference.title }} {{ typeReference.id }}</q-item-label>
+          <q-item-label>{{ typeReference.title }}</q-item-label>
           <q-item-label caption>
             <span
               v-for="(author, i) in typeReference.authors"
@@ -44,6 +44,8 @@
         </q-item-section>
       </q-item>
     </q-list>
+    <div v-else>No reference saved !</div>
+
     <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="confirmDelete"
       ><template v-slot:message>
         Are you sure to delete this reference ? It will delete the quotes associated with !

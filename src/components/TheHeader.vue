@@ -6,11 +6,11 @@
       <q-toolbar-title class="cursor-pointer" @click="route.path !== '/' ? $router.go(-1) : null">
         {{ mainTitle }}
       </q-toolbar-title>
-      <q-btn v-if="isRouteReferences" dense flat round icon="add" @click="openModal" />
-      <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
+      <q-btn v-if="isRouteReferences" dense round icon="add" @click="openModal" />
+      <!-- <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
-      <AuthentificationWidget />
       <SaveWidget />
+      <AuthentificationWidget />
     </q-toolbar>
   </q-header>
 </template>
@@ -25,6 +25,7 @@ import { useReferencesStore } from 'src/stores/references';
 import { useProjectsStore } from 'src/stores/projects';
 import AuthentificationWidget from './AuthentificationWidget.vue';
 import SaveWidget from './SaveWidget.vue';
+import type { References } from 'src/types/references';
 const { capitalize } = format;
 
 const route = useRoute();
@@ -51,13 +52,19 @@ const isRouteReferences = computed(() => {
 });
 
 const mainTitle = computed(() => {
-  if (route.params.id) {
-    return ReferenceStore.getTitle(route.params.type as string, route.params.id as string);
-  }
+  let title = capitalize(project.value!.label).concat(` - ${capitalize(route.name as string)}`);
+
   if (route.params.type) {
-    return capitalize(route.params.type as string).concat(` - ${capitalize(project.value!.label)}`);
+    title = capitalize(project.value!.label).concat(
+      ` - ${project.value!.references[route.params.type as keyof References]!.label}`,
+    );
   }
-  return capitalize(route.name as string).concat(` - ${capitalize(project.value!.label)}`);
+  if (route.params.id) {
+    title = title.concat(
+      ` - ${ReferenceStore.getTitle(route.params.type as string, route.params.id as string)}`,
+    );
+  }
+  return title;
 });
 </script>
 
