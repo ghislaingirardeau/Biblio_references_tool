@@ -15,7 +15,7 @@
       round
       :icon="mdiAccountPlus"
       class="q-ml-sm text-white"
-      @click="useFirebaseAuth.signInWithGoogle(router)"
+      @click="useFirebaseAuth.signInWithGoogle()"
     >
     </q-btn>
   </div>

@@ -47,6 +47,7 @@ export async function setUserFirestore() {
   // Vérification si le document existe déjà, si c'est le cas, charge les
   if (projects) {
     ProjectsStore.loadProjectsFromFirestore(projects);
+
     return { isNewUser: false };
   }
   // Sinon, on le crée avec les données par défaut

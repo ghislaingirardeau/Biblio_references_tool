@@ -93,7 +93,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   watch(
     () => projects.value,
     () => {
-      console.log('has to save');
       userHasToSave.value = true;
     },
     { deep: true },

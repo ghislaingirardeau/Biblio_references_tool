@@ -5,10 +5,9 @@ import { useAuth } from 'src/stores/auth';
 const authStore = useAuth();
 
 export const useFirebaseAuth = {
-  async signInWithGoogle(router: any) {
+  async signInWithGoogle() {
     try {
       await signInWithPopup(auth, provider);
-      await router.push({ name: 'references' });
     } catch (error) {
       console.error("Erreur d'authentification :", error);
     }

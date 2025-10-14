@@ -12,8 +12,7 @@
     </div>
     <div>Sign-in to start using the tool</div>
     <div>
-      <q-btn color="primary" label="Sign-in" @click="useFirebaseAuth.signInWithGoogle(router)">
-      </q-btn>
+      <q-btn color="primary" label="Sign-in" @click="useFirebaseAuth.signInWithGoogle()"> </q-btn>
     </div>
   </q-page>
 </template>
