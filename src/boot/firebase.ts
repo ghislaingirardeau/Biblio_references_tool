@@ -8,8 +8,6 @@ import {
 } from 'firebase/auth';
 import { getAnalytics } from 'firebase/analytics';
 
-console.log('API key', process.env.APIKEY);
-
 const firebaseConfig = {
   apiKey: process.env.APIKEY as string,
   authDomain: process.env.AUTH_DOMAIN as string,
