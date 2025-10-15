@@ -7,6 +7,9 @@
         :src="previewUrl"
         alt="Source Image"
         class="w-full"
+        :viewMode="1"
+        :autoCropArea="0"
+        @ready="onCropperReady"
         @cropend="cropImage"
       >
       </vue-cropper>
@@ -16,7 +19,7 @@
         :loading="loading"
         :disable="loading"
         @click="reloadCanvasVideo"
-        class="absolute bottom-7 right-40"
+        class="absolute bottom-3 right-40"
       />
       <q-btn
         color="primary"
@@ -24,7 +27,7 @@
         :loading="loading"
         :disable="loading"
         @click="sendToOCR"
-        class="absolute bottom-7 right-7"
+        class="absolute bottom-3 right-7"
       />
     </div>
     <div v-else>
@@ -40,7 +43,7 @@
         @click="captureImage"
         color="primary"
         label="Capture"
-        class="absolute bottom-7 right-7"
+        class="absolute bottom-3 right-7"
       />
     </div>
     <q-btn
@@ -48,7 +51,7 @@
       color="primary"
       @click="modalReferenceStore.reset()"
       label="Close"
-      class="absolute bottom-7 left-7"
+      class="absolute bottom-3 left-7"
     />
   </div>
 </template>
@@ -95,7 +98,9 @@ const { stream, enabled } = useUserMedia({
     video: computed(() =>
       currentCamera.value
         ? { deviceId: { exact: currentCamera.value } }
-        : { facingMode: { exact: 'environment' } },
+        : {
+            /* facingMode: { exact: 'environment' }  */
+          },
     ),
   }),
 });
@@ -196,6 +201,14 @@ function reloadCanvasVideo() {
   canvasRef.value = null;
   enabled.value = true;
   launchCanvasAnimation();
+}
+
+function onCropperReady() {
+  cropper.value.setCropBoxData({
+    top: 50,
+    width: 400,
+    height: 400,
+  });
 }
 
 onMounted(() => {
