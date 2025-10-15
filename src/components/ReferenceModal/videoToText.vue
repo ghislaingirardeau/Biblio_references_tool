@@ -1,58 +1,47 @@
 <template>
-  <div class="relative flex flex-wrap">
-    <div v-if="previewUrl">
-      <vue-cropper
-        ref="cropper"
-        :key="previewUrl"
-        :src="previewUrl"
-        alt="Source Image"
-        class="w-full"
-        :viewMode="1"
-        :autoCropArea="0"
-        @ready="onCropperReady"
-        @cropend="cropImage"
-      >
-      </vue-cropper>
+  <div class="flex">
+    <vue-cropper
+      v-if="previewUrl"
+      ref="cropper"
+      :key="previewUrl"
+      :src="previewUrl"
+      alt="Source Image"
+      class="w-full"
+      :viewMode="1"
+      :autoCropArea="0"
+      @ready="onCropperReady"
+      @cropend="cropImage"
+    >
+    </vue-cropper>
+    <canvas
+      v-else
+      ref="canvasRef"
+      :width="canvasWidth"
+      :height="canvasWHeight"
+      style="touch-action: none"
+    />
+    <video ref="videoRef" style="display: none" autoplay playsinline />
+    <div class="w-full flex m-3 justify-around">
+      <q-btn outline color="primary" @click="modalReferenceStore.reset()" label="Close" />
+
       <q-btn
+        v-if="previewUrl"
         color="positive"
         label="Photo"
         :loading="loading"
         :disable="loading"
         @click="reloadCanvasVideo"
-        class="absolute bottom-3 right-40"
       />
       <q-btn
+        v-if="previewUrl"
         color="primary"
         label="Extract"
         :loading="loading"
         :disable="loading"
         @click="sendToOCR"
-        class="absolute bottom-3 right-7"
       />
+      <q-btn v-else @click="captureImage" color="primary" label="Capture" />
     </div>
-    <div v-else>
-      <canvas
-        ref="canvasRef"
-        :width="canvasWidth"
-        :height="canvasWHeight"
-        style="border: 1px solid #ccc; touch-action: none"
-      />
-      <video ref="videoRef" style="display: none" autoplay playsinline />
-
-      <q-btn
-        @click="captureImage"
-        color="primary"
-        label="Capture"
-        class="absolute bottom-3 right-7"
-      />
-    </div>
-    <q-btn
-      flat
-      color="primary"
-      @click="modalReferenceStore.reset()"
-      label="Close"
-      class="absolute bottom-3 left-7"
-    />
   </div>
 </template>
 
@@ -72,7 +61,7 @@ const ctx = ref<CanvasRenderingContext2D | null>(null);
 const modalReferenceStore = useModalReferenceStore();
 const { width, height } = useWindowSize();
 const canvasWidth = computed(() => width.value);
-const canvasWHeight = computed(() => height.value - 75);
+const canvasWHeight = computed(() => height.value - 135);
 const currentCamera = shallowRef<string>();
 
 const previewUrl = ref<string | null>(null);
