@@ -109,7 +109,7 @@ import { useTemplateRefsList } from '@vueuse/core';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, currentProject } = storeToRefs(ProjectsStore);
+const { projectsLabel, currentProject, userHasToSave } = storeToRefs(ProjectsStore);
 
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
 const isProjectOnEditing = ref(false);
@@ -154,6 +154,7 @@ function switchProject(id: string) {
   if (isProjectOnEditing.value) return;
   currentProject.value = id;
   leftDrawerOpen.value = false;
+  userHasToSave.value = false;
 }
 
 function handleActions(onEdited: boolean, id: string, label: string, index: number, e: Event) {
