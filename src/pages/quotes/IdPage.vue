@@ -8,20 +8,45 @@
       left-label
     />
     <q-list v-if="quotes && quotes.length" bordered separator>
-      <q-item
-        clickable
-        v-ripple
-        v-for="quote in quotes"
-        :key="quote.id!"
-        class="flex-col md:!flex-row items-start"
-      >
-        <q-item-section @click="modalEdit(quote, true)" class="!flex-grow">
-          <q-item-label>
+      <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
+        <q-item-section @click="modalEdit(quote, true)" class="w-full">
+          <q-item-label class="w-full">
             <div :class="{ 'truncate-2-lines': !isQuoteExpanded }" v-html="quote.content"></div>
           </q-item-label>
-          <q-item-label caption
-            >Pages: {{ quote.page }}
-            <q-chip
+          <q-item-label class="flex items-center justify-between">
+            <div>
+              <span class="mr-4">Pages: {{ quote.page }}</span>
+            </div>
+            <div>
+              <q-btn
+                dense
+                flat
+                round
+                color="primary"
+                :icon="mdiContentCopy"
+                @click="copy(quote.content!.replace(/<[^>]+>/g, ''))"
+              >
+                <q-tooltip class="" :offset="[10, 10]"> Copy </q-tooltip>
+              </q-btn>
+
+              <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)">
+                <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
+              </q-btn>
+              <q-btn
+                dense
+                flat
+                round
+                color="primary"
+                icon="delete"
+                @click="askConfirmation(quote.id!)"
+              >
+                <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
+              </q-btn>
+            </div>
+          </q-item-label>
+
+          <q-item-label
+            ><q-chip
               v-for="tag in quote.tag"
               :key="tag"
               size="sm"
@@ -34,38 +59,6 @@
               {{ tag }}
             </q-chip></q-item-label
           >
-
-          <!-- <q-item-label v-if="quote.tag?.length" caption
-            >tag: {{ quote.tag.join('-') }}</q-item-label
-          > -->
-        </q-item-section>
-        <q-item-section class="flex-none">
-          <div class="flex">
-            <q-btn
-              dense
-              flat
-              round
-              color="primary"
-              :icon="mdiContentCopy"
-              @click="copy(quote.content!.replace(/<[^>]+>/g, ''))"
-            >
-              <q-tooltip class="" :offset="[10, 10]"> Copy </q-tooltip>
-            </q-btn>
-
-            <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)">
-              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
-            </q-btn>
-            <q-btn
-              dense
-              flat
-              round
-              color="primary"
-              icon="delete"
-              @click="askConfirmation(quote.id!)"
-            >
-              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
-            </q-btn>
-          </div>
         </q-item-section>
       </q-item>
     </q-list>
