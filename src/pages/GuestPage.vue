@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { useFirebaseAuth } from 'src/utils/useFirebaseAuth';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

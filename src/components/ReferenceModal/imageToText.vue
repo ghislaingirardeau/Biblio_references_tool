@@ -36,6 +36,7 @@ import { ref, watch } from 'vue';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import { Notify } from 'quasar';
+import { getAuth } from 'firebase/auth';
 
 const modalReferenceStore = useModalReferenceStore();
 
@@ -71,9 +72,12 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const token = await user!.getIdToken();
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ imageBase64: imageCropped.value }),
     });
 

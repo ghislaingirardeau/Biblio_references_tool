@@ -53,6 +53,7 @@ import { computed, onMounted, onUnmounted, reactive, ref, shallowRef, watchEffec
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { Notify } from 'quasar';
 import type { Quote } from 'src/types/references';
+import { getAuth } from 'firebase/auth';
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -141,9 +142,12 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const token = await user!.getIdToken();
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ imageBase64: imageCropped.value }),
     });
 

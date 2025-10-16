@@ -6,6 +6,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
 import routerApi from './router.js';
+import { isAuthenticated } from './middleware/isAuthenticated.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,7 +24,7 @@ app.use(
 app.use(fileUpload());
 app.use(bodyParser.json({ limit: '10mb' }));
 
-app.use('/api', routerApi);
+app.use('/api', isAuthenticated, routerApi);
 
 /* 
 SERVE FRONTEND 

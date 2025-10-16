@@ -1,7 +1,6 @@
 <template>
   <q-stepper v-model="step" ref="stepperRef" color="primary" header-nav animated>
     <q-step :name="1" title="Scan & Extract" icon="settings" :done="step > 1">
-      <!-- <VideoToImgCanvas v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" /> -->
       <VideoToText v-if="useIsMobile()" v-model:newQuote="newQuote" @next-step="step = 2" />
       <ImageToText v-else v-model:newQuote="newQuote" @next-step="step = 2" />
     </q-step>
@@ -36,7 +35,6 @@ import { useModalReferenceStore } from 'src/stores/modalReferences';
 import type { Quote } from 'src/types/references';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import VideoToImgCanvas from 'src/components/ReferenceModal/videoToImgCanvas.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import ImageToText from 'src/components/ReferenceModal/imageToText.vue';
 import QuoteEdit from './QuoteEdit.vue';
