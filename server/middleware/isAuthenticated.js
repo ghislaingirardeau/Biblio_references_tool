@@ -16,6 +16,6 @@ export async function isAuthenticated(req, res, next) {
     next();
   } catch (error) {
     console.error('Erreur vérification token:', error);
-    res.status(401).json({ message: 'Token invalide' });
+    return res.status(401).json({ message: 'Token invalide' });
   }
 }

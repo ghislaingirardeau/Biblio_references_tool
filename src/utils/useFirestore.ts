@@ -17,7 +17,7 @@ export async function saveDataFirestore() {
     // Vérification du type basée sur les propriétés distinctives
     const ProjectsStore = useProjectsStore();
 
-    // erase and update data
+    // update data
     await updateDoc(userDocRef, { projects: ProjectsStore.projects });
 
     // remove badge on save icon

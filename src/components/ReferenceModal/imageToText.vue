@@ -78,7 +78,7 @@ async function sendToOCR() {
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ imageBase64: imageCropped.value }),
+      body: JSON.stringify({ imageBase64: imageCropped.value, user: { uid: user?.uid } }),
     });
 
     const data = await response.json();
