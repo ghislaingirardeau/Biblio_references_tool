@@ -89,7 +89,7 @@ const { stream, enabled } = useUserMedia({
       currentCamera.value
         ? { deviceId: { exact: currentCamera.value } }
         : {
-            /* facingMode: { exact: 'environment' }  */
+            facingMode: { exact: 'environment' },
           },
     ),
   }),
