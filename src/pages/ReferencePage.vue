@@ -3,35 +3,31 @@
     <q-list v-if="typeReferences && typeReferences.length" bordered separator>
       <q-item
         clickable
-        @click="goToQuotes(typeReference.id!)"
+        @click="goToQuotes(reference.id!)"
         v-ripple
-        v-for="typeReference in typeReferences"
-        :key="typeReference.id!"
+        v-for="reference in typeReferences"
+        :key="reference.id!"
       >
         <q-item-section>
-          <q-item-label>{{ typeReference.title }}</q-item-label>
+          <q-item-label>{{ reference.title }}</q-item-label>
           <q-item-label caption>
             <span
-              v-for="(author, i) in typeReference.authors"
+              v-for="(author, i) in reference.authors"
               :key="author.lastname + i"
               class="mr-2"
               >{{ author.lastname + ' ' + author.firstname }}</span
             >
           </q-item-label>
-          <q-item-label v-if="typeReference.URL" class="italic underline">
-            <span @click.stop="goToLink(typeReference.URL)">Check the reference website</span>
+          <q-item-label caption>
+            <span>Quotes: {{ reference.quotes?.length }}</span>
+          </q-item-label>
+          <q-item-label v-if="reference.URL" class="italic underline">
+            <span @click.stop="goToLink(reference.URL)">Check the reference website</span>
           </q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
-            <q-btn
-              dense
-              flat
-              round
-              color="primary"
-              icon="edit"
-              @click.stop="modalEdit(typeReference)"
-            >
+            <q-btn dense flat round color="primary" icon="edit" @click.stop="modalEdit(reference)">
               <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
             </q-btn>
             <q-btn
@@ -40,7 +36,7 @@
               round
               color="primary"
               icon="delete"
-              @click.stop="modalConfirm(typeReference.id!)"
+              @click.stop="modalConfirm(reference.id!)"
             >
               <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
             </q-btn>
@@ -65,11 +61,9 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
-import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
 import type { BibliographicEntry } from 'src/types/references';
 import type { References } from 'src/types/references';
