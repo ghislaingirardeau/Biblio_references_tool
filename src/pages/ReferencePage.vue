@@ -19,14 +19,22 @@
             >
           </q-item-label>
           <q-item-label caption>
-            <span>Quotes: {{ reference.quotes?.length }}</span>
-          </q-item-label>
-          <q-item-label v-if="reference.URL" class="italic underline">
-            <span @click.stop="goToLink(reference.URL)">Check the reference website</span>
+            <span>Quotes: {{ reference.quotes?.length ? reference.quotes?.length : '0' }}</span>
           </q-item-label>
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
+            <q-btn
+              v-if="reference.URL"
+              dense
+              flat
+              round
+              color="primary"
+              :icon="mdiWeb"
+              @click.stop="goToLink(reference.URL)"
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Website </q-tooltip>
+            </q-btn>
             <q-btn dense flat round color="primary" icon="edit" @click.stop="modalEdit(reference)">
               <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
             </q-btn>
@@ -61,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiWeb } from '@quasar/extras/mdi-v7';
 import AddWidget from 'src/components/AddWidget.vue';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
