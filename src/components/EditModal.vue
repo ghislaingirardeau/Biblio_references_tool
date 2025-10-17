@@ -5,7 +5,7 @@
     maximized
     transition-show="slide-up"
     transition-hide="slide-down"
-    @hide="ModalReference.isReadonly = false"
+    @hide="isReadonly = false"
   >
     <q-card>
       <q-card-section class="row items-center q-pb-none">
@@ -31,12 +31,14 @@ import type { BibliographicEntry, Quote } from 'src/types/references';
 import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
+import { storeToRefs } from 'pinia';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<BibliographicEntry>('selectedReference');
 const selectedQuote = defineModel<Quote>('selectedQuote');
 
 const ModalReference = useModalReferenceStore();
+const { isReadonly } = storeToRefs(ModalReference);
 </script>
 
 <style scoped></style>

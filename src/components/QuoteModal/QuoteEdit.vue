@@ -1,12 +1,6 @@
 <template>
   <div class="flex q-gutter-y-sm" v-if="editQuote">
-    <q-input
-      class="w-full"
-      filled
-      v-model="editQuote.page"
-      label="Page"
-      :readonly="ModalReference.isReadonly"
-    />
+    <q-input class="w-full" v-model="editQuote.page" label="Page" :readonly="isReadonly" />
     <q-select
       v-model="editQuote.tag"
       class="w-full"
@@ -23,7 +17,7 @@
       theme="snow"
       content-type="html"
       class="quill-editor w-full border-2 border-gray-200 !mt-0 h-80"
-      :readOnly="ModalReference.isReadonly"
+      :readOnly="isReadonly"
     />
   </div>
 </template>
@@ -34,12 +28,14 @@ import type { Quote } from 'src/types/references';
 import { computed, ref } from 'vue';
 import { format } from 'quasar';
 import { useProjectsStore } from 'src/stores/projects';
+import { storeToRefs } from 'pinia';
 
 const editQuote = defineModel<Quote>('editQuote');
 
 const { capitalize } = format;
 
 const ModalReference = useModalReferenceStore();
+const { isReadonly } = storeToRefs(ModalReference);
 const ProjectsStore = useProjectsStore();
 
 const tagsFirstCapitalize = computed(() => {

@@ -29,7 +29,14 @@
                 <q-tooltip class="" :offset="[10, 10]"> Copy </q-tooltip>
               </q-btn>
 
-              <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)">
+              <q-btn
+                dense
+                flat
+                round
+                color="primary"
+                icon="edit"
+                @click.stop="modalEdit(quote, false)"
+              >
                 <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
               </q-btn>
               <q-btn
@@ -71,7 +78,7 @@
       v-model:showEditModal="showEditModal"
       v-model:selectedQuote="selectedQuote!"
       @confirm-edit="confirmEdit"
-      :isReadonly="ModalReference.isReadonly"
+      :isReadonly="isReadonly"
     />
 
     <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="deleteQuote">
@@ -95,8 +102,9 @@ import AddWidget from 'src/components/AddWidget.vue';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();
+const { isReadonly } = storeToRefs(ModalReference);
 
-const { text, copy, copied, isSupported } = useClipboard();
+const { copy } = useClipboard();
 
 const route = useRoute();
 const showEditModal = ref(false);
@@ -129,7 +137,7 @@ async function deleteQuote() {
 }
 
 function modalEdit(quote: Quote, modeReadonly: boolean) {
-  ModalReference.isReadonly = modeReadonly;
+  isReadonly.value = modeReadonly;
   showEditModal.value = true;
   selectedQuote.value = quote;
 }
