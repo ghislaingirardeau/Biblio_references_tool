@@ -23,6 +23,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   const currentProject = ref(projects.value[0]!.id);
   const userHasToSave = ref(false);
+  const refreshKey = ref(0);
 
   const project = computed(() => projects.value.find((p) => p.id === currentProject.value));
 
@@ -113,5 +114,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     resetProjects,
     addTagToProject,
     userHasToSave,
+    refreshKey,
   };
 });

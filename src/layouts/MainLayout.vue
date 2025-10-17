@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" :key="refreshKey">
     <TheHeader v-model:leftDrawerOpen="leftDrawerOpen" />
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay bordered>
@@ -109,7 +109,7 @@ import { useTemplateRefsList } from '@vueuse/core';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, currentProject, userHasToSave } = storeToRefs(ProjectsStore);
+const { projectsLabel, currentProject, userHasToSave, refreshKey } = storeToRefs(ProjectsStore);
 
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
 const isProjectOnEditing = ref(false);

@@ -9,6 +9,7 @@
 
       <!-- <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
+      <SyncWidget />
       <SaveWidget />
       <AuthentificationWidget />
     </q-toolbar>
@@ -26,6 +27,7 @@ import { useProjectsStore } from 'src/stores/projects';
 import AuthentificationWidget from './AuthentificationWidget.vue';
 import SaveWidget from './SaveWidget.vue';
 import type { References } from 'src/types/references';
+import SyncWidget from './SyncWidget.vue';
 const { capitalize } = format;
 
 const route = useRoute();
