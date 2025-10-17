@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title> Welcome to my bibliography </q-toolbar-title>
+        <q-toolbar-title> Welcome to My Bibliography </q-toolbar-title>
 
         <AuthentificationWidget />
       </q-toolbar>
