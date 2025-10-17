@@ -8,10 +8,14 @@
       left-label
     />
     <q-list v-if="quotes && quotes.length" bordered separator>
-      <q-item clickable v-ripple v-for="quote in quotes" :key="quote.id!">
+      <q-item clickable v-ripple v-for="(quote, index) in quotes" :key="quote.id!">
         <q-item-section @click="modalEdit(quote, true)" class="w-full">
           <q-item-label class="w-full">
-            <div :class="{ 'truncate-2-lines': !isQuoteExpanded }" v-html="quote.content"></div>
+            <div
+              :class="{ 'truncate-2-lines': !isQuoteExpanded }"
+              class="quote-content"
+              v-html="quote.content"
+            ></div>
           </q-item-label>
           <q-item-label class="flex items-center justify-between">
             <div>
@@ -24,9 +28,11 @@
                 round
                 color="primary"
                 :icon="mdiContentCopy"
-                @click="copy(quote.content!.replace(/<[^>]+>/g, ''))"
+                @click.stop="copyQuote(index)"
               >
-                <q-tooltip class="" :offset="[10, 10]"> Copy </q-tooltip>
+                <q-tooltip :class="{ 'bg-green': copied }" :offset="[10, 10]">
+                  {{ copied ? 'Copied in clipboard' : 'Copy' }}
+                </q-tooltip>
               </q-btn>
 
               <q-btn
@@ -45,7 +51,7 @@
                 round
                 color="primary"
                 icon="delete"
-                @click="askConfirmation(quote.id!)"
+                @click.stop="askConfirmation(quote.id!)"
               >
                 <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
               </q-btn>
@@ -94,9 +100,9 @@ import EditModal from 'src/components/EditModal.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/references';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, useTemplateRef } from 'vue';
 import { useRoute } from 'vue-router';
-import { useClipboard } from '@vueuse/core';
+import { useClipboard, useTemplateRefsList } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 
@@ -104,7 +110,7 @@ const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 
-const { copy } = useClipboard();
+const { copy, copied } = useClipboard();
 
 const route = useRoute();
 const showEditModal = ref(false);
@@ -119,6 +125,11 @@ const quotes = computed(() => {
   }
   return QuotesStore.quotes ?? [];
 });
+
+async function copyQuote(index: number) {
+  const quote = document.querySelectorAll('.quote-content')[index]?.querySelector('p')?.outerText;
+  if (quote) await copy(quote);
+}
 
 function askConfirmation(id: string) {
   showConfirmModal.value = true;

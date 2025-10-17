@@ -16,7 +16,8 @@
           @keyup.enter="filter"
         >
           <template v-slot:append>
-            <q-icon name="search" @click="filter" color="primary" />
+            <q-icon name="search" @click="filter" color="primary" class="cursor-pointer" />
+            <q-icon :name="mdiCloseThick" @click="restore" color="primary" class="cursor-pointer" />
           </template>
         </q-input>
       </q-toolbar-title>
@@ -26,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCloseThick } from '@quasar/extras/mdi-v7';
 import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
 import { computed, ref, watch } from 'vue';
@@ -49,13 +51,22 @@ const isRouteQuotes = computed(() => {
 
 function filter() {
   isLoading.value = true;
+  typeToFilter();
+  isLoading.value = false;
+}
+
+function restore() {
+  query.value = '';
+  typeToFilter();
+}
+
+function typeToFilter() {
   message.value = null;
   if (isRouteQuotes.value) {
     filterQuotes();
   } else {
     filterReferences();
   }
-  isLoading.value = false;
 }
 
 function filterReferences() {
