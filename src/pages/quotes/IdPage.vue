@@ -7,13 +7,13 @@
       label="Expand quote"
       left-label
     />
-    <q-list v-if="quotes && quotes.length" bordered separator>
+    <q-list v-if="quotes && quotes.length" bordered separator :key="quotes.length">
       <q-item clickable v-ripple v-for="(quote, index) in quotes" :key="quote.id!">
         <q-item-section @click="modalEdit(quote, true)" class="w-full">
           <q-item-label class="w-full">
             <div
               :class="{ 'truncate-2-lines': !isQuoteExpanded }"
-              class="quote-content"
+              ref="quote-content"
               v-html="quote.content"
             ></div>
           </q-item-label>
@@ -118,6 +118,7 @@ const selectedQuote = ref<Quote | null>(null);
 const showConfirmModal = ref(false);
 const selectedQuoteId = ref<null | string>(null);
 const isQuoteExpanded = ref(true);
+const quoteContent = useTemplateRef<HTMLDivElement[]>('quote-content');
 
 const quotes = computed(() => {
   if (Array.isArray(QuotesStore.filteredQuotes)) {
@@ -127,7 +128,7 @@ const quotes = computed(() => {
 });
 
 async function copyQuote(index: number) {
-  const quote = document.querySelectorAll('.quote-content')[index]?.querySelector('p')?.outerText;
+  const quote = quoteContent.value![index]!.outerText;
   if (quote) await copy(quote);
 }
 
