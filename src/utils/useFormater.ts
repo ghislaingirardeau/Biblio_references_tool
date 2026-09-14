@@ -72,12 +72,12 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
   });
   newReference.value = Object.assign(newReference.value, {
     title,
-    subtitle,
+    subtitle: subtitle ? subtitle : '',
     authors: formatAuthors,
-    publisher,
+    publisher: publisher ? publisher : '',
     date: result.publishedDate,
     page: result.pageCount,
-    categories,
+    categories: categories ? categories : '',
     URL: result.infoLink,
     imageLinks: result.imageLinks?.thumbnail,
     language,

@@ -133,6 +133,7 @@ onMounted(async () => {
     isScanning.value = false;
     codeBarMessage.value =
       'BarcodeDetector ne fonctionne pas sur laptop, merci de saisir manuellement le code barre';
+    getBarcodeFromVideoInterval.pause();
     return;
   }
   await startCamera();
