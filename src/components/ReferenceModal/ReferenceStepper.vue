@@ -18,7 +18,7 @@
         v-model="identifier"
         label="Reference Identifier (ISBN or DOI)"
         :placeholder="
-          route.params.type === 'books' ? '9780299326104' : '10.1177/097215091001200110'
+          route.params.type === 'books' ? '9782290258064' : '10.1177/097215091001200110'
         "
         class="mb-2 mt-2"
       />
@@ -136,7 +136,7 @@ const errorMessage = ref<null | string>(null);
 
 function url() {
   return isbnRegex.test(identifier.value)
-    ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1`
+    ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1&key=${process.env.APIKEY}`
     : `https://api.crossref.org/works/${encodeURIComponent(identifier.value)}`;
 }
 

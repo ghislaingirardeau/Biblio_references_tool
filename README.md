@@ -1,5 +1,12 @@
 # biblio_tool (my-biblio-tool)
 
+## Cloud Vision API
+
+Text_detection (used here) => 1000 request free / months
+1.5$ next 1000 requests
+
+Document_Text_detection => for hand writing or more condense text like PDF => not used here yet
+
 ## Documentation
 
 ### Reference TAG
