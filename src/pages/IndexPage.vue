@@ -1,9 +1,9 @@
 <template>
-  <q-page class="p-2 flex q-gutter-y-sm">
+  <q-page class="p-2 row justify-between q-gutter-y-sm">
     <p v-if="!user">Loading references...</p>
     <q-card
       v-else
-      class="w-full h-24 cursor-pointer"
+      class="col-sm-4 col-12 cursor-pointer"
       v-for="referenceType in menuTypes"
       :key="referenceType.type"
       @click="goTo(referenceType.type)"
