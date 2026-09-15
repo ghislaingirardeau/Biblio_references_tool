@@ -95,7 +95,7 @@ import { computed, ref } from 'vue';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useProjectsStore } from 'src/stores/projects';
 import {
   mdiCheckCircleOutline,
@@ -128,14 +128,15 @@ const menuList = computed(() => {
     //   label: 'Home',
     //   to: { name: 'references' },
     // },
-    {
-      label: 'Biblio',
-      to: { name: 'bibliography' },
-    },
+
     {
       label: 'Projects',
       to: { name: 'references' },
       detail: [...projectsLabel.value],
+    },
+    {
+      label: 'Bibliography',
+      to: { name: 'bibliography' },
     },
   ];
 });
@@ -143,6 +144,7 @@ const menuList = computed(() => {
 const leftDrawerOpen = ref(false);
 
 const route = useRoute();
+const router = useRouter();
 
 const modalMode = computed(() => {
   return route.params?.id ? 'quote' : 'reference';
@@ -152,11 +154,12 @@ async function showModalProject() {
   await ProjectsStore.add('new project');
 }
 
-function switchProject(id: string) {
+async function switchProject(id: string) {
   if (isProjectOnEditing.value) return;
   currentProject.value = id;
   leftDrawerOpen.value = false;
   userHasToSave.value = false;
+  await router.push({ name: 'references' });
 }
 
 function handleActions(onEdited: boolean, id: string, label: string, index: number, e: Event) {
