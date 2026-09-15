@@ -30,7 +30,7 @@ export const referencesTemplate = {
   books: {
     lists: [],
     type: 'books',
-    label: 'Book',
+    label: 'Books',
     description: 'A complete book written by one or more authors.',
     template: {
       id: null,

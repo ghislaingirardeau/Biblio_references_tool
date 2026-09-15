@@ -3,12 +3,12 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <q-toolbar-title class="cursor-pointer" @click="route.path !== '/' ? $router.go(-1) : null">
+      <q-toolbar-title class="cursor-pointer">
         {{ mainTitle }}
       </q-toolbar-title>
 
       <!-- Reset datas and save to reset firestore as well -->
-      <!-- <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
+      <!-- <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
       <SyncWidget />
       <SaveWidget />
@@ -50,14 +50,10 @@ const mainTitle = computed(() => {
   let title = capitalize(project.value!.label).concat(` - ${capitalize(route.name as string)}`);
 
   if (route.params.type) {
-    title = capitalize(project.value!.label).concat(
-      ` - ${project.value!.references[route.params.type as keyof References]!.label}`,
-    );
+    title = project.value!.references[route.params.type as keyof References]!.label;
   }
   if (route.params.id) {
-    title = title.concat(
-      ` - ${ReferenceStore.getTitle(route.params.type as string, route.params.id as string)}`,
-    );
+    title = ReferenceStore.getTitle(route.params.type as string, route.params.id as string)!;
   }
   return title;
 });

@@ -78,6 +78,7 @@
     </q-drawer>
 
     <q-page-container>
+      <BreadCrumbWidget v-if="route.params.type" />
       <router-view />
     </q-page-container>
 
@@ -107,6 +108,7 @@ import {
 import { storeToRefs } from 'pinia';
 import { useTemplateRefsList } from '@vueuse/core';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
+import BreadCrumbWidget from 'src/components/BreadCrumbWidget.vue';
 
 const ProjectsStore = useProjectsStore();
 const { projectsLabel, currentProject, userHasToSave, refreshKey } = storeToRefs(ProjectsStore);
