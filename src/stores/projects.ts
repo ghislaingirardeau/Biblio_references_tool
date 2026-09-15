@@ -9,7 +9,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   const projects: Ref<Project[]> = useStorage('projects', [
     {
       id: `Project-${Date.now()}`,
-      label: 'All',
+      label: 'Default',
       name: 'default',
       created_at: Date.now(),
       references: referencesTemplate,
@@ -81,7 +81,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projects.value = [
       {
         id: `Project-${Date.now()}`,
-        label: 'All',
+        label: 'Default',
         created_at: Date.now(),
         references: referencesTemplate,
         onEdited: false,
