@@ -7,6 +7,7 @@
         {{ mainTitle }}
       </q-toolbar-title>
 
+      <!-- Reset datas and save to reset firestore as well -->
       <!-- <q-btn v-else dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
       <SyncWidget />

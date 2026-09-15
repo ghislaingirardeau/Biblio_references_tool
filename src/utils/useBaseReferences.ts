@@ -2,7 +2,7 @@ export const referencesTemplate = {
   articles: {
     lists: [],
     type: 'articles',
-    label: 'Journal Article',
+    label: 'Articles',
     description: 'A scholarly article published in an academic journal.',
     template: {
       id: null,
@@ -167,7 +167,7 @@ export const referencesTemplate = {
       accessDate: '',
     },
   },
-  newspaperArticle: {
+  /* newspaperArticle: {
     lists: [],
     type: 'newspaperArticle',
     label: 'Newspaper Article',
@@ -228,7 +228,7 @@ export const referencesTemplate = {
       date: '',
       URL: '',
     },
-  },
+  }, */
 
   legislation: {
     lists: [],
@@ -252,7 +252,7 @@ export const referencesTemplate = {
     },
   },
 
-  manuscript: {
+  /* manuscript: {
     lists: [],
     type: 'manuscript',
     label: 'Manuscript',
@@ -292,5 +292,5 @@ export const referencesTemplate = {
       date: '',
       URL: '',
     },
-  },
+  }, */
 };
