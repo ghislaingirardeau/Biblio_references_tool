@@ -1,6 +1,13 @@
 <template>
-  <div class="flex q-gutter-y-sm" v-if="editQuote">
-    <q-input class="w-full" v-model="editQuote.page" label="Page" :readonly="isReadonly" />
+  <div class="flex q-gutter-y-sm p-2" v-if="editQuote">
+    <q-input
+      class="w-full"
+      v-model="editQuote.page"
+      label="Page"
+      type="number"
+      :readonly="isReadonly"
+      @focus="($event.target as HTMLInputElement).select()"
+    />
     <q-select
       v-model="editQuote.tag"
       class="w-full"

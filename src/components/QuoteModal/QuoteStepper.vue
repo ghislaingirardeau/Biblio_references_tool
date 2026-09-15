@@ -16,7 +16,7 @@
 
     <template v-slot:navigation>
       <q-stepper-navigation v-if="step === 2">
-        <q-btn @click="saveQuote" :loading="isSearchingReference" color="primary" label="Save" />
+        <q-btn @click="saveQuote" :loading="isSavingQuote" color="primary" label="Save" />
         <q-btn flat color="primary" @click="stepperRef?.previous()" label="Back" class="q-ml-sm" />
         <q-btn
           flat
@@ -44,7 +44,7 @@ import VideoToText from '../ReferenceModal/videoToText.vue';
 const step = ref(1);
 const stepperRef = ref();
 
-const isSearchingReference = ref(false);
+const isSavingQuote = ref(false);
 
 const newQuote = ref<Quote>({
   id: Date.now().toString(),
@@ -60,12 +60,14 @@ const modalReferenceStore = useModalReferenceStore();
 const route = useRoute();
 
 async function saveQuote() {
+  isSavingQuote.value = true;
   await QuotesStore.addQuote(
     route.params.type as string,
     route.params.id as string,
     newQuote.value,
   );
   modalReferenceStore.reset();
+  isSavingQuote.value = false;
 }
 </script>
 
