@@ -1,9 +1,5 @@
 import type { References } from './references';
-
-export interface Tags {
-  references: string[];
-  quotes: string[];
-}
+import type { Tags } from './tags';
 
 export interface Project {
   id: string;

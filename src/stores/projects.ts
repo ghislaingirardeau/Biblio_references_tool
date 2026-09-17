@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
-import type { Project, Projects, Tags } from 'src/types/projects';
+import type { Project, Projects } from 'src/types/projects';
+import type { Tags } from 'src/types/tags';
+import type { References } from 'src/types/references';
+
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
@@ -32,6 +35,24 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
       return { id: p.id, label: p.label, onEdited: p.onEdited };
     }),
   );
+
+  const treeProjectView = computed(() => {
+    const referencesString = Object.keys(project.value!.references) as Array<keyof References>;
+    const formatTree = referencesString.map((refLabel) => {
+      return {
+        label: 'References',
+        children: [
+          {
+            label: refLabel,
+            children: project.value!.references[refLabel]?.lists.map((theRef) => {
+              return { label: theRef.title };
+            }),
+          },
+        ],
+      };
+    });
+    return formatTree;
+  });
 
   async function add(label: string) {
     projects.value.push({
@@ -106,6 +127,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projects,
     project,
     projectsLabel,
+    treeProjectView,
     loadProjectsFromFirestore,
     add,
     edit,

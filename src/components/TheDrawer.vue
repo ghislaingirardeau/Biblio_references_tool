@@ -111,6 +111,14 @@ const menuList = computed(() => {
       label: 'Bibliography',
       to: { name: 'bibliography' },
     },
+    {
+      label: 'Tags',
+      to: { name: 'tags' },
+    },
+    {
+      label: 'PDF',
+      to: { name: 'PDF' },
+    },
   ];
 });
 
