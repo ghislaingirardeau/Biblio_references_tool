@@ -7,10 +7,69 @@
           <!-- <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
             </q-item-section> -->
-          <q-item-section>
+
+          <q-item-section v-if="!menuItem.detail">
             {{ menuItem.label.toUpperCase() }}
           </q-item-section>
-          <q-item-section v-if="menuItem.detail" class="project-actions">
+
+          <!-- Menu with projects to expand or not -->
+          <q-expansion-item v-else :label="menuItem.label.toUpperCase()" class="full-width">
+            <q-item
+              v-for="(project, index) in menuItem.detail"
+              :key="project.id"
+              class="ml-4 cursor-pointer"
+            >
+              <q-item-section :class="{ 'text-indigo-800': isCurrentProjectOpened(project.id) }">
+                <q-input
+                  v-model="project.label"
+                  dense
+                  :ref="inputRefs.set"
+                  :readonly="!project.onEdited"
+                  @blur="editProject(project.id, project.label)"
+                  @keyup.enter="$event.target.blur()"
+                  @click="!project.onEdited ? switchProject(project.id) : null"
+                  :class="{ 'menu-projects-input': !project.onEdited }"
+                >
+                  <template v-slot:prepend>
+                    <q-icon
+                      :name="
+                        isCurrentProjectOpened(project.id) ? mdiFolderOpenOutline : mdiFolderOutline
+                      "
+                      :class="{ 'cursor-pointer': !isCurrentProjectOpened(project.id) }"
+                      :color="isCurrentProjectOpened(project.id) ? 'primary' : 'grey-6'"
+                      @click="!project.onEdited ? switchProject(project.id) : null"
+                    />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="project.onEdited"
+                      :name="mdiCheckCircleOutline"
+                      color="primary"
+                      class="cursor-pointer"
+                      @click="editProject(project.id, project.label)"
+                    />
+                    <q-icon
+                      v-else
+                      :name="mdiFolderEditOutline"
+                      color="primary"
+                      class="cursor-pointer"
+                      @click="
+                        handleActions(project.onEdited, project.id, project.label, index, $event)
+                      "
+                    />
+                    <q-icon
+                      v-if="index > 0"
+                      :name="mdiTrashCan"
+                      :color="project.onEdited ? 'grey-6' : 'negative'"
+                      class="cursor-pointer"
+                      @click="askConfirmation(project.onEdited, project.id)"
+                    />
+                  </template>
+                </q-input>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <!-- <q-item-section v-if="menuItem.detail" class="project-actions">
             <q-icon
               v-if="menuItem.detail && isExpanded"
               color="primary"
@@ -24,64 +83,8 @@
               :name="isExpanded ? mdiEyeOffOutline : mdiEyeOutline"
               @click="isExpanded = !isExpanded"
             />
-          </q-item-section>
+          </q-item-section> -->
         </q-item>
-        <div v-if="menuItem.detail && isExpanded">
-          <q-item
-            v-for="(project, index) in menuItem.detail"
-            :key="project.id"
-            class="ml-4 cursor-pointer"
-          >
-            <q-item-section :class="{ 'text-indigo-800': isCurrentProjectOpened(project.id) }">
-              <q-input
-                v-model="project.label"
-                dense
-                :ref="inputRefs.set"
-                :readonly="!project.onEdited"
-                @blur="editProject(project.id, project.label)"
-                @keyup.enter="$event.target.blur()"
-                @click="!project.onEdited ? switchProject(project.id) : null"
-                :class="{ 'menu-projects-input': !project.onEdited }"
-              >
-                <template v-slot:prepend>
-                  <q-icon
-                    :name="
-                      isCurrentProjectOpened(project.id) ? mdiFolderOpenOutline : mdiFolderOutline
-                    "
-                    :class="{ 'cursor-pointer': !isCurrentProjectOpened(project.id) }"
-                    :color="isCurrentProjectOpened(project.id) ? 'primary' : 'grey-6'"
-                    @click="!project.onEdited ? switchProject(project.id) : null"
-                  />
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    v-if="project.onEdited"
-                    :name="mdiCheckCircleOutline"
-                    color="primary"
-                    class="cursor-pointer"
-                    @click="editProject(project.id, project.label)"
-                  />
-                  <q-icon
-                    v-else
-                    :name="mdiFolderEditOutline"
-                    color="primary"
-                    class="cursor-pointer"
-                    @click="
-                      handleActions(project.onEdited, project.id, project.label, index, $event)
-                    "
-                  />
-                  <q-icon
-                    v-if="index > 0"
-                    :name="mdiTrashCan"
-                    :color="project.onEdited ? 'grey-6' : 'negative'"
-                    class="cursor-pointer"
-                    @click="askConfirmation(project.onEdited, project.id)"
-                  />
-                </template>
-              </q-input>
-            </q-item-section>
-          </q-item>
-        </div>
       </template>
     </q-list>
   </q-drawer>
@@ -183,6 +186,9 @@ function askConfirmation(onEdited: boolean, id: string) {
     &.q-field--readonly.q-field--float .q-field__native {
       cursor: pointer !important;
     }
+  }
+  .q-expansion-item__container > .q-item {
+    padding: 0px;
   }
 }
 </style>

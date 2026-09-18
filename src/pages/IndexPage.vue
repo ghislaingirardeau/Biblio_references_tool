@@ -1,28 +1,13 @@
 <template>
   <q-page padding>
-    <!-- <p v-if="!user">Loading references...</p>
-    <q-card
-      v-else
-      class="col-sm-4 col-12 cursor-pointer"
-      v-for="referenceType in menuTypes"
-      :key="referenceType.type"
-      @click="goTo(referenceType.type)"
-    >
-      <q-card-section>
-        <div class="text-h6">{{ referenceType.label }}</div>
-        <div class="text-subtitle2">
-          {{ referenceType.description }} Total refs: {{ referenceType.countRef }}
-        </div>
-      </q-card-section>
-    </q-card> -->
-    <div class="row q-col-gutter-md">
+    <div class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-8">
-        <q-card outlined class="full-height">
+        <q-card outlined class="full-height p-2">
           <TreeProjectView />
         </q-card>
       </div>
       <div class="col-12 col-md-4">
-        <q-card class="bg-primary full-height" outlined>sdcsdv </q-card>
+        <q-card outlined class="full-height p-2">Tutorial d'aide et explications ici</q-card>
       </div>
     </div>
   </q-page>

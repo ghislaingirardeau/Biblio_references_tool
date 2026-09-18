@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div>
     <q-input ref="filterRef" filled v-model="filter" label="Filter">
       <template v-slot:append>
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
@@ -11,6 +11,7 @@
       :filter="filter"
       v-model:expanded="expandedKeys"
       selected-color="primary"
+      class="cursor-pointer"
     />
   </div>
 </template>
@@ -35,3 +36,13 @@ function resetFilter() {
   filterRef.value!.focus();
 }
 </script>
+
+<style scoped lang="scss">
+:deep() {
+  .q-tree__arrow,
+  .q-tree__spinner {
+    font-size: 20px;
+    color: teal;
+  }
+}
+</style>
