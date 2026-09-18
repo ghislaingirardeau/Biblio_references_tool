@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import TreeProjectView from 'src/components/Pdf/TreeProjectView.vue';
+import TreeProjectView from 'src/components/TreeProjectView.vue';
 import { useAuth } from 'src/stores/auth';
 import { useReferencesStore } from 'src/stores/references';
 import { computed } from 'vue';

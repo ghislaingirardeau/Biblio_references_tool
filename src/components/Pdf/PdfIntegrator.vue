@@ -104,7 +104,7 @@
 <script setup lang="ts">
 import { ref, nextTick, onBeforeUnmount } from 'vue';
 import type { PDFDocumentProxy, PageViewport } from 'pdfjs-dist';
-import TreeProjectView from './TreeProjectView.vue';
+import TreeProjectView from 'src/components/TreeProjectView.vue';
 import { storeToRefs } from 'pinia';
 import { useTreeStore } from 'src/stores/tree.js';
 import { useQuotesStore } from 'src/stores/quotes.js';
