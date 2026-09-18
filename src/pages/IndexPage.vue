@@ -1,6 +1,6 @@
 <template>
   <q-page class="p-2 row justify-between q-gutter-y-sm">
-    <p v-if="!user">Loading references...</p>
+    <!-- <p v-if="!user">Loading references...</p>
     <q-card
       v-else
       class="col-sm-4 col-12 cursor-pointer"
@@ -14,12 +14,14 @@
           {{ referenceType.description }} Total refs: {{ referenceType.countRef }}
         </div>
       </q-card-section>
-    </q-card>
+    </q-card> -->
+    <TreeProjectView />
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import TreeProjectView from 'src/components/Pdf/TreeProjectView.vue';
 import { useAuth } from 'src/stores/auth';
 import { useReferencesStore } from 'src/stores/references';
 import { computed } from 'vue';
@@ -42,6 +44,7 @@ const menuTypes = computed(() => {
 const router = useRouter();
 
 async function goTo(type: string) {
+  console.log(type);
   await router.push({ name: 'references-type', params: { type } });
 }
 </script>
