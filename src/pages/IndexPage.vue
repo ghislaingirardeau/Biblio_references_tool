@@ -1,5 +1,5 @@
 <template>
-  <q-page class="p-2 row justify-between q-gutter-y-sm">
+  <q-page padding>
     <!-- <p v-if="!user">Loading references...</p>
     <q-card
       v-else
@@ -15,10 +15,16 @@
         </div>
       </q-card-section>
     </q-card> -->
-    <q-card class="col-md-8 col-12">
-      <TreeProjectView />
-    </q-card>
-    <q-card class="col-md-4 bg-primary"> </q-card>
+    <div class="row q-col-gutter-md">
+      <div class="col-12 col-md-8">
+        <q-card outlined class="full-height">
+          <TreeProjectView />
+        </q-card>
+      </div>
+      <div class="col-12 col-md-4">
+        <q-card class="bg-primary full-height" outlined>sdcsdv </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 

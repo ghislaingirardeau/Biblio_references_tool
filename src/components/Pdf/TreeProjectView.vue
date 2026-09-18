@@ -9,8 +9,7 @@
       :nodes="tree"
       node-key="label"
       :filter="filter"
-      default-expand-all
-      v-model:selected="selected"
+      v-model:expanded="expandedKeys"
       selected-color="primary"
     />
   </div>
@@ -19,7 +18,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
-import { useProjectsStore } from 'src/stores/projects';
 import { useTreeStore } from 'src/stores/tree';
 import { computed, ref, useTemplateRef } from 'vue';
 
@@ -28,7 +26,7 @@ const { treeProjectView } = storeToRefs(treeStore);
 
 const filter = ref('');
 const filterRef = useTemplateRef<QInput>('filterRef');
-const selected = ref('');
+const expandedKeys = ref(['References']);
 
 const tree = computed<QTreeNode[]>(() => treeProjectView.value as unknown as QTreeNode[]);
 

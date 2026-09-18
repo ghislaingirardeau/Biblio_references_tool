@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useProjectsStore } from './projects';
 import { useRoute, useRouter } from 'vue-router';
 import { format } from 'quasar';
@@ -13,6 +13,9 @@ const { capitalize } = format;
 export const useTreeStore = defineStore('TreeStore', () => {
   const route = useRoute();
   const router = useRouter();
+
+  const textToExtractIn = ref<{ type: string; referenceId: string } | null>(null);
+
   const treeProjectView = computed(() => {
     const referencesString = Object.keys(project.value!.references) as Array<keyof References>;
     // if you are a routing menu
@@ -40,7 +43,10 @@ export const useTreeStore = defineStore('TreeStore', () => {
                     name: 'quotes-id',
                     params: { type: refLabel, id: theRef.id },
                   })
-                : console.log(node);
+                : (textToExtractIn.value = {
+                    type: refLabel,
+                    referenceId: theRef.id!,
+                  });
             },
           };
         }),
@@ -56,5 +62,5 @@ export const useTreeStore = defineStore('TreeStore', () => {
     ];
   });
 
-  return { treeProjectView };
+  return { treeProjectView, textToExtractIn };
 });

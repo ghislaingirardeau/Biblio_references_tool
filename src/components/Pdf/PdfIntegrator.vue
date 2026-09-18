@@ -4,7 +4,7 @@
     <div class="col-12" v-if="!pdfFileUrl">
       <q-file
         v-model="pickedFile"
-        label="Choisir ou glisser un fichier PDF"
+        label="Drag or drop PDF File"
         outlined
         accept=".pdf"
         @update:model-value="onFileChange"
@@ -50,7 +50,7 @@
 
           <q-card-section
             class="scroll-area flex justify-center q-pa-md bg-grey-3"
-            style="max-height: 70vh; overflow-y: auto"
+            style="max-height: 100vh; overflow-y: auto"
           >
             <!-- Conteneur global du PDF avec capture de sélection à la fin du geste de souris -->
             <div
@@ -76,9 +76,9 @@
               v-model="extractedText"
               type="textarea"
               outlined
-              label="Texte sélectionné dans le document"
-              rows="12"
-              placeholder="Surlignez du texte sur le document de gauche pour l'importer instantanément ici..."
+              label="Text selected"
+              rows="2"
+              placeholder="Overline the text with the mouse to add"
             />
           </q-card-section>
           <q-card-section>
@@ -88,8 +88,9 @@
           <q-card-actions class="q-pa-md bg-grey-1">
             <q-btn
               color="positive"
-              label="Intégrer à l'application"
+              label="Save"
               icon="add_task"
+              :loading="isSavingQuote"
               :disabled="!extractedText"
               @click="integrateTextToApp"
             />
@@ -104,6 +105,14 @@
 import { ref, nextTick, onBeforeUnmount } from 'vue';
 import type { PDFDocumentProxy, PageViewport } from 'pdfjs-dist';
 import TreeProjectView from './TreeProjectView.vue';
+import { storeToRefs } from 'pinia';
+import { useTreeStore } from 'src/stores/tree.js';
+import { useQuotesStore } from 'src/stores/quotes.js';
+import type { Quote } from 'src/types/references.js';
+
+const treeStore = useTreeStore();
+const { textToExtractIn } = storeToRefs(treeStore);
+const QuotesStore = useQuotesStore();
 
 // Typage strict pour Quasar et les éléments HTML
 const pickedFile = ref<File | null>(null);
@@ -111,6 +120,7 @@ const pdfFileUrl = ref<string | null>(null);
 const currentPage = ref<number>(1);
 const totalPages = ref<number>(0);
 const extractedText = ref<string>('');
+const isSavingQuote = ref(false);
 
 const pdfCanvas = ref<HTMLCanvasElement | null>(null);
 const pdfContainer = ref<HTMLDivElement | null>(null);
@@ -244,10 +254,27 @@ const resetPdf = () => {
   pdfDoc = null;
 };
 
-// Envoi vers votre code métier (ex: Store Pinia, API, Parents)
-const integrateTextToApp = () => {
-  // Remplacez cette alert par votre appel de fonction ou Store
-  alert(`Texte récupéré avec succès :\n\n${extractedText.value}`);
+// Envoi vers la reference demandée
+const integrateTextToApp = async () => {
+  if (!textToExtractIn.value) return;
+
+  // Format the quote
+  const newQuote = {
+    id: Date.now().toString(),
+    page: currentPage.value.toString(),
+    content: extractedText.value,
+    tag: null,
+  } as Quote;
+
+  // Save to the right place according to the tree selected
+  isSavingQuote.value = true;
+  await QuotesStore.addQuote(
+    textToExtractIn.value?.type,
+    textToExtractIn.value?.referenceId,
+    newQuote,
+  );
+  isSavingQuote.value = false;
+  textToExtractIn.value = null;
 };
 
 // Nettoyage de sécurité lors du démontage du composant
@@ -256,7 +283,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* CSS FONDAMENTAL pour fusionner parfaitement le visuel et l'interactivité */
 .pdf-page-container {
   position: relative;

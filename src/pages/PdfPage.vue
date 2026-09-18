@@ -1,8 +1,6 @@
 <!-- pages/pdf-reader.vue -->
 <template>
   <q-page padding>
-    <div class="text-h4 q-mb-md">Mon Espace Documentaire</div>
-
     <!-- Injection sécurisée du lecteur -->
     <ClientOnly>
       <PdfIntegrator />
