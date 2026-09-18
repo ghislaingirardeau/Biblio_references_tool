@@ -5,7 +5,6 @@
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
       </template>
     </q-input>
-
     <q-tree
       :nodes="tree"
       node-key="label"
@@ -21,10 +20,11 @@
 import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
 import { useProjectsStore } from 'src/stores/projects';
+import { useTreeStore } from 'src/stores/tree';
 import { computed, ref, useTemplateRef } from 'vue';
 
-const ProjectsStore = useProjectsStore();
-const { treeProjectView } = storeToRefs(ProjectsStore);
+const treeStore = useTreeStore();
+const { treeProjectView } = storeToRefs(treeStore);
 
 const filter = ref('');
 const filterRef = useTemplateRef<QInput>('filterRef');

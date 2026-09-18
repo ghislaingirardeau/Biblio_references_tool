@@ -40,51 +40,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }),
   );
 
-  const treeProjectView = computed(() => {
-    const route = useRoute();
-    const router = useRouter();
-    const referencesString = Object.keys(project.value!.references) as Array<keyof References>;
-    // if you are a routing menu
-    const useRouteOnClick = route?.name === 'references';
-
-    const formatTree = referencesString.map((refLabel) => {
-      return {
-        label: capitalize(refLabel),
-        selectable: useRouteOnClick,
-        handler: async (node: string) => {
-          useRouteOnClick
-            ? await router.push({ name: 'references-type', params: { type: refLabel } })
-            : null;
-        },
-        children: project.value!.references[refLabel]?.lists.map((theRef) => {
-          return {
-            id: theRef.id,
-            type: refLabel,
-            label: theRef.title,
-            selectable: true,
-            handler: async (node: string) => {
-              // if menu go to the route clicked else it's where I want to register the quote
-              useRouteOnClick
-                ? await router.push({
-                    name: 'quotes-id',
-                    params: { type: refLabel, id: theRef.id },
-                  })
-                : console.log(node);
-            },
-          };
-        }),
-      };
-    });
-
-    return [
-      {
-        label: 'References',
-        selectable: false,
-        children: formatTree.sort((a, b) => a.label.localeCompare(b.label)),
-      },
-    ];
-  });
-
   async function add(label: string) {
     projects.value.push({
       id: `Project-${Date.now()}`,
@@ -158,7 +113,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projects,
     project,
     projectsLabel,
-    treeProjectView,
     loadProjectsFromFirestore,
     add,
     edit,

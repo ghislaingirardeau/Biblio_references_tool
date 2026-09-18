@@ -15,7 +15,10 @@
         </div>
       </q-card-section>
     </q-card> -->
-    <TreeProjectView />
+    <q-card class="col-md-8 col-12">
+      <TreeProjectView />
+    </q-card>
+    <q-card class="col-md-4 bg-primary"> </q-card>
   </q-page>
 </template>
 
