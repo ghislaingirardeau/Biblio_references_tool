@@ -33,7 +33,7 @@
       <q-stepper-navigation>
         <q-btn
           @click="modalActionFind"
-          :loading="isLoadingNextStep"
+          :loading="isLoading"
           :disable="useIsMobile() && isScanning && step === 1"
           color="primary"
           :label="step === 2 ? 'Save' : 'Find'"
@@ -85,7 +85,7 @@ const step = ref(1);
 const stepperRef = ref();
 
 const identifier = ref('');
-const isLoadingNextStep = ref(false);
+const isLoading = ref(false);
 const isScanning = ref(true);
 
 const newReference = ref<BibliographicEntry>({
@@ -121,10 +121,12 @@ function modalBackAction() {
 }
 
 async function saveReference() {
+  isLoading.value = true;
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
   await ReferenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
   restoreReferenceBase();
+  isLoading.value = false;
 }
 
 function restoreReferenceBase() {
@@ -142,7 +144,7 @@ function url() {
 
 async function findReference() {
   try {
-    isLoadingNextStep.value = true;
+    isLoading.value = true;
     errorMessage.value = null;
 
     const response = await fetch(url());
@@ -172,7 +174,7 @@ async function findReference() {
     console.log(error);
     errorMessage.value = 'Reference not found';
   }
-  isLoadingNextStep.value = false;
+  isLoading.value = false;
 }
 
 async function handleDetectionComplete(payload: string) {
