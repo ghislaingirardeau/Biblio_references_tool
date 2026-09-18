@@ -10,11 +10,23 @@
           <q-item-section>
             {{ menuItem.label.toUpperCase() }}
           </q-item-section>
-          <q-item-section avatar v-if="menuItem.detail">
-            <q-icon color="primary" name="add" @click="showModalProject" />
+          <q-item-section v-if="menuItem.detail" class="project-actions">
+            <q-icon
+              v-if="menuItem.detail && isExpanded"
+              color="primary"
+              size="sm"
+              name="add"
+              @click="showModalProject"
+            />
+            <q-icon
+              color="primary"
+              size="sm"
+              :name="isExpanded ? mdiEyeOffOutline : mdiEyeOutline"
+              @click="isExpanded = !isExpanded"
+            />
           </q-item-section>
         </q-item>
-        <div v-if="menuItem.detail">
+        <div v-if="menuItem.detail && isExpanded">
           <q-item
             v-for="(project, index) in menuItem.detail"
             :key="project.id"
@@ -83,6 +95,8 @@ import {
   mdiFolderOpenOutline,
   mdiFolderOutline,
   mdiTrashCan,
+  mdiEyeOutline,
+  mdiEyeOffOutline,
 } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
@@ -99,14 +113,10 @@ const showConfirmModal = defineModel<boolean>('showConfirmModal');
 const isProjectOnEditing = ref(false);
 const selectedFolder = ref<null | string>(null);
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
+const isExpanded = ref(false);
 
 const menuList = computed(() => {
   return [
-    {
-      label: 'Projects',
-      to: { name: 'references' },
-      detail: [...projectsLabel.value],
-    },
     {
       label: 'Bibliography',
       to: { name: 'bibliography' },
@@ -118,6 +128,11 @@ const menuList = computed(() => {
     {
       label: 'PDF',
       to: { name: 'PDF' },
+    },
+    {
+      label: 'Projects',
+      to: { name: 'references' },
+      detail: [...projectsLabel.value],
     },
   ];
 });
@@ -156,6 +171,13 @@ function askConfirmation(onEdited: boolean, id: string) {
 </script>
 
 <style lang="scss" scoped>
+.project-actions {
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 8px;
+}
+
 :deep() {
   .menu-projects-input {
     &.q-field--readonly.q-field--float .q-field__native {
