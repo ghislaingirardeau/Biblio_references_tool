@@ -22,18 +22,18 @@ export function formatArticleData(article: DoiAPIData, newReference: Ref<Bibliog
   const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL, type } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type,
-    title: rawTitle[0],
-    authors: author,
-    journal: article['container-title'][0],
-    publisher,
-    date: publishedDate,
-    page,
-    issue,
-    volume,
-    DOI,
-    URL,
-    language,
+    type: type || '',
+    title: rawTitle[0] || '',
+    authors: author || [],
+    journal: article['container-title'][0] || '',
+    publisher: publisher || '',
+    date: publishedDate || '',
+    page: page || '',
+    issue: issue || '',
+    volume: volume || '',
+    DOI: DOI || '',
+    URL: URL || '',
+    language: language || '',
   });
 }
 
@@ -48,15 +48,15 @@ export function formatReportData(article: DoiAPIData, newReference: Ref<Bibliogr
   const { title: rawTitle, publisher, DOI, language, URL, type } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type,
-    title: rawTitle[0],
-    authors: author,
-    journal: article['container-title'][0],
-    publisher,
-    date: publishedDate,
-    DOI,
-    URL,
-    language,
+    type: type || '',
+    title: rawTitle[0] || '',
+    authors: author || [],
+    journal: article['container-title'][0] || '',
+    publisher: publisher || '',
+    date: publishedDate || '',
+    DOI: DOI || '',
+    URL: URL || '',
+    language: language || '',
   });
 }
 
@@ -72,15 +72,15 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
   });
   newReference.value = Object.assign(newReference.value, {
     title,
-    subtitle: subtitle ? subtitle : '',
-    authors: formatAuthors,
-    publisher: publisher ? publisher : '',
-    date: result.publishedDate,
-    page: result.pageCount,
-    categories: categories ? categories : '',
-    URL: result.infoLink,
-    imageLinks: result.imageLinks?.thumbnail,
-    language,
+    subtitle: subtitle || '',
+    authors: formatAuthors || [],
+    publisher: publisher || '',
+    date: result.publishedDate || '',
+    page: result.pageCount || '',
+    categories: categories || '',
+    URL: result.infoLink || '',
+    imageLinks: result.imageLinks?.thumbnail || '',
+    language: result.language || '',
   });
 }
 
@@ -97,16 +97,16 @@ export function formatConferenceData(article: DoiAPIData, newReference: Ref<Bibl
   const start = event?.start?.['date-parts']?.[0]?.[0];
   const end = event?.end?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type,
-    title: title[0],
-    authors: author,
+    type: type || '',
+    title: title[0] || '',
+    authors: author || [],
     location: event?.location || '',
-    publisher,
-    date: publishedDate,
+    publisher: publisher || '',
+    date: publishedDate || '',
     name: event?.name || '',
-    DOI,
-    URL,
-    language,
-    page,
+    DOI: DOI || '',
+    URL: URL || '',
+    language: language || '',
+    page: page || '',
   });
 }
