@@ -47,7 +47,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
             .join(' ')
             .toLowerCase()
             .includes(lowerQuery)) ||
-        reference.tag?.join(' ').toLowerCase().includes(lowerQuery),
+        reference.tags?.join(' ').toLowerCase().includes(lowerQuery),
     );
     if (findReferences.length === 0) {
       return 'Book not found';

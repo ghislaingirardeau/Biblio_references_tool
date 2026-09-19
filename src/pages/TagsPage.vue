@@ -3,12 +3,12 @@
     <div class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-4">
         <q-card outlined class="full-height p-2">
-          <tree-tags-view :treeTags="treeReferencesTags" />
+          <tree-tags-view :treeTags="treeReferencesTags" type="references" />
         </q-card>
       </div>
       <div class="col-12 col-md-4">
         <q-card outlined class="full-height p-2">
-          <tree-tags-view :treeTags="treeQuotesTags" />
+          <tree-tags-view :treeTags="treeQuotesTags" type="quotes" />
         </q-card>
       </div>
       <div class="col-12 col-md-4">

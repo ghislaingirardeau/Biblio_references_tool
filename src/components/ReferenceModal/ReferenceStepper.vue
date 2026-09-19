@@ -123,6 +123,7 @@ function modalBackAction() {
 async function saveReference() {
   isLoading.value = true;
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
+  console.log(newReference.value);
   await ReferenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
   restoreReferenceBase();

@@ -8,7 +8,7 @@
       <div v-if="Array.isArray((editReference as any)[reference])" class="w-full">
         <div v-if="reference === 'tags'">
           <q-select
-            v-model="tag"
+            v-model="(editReference as any)['tags']"
             multiple
             use-chips
             use-input
@@ -19,20 +19,26 @@
           />
         </div>
         <div v-else>
-          <div v-for="(item, idx) in (editReference as any)[reference]" :key="idx" class="flex">
+          <div
+            v-for="(item, idx) in (editReference as BibliographicEntry)[
+              reference as keyof BibliographicEntry
+            ]"
+            :key="idx"
+            class="flex"
+          >
             <q-input
               v-model="(editReference as any)[reference][idx].firstname"
               class="mb-2 mr-2 flex-1"
-              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'First name')}`"
+              :label="`${formatLabel(reference + ' ' + (Number(idx) + 1) + ' ' + 'First name')}`"
             />
             <q-input
               v-model="(editReference as any)[reference][idx].lastname"
               class="mb-2 mr-2 flex-1"
-              :label="`${formatLabel(reference + ' ' + (idx + 1) + ' ' + 'Last name')} *`"
+              :label="`${formatLabel(reference + ' ' + (Number(idx) + 1) + ' ' + 'Last name')} *`"
               :rules="[(val) => !!val || 'Field is required']"
             />
             <q-btn
-              v-if="idx > 0"
+              v-if="Number(idx) > 0"
               flat
               color="primary"
               :icon="mdiCloseCircleOutline"
@@ -68,11 +74,14 @@ import { mdiCloseCircleOutline } from '@quasar/extras/mdi-v7';
 import { format } from 'quasar';
 import { useProjectsStore } from 'src/stores/projects';
 import { computed, ref } from 'vue';
+import type { BibliographicEntry } from 'src/types/references';
 
 const editReference = defineModel('editReference');
 const ProjectsStore = useProjectsStore();
 
-const tag = ref(null);
+console.log(editReference.value);
+
+// const tag = ref(null);
 
 const { capitalize } = format;
 

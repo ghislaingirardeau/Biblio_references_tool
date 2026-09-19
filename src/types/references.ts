@@ -55,7 +55,7 @@ export interface BibliographicEntry {
   id: string | null;
   title?: string;
   type?: string;
-  tag?: string[];
+  tags?: string[];
   subtitle?: string;
   authors?: Authors[];
   ['main-title']?: string;

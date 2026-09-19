@@ -5,18 +5,32 @@
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
       </template>
     </q-input>
-    <q-tree
-      :nodes="tree"
-      node-key="label"
-      :filter="filter"
-      v-model:expanded="expandedKeys"
-      selected-color="primary"
-      class="cursor-pointer"
-    />
+    <q-tree :nodes="tree" node-key="label" default-expand-all :filter="filter">
+      <template #default-header="prop">
+        <div class="row items-center justify-between full-width">
+          <div class="">{{ prop.node.label }}</div>
+          <q-icon
+            v-if="!prop.node.children"
+            :name="mdiMinus"
+            color="negative"
+            class="q-mr-sm cursor-pointer"
+            @click="deleteTag(prop.node.label, $event)"
+          />
+          <q-icon
+            v-else
+            :name="mdiPlus"
+            color="primary"
+            class="q-mr-sm cursor-pointer"
+            @click="createTag"
+          />
+        </div>
+      </template>
+    </q-tree>
   </div>
 </template>
 
 <script setup lang="ts">
+import { mdiMinus, mdiPlus } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
 import { useTagsStore } from 'src/stores/tags';
@@ -27,6 +41,7 @@ const { treeReferencesTags } = storeToRefs(tagsStore);
 
 const props = defineProps<{
   treeTags: QTreeNode[];
+  type: string;
 }>();
 
 const filter = ref('');
@@ -38,6 +53,17 @@ const tree = computed<QTreeNode[]>(() => props.treeTags);
 function resetFilter() {
   filter.value = '';
   filterRef.value!.focus();
+}
+
+function deleteTag(label: string, e: Event) {
+  e.stopPropagation();
+  // remove for all the quotes OR not allowed if used ???
+  console.log('remove the ', label, 'in ', props.type);
+}
+
+function createTag(e: Event) {
+  e.stopPropagation();
+  console.log('create new tag');
 }
 </script>
 

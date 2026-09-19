@@ -21,6 +21,20 @@
           <q-item-label caption>
             <span>Quotes: {{ reference.quotes?.length ? reference.quotes?.length : '0' }}</span>
           </q-item-label>
+          <q-item-label>
+            <q-chip
+              v-for="tag in reference.tags"
+              :key="tag"
+              size="sm"
+              outline
+              square
+              color="secondary"
+              text-color="white"
+              icon="bookmark"
+            >
+              {{ tag }}
+            </q-chip></q-item-label
+          >
         </q-item-section>
         <q-item-section avatar>
           <div class="flex">
