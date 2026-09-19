@@ -23,13 +23,17 @@ import { useTagsStore } from 'src/stores/tags';
 import { computed, ref, useTemplateRef } from 'vue';
 
 const tagsStore = useTagsStore();
-const { treeTagsView } = storeToRefs(tagsStore);
+const { treeReferencesTags } = storeToRefs(tagsStore);
+
+const props = defineProps<{
+  treeTags: QTreeNode[];
+}>();
 
 const filter = ref('');
 const filterRef = useTemplateRef<QInput>('filterRef');
 const expandedKeys = ref(['References']);
 
-const tree = computed<QTreeNode[]>(() => treeTagsView.value as unknown as QTreeNode[]);
+const tree = computed<QTreeNode[]>(() => props.treeTags);
 
 function resetFilter() {
   filter.value = '';

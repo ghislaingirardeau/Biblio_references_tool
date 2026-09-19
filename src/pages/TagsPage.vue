@@ -1,9 +1,14 @@
 <template>
   <q-page padding>
     <div class="row q-col-gutter-md q-pa-md">
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-4">
         <q-card outlined class="full-height p-2">
-          <tree-tags-view />
+          <tree-tags-view :treeTags="treeReferencesTags" />
+        </q-card>
+      </div>
+      <div class="col-12 col-md-4">
+        <q-card outlined class="full-height p-2">
+          <tree-tags-view :treeTags="treeQuotesTags" />
         </q-card>
       </div>
       <div class="col-12 col-md-4">
@@ -14,7 +19,12 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import TreeTagsView from 'src/components/TreeTagsView.vue';
+import { useTagsStore } from 'src/stores/tags';
+
+const tagsStore = useTagsStore();
+const { treeReferencesTags, treeQuotesTags } = storeToRefs(tagsStore);
 </script>
 
 <style scoped></style>

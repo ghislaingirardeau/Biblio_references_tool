@@ -12,21 +12,26 @@ export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
   const tagsQuote: Ref<string[]> = computed(() => project.value!.tags.quotes);
 
-  const treeTagsView: Ref<any[]> = computed(() => {
+  const treeQuotesTags: Ref<any[]> = computed(() => {
     return [
       {
-        label: 'Tags for References',
+        label: 'Tags for Quotes',
         selectable: false,
-        children: tagsReference.value.map((r) => {
+        children: tagsQuote.value.map((r) => {
           return {
             label: r,
           };
         }),
       },
+    ];
+  });
+
+  const treeReferencesTags: Ref<any[]> = computed(() => {
+    return [
       {
-        label: 'Tags for Quotes',
+        label: 'Tags for References',
         selectable: false,
-        children: tagsQuote.value.map((r) => {
+        children: tagsReference.value.map((r) => {
           return {
             label: r,
           };
@@ -44,5 +49,5 @@ export const useTagsStore = defineStore('TagsStore', () => {
     }
   }
 
-  return { tags, tagsReference, tagsQuote, addTag, treeTagsView };
+  return { tags, tagsReference, tagsQuote, addTag, treeQuotesTags, treeReferencesTags };
 });
