@@ -4,9 +4,13 @@ import { useProjectsStore } from './projects';
 import { useRoute, useRouter } from 'vue-router';
 import { format } from 'quasar';
 import type { References } from 'src/types/references';
+import { useReferencesStore } from './references';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
+
+const ReferencesStore = useReferencesStore();
+const { referencesLabels } = storeToRefs(ReferencesStore);
 
 const { capitalize } = format;
 
@@ -21,9 +25,9 @@ export const useTreeStore = defineStore('TreeStore', () => {
     // if you are a routing menu
     const useRouteOnClick = route?.name === 'references';
 
-    const formatTree = referencesString.map((refLabel) => {
+    const formatTree = referencesString.map((refLabel, index) => {
       return {
-        label: capitalize(refLabel),
+        label: capitalize(referencesLabels.value[index]!),
         selectable: useRouteOnClick,
         handler: async (node: string) => {
           useRouteOnClick

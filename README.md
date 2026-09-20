@@ -1,6 +1,12 @@
 # biblio_tool (my-biblio-tool)
 
-## Cloud Vision API
+## Deploy
+
+Npm run build:pwa => comit & push to repo => auto deploy on Render
+
+Otherwise the web app is not updated !
+
+## Cloud Vision API & CLE GOOGLE SUR g.gXXXX
 
 Text_detection (used here) => 1000 request free / months
 1.5$ next 1000 requests

@@ -6,7 +6,7 @@ export const referencesTemplate = {
     description: 'A scholarly article published in an academic journal.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       type: '',
       title: '',
       authors: [
@@ -34,7 +34,7 @@ export const referencesTemplate = {
     description: 'A complete book written by one or more authors.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       subtitle: '',
       authors: [
@@ -56,7 +56,7 @@ export const referencesTemplate = {
     description: 'A chapter or section within an edited book.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       subtitle: '',
       authors: [
@@ -85,7 +85,7 @@ export const referencesTemplate = {
     description: 'A paper presented at a conference or symposium.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -108,7 +108,7 @@ export const referencesTemplate = {
     description: 'An academic dissertation or dissertation submitted for a degree.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -129,7 +129,7 @@ export const referencesTemplate = {
     description: 'A technical or research report published by an institution or organization.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       type: '',
       title: '',
       authors: [
@@ -153,7 +153,7 @@ export const referencesTemplate = {
     description: 'Content from an online source, such as a website or blog post.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -174,7 +174,7 @@ export const referencesTemplate = {
     description: 'An article published in a newspaper.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -194,7 +194,7 @@ export const referencesTemplate = {
     description: 'An article published in a magazine or popular journal.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -215,7 +215,7 @@ export const referencesTemplate = {
     description: 'Software or code used or cited in the research.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -237,7 +237,7 @@ export const referencesTemplate = {
     description: 'A law, statute, or regulation.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -259,7 +259,7 @@ export const referencesTemplate = {
     description: 'An unpublished or in-progress work.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {
@@ -279,7 +279,7 @@ export const referencesTemplate = {
     description: 'An oral presentation, lecture, or slide deck.',
     template: {
       id: null,
-      tags: [''],
+      tags: [],
       title: '',
       authors: [
         {

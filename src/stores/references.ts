@@ -18,6 +18,12 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     return Object.keys(references.value) as Array<keyof References>;
   });
 
+  const referencesLabels = computed(() => {
+    return referencesTypes.value.map((ref) => {
+      return references.value[ref]?.label;
+    });
+  });
+
   function resetReferences() {
     references.value = referencesTemplate;
   }
@@ -75,6 +81,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   return {
     references,
     referencesTypes,
+    referencesLabels,
     getTitle,
     add,
     find,
