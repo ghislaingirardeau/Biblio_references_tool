@@ -13,7 +13,15 @@
           </q-item-section>
 
           <!-- Menu with projects to expand or not -->
-          <q-expansion-item v-else :label="menuItem.label.toUpperCase()" class="full-width">
+          <q-expansion-item v-else v-model="isExpanded" class="full-width">
+            <template #header>
+              <q-item-section> {{ menuItem.label.toUpperCase() }} </q-item-section>
+
+              <q-item-section avatar v-if="isExpanded">
+                <q-icon color="primary" size="sm" :name="mdiPlusCircle" @click="showModalProject" />
+              </q-item-section>
+            </template>
+
             <q-item
               v-for="(project, index) in menuItem.detail"
               :key="project.id"
@@ -69,21 +77,6 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
-          <!-- <q-item-section v-if="menuItem.detail" class="project-actions">
-            <q-icon
-              v-if="menuItem.detail && isExpanded"
-              color="primary"
-              size="sm"
-              name="add"
-              @click="showModalProject"
-            />
-            <q-icon
-              color="primary"
-              size="sm"
-              :name="isExpanded ? mdiEyeOffOutline : mdiEyeOutline"
-              @click="isExpanded = !isExpanded"
-            />
-          </q-item-section> -->
         </q-item>
       </template>
     </q-list>
@@ -100,6 +93,7 @@ import {
   mdiTrashCan,
   mdiEyeOutline,
   mdiEyeOffOutline,
+  mdiPlusCircle,
 } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
@@ -116,6 +110,7 @@ const selectedFolder = defineModel<string | null>('selectedFolder');
 
 const isProjectOnEditing = ref(false);
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
+const isExpanded = ref(true);
 
 const menuList = computed(() => {
   return [
@@ -133,7 +128,6 @@ const menuList = computed(() => {
     },
     {
       label: 'Projects',
-      to: { name: 'references' },
       detail: [...projectsLabel.value],
     },
   ];
@@ -143,7 +137,8 @@ function isCurrentProjectOpened(id: string) {
   return currentProject.value === id;
 }
 
-async function showModalProject() {
+async function showModalProject(e: Event) {
+  e.stopPropagation();
   await ProjectsStore.add('new project');
 }
 
@@ -173,13 +168,6 @@ function askConfirmation(onEdited: boolean, id: string) {
 </script>
 
 <style lang="scss" scoped>
-.project-actions {
-  flex-direction: row;
-  justify-content: end;
-  align-items: center;
-  gap: 8px;
-}
-
 :deep() {
   .menu-projects-input {
     &.q-field--readonly.q-field--float .q-field__native {

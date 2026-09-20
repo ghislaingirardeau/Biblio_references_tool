@@ -3,7 +3,7 @@
     <q-toolbar>
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-      <q-toolbar-title class="cursor-pointer">
+      <q-toolbar-title>
         {{ mainTitle }}
       </q-toolbar-title>
 
