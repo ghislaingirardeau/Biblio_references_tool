@@ -17,7 +17,11 @@ const port = process.env.PORT || 3000;
 // Configuration de base
 app.use(
   cors({
-    origin: ['http://localhost:9200', 'https://biblio-references-tool.onrender.com'],
+    origin: [
+      'http://localhost:9200',
+      'http://localhost:9000',
+      'https://biblio-references-tool.onrender.com',
+    ],
     credentials: true,
   }),
 );
