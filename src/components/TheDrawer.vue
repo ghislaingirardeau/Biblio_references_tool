@@ -112,11 +112,10 @@ const router = useRouter();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 const showConfirmModal = defineModel<boolean>('showConfirmModal');
+const selectedFolder = defineModel<string | null>('selectedFolder');
 
 const isProjectOnEditing = ref(false);
-const selectedFolder = ref<null | string>(null);
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
-const isExpanded = ref(false);
 
 const menuList = computed(() => {
   return [

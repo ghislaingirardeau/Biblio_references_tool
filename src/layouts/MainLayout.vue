@@ -5,6 +5,7 @@
     <TheDrawer
       v-model:leftDrawerOpen="leftDrawerOpen"
       v-model:showConfirmModal="showConfirmModal"
+      v-model:selectedFolder="selectedFolder"
     />
 
     <q-page-container>
@@ -39,8 +40,7 @@ const ProjectsStore = useProjectsStore();
 const { refreshKey } = storeToRefs(ProjectsStore);
 
 const showConfirmModal = ref(false);
-const selectedFolder = ref<null | string>(null);
-
+const selectedFolder = ref<string | null>(null);
 const leftDrawerOpen = ref(false);
 
 const route = useRoute();
@@ -50,7 +50,9 @@ const modalMode = computed(() => {
 });
 
 async function deleteProject() {
-  selectedFolder.value ? await ProjectsStore.remove(selectedFolder.value) : null;
+  if (selectedFolder.value) {
+    await ProjectsStore.remove(selectedFolder.value);
+  }
   selectedFolder.value = null;
 }
 </script>

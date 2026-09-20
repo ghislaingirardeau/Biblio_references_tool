@@ -5,7 +5,7 @@ import type { References } from 'src/types/references';
 
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
-import { useStorage } from '@vueuse/core';
+import { identity, useStorage } from '@vueuse/core';
 import { saveDataFirestore } from 'src/utils/useFirestore';
 import { format } from 'quasar';
 import { useRoute, useRouter } from 'vue-router';
