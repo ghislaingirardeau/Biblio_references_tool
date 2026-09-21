@@ -30,7 +30,20 @@
                 :disabled="currentPage <= 1"
                 @click="changePage(-1)"
               />
-              <span class="text-subtitle2">Page {{ currentPage }} / {{ totalPages }}</span>
+              <span class="text-subtitle2">Page</span>
+              <q-input
+                v-model="currentPage"
+                class="ml-2"
+                dense
+                borderless
+                :max="totalPages"
+                min="1"
+                type="number"
+                :style="{ width: '2.5rem' }"
+                @blur="changePage(currentPage, true)"
+                @keyup.enter="$event.target.blur()"
+              /><span class="text-subtitle2">/ {{ totalPages }}</span>
+
               <q-btn
                 flat
                 round
@@ -118,6 +131,7 @@ const QuotesStore = useQuotesStore();
 const pickedFile = ref<File | null>(null);
 const pdfFileUrl = ref<string | null>(null);
 const currentPage = ref<number>(1);
+
 const totalPages = ref<number>(0);
 const extractedText = ref<string>('');
 const isSavingQuote = ref(false);
@@ -237,8 +251,8 @@ const handleTextSelection = () => {
 };
 
 // Changement de page
-const changePage = async (direction: number) => {
-  const targetPage = currentPage.value + direction;
+const changePage = async (direction: number, isRandom: boolean = false) => {
+  const targetPage = isRandom ? Number(direction) : currentPage.value + direction;
   if (targetPage >= 1 && targetPage <= totalPages.value) {
     currentPage.value = targetPage;
     await renderPage(currentPage.value);
