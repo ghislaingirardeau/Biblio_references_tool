@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Capture écran - Mon application",
+  "name": "Capture texte - Biblio Tool",
   "version": "1.0.0",
-  "description": "Capture une zone de la page web.",
+  "description": "Capture une zone de la page web et envoie du texte vers Biblio Tool.",
   "permissions": ["activeTab", "tabs"],
   "background": {
     "service_worker": "background.js"
@@ -13,7 +13,7 @@
   "commands": {
     "start-capture": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Y"
+        "default": "Ctrl+Shift+X"
       },
       "description": "Capturer une zone de la page"
     },

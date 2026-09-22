@@ -10,13 +10,22 @@ let isSelecting = false;
 // 1. Capture texte
 // ========================================
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener(async (message) => {
   console.log('Message reçu par content.js :', message);
 
   if (message.type === 'GET_SELECTED_TEXT') {
     const selection = window.getSelection();
 
-    const selectedText = selection?.toString().trim();
+    let selectedText = selection?.toString().trim();
+
+    // 2. Si rien trouvé, essayer le presse-papiers
+    if (!selectedText) {
+      try {
+        selectedText = (await navigator.clipboard.readText()).trim();
+      } catch (error) {
+        console.error('Impossible de lire le presse-papiers :', error);
+      }
+    }
 
     if (!selectedText) {
       console.warn('❌ Aucun texte sélectionné');
