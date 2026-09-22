@@ -6,6 +6,18 @@ Npm run build:pwa => comit & push to repo => auto deploy on Render
 
 Otherwise the web app is not updated !
 
+## Extension chrome-screenshot
+
+It's the extension used to extract text from copy or from image capture and to integrate directly to quote folder
+
+requirement:
+
+- Install extension:
+  - manage extension _ developper mode _ load unpacked \_ select the folder
+- The tab biblio_tool must be opened with the right reference to add quote
+- CTRL + SHIFT + X to extract from image /!\ it use Vision API
+- SELECT TEXT _ COPY LEFT CLICK _ CTRL + SHIFT + Q to send to the app
+
 ## Cloud Vision API & CLE GOOGLE SUR g.gXXXX
 
 Text_detection (used here) => 1000 request free / months
