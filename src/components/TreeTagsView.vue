@@ -34,14 +34,14 @@ import { mdiMinus, mdiPlus } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
 import { useTagsStore } from 'src/stores/tags';
+import type { Tags } from 'src/types/tags';
 import { computed, ref, useTemplateRef } from 'vue';
 
 const tagsStore = useTagsStore();
-const { treeReferencesTags } = storeToRefs(tagsStore);
 
 const props = defineProps<{
   treeTags: QTreeNode[];
-  type: string;
+  type: keyof Tags;
 }>();
 
 const filter = ref('');
@@ -59,11 +59,12 @@ function deleteTag(label: string, e: Event) {
   e.stopPropagation();
   // remove for all the quotes OR not allowed if used ???
   console.log('remove the ', label, 'in ', props.type);
+  tagsStore.removeTag(props.type, label);
 }
 
 function createTag(e: Event) {
   e.stopPropagation();
-  console.log('create new tag');
+  console.log('create new tag', props.type);
 }
 </script>
 

@@ -49,5 +49,11 @@ export const useTagsStore = defineStore('TagsStore', () => {
     }
   }
 
-  return { tags, tagsReference, tagsQuote, addTag, treeQuotesTags, treeReferencesTags };
+  function removeTag(type: keyof Tags, name: string) {
+    project.value!.tags[type] = project.value!.tags[type].filter((n) => n !== name);
+
+    // Use Filter() from store References to get all with the tags, map and delete
+  }
+
+  return { tags, tagsReference, tagsQuote, addTag, removeTag, treeQuotesTags, treeReferencesTags };
 });

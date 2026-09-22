@@ -10,6 +10,21 @@
   "action": {
     "default_title": "Capturer une zone"
   },
+  "commands": {
+    "start-capture": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Capturer une zone de la page"
+    },
+
+    "send-selected-text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q"
+      },
+      "description": "Envoyer le texte sélectionné vers Biblio Tool"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

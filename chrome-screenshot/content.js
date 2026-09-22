@@ -6,6 +6,48 @@ let startY = 0;
 
 let isSelecting = false;
 
+// ========================================
+// 1. Capture texte
+// ========================================
+
+chrome.runtime.onMessage.addListener((message) => {
+  console.log('Message reçu par content.js :', message);
+
+  if (message.type === 'GET_SELECTED_TEXT') {
+    const selection = window.getSelection();
+
+    const selectedText = selection?.toString().trim();
+
+    if (!selectedText) {
+      console.warn('❌ Aucun texte sélectionné');
+      return;
+    }
+
+    chrome.runtime.sendMessage({
+      type: 'SEND_SELECTED_TEXT',
+      text: selectedText,
+    });
+
+    return;
+  }
+
+  if (message.type === 'SELECTED_TEXT_FOR_QUASAR') {
+    console.log('Texte reçu pour Biblio Tool :', message.text);
+
+    window.dispatchEvent(
+      new CustomEvent('EXTENSION_SELECTED_TEXT', {
+        detail: {
+          text: message.text,
+        },
+      }),
+    );
+  }
+});
+
+// ========================================
+// 2. Capture d'images
+// ========================================
+
 chrome.runtime.onMessage.addListener((message) => {
   if (message.type === 'START_CAPTURE') {
     startCapture();

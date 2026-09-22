@@ -7,6 +7,9 @@
       label="Expand quote"
       left-label
     />
+    <ScreenshotFromExtension />
+    <TextFromExtension />
+
     <q-list v-if="quotes && quotes.length" bordered separator :key="quotes.length">
       <q-item clickable v-ripple v-for="(quote, index) in quotes" :key="quote.id!">
         <q-item-section @click="modalEdit(quote, true)" class="w-full">
@@ -105,6 +108,8 @@ import { useRoute } from 'vue-router';
 import { useClipboard, useTemplateRefsList } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
+import ScreenshotFromExtension from 'src/components/ScreenShot/ScreenshotFromExtension.vue';
+import TextFromExtension from 'src/components/ScreenShot/TextFromExtension.vue';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();
