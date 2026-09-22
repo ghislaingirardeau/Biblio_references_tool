@@ -129,16 +129,16 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 chrome.commands.onCommand.addListener(async (command) => {
   console.log('Commande reçue :', command);
 
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+
   // ==========================================
   // CAPTURE IMAGE
   // ==========================================
 
   if (command === 'start-capture') {
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
-
     if (!tab?.id) {
       return;
     }
@@ -159,11 +159,6 @@ chrome.commands.onCommand.addListener(async (command) => {
   // ==========================================
 
   if (command === 'send-selected-text') {
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
-
     if (!tab?.id) {
       return;
     }
