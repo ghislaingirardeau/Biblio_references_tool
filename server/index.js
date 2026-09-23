@@ -20,6 +20,7 @@ app.use(
     origin: [
       'http://localhost:9200',
       'http://localhost:9000',
+      'http://localhost:9300',
       'https://biblio-references-tool.onrender.com',
     ],
     credentials: true,
