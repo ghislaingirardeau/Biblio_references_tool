@@ -55,6 +55,11 @@ function resetFilter() {
   filterRef.value!.focus();
 }
 
+/* TODO 
+- suppression de tags
+- ajout de nouveau tags
+*/
+
 function deleteTag(label: string, e: Event) {
   e.stopPropagation();
   // remove for all the quotes OR not allowed if used ???

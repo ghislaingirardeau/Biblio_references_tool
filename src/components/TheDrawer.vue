@@ -91,8 +91,6 @@ import {
   mdiFolderOpenOutline,
   mdiFolderOutline,
   mdiTrashCan,
-  mdiEyeOutline,
-  mdiEyeOffOutline,
   mdiPlusCircle,
 } from '@quasar/extras/mdi-v7';
 import { storeToRefs } from 'pinia';
@@ -121,10 +119,6 @@ const menuList = computed(() => {
     {
       label: 'Tags',
       to: { name: 'tags' },
-    },
-    {
-      label: 'PDF',
-      to: { name: 'PDF' },
     },
     {
       label: 'Projects',
