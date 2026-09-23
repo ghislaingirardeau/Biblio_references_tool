@@ -22,11 +22,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/TagsPage.vue'),
       },
       {
-        path: 'PDF',
-        name: 'PDF',
-        component: () => import('pages/PdfPage.vue'),
-      },
-      {
         path: '/:type',
         name: 'references-type',
         component: () => import('pages/ReferencePage.vue'),
