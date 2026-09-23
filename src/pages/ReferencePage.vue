@@ -60,72 +60,7 @@
         </q-card>
       </div>
     </div>
-    <!-- <q-list v-if="typeReferences && typeReferences.length" bordered separator>
-      <q-item
-        clickable
-        @click="goToQuotes(reference.id!)"
-        v-ripple
-        v-for="reference in typeReferences"
-        :key="reference.id!"
-      >
-        <q-item-section>
-          <q-item-label>{{ reference.title }}</q-item-label>
-          <q-item-label caption>
-            <span
-              v-for="(author, i) in reference.authors"
-              :key="author.lastname + i"
-              class="mr-2"
-              >{{ author.lastname + ' ' + author.firstname }}</span
-            >
-          </q-item-label>
-          <q-item-label caption>
-            <span>Quotes: {{ reference.quotes?.length ? reference.quotes?.length : '0' }}</span>
-          </q-item-label>
-          <q-item-label>
-            <q-chip
-              v-for="tag in reference.tags"
-              :key="tag"
-              size="sm"
-              outline
-              square
-              color="secondary"
-              text-color="white"
-              icon="bookmark"
-            >
-              {{ tag }}
-            </q-chip></q-item-label
-          >
-        </q-item-section>
-        <q-item-section avatar>
-          <div class="flex">
-            <q-btn
-              v-if="reference.URL"
-              dense
-              flat
-              round
-              color="primary"
-              :icon="mdiWeb"
-              @click.stop="goToLink(reference.URL)"
-            >
-              <q-tooltip class="" :offset="[10, 10]"> Website </q-tooltip>
-            </q-btn>
-            <q-btn dense flat round color="primary" icon="edit" @click.stop="modalEdit(reference)">
-              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
-            </q-btn>
-            <q-btn
-              dense
-              flat
-              round
-              color="primary"
-              icon="delete"
-              @click.stop="modalConfirm(reference.id!)"
-            >
-              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
-            </q-btn>
-          </div>
-        </q-item-section>
-      </q-item>
-    </q-list> -->
+
     <div v-else>No reference saved !</div>
 
     <AddWidget />
