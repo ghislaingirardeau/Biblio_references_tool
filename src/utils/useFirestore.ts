@@ -42,18 +42,25 @@ export async function setUserFirestore() {
   const docSnap = await getDoc(userDocRef);
 
   const ProjectsStore = useProjectsStore();
+
+  if (!docSnap.exists()) {
+    // créer le document utilisateur si celui-ci est nouveau
+    await setDoc(doc(db, 'users', authStore.user!.uid!), {
+      projects: ProjectsStore.projects,
+    });
+
+    return;
+  }
+
+  // Sinon extrait les projets
   const { projects } = docSnap.data() as Projects;
 
-  // Vérification si le document existe déjà, si c'est le cas, charge les
   if (projects) {
     ProjectsStore.loadProjectsFromFirestore(projects);
 
     return { isNewUser: false };
   }
-  // Sinon, on le crée avec les données par défaut
-  await setDoc(doc(db, 'users', authStore.user!.uid!), {
-    projects: ProjectsStore.projects,
-  });
+
   Notify.create({
     message: 'Data saved',
     color: 'secondary',

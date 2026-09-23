@@ -2,6 +2,7 @@
   <q-page padding>
     <div class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-8">
+        <TextClipboard />
         <q-card outlined class="full-height p-2">
           <TreeProjectView />
         </q-card>
@@ -15,6 +16,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import TextClipboard from 'src/components/electron/textClipboard.vue';
 import TreeProjectView from 'src/components/TreeProjectView.vue';
 import { useAuth } from 'src/stores/auth';
 import { useReferencesStore } from 'src/stores/references';

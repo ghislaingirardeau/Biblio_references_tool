@@ -142,8 +142,8 @@ export default defineConfig((ctx) => {
     pwaRegisterServiceWorker: 'src-pwa/register-service-worker',
     pwaServiceWorker: 'src-pwa/custom-service-worker',
     pwaManifestFile: 'src-pwa/manifest.json',
-    //   electronMain: 'src-electron/electron-main',
-    //   electronPreload: 'src-electron/electron-preload'
+    electronMain: 'src-electron/electron-main',
+    electronPreload: 'src-electron/electron-preload',
     //   bexManifestFile: 'src-bex/manifest.json
     // },
 
