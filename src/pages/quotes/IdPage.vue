@@ -12,7 +12,7 @@
 
     <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
-        <q-card outlined class="full-height">
+        <q-card class="full-height flex flex-col justify-between">
           <q-card-section>
             <div
               :class="{ 'truncate-2-lines': !isQuoteExpanded }"
@@ -38,8 +38,8 @@
               </q-chip>
             </div>
           </q-card-section>
-          <q-separator />
-          <q-card-actions>
+
+          <q-card-actions class="border-t-2 border-indigo-500">
             <q-btn
               dense
               flat
@@ -107,8 +107,8 @@ import { useRoute } from 'vue-router';
 import { useClipboard, useTemplateRefsList } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
-import ScreenshotFromExtension from 'src/components/ScreenShot/ScreenshotFromExtension.vue';
-import TextFromExtension from 'src/components/ScreenShot/TextFromExtension.vue';
+import ScreenshotFromExtension from 'src/components/ExtractFromExtension/ScreenshotFromExtension.vue';
+import TextFromExtension from 'src/components/ExtractFromExtension/TextFromExtension.vue';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();

@@ -6,7 +6,10 @@ export async function useSentToOcr(screenshot: ImageData, newQuote: Quote, toDoN
   try {
     const auth = getAuth();
     const user = auth.currentUser;
-    const token = await user!.getIdToken();
+    if (!user) {
+      throw new Error('Utilisateur non connecté');
+    }
+    const token = await user.getIdToken();
     const response = await fetch(`${process.env.API}/ocrCapture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },

@@ -1,5 +1,5 @@
 <template>
-  <span></span>
+  <q-spinner-ios v-if="isSavingQuote" color="primary" size="4em" />
 </template>
 
 <script setup lang="ts">
@@ -24,6 +24,8 @@ const newQuote = ref<Quote>({
 function handleScreenshot(event: any) {
   console.log('Capture reçue depuis extension', event);
 
+  isSavingQuote.value = true;
+
   const image = event.detail?.image;
 
   if (!image) {
@@ -42,7 +44,6 @@ function handleScreenshot(event: any) {
 }
 
 async function saveQuote() {
-  isSavingQuote.value = true;
   await QuotesStore.addQuote(
     route.params.type as string,
     route.params.id as string,

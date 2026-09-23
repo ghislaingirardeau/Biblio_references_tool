@@ -30,8 +30,7 @@
               </q-chip>
             </div>
           </q-card-section>
-          <q-separator />
-          <q-card-actions>
+          <q-card-actions class="border-t-2 border-indigo-500">
             <q-btn
               v-if="reference.URL"
               dense
