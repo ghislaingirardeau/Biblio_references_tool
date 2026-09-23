@@ -15,8 +15,9 @@
       size="sm"
       round
       :icon="mdiAccountPlus"
+      :loading="isFetchingData"
       class="q-ml-sm text-white"
-      @click="useFirebaseAuth.signInWithGoogle()"
+      @click="authentify"
     >
     </q-btn>
     <ConfirmModal
@@ -44,13 +45,18 @@ import { ref } from 'vue';
 import { useProjectsStore } from 'src/stores/projects';
 
 const auth = useAuth();
-const { loggedIn } = storeToRefs(auth);
+const { loggedIn, isFetchingData } = storeToRefs(auth);
 
 const router = useRouter();
 const ProjectsStore = useProjectsStore();
 const { userHasToSave } = storeToRefs(ProjectsStore);
 
 const showConfirmModal = ref(false);
+
+const authentify = async () => {
+  isFetchingData.value = true;
+  const response = await useFirebaseAuth.signInWithGoogle();
+};
 </script>
 
 <style scoped></style>

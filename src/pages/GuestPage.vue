@@ -30,7 +30,8 @@
       <q-btn
         color="primary"
         label="Sign-in with Google"
-        @click="useFirebaseAuth.signInWithGoogle()"
+        :loading="isFetchingData"
+        @click="authentify"
       >
       </q-btn>
     </div>
@@ -38,11 +39,17 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useAuth } from 'src/stores/auth';
 import { useFirebaseAuth } from 'src/utils/useFirebaseAuth';
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
+const auth = useAuth();
+const { isFetchingData } = storeToRefs(auth);
+
+const authentify = async () => {
+  isFetchingData.value = true;
+  const response = await useFirebaseAuth.signInWithGoogle();
+};
 </script>
 
 <style scoped></style>

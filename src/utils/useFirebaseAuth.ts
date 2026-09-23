@@ -7,7 +7,8 @@ const authStore = useAuth();
 export const useFirebaseAuth = {
   async signInWithGoogle() {
     try {
-      await signInWithPopup(auth, provider);
+      const response = await signInWithPopup(auth, provider);
+      return response;
     } catch (error) {
       console.error("Erreur d'authentification :", error);
     }

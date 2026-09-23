@@ -32,7 +32,10 @@ export const useAuth = defineStore(
         // Exécuter du code async sans rendre le callback async
         void (async () => {
           await setUserFirestore();
-          await router.push({ name: 'references' });
+          const goTo = await router.push({ name: 'references' });
+          if (goTo) {
+            isFetchingData.value = false;
+          }
           userHasToSave.value = false;
         })();
       } else {
