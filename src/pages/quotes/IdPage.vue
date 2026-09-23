@@ -7,8 +7,7 @@
       label="Expand quote"
       left-label
     />
-    <ScreenshotFromExtension />
-    <TextFromExtension />
+    <ElementFromExtension />
 
     <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
@@ -107,8 +106,7 @@ import { useRoute } from 'vue-router';
 import { useClipboard, useTemplateRefsList } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
-import ScreenshotFromExtension from 'src/components/ExtractFromExtension/ScreenshotFromExtension.vue';
-import TextFromExtension from 'src/components/ExtractFromExtension/TextFromExtension.vue';
+import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();

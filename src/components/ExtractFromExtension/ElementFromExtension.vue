@@ -7,11 +7,13 @@ import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/references';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const QuotesStore = useQuotesStore();
 const route = useRoute();
 
 const isSavingQuote = ref(false);
+const screenshot = ref(null);
 const newQuote = ref<Quote>({
   id: Date.now().toString(),
   page: '0',
@@ -21,10 +23,12 @@ const newQuote = ref<Quote>({
 
 onMounted(() => {
   window.addEventListener('EXTENSION_SELECTED_TEXT', handleSelectedText);
+  window.addEventListener('EXTENSION_SCREENSHOT', handleScreenshot);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('EXTENSION_SELECTED_TEXT', handleSelectedText);
+  window.removeEventListener('EXTENSION_SCREENSHOT', handleScreenshot);
 });
 
 function handleSelectedText(event: any) {
@@ -37,6 +41,28 @@ function handleSelectedText(event: any) {
   newQuote.value.content = text;
 
   void saveQuote();
+}
+
+function handleScreenshot(event: any) {
+  console.log('Capture reçue depuis extension', event);
+
+  isSavingQuote.value = true;
+
+  const image = event.detail?.image;
+
+  if (!image) {
+    console.warn('Aucune image dans le message');
+
+    return;
+  }
+
+  console.log('Image reçue !');
+
+  screenshot.value = image;
+
+  void useSentToOcr(image, newQuote.value, () => {
+    void saveQuote();
+  });
 }
 
 async function saveQuote() {
