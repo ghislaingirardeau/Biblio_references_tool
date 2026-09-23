@@ -9,6 +9,7 @@
         :icon="link.label === 'home' ? 'home' : undefined"
       />
     </q-breadcrumbs>
+    <q-separator />
   </div>
 </template>
 

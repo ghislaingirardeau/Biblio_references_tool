@@ -1,6 +1,66 @@
 <template>
   <q-page class="p-2">
-    <q-list v-if="typeReferences && typeReferences.length" bordered separator>
+    <div v-if="typeReferences && typeReferences.length" class="row q-col-gutter-md q-pa-md">
+      <div class="col-12 col-md-4" v-for="reference in typeReferences" :key="reference.id!">
+        <q-card outlined class="full-height">
+          <q-card-section @click="goToQuotes(reference.id!)" class="cursor-pointer">
+            <div class="text-h6">{{ reference.title }}</div>
+            <span
+              v-for="(author, i) in reference.authors"
+              :key="author.lastname + i"
+              class="text-h7 underline"
+            >
+              {{ i === 0 ? 'by' : ',' }} {{ author.lastname + ' ' + author.firstname }}
+            </span>
+            <div class="italic my-2">
+              Number of quotes: {{ reference.quotes?.length ? reference.quotes?.length : '0' }}
+            </div>
+            <div class="my-2">
+              <q-chip
+                v-for="tag in reference.tags"
+                :key="tag"
+                size="sm"
+                outline
+                square
+                color="secondary"
+                text-color="white"
+                icon="bookmark"
+              >
+                {{ tag }}
+              </q-chip>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <q-card-actions>
+            <q-btn
+              v-if="reference.URL"
+              dense
+              flat
+              round
+              color="primary"
+              :icon="mdiWeb"
+              @click.stop="goToLink(reference.URL)"
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Website </q-tooltip>
+            </q-btn>
+            <q-btn dense flat round color="primary" icon="edit" @click.stop="modalEdit(reference)">
+              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
+            </q-btn>
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              icon="delete"
+              @click.stop="modalConfirm(reference.id!)"
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
+            </q-btn>
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+    <!-- <q-list v-if="typeReferences && typeReferences.length" bordered separator>
       <q-item
         clickable
         @click="goToQuotes(reference.id!)"
@@ -65,7 +125,7 @@
           </div>
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-list> -->
     <div v-else>No reference saved !</div>
 
     <AddWidget />

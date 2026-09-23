@@ -10,7 +10,75 @@
     <ScreenshotFromExtension />
     <TextFromExtension />
 
-    <q-list v-if="quotes && quotes.length" bordered separator :key="quotes.length">
+    <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
+      <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
+        <q-card outlined class="full-height">
+          <q-card-section>
+            <div
+              :class="{ 'truncate-2-lines': !isQuoteExpanded }"
+              ref="quote-content"
+              v-html="quote.content"
+              class="mb-2"
+            ></div>
+
+            <div class="my-2">
+              <span class="text-h7 italic mr-2">P. {{ quote.page }}</span>
+
+              <q-chip
+                v-for="tag in quote.tag"
+                :key="tag"
+                size="sm"
+                outline
+                square
+                color="secondary"
+                text-color="white"
+                icon="bookmark"
+              >
+                {{ tag }}
+              </q-chip>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <q-card-actions>
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              :icon="mdiContentCopy"
+              @click.stop="copyQuote(index)"
+            >
+              <q-tooltip :class="{ 'bg-green': copied }" :offset="[10, 10]">
+                {{ copied ? 'Copied in clipboard' : 'Copy' }}
+              </q-tooltip>
+            </q-btn>
+
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              icon="edit"
+              @click.stop="modalEdit(quote, false)"
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
+            </q-btn>
+            <q-btn
+              dense
+              flat
+              round
+              color="primary"
+              icon="delete"
+              @click.stop="askConfirmation(quote.id!)"
+            >
+              <q-tooltip class="" :offset="[10, 10]"> Remove </q-tooltip>
+            </q-btn>
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+
+    <!-- <q-list v-if="quotes && quotes.length" bordered separator :key="quotes.length">
       <q-item clickable v-ripple v-for="(quote, index) in quotes" :key="quote.id!">
         <q-item-section @click="modalEdit(quote, true)" class="w-full">
           <q-item-label class="w-full">
@@ -77,7 +145,7 @@
           >
         </q-item-section>
       </q-item>
-    </q-list>
+    </q-list> -->
 
     <div v-else>No quote saved !</div>
 
