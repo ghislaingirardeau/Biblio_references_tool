@@ -59,7 +59,11 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
     }
 
     const tabs = await chrome.tabs.query({
-      url: ['http://localhost:9000/*', 'https://biblio-references-tool.onrender.com/*'],
+      url: [
+        'http://localhost:9000/*',
+        'http://localhost:9200/*',
+        'https://biblio-references-tool.onrender.com/*',
+      ],
     });
 
     if (!tabs.length) {
@@ -99,8 +103,14 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
     // Cherche ton application Biblio Tool
     const tabs = await chrome.tabs.query({
-      url: ['http://localhost:9000/*', 'https://biblio-references-tool.onrender.com/*'],
+      url: [
+        'http://localhost:9200/*',
+        'http://localhost:9000/*',
+        'https://biblio-references-tool.onrender.com/*',
+      ],
     });
+
+    console.log(tabs);
 
     if (!tabs.length) {
       console.error('Aucun onglet Biblio Tool trouvé');

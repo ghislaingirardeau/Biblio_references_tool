@@ -41,6 +41,7 @@ export const useAuth = defineStore(
       } else {
         user.value = null;
         loggedIn.value = false;
+        isFetchingData.value = false;
         loggedOut.value = true;
       }
     });

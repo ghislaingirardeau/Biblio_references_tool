@@ -37,6 +37,7 @@ import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import { Notify } from 'quasar';
 import { getAuth } from 'firebase/auth';
+import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const modalReferenceStore = useModalReferenceStore();
 
@@ -72,30 +73,13 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const token = await user!.getIdToken();
-    const response = await fetch(`${process.env.API}/ocrCapture`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ imageBase64: imageCropped.value, user: { uid: user?.uid } }),
+    await useSentToOcr(imageCropped.value!, newQuote.value!, () => {
+      emits('next-step');
     });
-
-    const data = await response.json();
-
-    newQuote.value!.content = data.text;
-
-    emits('next-step');
-  } catch (err) {
-    Notify.create({
-      message: 'Error: extracting text.',
-      color: 'negative',
-      icon: 'system_update',
-      timeout: 3000,
-    });
-  } finally {
-    loading.value = false;
+  } catch (error) {
+    console.log('Image sent to OCR failed', error);
   }
+  loading.value = false;
 }
 </script>
 

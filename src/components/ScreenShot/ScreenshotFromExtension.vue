@@ -3,10 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import { getAuth } from 'firebase/auth';
-import { Notify } from 'quasar';
 import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/references';
+import { useSentToOcr } from 'src/utils/useSentToOcr';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -37,33 +36,9 @@ function handleScreenshot(event: any) {
 
   screenshot.value = image;
 
-  void sendToOCR();
-}
-
-async function sendToOCR() {
-  try {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const token = await user!.getIdToken();
-    const response = await fetch(`${process.env.API}/ocrCapture`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ imageBase64: screenshot.value, user: { uid: user?.uid } }),
-    });
-
-    const data = await response.json();
-
-    newQuote.value.content = data.text;
-
-    await saveQuote();
-  } catch (err) {
-    Notify.create({
-      message: 'Error: extracting text.',
-      color: 'negative',
-      icon: 'system_update',
-      timeout: 3000,
-    });
-  }
+  void useSentToOcr(image, newQuote.value, () => {
+    void saveQuote();
+  });
 }
 
 async function saveQuote() {

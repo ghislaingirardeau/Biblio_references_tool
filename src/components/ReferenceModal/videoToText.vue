@@ -54,6 +54,7 @@ import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { Notify } from 'quasar';
 import type { Quote } from 'src/types/references';
 import { getAuth } from 'firebase/auth';
+import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const videoRef = ref<HTMLVideoElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
@@ -69,7 +70,7 @@ const previewUrl = ref<string | null>(null);
 const cropper = ref<any>(null);
 const imageCropped = ref<ImageData | null>(null);
 
-const newQuote = defineModel<Quote>('newQuote');
+const newQuote = defineModel<Quote>();
 const emits = defineEmits(['next-step']);
 
 const loading = ref(false);
@@ -142,30 +143,13 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const token = await user!.getIdToken();
-    const response = await fetch(`${process.env.API}/ocrCapture`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ imageBase64: imageCropped.value }),
+    await useSentToOcr(imageCropped.value!, newQuote.value!, () => {
+      emits('next-step');
     });
-
-    const data = await response.json();
-
-    newQuote.value!.content = data.text;
-
-    emits('next-step');
-  } catch (err) {
-    Notify.create({
-      message: 'Error: extracting text.',
-      color: 'negative',
-      icon: 'system_update',
-      timeout: 3000,
-    });
-  } finally {
-    loading.value = false;
+  } catch (error) {
+    console.log('Image sent to OCR failed', error);
   }
+  loading.value = false;
 }
 
 let animationFrameId: number | null = null;
