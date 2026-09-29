@@ -104,8 +104,9 @@ function formatLabel(label: string) {
 }
 
 const referenceInputsEditable = computed(() => {
-  const toArray = Object.keys(editReference.value ?? {});
-  return toArray.filter((e) => e !== 'quotes');
+  const obj = editReference.value ?? {};
+  const toArray = Object.keys(obj);
+  return toArray.filter((e) => e !== 'quotes').sort((a, b) => a.localeCompare(b));
 });
 
 function createValue(

@@ -8,7 +8,7 @@
 - Reprendre la biblio pour finaliser
 - faire le test avec terract.js pour l'extraction avec electron car moins couteuse que vision API
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
-- reference et quote => rendre title mandatory
+- sur edit modal, l'ordre des inputs est différent suivant la selection, il faut avoir le meme
 - filter quote only on title & tag pour etre moins lourd
 - debug server OCR, la 1ere capture ne fonctionne pas, je dois recharger la page. cf chatgpt
 - sur tags, que je clique dessus cela me renvoit à toutes les references ou quote avec ce tag
