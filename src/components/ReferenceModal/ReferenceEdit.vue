@@ -65,7 +65,7 @@
           :label="formatLabel(reference)"
           bottom-slots
           error-message="Field is required"
-          :error="reference === 'title' ? hasNoTitle : undefined"
+          :error="reference === 'title' ? hasRequiredField : undefined"
         />
       </div>
     </div>
@@ -83,7 +83,7 @@ const editReference = defineModel<BibliographicEntry>('editReference');
 const ProjectsStore = useProjectsStore();
 
 const props = defineProps({
-  hasNoTitle: {
+  hasRequiredField: {
     type: Boolean,
   },
 });

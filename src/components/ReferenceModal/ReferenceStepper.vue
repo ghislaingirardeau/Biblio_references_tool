@@ -26,7 +26,7 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <ReferenceEdit v-model:editReference="newReference" :hasNoTitle="hasNoTitle" />
+      <ReferenceEdit v-model:editReference="newReference" :hasRequiredField="hasRequiredField" />
     </q-step>
 
     <template v-slot:navigation>
@@ -56,7 +56,9 @@
           class="q-ml-sm"
         />
         <q-btn flat color="primary" @click="modalCloseAction" label="Close" class="q-ml-sm" />
-        <span v-if="hasNoTitle" class="ml-5 italic">Title field is required !</span>
+        <span v-if="hasRequiredField && step === 2" class="ml-5 italic"
+          >Title field is required !</span
+        >
       </q-stepper-navigation>
     </template>
   </q-stepper>
@@ -66,7 +68,7 @@
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { useReferencesStore } from 'src/stores/references';
 import type { BibliographicEntry } from 'src/types/references';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import BarcodeDetection from './BarcodeDetection.vue';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
@@ -126,7 +128,7 @@ function modalBackAction() {
 }
 
 async function saveReference() {
-  if (!checkRequiredField()) return;
+  if (hasRequiredField.value) return;
   isLoading.value = true;
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
   console.log(newReference.value);
@@ -134,7 +136,6 @@ async function saveReference() {
   modalReferenceStore.reset();
   restoreReferenceBase();
   isLoading.value = false;
-  hasNoTitle.value = false;
 }
 
 function restoreReferenceBase() {
@@ -142,18 +143,9 @@ function restoreReferenceBase() {
   newReference.value = JSON.parse(JSON.stringify(referencesTemplate[type].template));
 }
 
-function checkRequiredField() {
-  if (newReference.value.title.length === 0) {
-    hasNoTitle.value = true;
-    setTimeout(() => {
-      hasNoTitle.value = false;
-    }, 4000);
-
-    return false;
-  } else {
-    return true;
-  }
-}
+const hasRequiredField = computed(() => {
+  return newReference.value.title.length === 0;
+});
 
 const errorMessage = ref<null | string>(null);
 

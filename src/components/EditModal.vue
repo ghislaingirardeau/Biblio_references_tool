@@ -11,16 +11,29 @@
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Edit</div>
         <q-space />
-        <q-btn icon="close" color="primary" flat round dense v-close-popup />
+        <q-btn
+          icon="close"
+          :disable="hasRequiredField"
+          color="primary"
+          flat
+          round
+          dense
+          v-close-popup
+        />
       </q-card-section>
 
       <q-card-section class="row items-center">
         <QuoteEdit v-if="$route.params.id" v-model:editQuote="selectedQuote!" />
-        <ReferenceEdit v-else v-model:editReference="selectedReference!" />
+        <ReferenceEdit
+          v-else
+          v-model:editReference="selectedReference!"
+          :hasRequiredField="hasRequiredField"
+        />
       </q-card-section>
 
-      <q-card-actions align="right">
-        <q-btn flat label="Close" outline color="primary" v-close-popup />
+      <q-card-actions>
+        <q-btn label="Close" :disable="hasRequiredField" color="primary" v-close-popup />
+        <span v-if="hasRequiredField" class="ml-5 italic">Title field is required !</span>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -32,6 +45,7 @@ import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
 import { storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<BibliographicEntry>('selectedReference');
@@ -39,6 +53,10 @@ const selectedQuote = defineModel<Quote>('selectedQuote');
 
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
+
+const hasRequiredField = computed(() => {
+  return selectedReference.value!.title.length === 0;
+});
 </script>
 
 <style scoped></style>
