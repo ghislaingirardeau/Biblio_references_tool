@@ -63,6 +63,9 @@
           :disable="reference === 'id'"
           v-model="(editReference as any)[reference]"
           :label="formatLabel(reference)"
+          bottom-slots
+          error-message="Field is required"
+          :error="reference === 'title' ? hasNoTitle : undefined"
         />
       </div>
     </div>
@@ -76,10 +79,14 @@ import { useProjectsStore } from 'src/stores/projects';
 import { computed, ref } from 'vue';
 import type { BibliographicEntry } from 'src/types/references';
 
-const editReference = defineModel('editReference');
+const editReference = defineModel<BibliographicEntry>('editReference');
 const ProjectsStore = useProjectsStore();
 
-console.log(editReference.value);
+const props = defineProps({
+  hasNoTitle: {
+    type: Boolean,
+  },
+});
 
 // const tag = ref(null);
 

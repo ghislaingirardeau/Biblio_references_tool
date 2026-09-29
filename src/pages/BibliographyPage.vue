@@ -70,7 +70,7 @@ const formatCitation = ref({
 });
 
 const showEditModal = ref(false);
-const selectedReference = ref<BibliographicEntry>({ id: null });
+const selectedReference = ref<BibliographicEntry>({ id: null, title: '' });
 
 function modalEdit(reference: BibliographicEntry) {
   showEditModal.value = true;

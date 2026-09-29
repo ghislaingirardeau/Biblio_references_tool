@@ -97,7 +97,7 @@ const type = computed(() => route.params.type);
 const showConfirmModal = ref(false);
 const showEditModal = ref(false);
 
-const selectedReference = ref<BibliographicEntry>({ id: null });
+const selectedReference = ref<BibliographicEntry>({ id: null, title: '' });
 const selectedId = ref<null | string>(null);
 
 const typeReferences: ComputedRef<BibliographicEntry[]> = computed(() => {

@@ -53,7 +53,7 @@ export interface Authors {
 
 export interface BibliographicEntry {
   id: string | null;
-  title?: string;
+  title: string;
   type?: string;
   tags?: string[];
   subtitle?: string;

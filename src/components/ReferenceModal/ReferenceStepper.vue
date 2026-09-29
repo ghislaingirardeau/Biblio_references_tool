@@ -26,7 +26,7 @@
     </q-step>
 
     <q-step :name="2" title="Edit" icon="create_new_folder" :done="step > 2" class="text-black">
-      <ReferenceEdit v-model:editReference="newReference" />
+      <ReferenceEdit v-model:editReference="newReference" :hasNoTitle="hasNoTitle" />
     </q-step>
 
     <template v-slot:navigation>
@@ -56,6 +56,7 @@
           class="q-ml-sm"
         />
         <q-btn flat color="primary" @click="modalCloseAction" label="Close" class="q-ml-sm" />
+        <span v-if="hasNoTitle" class="ml-5 italic">Title field is required !</span>
       </q-stepper-navigation>
     </template>
   </q-stepper>
@@ -78,6 +79,7 @@ import {
   formatIdentifier,
   formatReportData,
 } from 'src/utils/useFormater';
+import { useWindowScroll } from '@vueuse/core';
 
 const route = useRoute();
 
@@ -90,7 +92,10 @@ const isScanning = ref(true);
 
 const newReference = ref<BibliographicEntry>({
   id: null,
+  title: '',
 });
+
+const hasNoTitle = ref(false);
 
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/i;
 
@@ -121,6 +126,7 @@ function modalBackAction() {
 }
 
 async function saveReference() {
+  if (!checkRequiredField()) return;
   isLoading.value = true;
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
   console.log(newReference.value);
@@ -128,11 +134,25 @@ async function saveReference() {
   modalReferenceStore.reset();
   restoreReferenceBase();
   isLoading.value = false;
+  hasNoTitle.value = false;
 }
 
 function restoreReferenceBase() {
   const type = route.params.type as keyof typeof referencesTemplate;
   newReference.value = JSON.parse(JSON.stringify(referencesTemplate[type].template));
+}
+
+function checkRequiredField() {
+  if (newReference.value.title.length === 0) {
+    hasNoTitle.value = true;
+    setTimeout(() => {
+      hasNoTitle.value = false;
+    }, 4000);
+
+    return false;
+  } else {
+    return true;
+  }
 }
 
 const errorMessage = ref<null | string>(null);
