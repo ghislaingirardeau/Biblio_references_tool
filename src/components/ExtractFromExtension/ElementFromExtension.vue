@@ -1,4 +1,5 @@
 <template>
+  <span>test</span>
   <q-spinner-ios v-if="isSavingQuote" color="primary" size="4em" />
 </template>
 

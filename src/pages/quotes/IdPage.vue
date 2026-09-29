@@ -7,7 +7,7 @@
       label="Expand quote"
       left-label
     />
-    <ElementFromExtension />
+    <ElementFromExtension v-if="isElectron" />
 
     <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
@@ -95,6 +95,10 @@
 </template>
 
 <script setup lang="ts">
+/* TODO
+- not possible to add or click on extraction from extension (use inner loading quasar) ?
+*/
+
 import { mdiContentCopy } from '@quasar/extras/mdi-v7';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
@@ -107,6 +111,7 @@ import { useClipboard, useTemplateRefsList } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';
+import { isElectron } from 'src/utils/useElectron';
 
 const QuotesStore = useQuotesStore();
 const ModalReference = useModalReferenceStore();

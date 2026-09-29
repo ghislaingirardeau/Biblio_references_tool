@@ -1,10 +1,30 @@
 # biblio_tool (my-biblio-tool)
 
+<!-- TODO GLOBAL
+- Fixe quand je me reconnecte, je perds la connection au serveur pour extraction de l'image, si je reconnecte cela refonctionne
+- Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
+- Faire la description du tuto
+- Finaliser les tags
+- Reprendre la biblio pour finaliser
+- faire le test avec terract.js pour l'extraction avec electron car moins couteuse que vision API
+- Possibilité de tout extraire en fichier excel ou word (optionnal)
+- reference et quote => rendre title mandatory
+- filter quote only on title & tag pour etre moins lourd
+- debug server OCR, la 1ere capture ne fonctionne pas, je dois recharger la page. cf chatgpt
+- sur tags, que je clique dessus cela me renvoit à toutes les references ou quote avec ce tag
+ -->
+
 ## Deploy
 
 Npm run build:pwa => comit & push to repo => auto deploy on Render
 
 Otherwise the web app is not updated !
+
+## Electron
+
+Dev sous electron avec script pour le dev et le build dans `package.json`
+
+le build d'electron, crée un dossier associé dans `dist/electron` avec un fichier .exe pour une installation en local
 
 ## Extension chrome-screenshot
 

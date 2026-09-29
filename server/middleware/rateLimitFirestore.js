@@ -10,6 +10,7 @@ export async function rateLimitByUser(req, res, next) {
 
   const now = Date.now();
   const cached = userCache.get(uid);
+  console.log(cached);
 
   if (cached && now - cached.lastSync < 60_000) {
     // rafraîchit toutes les 60s
@@ -21,14 +22,15 @@ export async function rateLimitByUser(req, res, next) {
   // Sinon : recharge depuis Firestore
   const ref = db.collection('users').doc(uid);
   const doc = await ref.get();
-  let data = doc.exists && doc.data().apiUsage ? doc.data().apiUsage : { count: 0, start: now };
+  let data =
+    doc.exists && doc.data().apiUsage ? doc.data().apiUsage : { count: 0, start: now, limit: 100 };
 
   if (now - data.start > WINDOW_MS) data = { count: 0, start: now };
   data.count += 1;
 
   userCache.set(uid, { ...data, lastSync: now });
 
-  if (data.count > MAX_CALLS) return res.status(429).json({ message: 'Limit reach' });
+  if (data.count > data.limit) return res.status(429).json({ message: 'Limit reach' });
 
   next();
   await ref.update({ apiUsage: data });
