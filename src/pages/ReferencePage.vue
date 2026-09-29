@@ -2,7 +2,7 @@
   <q-page class="p-2">
     <div v-if="typeReferences && typeReferences.length" class="row q-col-gutter-md q-pa-md">
       <div class="col-12 col-md-4" v-for="reference in typeReferences" :key="reference.id!">
-        <q-card outlined class="full-height">
+        <q-card class="full-height flex flex-col justify-between">
           <q-card-section @click="goToQuotes(reference.id!)" class="cursor-pointer">
             <div class="text-h6">{{ reference.title }}</div>
             <span
