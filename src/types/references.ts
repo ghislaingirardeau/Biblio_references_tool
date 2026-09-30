@@ -65,7 +65,6 @@ export interface BibliographicEntry {
   date?: string;
   page?: string;
   pages?: string;
-  categories?: string[];
   language?: string;
   URL?: string;
   imageLinks?: { thumbnail: string };

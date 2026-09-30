@@ -61,7 +61,7 @@ export function formatReportData(article: DoiAPIData, newReference: Ref<Bibliogr
 }
 
 export function formatBookData(result: IsbnAPIData, newReference: Ref<BibliographicEntry>) {
-  const { title, subtitle, authors, publisher, categories, language } = result;
+  const { title, subtitle, authors, publisher } = result;
   console.log(authors);
   const formatAuthors = authors?.map((a) => {
     const textToArray = a.split(' ');
@@ -77,7 +77,6 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
     publisher: publisher || '',
     date: result.publishedDate || '',
     page: result.pageCount || '',
-    categories: categories || '',
     URL: result.infoLink || '',
     imageLinks: result.imageLinks?.thumbnail || '',
     language: result.language || '',
