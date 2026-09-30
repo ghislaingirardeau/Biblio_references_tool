@@ -46,7 +46,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     const lowerQuery = query.toLowerCase();
     const findReferences = references.value[type as keyof References]!.lists.filter(
       (reference) =>
-        reference.title!.toLowerCase().includes(lowerQuery) ||
+        reference.title.toLowerCase().includes(lowerQuery) ||
         ('authors' in reference &&
           reference.authors
             .map((a) => a.firstname + ' ' + a.lastname)
