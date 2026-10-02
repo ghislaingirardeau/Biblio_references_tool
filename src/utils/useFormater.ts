@@ -12,18 +12,22 @@ export function formatIdentifier(identifier: Ref<string>) {
   }
 }
 
-export function formatArticleData(article: DoiAPIData, newReference: Ref<BibliographicEntry>) {
+export function formatArticleData(
+  article: DoiAPIData,
+  newReference: Ref<BibliographicEntry>,
+  type: string,
+) {
   const author = article.author?.map((a) => {
     return {
       firstname: a.given,
       lastname: a.family,
     };
   });
-  const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL, type } = article;
+  const { title: rawTitle, publisher, DOI, language, volume, issue, page, URL } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type: type || '',
     title: rawTitle[0] || '',
+    type: type,
     authors: author || [],
     journal: article['container-title'][0] || '',
     publisher: publisher || '',
@@ -37,7 +41,11 @@ export function formatArticleData(article: DoiAPIData, newReference: Ref<Bibliog
   });
 }
 
-export function formatReportData(article: DoiAPIData, newReference: Ref<BibliographicEntry>) {
+export function formatReportData(
+  article: DoiAPIData,
+  newReference: Ref<BibliographicEntry>,
+  type: string,
+) {
   const author = article.author?.map((a) => {
     return {
       firstname: '',
@@ -45,11 +53,11 @@ export function formatReportData(article: DoiAPIData, newReference: Ref<Bibliogr
     };
   });
   console.log(article);
-  const { title: rawTitle, publisher, DOI, language, URL, type } = article;
+  const { title: rawTitle, publisher, DOI, language, URL } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type: type || '',
     title: rawTitle[0] || '',
+    type: type,
     authors: author || [],
     journal: article['container-title'][0] || '',
     publisher: publisher || '',
@@ -60,7 +68,11 @@ export function formatReportData(article: DoiAPIData, newReference: Ref<Bibliogr
   });
 }
 
-export function formatBookData(result: IsbnAPIData, newReference: Ref<BibliographicEntry>) {
+export function formatBookData(
+  result: IsbnAPIData,
+  newReference: Ref<BibliographicEntry>,
+  type: string,
+) {
   const { title, subtitle, authors, publisher } = result;
   console.log(authors);
   const formatAuthors = authors?.map((a) => {
@@ -72,6 +84,7 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
   });
   newReference.value = Object.assign(newReference.value, {
     title,
+    type: type,
     subtitle: subtitle || '',
     authors: formatAuthors || [],
     publisher: publisher || '',
@@ -83,7 +96,11 @@ export function formatBookData(result: IsbnAPIData, newReference: Ref<Bibliograp
   });
 }
 
-export function formatConferenceData(article: DoiAPIData, newReference: Ref<BibliographicEntry>) {
+export function formatConferenceData(
+  article: DoiAPIData,
+  newReference: Ref<BibliographicEntry>,
+  type: string,
+) {
   const author = article.author?.map((a) => {
     return {
       firstname: a.given,
@@ -91,13 +108,13 @@ export function formatConferenceData(article: DoiAPIData, newReference: Ref<Bibl
     };
   });
   console.log(article);
-  const { title, publisher, DOI, language, URL, type, event, page } = article;
+  const { title, publisher, DOI, language, URL, event, page } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   const start = event?.start?.['date-parts']?.[0]?.[0];
   const end = event?.end?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
-    type: type || '',
     title: title[0] || '',
+    type: type,
     authors: author || [],
     location: event?.location || '',
     publisher: publisher || '',

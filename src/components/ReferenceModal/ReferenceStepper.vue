@@ -95,9 +95,8 @@ const isScanning = ref(true);
 const newReference = ref<BibliographicEntry>({
   id: null,
   title: '',
+  type: '',
 });
-
-const hasNoTitle = ref(false);
 
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/i;
 
@@ -165,16 +164,17 @@ async function findReference() {
       const result = await response.json();
       newReference.value.id = identifier.value;
       if (route.params.type === 'books' || route.params.type === 'bookChapter') {
-        formatBookData(result.items[0].volumeInfo, newReference);
+        console.log(result);
+        formatBookData(result.items[0].volumeInfo, newReference, route.params.type);
       }
       if (route.params.type === 'articles') {
-        formatArticleData(result.message, newReference);
+        formatArticleData(result.message, newReference, route.params.type);
       }
       if (route.params.type === 'report') {
-        formatReportData(result.message, newReference);
+        formatReportData(result.message, newReference, route.params.type);
       }
       if (route.params.type === 'conferencePaper') {
-        formatConferenceData(result.message, newReference);
+        formatConferenceData(result.message, newReference, route.params.type);
       }
       // DOI for dissertation do not found on CrossRef
       // if (route.params.type === 'dissertation') {
