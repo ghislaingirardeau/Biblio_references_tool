@@ -1,16 +1,23 @@
-import { defineStore, storeToRefs } from 'pinia';
+import { defineStore, storeToRefs, acceptHMRUpdate } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { Tags } from 'src/types/tags';
 import { useProjectsStore } from './projects';
+import { useReferencesStore } from './references';
+import type { BibliographicEntry } from 'src/types/references';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
+
+const ReferencesStore = useReferencesStore();
+const { referencesTypes } = storeToRefs(ReferencesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
   const tags: Ref<Tags> = computed(() => project.value!.tags);
 
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
   const tagsQuote: Ref<string[]> = computed(() => project.value!.tags.quotes);
+
+  const referencesWithSpecificTag: Ref<BibliographicEntry[] | null> = ref(null);
 
   const treeQuotesTags: Ref<any[]> = computed(() => {
     return [
@@ -60,5 +67,35 @@ export const useTagsStore = defineStore('TagsStore', () => {
     // Use Filter() from store References to get all with the tags, map and delete
   }
 
-  return { tags, tagsReference, tagsQuote, addTag, removeTag, treeQuotesTags, treeReferencesTags };
+  function filterProjectsWithTagReferences(type: keyof Tags, tag: string) {
+    referencesWithSpecificTag.value = [];
+
+    for (const key of referencesTypes.value) {
+      const typeOfReferences = project.value?.references[key];
+      // if there is no references type inside list array return
+      if (!typeOfReferences?.lists.length) continue;
+      const typesWithTags = typeOfReferences?.lists.filter((e) => {
+        const findTag = e.tags!.find((t) => t.toLowerCase() === tag.toLowerCase());
+        if (findTag) return true;
+      });
+      if (!typesWithTags.length) continue;
+      referencesWithSpecificTag.value.push(...typesWithTags);
+    }
+  }
+
+  return {
+    tags,
+    tagsReference,
+    tagsQuote,
+    addTag,
+    removeTag,
+    treeQuotesTags,
+    treeReferencesTags,
+    filterProjectsWithTagReferences,
+    referencesWithSpecificTag,
+  };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useTagsStore, import.meta.hot));
+}

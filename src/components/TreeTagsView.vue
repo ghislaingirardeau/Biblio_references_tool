@@ -8,7 +8,13 @@
     <q-tree :nodes="tree" node-key="label" default-expand-all :filter="filter">
       <template #default-header="prop">
         <div class="row items-center justify-between full-width">
-          <div v-if="prop.node.label.length" class="">{{ prop.node.label }}</div>
+          <div
+            v-if="prop.node.label.length"
+            class="cursor-pointer"
+            @click="sendFilterTagToStore($event, prop.node.label)"
+          >
+            {{ prop.node.label }}
+          </div>
           <q-input v-else autofocus dense v-model="newTag" @blur="createTag($event)"></q-input>
           <q-icon
             v-if="!prop.node.children"
@@ -56,11 +62,6 @@ function resetFilter() {
   filterRef.value!.focus();
 }
 
-/* TODO 
-- suppression de tags
-- ajout de nouveau tags
-*/
-
 function deleteTag(label: string, e: Event) {
   e.stopPropagation();
   // remove for all the quotes OR not allowed if used ???
@@ -74,6 +75,11 @@ function createTag(e: Event) {
     ? tagsStore.addTag(props.type, newTag.value)
     : tagsStore.addTag(props.type, '');
   newTag.value = '';
+}
+
+function sendFilterTagToStore(e: Event, label: string) {
+  e.stopPropagation();
+  tagsStore.filterProjectsWithTagReferences(props.type, label);
 }
 </script>
 
