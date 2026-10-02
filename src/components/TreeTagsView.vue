@@ -8,7 +8,8 @@
     <q-tree :nodes="tree" node-key="label" default-expand-all :filter="filter">
       <template #default-header="prop">
         <div class="row items-center justify-between full-width">
-          <div class="">{{ prop.node.label }}</div>
+          <div v-if="prop.node.label.length" class="">{{ prop.node.label }}</div>
+          <q-input v-else autofocus dense v-model="newTag" @blur="createTag($event)"></q-input>
           <q-icon
             v-if="!prop.node.children"
             :name="mdiMinus"
@@ -21,7 +22,7 @@
             :name="mdiPlus"
             color="primary"
             class="q-mr-sm cursor-pointer"
-            @click="createTag"
+            @click="createTag($event)"
           />
         </div>
       </template>
@@ -46,9 +47,9 @@ const props = defineProps<{
 
 const filter = ref('');
 const filterRef = useTemplateRef<QInput>('filterRef');
-const expandedKeys = ref(['References']);
 
 const tree = computed<QTreeNode[]>(() => props.treeTags);
+const newTag = ref('');
 
 function resetFilter() {
   filter.value = '';
@@ -69,7 +70,10 @@ function deleteTag(label: string, e: Event) {
 
 function createTag(e: Event) {
   e.stopPropagation();
-  console.log('create new tag', props.type);
+  newTag.value.length
+    ? tagsStore.addTag(props.type, newTag.value)
+    : tagsStore.addTag(props.type, '');
+  newTag.value = '';
 }
 </script>
 

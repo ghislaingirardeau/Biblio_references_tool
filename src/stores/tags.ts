@@ -41,12 +41,17 @@ export const useTagsStore = defineStore('TagsStore', () => {
   });
 
   function addTag(type: keyof Tags, name: string) {
-    const isTagExist = project.value!.tags[type].findIndex((tag) => tag === name.toLowerCase());
-    if (isTagExist === -1) {
-      project.value!.tags[type].push(name);
+    const tags = [...project.value!.tags[type]];
+    // if name is '', it's an edit input empty, add to array to edit
+    // if not empty, replace '' by the user tag name
+    if (name.length) {
+      const findEmptyTag = tags.indexOf('');
+      tags[findEmptyTag] = name;
     } else {
-      return 'This tag exist already';
+      tags.push(name);
     }
+    const uniqueTags = [...new Set(tags)];
+    project.value!.tags[type] = uniqueTags;
   }
 
   function removeTag(type: keyof Tags, name: string) {
