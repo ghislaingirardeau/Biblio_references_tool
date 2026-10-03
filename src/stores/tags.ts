@@ -17,7 +17,10 @@ export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
   const tagsQuote: Ref<string[]> = computed(() => project.value!.tags.quotes);
 
-  const referencesWithSpecificTag: Ref<BibliographicEntry[] | null> = ref(null);
+  const referencesWithSpecificTag = ref({
+    tag: '' as string,
+    list: [] as BibliographicEntry[],
+  });
 
   const treeQuotesTags: Ref<any[]> = computed(() => {
     return [
@@ -27,6 +30,7 @@ export const useTagsStore = defineStore('TagsStore', () => {
         children: tagsQuote.value.map((r) => {
           return {
             label: r,
+            selectable: true,
           };
         }),
       },
@@ -41,6 +45,7 @@ export const useTagsStore = defineStore('TagsStore', () => {
         children: tagsReference.value.map((r) => {
           return {
             label: r,
+            selectable: true,
           };
         }),
       },
@@ -68,7 +73,10 @@ export const useTagsStore = defineStore('TagsStore', () => {
   }
 
   function filterProjectsWithTagReferences(type: keyof Tags, tag: string) {
-    referencesWithSpecificTag.value = [];
+    referencesWithSpecificTag.value = {
+      tag,
+      list: [],
+    };
 
     for (const key of referencesTypes.value) {
       const typeOfReferences = project.value?.references[key];
@@ -79,7 +87,7 @@ export const useTagsStore = defineStore('TagsStore', () => {
         if (findTag) return true;
       });
       if (!typesWithTags.length) continue;
-      referencesWithSpecificTag.value.push(...typesWithTags);
+      referencesWithSpecificTag.value.list.push(...typesWithTags);
     }
   }
 

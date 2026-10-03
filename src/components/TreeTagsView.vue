@@ -5,12 +5,22 @@
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
       </template>
     </q-input>
-    <q-tree :nodes="tree" node-key="label" default-expand-all :filter="filter">
+    <q-tree
+      :nodes="tree"
+      node-key="label"
+      v-model="expandedKeys"
+      default-expand-all
+      :filter="filter"
+    >
       <template #default-header="prop">
         <div class="row items-center justify-between full-width">
           <div
             v-if="prop.node.label.length"
-            class="cursor-pointer"
+            class="cursor-default"
+            :class="{
+              'tree__label--selectable': prop.node.selectable,
+              'hover:underline': prop.node.selectable,
+            }"
             @click="sendFilterTagToStore($event, prop.node.label)"
           >
             {{ prop.node.label }}
@@ -56,6 +66,7 @@ const filterRef = useTemplateRef<QInput>('filterRef');
 
 const tree = computed<QTreeNode[]>(() => props.treeTags);
 const newTag = ref('');
+const expandedKeys = ref(true);
 
 function resetFilter() {
   filter.value = '';
@@ -87,8 +98,11 @@ function sendFilterTagToStore(e: Event, label: string) {
 :deep() {
   .q-tree__arrow,
   .q-tree__spinner {
-    font-size: 20px;
-    color: teal;
+    display: none;
   }
+}
+
+.tree__label--selectable {
+  cursor: pointer;
 }
 </style>
