@@ -1,6 +1,9 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
+- REFAIRE LA BASE FIRESTORE avec 3 collections distincte: project avec projet_id, reference avec reference_id & quote quote_id
+  => chque ref est associé à un projet_id, chaque quote est associé à projet_id et reference_id
+  => ce qui rend l'extraction plus rapide avec `where` et ne remplace tout l'objet en lui même
 - Fixe quand je me reconnecte, je perds la connection au serveur pour extraction de l'image, si je reconnecte cela refonctionne
 - Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
 - Faire la description du tuto

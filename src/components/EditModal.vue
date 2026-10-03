@@ -55,7 +55,7 @@ const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 
 const hasRequiredField = computed(() => {
-  return selectedReference.value!.title.length === 0;
+  return selectedReference.value?.title.length === 0;
 });
 </script>
 
