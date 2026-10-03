@@ -3,7 +3,6 @@
 
 import { defineConfig } from '#q-app/wrappers';
 import { fileURLToPath } from 'node:url';
-import vueDevTools from 'vite-plugin-vue-devtools';
 import 'dotenv/config';
 
 export default defineConfig((ctx) => {
@@ -48,10 +47,7 @@ export default defineConfig((ctx) => {
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
-      extendViteConf(viteConf) {
-        viteConf.plugins = viteConf.plugins || [];
-        viteConf.plugins.push(vueDevTools());
-      },
+
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
