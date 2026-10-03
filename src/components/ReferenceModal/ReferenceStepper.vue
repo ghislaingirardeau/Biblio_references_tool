@@ -81,7 +81,6 @@ import {
   formatIdentifier,
   formatReportData,
 } from 'src/utils/useFormater';
-import { useWindowScroll } from '@vueuse/core';
 
 const route = useRoute();
 
@@ -131,6 +130,9 @@ async function saveReference() {
   isLoading.value = true;
   if (!newReference.value.id) newReference.value.id = Date.now().toString();
   console.log(newReference.value);
+  if (!newReference.value.type || !newReference.value.type.length) {
+    newReference.value.type = route.params.type as string;
+  }
   await ReferenceStore.add(route.params.type as string, newReference.value);
   modalReferenceStore.reset();
   restoreReferenceBase();
