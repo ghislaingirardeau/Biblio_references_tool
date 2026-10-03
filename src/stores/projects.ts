@@ -15,7 +15,7 @@ const { capitalize } = format;
 export const useProjectsStore = defineStore('ProjectsStore', () => {
   const projects: Ref<Project[]> = useStorage('projects', [
     {
-      id: `Project-${Date.now()}`,
+      id: `project-${Date.now()}`,
       label: 'Default',
       name: 'default',
       created_at: Date.now(),
@@ -33,6 +33,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   const refreshKey = ref(0);
 
   const project = computed(() => projects.value.find((p) => p.id === currentProject.value));
+  const projectId = computed(() => project.value!.id);
 
   const projectsLabel = computed(() =>
     projects.value.map((p) => {
@@ -42,7 +43,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   async function add(label: string) {
     projects.value.push({
-      id: `Project-${Date.now()}`,
+      id: `project-${Date.now()}`,
       label,
       created_at: Date.now(),
       references: referencesTemplate,
@@ -87,7 +88,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   function resetProjects() {
     projects.value = [
       {
-        id: `Project-${Date.now()}`,
+        id: `project-${Date.now()}`,
         label: 'Default',
         created_at: Date.now(),
         references: referencesTemplate,
@@ -112,6 +113,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     currentProject,
     projects,
     project,
+    projectId,
     projectsLabel,
     loadProjectsFromFirestore,
     add,

@@ -44,6 +44,8 @@ export interface Quote {
   page?: string;
   content?: string;
   tag?: string[] | null;
+  reference_id: string | null;
+  project_id: string | null;
 }
 
 export interface Authors {
@@ -53,6 +55,7 @@ export interface Authors {
 
 export interface BibliographicEntry {
   id: string | null;
+  project_id: string | null;
   title: string;
   type: string;
   tags?: string[];

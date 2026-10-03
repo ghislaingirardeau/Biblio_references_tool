@@ -81,6 +81,11 @@ import {
   formatIdentifier,
   formatReportData,
 } from 'src/utils/useFormater';
+import { storeToRefs } from 'pinia';
+import { useProjectsStore } from 'src/stores/projects.js';
+
+const ProjectsStore = useProjectsStore();
+const { projectId } = storeToRefs(ProjectsStore);
 
 const route = useRoute();
 
@@ -93,6 +98,7 @@ const isScanning = ref(true);
 
 const newReference = ref<BibliographicEntry>({
   id: null,
+  project_id: null,
   title: '',
   type: '',
 });
@@ -128,8 +134,8 @@ function modalBackAction() {
 async function saveReference() {
   if (hasRequiredField.value) return;
   isLoading.value = true;
-  if (!newReference.value.id) newReference.value.id = Date.now().toString();
-  console.log(newReference.value);
+  if (!newReference.value.id) newReference.value.id = 'reference_' + Date.now().toString();
+  newReference.value.project_id = projectId.value;
   if (!newReference.value.type || !newReference.value.type.length) {
     newReference.value.type = route.params.type as string;
   }
@@ -164,7 +170,7 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      newReference.value.id = identifier.value;
+      newReference.value.id = 'reference_' + identifier.value;
       if (route.params.type === 'books' || route.params.type === 'bookChapter') {
         console.log(result);
         formatBookData(result.items[0].volumeInfo, newReference, route.params.type);

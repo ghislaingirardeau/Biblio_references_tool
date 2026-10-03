@@ -40,6 +40,11 @@ import ImageToText from 'src/components/ReferenceModal/imageToText.vue';
 import QuoteEdit from './QuoteEdit.vue';
 import { useQuotesStore } from 'src/stores/quotes';
 import VideoToText from '../ReferenceModal/videoToText.vue';
+import { storeToRefs } from 'pinia';
+import { useProjectsStore } from 'src/stores/projects.js';
+
+const ProjectsStore = useProjectsStore();
+const { projectId } = storeToRefs(ProjectsStore);
 
 const step = ref(1);
 const stepperRef = ref();
@@ -47,10 +52,12 @@ const stepperRef = ref();
 const isSavingQuote = ref(false);
 
 const newQuote = ref<Quote>({
-  id: Date.now().toString(),
+  id: 'quote_' + Date.now().toString(),
   page: '0',
   content: '',
   tag: null,
+  reference_id: null,
+  project_id: null,
 });
 
 const QuotesStore = useQuotesStore();
@@ -61,6 +68,9 @@ const route = useRoute();
 
 async function saveQuote() {
   isSavingQuote.value = true;
+  newQuote.value.project_id = projectId.value;
+  newQuote.value.reference_id = route.params.id as string;
+
   await QuotesStore.addQuote(
     route.params.type as string,
     route.params.id as string,

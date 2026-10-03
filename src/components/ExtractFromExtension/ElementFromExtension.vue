@@ -9,17 +9,24 @@ import type { Quote } from 'src/types/references';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSentToOcr } from 'src/utils/useSentToOcr';
+import { useProjectsStore } from 'src/stores/projects';
+import { storeToRefs } from 'pinia';
 
 const QuotesStore = useQuotesStore();
 const route = useRoute();
 
+const ProjectsStore = useProjectsStore();
+const { projectId } = storeToRefs(ProjectsStore);
+
 const isSavingQuote = ref(false);
 const screenshot = ref(null);
 const newQuote = ref<Quote>({
-  id: Date.now().toString(),
+  id: 'quote_' + Date.now().toString(),
   page: '0',
   content: '',
   tag: null,
+  reference_id: null,
+  project_id: null,
 });
 
 onMounted(() => {
@@ -67,6 +74,9 @@ function handleScreenshot(event: any) {
 }
 
 async function saveQuote() {
+  newQuote.value.project_id = projectId.value;
+  newQuote.value.reference_id = route.params.id as string;
+
   await QuotesStore.addQuote(
     route.params.type as string,
     route.params.id as string,

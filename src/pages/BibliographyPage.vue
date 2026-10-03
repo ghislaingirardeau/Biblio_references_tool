@@ -58,7 +58,7 @@ import type { BibliographicEntry } from 'src/types/references';
 import { computed, ref } from 'vue';
 
 const ProjectsStore = useProjectsStore();
-const { project } = storeToRefs(ProjectsStore);
+const { project, projectId } = storeToRefs(ProjectsStore);
 
 const FormatReferenceStore = useFormatReferenceStore();
 const { selectedFormat, formats } = storeToRefs(FormatReferenceStore);
@@ -70,7 +70,12 @@ const formatCitation = ref({
 });
 
 const showEditModal = ref(false);
-const selectedReference = ref<BibliographicEntry>({ id: null, title: '', type: '' });
+const selectedReference = ref<BibliographicEntry>({
+  id: null,
+  title: '',
+  type: '',
+  project_id: null,
+});
 
 function modalEdit(reference: BibliographicEntry) {
   showEditModal.value = true;
