@@ -15,7 +15,13 @@
 
 <script setup lang="ts">
 import TreeProjectView from 'src/components/TreeProjectView.vue';
+import { testFirestore } from 'src/utils/useFirestore';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
+onMounted(async () => {
+  await testFirestore();
+});
 </script>
