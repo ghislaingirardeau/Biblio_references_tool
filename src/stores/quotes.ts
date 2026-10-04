@@ -2,7 +2,12 @@ import { defineStore } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { Quote } from 'src/types/references';
 import { useReferencesStore } from './references';
-import { saveDataFirestore } from 'src/utils/useFirestore';
+import {
+  getQuotesByReference,
+  removeQuoteFirestore,
+  saveDataFirestore,
+  saveQuoteFirestore,
+} from 'src/utils/useFirestore';
 
 const { find } = useReferencesStore();
 
@@ -10,8 +15,20 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
   const quotes = ref<Quote[] | []>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
 
+  const loadingQuotes = ref(false);
+
   function resetQuoteFilter() {
     filteredQuotes.value = null;
+  }
+
+  async function loadQuotes(referenceId: string) {
+    loadingQuotes.value = true;
+
+    try {
+      quotes.value = (await getQuotesByReference(referenceId)) as Quote[];
+    } finally {
+      loadingQuotes.value = false;
+    }
   }
 
   async function addQuote(type: string, referenceId: string, quote: Quote) {
@@ -23,7 +40,8 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
       referenceFound!.quotes = [quote];
     }
     findQuotes(type, referenceId);
-    await saveDataFirestore();
+    // await saveDataFirestore();
+    await saveQuoteFirestore(quote);
   }
 
   async function removeQuote(type: string, referenceId: string, quoteId: string) {
@@ -34,7 +52,8 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
 
     findQuotes(type, referenceId);
-    await saveDataFirestore();
+    // await saveDataFirestore();
+    await removeQuoteFirestore(quoteId);
   }
 
   function findQuotes(type: string, referenceId: string) {
@@ -68,6 +87,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   return {
     quotes,
+    loadQuotes,
     filteredQuotes,
     addQuote,
     findQuotes,

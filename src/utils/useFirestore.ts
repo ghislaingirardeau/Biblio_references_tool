@@ -10,6 +10,7 @@ import {
   addDoc,
   query,
   where,
+  deleteDoc,
 } from 'firebase/firestore';
 import { storeToRefs } from 'pinia';
 import { Notify } from 'quasar';
@@ -17,6 +18,13 @@ import { useAuth } from 'src/stores/auth';
 import { useProjectsStore } from 'src/stores/projects';
 import type { Projects } from 'src/types/projects';
 import type { BibliographicEntry, Quote } from 'src/types/references';
+
+/* FIRESTORE:
+
+- ApiUsage & Projects are field of users/userID
+- References & Quotes are sub-collections of users/userID
+
+*/
 
 // Initialiser Firestore
 const db = getFirestore();
@@ -33,6 +41,7 @@ const getUid = () => {
 };
 
 export async function saveDataFirestore() {
+  console.log('is saving');
   const authStore = useAuth();
 
   if (authStore.user && authStore.user?.uid) {
@@ -94,12 +103,7 @@ export async function setUserFirestore() {
 }
 
 export async function testFirestore() {
-  const authStore = useAuth();
-  const uid = authStore.user?.uid;
-
-  if (!uid) {
-    return;
-  }
+  const uid = getUid();
 
   /* GET UNE SOUS COLLECTION */
   // const userCollectionRef = collection(db, 'users', uid, 'references');
@@ -114,15 +118,15 @@ export async function testFirestore() {
   /* Attention toutefois : getDocs() récupère toutes les références une seule fois. Si tu veux que ton application reçoive automatiquement les nouvelles références ou les modifications en temps réel, il faut utiliser onSnapshot() à la place. */
 
   /* GET collection with WHERE */
-  const res = await getReferencesByProject('123456');
+  const res = await getReferencesByProject('Project-1789463170877');
   console.log(res);
 
   /* CREER UNE SOUS COLLECTION */
   // const referencesRef = doc(db, 'users', uid, 'references', 'bGnDTrd89nueNuAUQ3dN');
 
-  // await addDoc(referencesRef, {});
+  // await setDoc(referencesRef, {});
 
-  // console.log(docRef.id);
+  // console.log(referencesRef.id);
 
   /* UPDATE UNE SOUS COLLECTION */
   // await setDoc(referencesRef, {
@@ -133,7 +137,9 @@ export async function testFirestore() {
   // });
 }
 
-const getReferencesByProject = async (projectId: string) => {
+/* REFERENCES */
+
+export const getReferencesByProject = async (projectId: string) => {
   const uid = getUid();
 
   const referencesCollection = collection(db, 'users', uid, 'references');
@@ -142,13 +148,25 @@ const getReferencesByProject = async (projectId: string) => {
 
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const result: Record<string, Array<BibliographicEntry>> = {};
+
+  snapshot.docs.forEach((doc) => {
+    const data = doc.data() as BibliographicEntry;
+    const type = data.type;
+
+    if (!result[type]) {
+      result[type] = [];
+    }
+
+    result[type].push({
+      ...data,
+    });
+  });
+
+  return result;
 };
 
-const getReferencesByTags = async (tag: string) => {
+export const getReferencesByTags = async (tag: string) => {
   const uid = getUid();
 
   const referencesCollection = collection(db, 'users', uid, 'references');
@@ -163,28 +181,30 @@ const getReferencesByTags = async (tag: string) => {
   }));
 };
 
-const saveReferenceFirestore = async (reference: BibliographicEntry) => {
+export const saveReferenceFirestore = async (reference: BibliographicEntry) => {
   const uid = getUid();
 
-  const referencesCollection = collection(db, 'users', uid, 'references', reference.id!);
+  const referencesCollection = doc(db, 'users', uid, 'references', reference.id!);
 
-  await addDoc(referencesCollection, reference);
+  await setDoc(referencesCollection, reference);
 };
 
-const updateReferenceFirestore = async (reference: BibliographicEntry) => {
-  const authStore = useAuth();
-  const uid = authStore.user?.uid;
-
-  if (!uid) {
-    return;
-  }
+export const updateReferenceFirestore = async (reference: BibliographicEntry) => {
+  const uid = getUid();
 
   const referencesDoc = doc(db, 'users', uid, 'references', reference.id!);
 
   await setDoc(referencesDoc, reference);
 };
 
-const getQuotesByReferences = async (referenceId: string) => {
+export const removeReferenceFirestore = async (referenceId: string) => {
+  const uid = getUid();
+  await deleteDoc(doc(db, 'users', uid, 'references', referenceId));
+};
+
+/* QUOTES */
+
+export const getQuotesByReference = async (referenceId: string) => {
   const uid = getUid();
 
   const quotesCollection = collection(db, 'users', uid, 'quotes');
@@ -194,12 +214,11 @@ const getQuotesByReferences = async (referenceId: string) => {
   const snapshot = await getDocs(q);
 
   return snapshot.docs.map((doc) => ({
-    id: doc.id,
     ...doc.data(),
   }));
 };
 
-const getQuotesByTags = async (tag: string) => {
+export const getQuotesByTag = async (tag: string) => {
   const uid = getUid();
 
   const quotesCollection = collection(db, 'users', uid, 'quotes');
@@ -214,7 +233,7 @@ const getQuotesByTags = async (tag: string) => {
   }));
 };
 
-const saveQuoteFirestore = async (quote: Quote) => {
+export const saveQuoteFirestore = async (quote: Quote) => {
   const uid = getUid();
 
   const referencesRef = collection(db, 'users', uid, 'quotes', quote.id!);
@@ -222,10 +241,15 @@ const saveQuoteFirestore = async (quote: Quote) => {
   await addDoc(referencesRef, quote);
 };
 
-const updateQuoteFirestore = async (quote: Quote) => {
+export const updateQuoteFirestore = async (quote: Quote) => {
   const uid = getUid();
 
   const quotesDoc = doc(db, 'users', uid, 'quote', quote.id!);
 
   await setDoc(quotesDoc, quote);
+};
+
+export const removeQuoteFirestore = async (quoteId: string) => {
+  const uid = getUid();
+  await deleteDoc(doc(db, 'users', uid, 'references', quoteId));
 };

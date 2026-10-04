@@ -170,7 +170,7 @@ async function findReference() {
     const response = await fetch(url());
     if (response.ok) {
       const result = await response.json();
-      newReference.value.id = 'reference_' + identifier.value;
+      newReference.value.id = 'reference_' + encodeURIComponent(identifier.value);
       if (route.params.type === 'books' || route.params.type === 'bookChapter') {
         console.log(result);
         formatBookData(result.items[0].volumeInfo, newReference, route.params.type);

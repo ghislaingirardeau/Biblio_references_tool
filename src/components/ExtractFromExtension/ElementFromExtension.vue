@@ -75,7 +75,7 @@ function handleScreenshot(event: any) {
 
 async function saveQuote() {
   newQuote.value.project_id = projectId.value;
-  newQuote.value.reference_id = route.params.id as string;
+  newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
 
   await QuotesStore.addQuote(
     route.params.type as string,

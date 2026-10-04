@@ -99,7 +99,7 @@ import { useRouter } from 'vue-router';
 import { useTemplateRefsList } from '@vueuse/core';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, currentProject, userHasToSave } = storeToRefs(ProjectsStore);
+const { projectsLabel, projectId, userHasToSave } = storeToRefs(ProjectsStore);
 const router = useRouter();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
@@ -128,7 +128,7 @@ const menuList = computed(() => {
 });
 
 function isCurrentProjectOpened(id: string) {
-  return currentProject.value === id;
+  return projectId.value === id;
 }
 
 async function showModalProject(e: Event) {
@@ -138,7 +138,7 @@ async function showModalProject(e: Event) {
 
 async function switchProject(id: string) {
   if (isProjectOnEditing.value) return;
-  currentProject.value = id;
+  projectId.value = id;
   leftDrawerOpen.value = false;
   userHasToSave.value = false;
   await router.push({ name: 'references' });

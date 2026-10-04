@@ -4,7 +4,12 @@ import type { References } from 'src/types/references';
 import type { BibliographicEntry } from 'src/types/references';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useProjectsStore } from './projects';
-import { saveDataFirestore } from 'src/utils/useFirestore';
+import {
+  getReferencesByProject,
+  removeReferenceFirestore,
+  saveDataFirestore,
+  saveReferenceFirestore,
+} from 'src/utils/useFirestore';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
@@ -14,6 +19,8 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
 
+  const loadingReferences = ref(false);
+  const referencesBis = ref<Record<string, BibliographicEntry[]>>({});
   const referencesTypes = computed(() => {
     return Object.keys(references.value) as Array<keyof References>;
   });
@@ -28,9 +35,20 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     references.value = referencesTemplate;
   }
 
+  async function loadReferences(projectId: string) {
+    loadingReferences.value = true;
+
+    try {
+      referencesBis.value = await getReferencesByProject(projectId);
+    } finally {
+      loadingReferences.value = false;
+    }
+  }
+
   async function add(type: string, reference: BibliographicEntry) {
     references.value[type as keyof References]?.lists.unshift(reference);
-    await saveDataFirestore();
+    // await saveDataFirestore();
+    await saveReferenceFirestore(reference);
   }
 
   function find(type: string, id: string) {
@@ -71,18 +89,21 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   async function remove(type: string, referenceId: string) {
-    const findReferences = references.value[type as keyof References]?.lists.filter(
+    const filterReferences = references.value[type as keyof References]?.lists.filter(
       (ref) => ref.id !== referenceId,
     );
-    references.value[type as keyof References]!.lists = findReferences as BibliographicEntry[];
-    await saveDataFirestore();
+    references.value[type as keyof References]!.lists = filterReferences as BibliographicEntry[];
+    // await saveDataFirestore();
+    await removeReferenceFirestore(referenceId);
   }
 
   return {
     references,
+    referencesBis,
     referencesTypes,
     referencesLabels,
     getTitle,
+    loadReferences,
     add,
     find,
     remove,

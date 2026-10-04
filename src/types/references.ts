@@ -14,13 +14,7 @@ export interface References {
   conferencePaper?: ReferenceDetails;
   dissertation?: ReferenceDetails;
   report?: ReferenceDetails;
-  newspaperArticle?: ReferenceDetails;
-  magazineArticle?: ReferenceDetails;
-  software?: ReferenceDetails;
   legislation?: ReferenceDetails;
-  presentation?: ReferenceDetails;
-  manuscript?: ReferenceDetails;
-  interview?: ReferenceDetails;
 }
 
 export type ReferencesType = readonly [

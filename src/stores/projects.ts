@@ -28,12 +28,11 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     },
   ]);
 
-  const currentProject = ref(projects.value[0]!.id);
+  const projectId = ref(projects.value[0]!.id);
   const userHasToSave = ref(false);
   const refreshKey = ref(0);
 
-  const project = computed(() => projects.value.find((p) => p.id === currentProject.value));
-  const projectId = computed(() => project.value!.id);
+  const project = computed(() => projects.value.find((p) => p.id === projectId.value));
 
   const projectsLabel = computed(() =>
     projects.value.map((p) => {
@@ -69,7 +68,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   }
 
   function addTagToProject(type: 'references' | 'quotes', tag: string) {
-    const foundProject = projects.value.find((p) => p.id === currentProject.value);
+    const foundProject = projects.value.find((p) => p.id === projectId.value);
     foundProject?.tags?.[type as keyof Tags].unshift(tag);
   }
 
@@ -110,10 +109,9 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   );
 
   return {
-    currentProject,
+    projectId,
     projects,
     project,
-    projectId,
     projectsLabel,
     loadProjectsFromFirestore,
     add,

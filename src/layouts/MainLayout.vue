@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
@@ -35,9 +35,12 @@ import { storeToRefs } from 'pinia';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import BreadCrumbWidget from 'src/components/BreadCrumbWidget.vue';
 import TheDrawer from 'src/components/TheDrawer.vue';
+import { useReferencesStore } from 'src/stores/references';
 
 const ProjectsStore = useProjectsStore();
-const { refreshKey } = storeToRefs(ProjectsStore);
+const { refreshKey, projectId } = storeToRefs(ProjectsStore);
+
+const ReferencesStore = useReferencesStore();
 
 const showConfirmModal = ref(false);
 const selectedFolder = ref<string | null>(null);
@@ -55,6 +58,15 @@ async function deleteProject() {
   }
   selectedFolder.value = null;
 }
+
+onMounted(async () => {
+  if (projectId.value) {
+    await Promise.all([
+      ReferencesStore.loadReferences(projectId.value),
+      // quotesStore.loadQuotes(projectStore.currentProjectId)
+    ]);
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
