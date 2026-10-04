@@ -10,7 +10,7 @@ const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
 const ReferencesStore = useReferencesStore();
-const { referencesLabels } = storeToRefs(ReferencesStore);
+const { referencesLabels, referencesBis } = storeToRefs(ReferencesStore);
 
 const { capitalize } = format;
 
@@ -34,26 +34,28 @@ export const useTreeStore = defineStore('TreeStore', () => {
             ? await router.push({ name: 'references-type', params: { type: refLabel } })
             : null;
         },
-        children: project.value!.references[refLabel]?.lists.map((theRef) => {
-          return {
-            id: theRef.id,
-            type: refLabel,
-            label: theRef.title,
-            selectable: true,
-            handler: async (node: string) => {
-              // if menu go to the route clicked else it's where I want to register the quote
-              useRouteOnClick
-                ? await router.push({
-                    name: 'quotes-id',
-                    params: { type: refLabel, id: theRef.id },
-                  })
-                : (textToExtractIn.value = {
-                    type: refLabel,
-                    referenceId: theRef.id!,
-                  });
-            },
-          };
-        }),
+        children: !referencesBis.value[refLabel]
+          ? null
+          : referencesBis.value[refLabel].map((theRef) => {
+              return {
+                id: theRef.id,
+                type: refLabel,
+                label: theRef.title,
+                selectable: true,
+                handler: async (node: string) => {
+                  // if menu go to the route clicked else it's where I want to register the quote
+                  useRouteOnClick
+                    ? await router.push({
+                        name: 'quotes-id',
+                        params: { type: refLabel, id: theRef.id },
+                      })
+                    : (textToExtractIn.value = {
+                        type: refLabel,
+                        referenceId: theRef.id!,
+                      });
+                },
+              };
+            }),
       };
     });
 
