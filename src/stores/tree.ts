@@ -10,7 +10,7 @@ const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
 const ReferencesStore = useReferencesStore();
-const { referencesLabels, referencesBis } = storeToRefs(ReferencesStore);
+const { referencesLabels, references } = storeToRefs(ReferencesStore);
 
 const { capitalize } = format;
 
@@ -34,9 +34,9 @@ export const useTreeStore = defineStore('TreeStore', () => {
             ? await router.push({ name: 'references-type', params: { type: refLabel } })
             : null;
         },
-        children: !referencesBis.value[refLabel]
+        children: !references.value[refLabel]
           ? null
-          : referencesBis.value[refLabel].map((theRef) => {
+          : references.value[refLabel].map((theRef) => {
               return {
                 id: theRef.id,
                 type: refLabel,

@@ -109,7 +109,7 @@ const typeReferences: ComputedRef<BibliographicEntry[]> = computed(() => {
   if (Array.isArray(ReferencesStore.filterReferences)) {
     return ReferencesStore.filterReferences as BibliographicEntry[];
   }
-  return ReferencesStore.referencesBis[type.value as keyof References] ?? [];
+  return ReferencesStore.references[type.value as keyof References] ?? [];
 });
 
 async function goToQuotes(id: string) {

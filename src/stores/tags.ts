@@ -9,7 +9,7 @@ const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
 const ReferencesStore = useReferencesStore();
-const { referencesTypes } = storeToRefs(ReferencesStore);
+const { referencesTypes, references } = storeToRefs(ReferencesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
   const tags: Ref<Tags> = computed(() => project.value!.tags);
@@ -79,10 +79,10 @@ export const useTagsStore = defineStore('TagsStore', () => {
     };
 
     for (const key of referencesTypes.value) {
-      const typeOfReferences = project.value?.references[key];
+      const typeOfReferences = references.value[key];
       // if there is no references type inside list array return
-      if (!typeOfReferences?.lists.length) continue;
-      const typesWithTags = typeOfReferences?.lists.filter((e) => {
+      if (!typeOfReferences?.length) continue;
+      const typesWithTags = typeOfReferences?.filter((e) => {
         const findTag = e.tags!.find((t) => t.toLowerCase() === tag.toLowerCase());
         if (findTag) return true;
       });

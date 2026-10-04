@@ -15,44 +15,38 @@ const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
-  const references: Ref<References> = computed(() => project.value!.references);
-
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
 
   const loadingReferences = ref(false);
-  const referencesBis = ref<Record<string, BibliographicEntry[]>>({});
+  const references = ref<Record<string, BibliographicEntry[]>>({});
   const referencesTypes = computed(() => {
-    return Object.keys(references.value) as Array<keyof References>;
+    return Object.keys(project.value!.references) as Array<keyof References>;
   });
 
   const referencesLabels = computed(() => {
     return referencesTypes.value.map((ref) => {
-      return references.value[ref]?.label;
+      return project.value!.references[ref]?.label;
     });
   });
-
-  function resetReferences() {
-    references.value = referencesTemplate;
-  }
 
   async function loadReferences(projectId: string) {
     loadingReferences.value = true;
 
     try {
-      referencesBis.value = await getReferencesByProject(projectId);
+      references.value = await getReferencesByProject(projectId);
     } finally {
       loadingReferences.value = false;
     }
   }
 
   async function add(type: string, reference: BibliographicEntry) {
-    references.value[type as keyof References]?.lists.unshift(reference);
+    references.value[type as keyof References]?.unshift(reference);
     // await saveDataFirestore();
     await saveReferenceFirestore(reference);
   }
 
   function find(type: string, id: string) {
-    return references.value[type as keyof References]!.lists.find((ref) => ref.id === id);
+    return references.value[type as keyof References]!.find((ref) => ref.id === id);
   }
 
   function filter(type: string, query: string) {
@@ -62,7 +56,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
       return;
     }
     const lowerQuery = query.toLowerCase();
-    const findReferences = references.value[type as keyof References]!.lists.filter(
+    const findReferences = references.value[type as keyof References]!.filter(
       (reference) =>
         reference.title.toLowerCase().includes(lowerQuery) ||
         ('authors' in reference &&
@@ -85,21 +79,20 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   function getTitle(type: string, id: string) {
-    return referencesBis.value[type as keyof References]!.find((ref) => ref.id === id)?.title;
+    return references.value[type as keyof References]!.find((ref) => ref.id === id)?.title;
   }
 
   async function remove(type: string, referenceId: string) {
-    const filterReferences = references.value[type as keyof References]?.lists.filter(
+    const filterReferences = references.value[type as keyof References]?.filter(
       (ref) => ref.id !== referenceId,
     );
-    references.value[type as keyof References]!.lists = filterReferences as BibliographicEntry[];
+    references.value[type as keyof References] = filterReferences as BibliographicEntry[];
     // await saveDataFirestore();
     await removeReferenceFirestore(referenceId);
   }
 
   return {
     references,
-    referencesBis,
     referencesTypes,
     referencesLabels,
     getTitle,
@@ -107,7 +100,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     add,
     find,
     remove,
-    resetReferences,
     filterReferences,
     filter,
     resetFilter,
