@@ -12,7 +12,7 @@ import {
 const { find } = useReferencesStore();
 
 export const useQuotesStore = defineStore('QuotesStore', () => {
-  const quotes = ref<Quote[] | []>([]);
+  const quotes = ref<Quote[]>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
 
   const loadingQuotes = ref(false);
@@ -32,17 +32,13 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
   }
 
-  async function addQuote(type: string, referenceId: string, quote: Quote) {
-    const referenceFound = find(type, referenceId);
-
-    if (referenceFound && referenceFound?.quotes) {
-      referenceFound?.quotes.unshift(quote);
-    } else {
-      referenceFound!.quotes = [quote];
+  async function addQuote(quote: Quote) {
+    try {
+      await saveQuoteFirestore(quote);
+      quotes.value.unshift(quote);
+    } catch (error) {
+      console.log(error);
     }
-    findQuotes(type, referenceId);
-    // await saveDataFirestore();
-    await saveQuoteFirestore(quote);
   }
 
   async function removeQuote(referenceId: string, quoteId: string) {

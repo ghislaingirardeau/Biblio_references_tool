@@ -282,11 +282,7 @@ const integrateTextToApp = async () => {
 
   // Save to the right place according to the tree selected
   isSavingQuote.value = true;
-  await QuotesStore.addQuote(
-    textToExtractIn.value?.type,
-    textToExtractIn.value?.referenceId,
-    newQuote,
-  );
+  await QuotesStore.addQuote(newQuote);
   isSavingQuote.value = false;
   textToExtractIn.value = null;
 };
