@@ -12,7 +12,7 @@ import {
 } from 'src/utils/useFirestore';
 
 const ProjectsStore = useProjectsStore();
-const { project } = storeToRefs(ProjectsStore);
+const { project, projectId } = storeToRefs(ProjectsStore);
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
@@ -29,11 +29,11 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     });
   });
 
-  async function loadReferences(projectId: string) {
+  async function loadReferences() {
     loadingReferences.value = true;
 
     try {
-      references.value = await getReferencesByProject(projectId);
+      references.value = await getReferencesByProject(projectId.value);
     } finally {
       loadingReferences.value = false;
     }
@@ -83,12 +83,18 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   async function remove(type: string, referenceId: string) {
-    const filterReferences = references.value[type as keyof References]?.filter(
-      (ref) => ref.id !== referenceId,
-    );
-    references.value[type as keyof References] = filterReferences as BibliographicEntry[];
-    // await saveDataFirestore();
-    await removeReferenceFirestore(referenceId);
+    try {
+      loadingReferences.value = true;
+      await removeReferenceFirestore(referenceId);
+      const filterReferences = references.value[type as keyof References]?.filter(
+        (ref) => ref.id !== referenceId,
+      );
+      references.value[type as keyof References] = filterReferences as BibliographicEntry[];
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loadingReferences.value = false;
+    }
   }
 
   return {

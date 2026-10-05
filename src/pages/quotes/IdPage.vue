@@ -153,11 +153,7 @@ function askConfirmation(id: string) {
 
 async function deleteQuote() {
   selectedQuoteId.value
-    ? await QuotesStore.removeQuote(
-        route.params.type as string,
-        route.params.id as string,
-        selectedQuoteId.value,
-      )
+    ? await QuotesStore.removeQuote(route.params.id as string, selectedQuoteId.value)
     : null;
   selectedQuoteId.value = null;
 }

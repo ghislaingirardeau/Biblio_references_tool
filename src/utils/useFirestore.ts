@@ -199,6 +199,7 @@ export const updateReferenceFirestore = async (reference: BibliographicEntry) =>
 
 export const removeReferenceFirestore = async (referenceId: string) => {
   const uid = getUid();
+  console.log('remove ref', referenceId);
   await deleteDoc(doc(db, 'users', uid, 'references', referenceId));
 };
 

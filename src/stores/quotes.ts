@@ -45,15 +45,16 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     await saveQuoteFirestore(quote);
   }
 
-  async function removeQuote(type: string, referenceId: string, quoteId: string) {
+  async function removeQuote(referenceId: string, quoteId: string) {
     try {
       removingQuote.value = true;
       await removeQuoteFirestore(quoteId);
+      const filterQuotes = quotes.value.filter((quote) => quote.id !== quoteId);
+      quotes.value = filterQuotes;
     } catch (error) {
       console.log(error);
     } finally {
       removingQuote.value = false;
-      await loadQuotes(referenceId);
     }
   }
 

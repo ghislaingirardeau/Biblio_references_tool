@@ -62,7 +62,7 @@ async function deleteProject() {
 onMounted(async () => {
   if (projectId.value) {
     await Promise.all([
-      ReferencesStore.loadReferences(projectId.value),
+      ReferencesStore.loadReferences(),
       // quotesStore.loadQuotes(projectStore.currentProjectId)
     ]);
   }

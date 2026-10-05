@@ -1,7 +1,10 @@
 <template>
   <q-page class="p-2">
     <div v-if="typeReferences && typeReferences.length" class="row q-col-gutter-md q-pa-md">
-      <div class="col-12 col-md-4" v-for="reference in typeReferences" :key="reference.id!">
+      <div v-if="loadingReferences" class="col-12 flex justify-center">
+        <q-spinner color="primary" size="3em" />
+      </div>
+      <div v-else class="col-12 col-md-4" v-for="reference in typeReferences" :key="reference.id!">
         <q-card class="full-height flex flex-col justify-between">
           <q-card-section @click="goToQuotes(reference.id!)" class="cursor-pointer">
             <div class="text-h6">{{ reference.title }}</div>
@@ -78,6 +81,7 @@
 
 <script setup lang="ts">
 import { mdiWeb } from '@quasar/extras/mdi-v7';
+import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
@@ -89,6 +93,7 @@ import type { ComputedRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
+const { loadingReferences, references } = storeToRefs(ReferencesStore);
 const router = useRouter();
 const route = useRoute();
 
@@ -109,7 +114,7 @@ const typeReferences: ComputedRef<BibliographicEntry[]> = computed(() => {
   if (Array.isArray(ReferencesStore.filterReferences)) {
     return ReferencesStore.filterReferences as BibliographicEntry[];
   }
-  return ReferencesStore.references[type.value as keyof References] ?? [];
+  return references.value[type.value as keyof References] ?? [];
 });
 
 async function goToQuotes(id: string) {
