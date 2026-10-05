@@ -9,8 +9,6 @@ import {
   saveQuoteFirestore,
 } from 'src/utils/useFirestore';
 
-const { find } = useReferencesStore();
-
 export const useQuotesStore = defineStore('QuotesStore', () => {
   const quotes = ref<Quote[]>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
@@ -54,16 +52,6 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
   }
 
-  function findQuotes(type: string, referenceId: string) {
-    const referenceFound = find(type, referenceId);
-
-    if (referenceFound && referenceFound?.quotes) {
-      quotes.value = referenceFound.quotes;
-    } else {
-      quotes.value = [];
-    }
-  }
-
   function filterQuotes(query: string) {
     filteredQuotes.value = null;
     if (!query.trim()) {
@@ -89,7 +77,6 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     loadQuotes,
     filteredQuotes,
     addQuote,
-    findQuotes,
     filterQuotes,
     resetQuoteFilter,
     removeQuote,

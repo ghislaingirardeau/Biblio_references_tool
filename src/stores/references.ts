@@ -41,12 +41,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   async function add(type: string, reference: BibliographicEntry) {
     references.value[type as keyof References]?.unshift(reference);
-    // await saveDataFirestore();
     await saveReferenceFirestore(reference);
-  }
-
-  function find(type: string, id: string) {
-    return references.value[type as keyof References]!.find((ref) => ref.id === id);
   }
 
   function filter(type: string, query: string) {
@@ -105,7 +100,6 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     loadingReferences,
     loadReferences,
     add,
-    find,
     remove,
     filterReferences,
     filter,

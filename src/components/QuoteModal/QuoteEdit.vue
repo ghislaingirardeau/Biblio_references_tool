@@ -13,6 +13,7 @@
       class="w-full"
       multiple
       use-chips
+      :readonly="isReadonly"
       use-input
       input-debounce="0"
       @new-value="createValue"

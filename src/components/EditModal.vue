@@ -5,7 +5,7 @@
     maximized
     transition-show="slide-up"
     transition-hide="slide-down"
-    @hide="isReadonly = false"
+    @hide="saveOnChange"
   >
     <q-card>
       <q-card-section class="row items-center q-pb-none">
@@ -32,7 +32,13 @@
       </q-card-section>
 
       <q-card-actions>
-        <q-btn label="Close" :disable="hasRequiredField" color="primary" v-close-popup />
+        <q-btn
+          label="Close"
+          :disable="hasRequiredField"
+          color="primary"
+          v-close-popup
+          @click="saveOnChange"
+        />
         <span v-if="hasRequiredField" class="ml-5 italic">Title field is required !</span>
       </q-card-actions>
     </q-card>
@@ -44,18 +50,59 @@ import type { BibliographicEntry, Quote } from 'src/types/references';
 import QuoteEdit from './QuoteModal/QuoteEdit.vue';
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import ReferenceEdit from './ReferenceModal/ReferenceEdit.vue';
+import { useReferencesStore } from 'src/stores/references';
+import { useQuotesStore } from 'src/stores/quotes';
+
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, onUpdated, ref, watch } from 'vue';
 
 const showEditModal = defineModel<boolean>('showEditModal');
 const selectedReference = defineModel<BibliographicEntry>('selectedReference');
 const selectedQuote = defineModel<Quote>('selectedQuote');
+
+const hasToSaveReference = ref(false);
+const hasToSaveQuote = ref(false);
+
+const ReferencesStore = useReferencesStore();
+const { references } = storeToRefs(ReferencesStore);
+
+const QuotesStore = useQuotesStore();
+const { quotes } = storeToRefs(QuotesStore);
 
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 
 const hasRequiredField = computed(() => {
   return selectedReference.value?.title.length === 0;
+});
+
+function saveOnChange() {
+  if (hasToSaveReference.value) {
+    console.log('reference has change, need to save: ', selectedReference.value?.id);
+  }
+  if (hasToSaveQuote.value) {
+    console.log('quote has change, need to save: ', selectedQuote.value?.id);
+  }
+  hasToSaveReference.value = false;
+  hasToSaveQuote.value = false;
+  isReadonly.value = false;
+}
+
+onUpdated(() => {
+  watch(
+    () => references.value,
+    () => {
+      hasToSaveReference.value = true;
+    },
+    { deep: true, immediate: false },
+  );
+  watch(
+    () => quotes.value,
+    () => {
+      hasToSaveQuote.value = true;
+    },
+    { deep: true, immediate: false },
+  );
 });
 </script>
 

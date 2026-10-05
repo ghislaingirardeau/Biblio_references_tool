@@ -16,7 +16,7 @@
 
       <div v-else class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
         <q-card class="full-height flex flex-col justify-between">
-          <q-card-section>
+          <q-card-section @click="modalEdit(quote, true)">
             <div
               :class="{ 'truncate-2-lines': !isQuoteExpanded }"
               ref="quote-content"
@@ -56,14 +56,7 @@
               </q-tooltip>
             </q-btn>
 
-            <q-btn
-              dense
-              flat
-              round
-              color="primary"
-              icon="edit"
-              @click.stop="modalEdit(quote, false)"
-            >
+            <q-btn dense flat round color="primary" icon="edit" @click="modalEdit(quote, false)">
               <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
             </q-btn>
             <q-btn
@@ -113,7 +106,7 @@ import { useQuotesStore } from 'src/stores/quotes';
 import type { Quote } from 'src/types/references';
 import { computed, onMounted, ref, useTemplateRef } from 'vue';
 import { useRoute } from 'vue-router';
-import { useClipboard, useTemplateRefsList } from '@vueuse/core';
+import { useClipboard } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';

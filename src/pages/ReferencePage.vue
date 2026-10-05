@@ -139,8 +139,6 @@ async function confirmDelete() {
   await ReferencesStore.remove(type.value as string, selectedId.value!);
   selectedId.value = null;
 }
-
-// }
 </script>
 
 <style scoped></style>
