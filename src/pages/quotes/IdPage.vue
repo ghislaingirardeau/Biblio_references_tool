@@ -1,16 +1,20 @@
 <template>
   <q-page class="p-2">
     <q-toggle
-      v-if="quotes && quotes.length"
+      v-if="quotes && quotes.length && !loadingQuotes"
       v-model="isQuoteExpanded"
       color="primary"
       label="Expand quote"
       left-label
     />
-    <ElementFromExtension v-if="isElectron" />
+    <ElementFromExtension />
 
     <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
-      <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
+      <div v-if="loadingQuotes" class="col-12 flex justify-center">
+        <q-spinner color="primary" size="3em" />
+      </div>
+
+      <div v-else class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
         <q-card class="full-height flex flex-col justify-between">
           <q-card-section>
             <div
@@ -114,6 +118,7 @@ import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFro
 import { isElectron } from 'src/utils/useElectron';
 
 const QuotesStore = useQuotesStore();
+const { loadingQuotes } = storeToRefs(QuotesStore);
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 
@@ -165,8 +170,8 @@ function confirmEdit() {
   selectedQuote.value = null;
 }
 
-onMounted(() => {
-  QuotesStore.findQuotes(route.params.type as string, route.params.id as string);
+onMounted(async () => {
+  await QuotesStore.loadQuotes(route.params.id as string);
 });
 </script>
 

@@ -209,7 +209,7 @@ export const getQuotesByReference = async (referenceId: string) => {
 
   const quotesCollection = collection(db, 'users', uid, 'quotes');
 
-  const q = query(quotesCollection, where('reference_id', '==', referenceId));
+  const q = query(quotesCollection, where('reference_id', '==', encodeURIComponent(referenceId)));
 
   const snapshot = await getDocs(q);
 
@@ -236,9 +236,9 @@ export const getQuotesByTag = async (tag: string) => {
 export const saveQuoteFirestore = async (quote: Quote) => {
   const uid = getUid();
 
-  const referencesRef = collection(db, 'users', uid, 'quotes', quote.id!);
+  const referencesRef = doc(db, 'users', uid, 'quotes', quote.id!);
 
-  await addDoc(referencesRef, quote);
+  await setDoc(referencesRef, quote);
 };
 
 export const updateQuoteFirestore = async (quote: Quote) => {

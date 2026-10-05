@@ -87,6 +87,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   return {
     quotes,
+    loadingQuotes,
     loadQuotes,
     filteredQuotes,
     addQuote,
