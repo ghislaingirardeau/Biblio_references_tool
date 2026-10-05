@@ -67,6 +67,8 @@
               <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
             </q-btn>
             <q-btn
+              :loading="removingQuote"
+              :disable="removingQuote"
               dense
               flat
               round
@@ -118,7 +120,7 @@ import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFro
 import { isElectron } from 'src/utils/useElectron';
 
 const QuotesStore = useQuotesStore();
-const { loadingQuotes } = storeToRefs(QuotesStore);
+const { loadingQuotes, removingQuote } = storeToRefs(QuotesStore);
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 

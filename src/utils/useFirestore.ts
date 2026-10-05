@@ -251,5 +251,6 @@ export const updateQuoteFirestore = async (quote: Quote) => {
 
 export const removeQuoteFirestore = async (quoteId: string) => {
   const uid = getUid();
-  await deleteDoc(doc(db, 'users', uid, 'references', quoteId));
+
+  await deleteDoc(doc(db, 'users', uid, 'quotes', quoteId));
 };

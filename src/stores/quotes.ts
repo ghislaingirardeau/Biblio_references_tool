@@ -16,6 +16,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
   const filteredQuotes = ref<Quote[] | null>(null);
 
   const loadingQuotes = ref(false);
+  const removingQuote = ref(false);
 
   function resetQuoteFilter() {
     filteredQuotes.value = null;
@@ -45,15 +46,15 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
   }
 
   async function removeQuote(type: string, referenceId: string, quoteId: string) {
-    const referenceFound = find(type, referenceId);
-
-    if (referenceFound && referenceFound?.quotes) {
-      referenceFound.quotes = referenceFound?.quotes?.filter((q) => q.id !== quoteId);
+    try {
+      removingQuote.value = true;
+      await removeQuoteFirestore(quoteId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      removingQuote.value = false;
+      await loadQuotes(referenceId);
     }
-
-    findQuotes(type, referenceId);
-    // await saveDataFirestore();
-    await removeQuoteFirestore(quoteId);
   }
 
   function findQuotes(type: string, referenceId: string) {
@@ -95,5 +96,6 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     filterQuotes,
     resetQuoteFilter,
     removeQuote,
+    removingQuote,
   };
 });
