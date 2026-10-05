@@ -96,6 +96,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     referencesTypes,
     referencesLabels,
     getTitle,
+    loadingReferences,
     loadReferences,
     add,
     find,
