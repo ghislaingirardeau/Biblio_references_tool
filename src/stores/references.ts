@@ -9,6 +9,7 @@ import {
   removeReferenceFirestore,
   saveDataFirestore,
   saveReferenceFirestore,
+  updateReferenceFirestore,
 } from 'src/utils/useFirestore';
 
 const ProjectsStore = useProjectsStore();
@@ -42,6 +43,14 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   async function add(type: string, reference: BibliographicEntry) {
     references.value[type as keyof References]?.unshift(reference);
     await saveReferenceFirestore(reference);
+  }
+
+  async function update(reference: BibliographicEntry) {
+    try {
+      await updateReferenceFirestore(reference);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function filter(type: string, query: string) {
@@ -100,6 +109,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     loadingReferences,
     loadReferences,
     add,
+    update,
     remove,
     filterReferences,
     filter,

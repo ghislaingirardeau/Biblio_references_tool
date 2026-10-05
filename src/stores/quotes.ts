@@ -7,6 +7,7 @@ import {
   removeQuoteFirestore,
   saveDataFirestore,
   saveQuoteFirestore,
+  updateQuoteFirestore,
 } from 'src/utils/useFirestore';
 
 export const useQuotesStore = defineStore('QuotesStore', () => {
@@ -34,6 +35,14 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     try {
       await saveQuoteFirestore(quote);
       quotes.value.unshift(quote);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updateQuote(quote: Quote) {
+    try {
+      await updateQuoteFirestore(quote);
     } catch (error) {
       console.log(error);
     }
@@ -77,6 +86,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     loadQuotes,
     filteredQuotes,
     addQuote,
+    updateQuote,
     filterQuotes,
     resetQuoteFilter,
     removeQuote,

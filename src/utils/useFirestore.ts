@@ -244,7 +244,9 @@ export const saveQuoteFirestore = async (quote: Quote) => {
 export const updateQuoteFirestore = async (quote: Quote) => {
   const uid = getUid();
 
-  const quotesDoc = doc(db, 'users', uid, 'quote', quote.id!);
+  console.log(quote.id);
+
+  const quotesDoc = doc(db, 'users', uid, 'quotes', quote.id!);
 
   await setDoc(quotesDoc, quote);
 };
