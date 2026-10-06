@@ -1,7 +1,7 @@
 <template>
   <q-footer elevated class="flex flex-center">
     <q-toolbar class="my-2">
-      <q-toolbar-title v-if="isRouteForReferences || isRouteQuotes">
+      <q-toolbar-title v-if="isRouteForReferences || isRouteQuotes" class="flex items-center">
         <q-input
           square
           filled
@@ -20,7 +20,9 @@
             <q-icon :name="mdiCloseThick" @click="restore" color="primary" class="cursor-pointer" />
           </template>
         </q-input>
+        <span class="ml-2">{{ message }}</span>
       </q-toolbar-title>
+
       <q-toolbar-title v-else> By Gg web dev </q-toolbar-title>
     </q-toolbar>
   </q-footer>
@@ -81,6 +83,7 @@ watch(
   () => route,
   () => {
     query.value = '';
+    message.value = null;
   },
   { deep: true },
 );

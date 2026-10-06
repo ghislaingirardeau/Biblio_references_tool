@@ -2,12 +2,10 @@ import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { References } from 'src/types/references';
 import type { BibliographicEntry } from 'src/types/references';
-import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useProjectsStore } from './projects';
 import {
   getReferencesByProject,
   removeReferenceFirestore,
-  saveDataFirestore,
   saveReferenceFirestore,
   updateReferenceFirestore,
 } from 'src/utils/useFirestore';
@@ -72,7 +70,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
         reference.tags?.join(' ').toLowerCase().includes(lowerQuery),
     );
     if (findReferences.length === 0) {
-      return 'Book not found';
+      return 'No references found...';
     }
     filterReferences.value = findReferences as Pick<References, 'books' | 'articles'>[];
     return null;

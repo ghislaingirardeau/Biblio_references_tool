@@ -9,12 +9,12 @@
     />
     <ElementFromExtension />
 
-    <div v-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
-      <div v-if="loadingQuotes" class="col-12 flex justify-center">
-        <q-spinner color="primary" size="3em" />
-      </div>
+    <div v-if="loadingQuotes" class="col-12 flex justify-center">
+      <q-spinner color="primary" size="3em" />
+    </div>
 
-      <div v-else class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
+    <div v-else-if="quotes && quotes.length" class="row q-col-gutter-md q-pa-md">
+      <div class="col-12 col-md-4" v-for="(quote, index) in quotes" :key="quote.id!">
         <q-card class="full-height flex flex-col justify-between">
           <q-card-section @click="modalEdit(quote, true)">
             <div

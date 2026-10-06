@@ -67,14 +67,13 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
       return;
     }
     const lowerQuery = query.toLowerCase();
-    console.log(quotes.value);
     const searchQuotes = quotes.value.filter(
       (quote) =>
         quote.content!.toLowerCase().includes(lowerQuery) ||
         quote.tag?.map((q) => q.toLowerCase()).includes(lowerQuery),
     );
     if (searchQuotes.length === 0) {
-      return 'Quote not found';
+      return 'No quotes found...';
     }
     filteredQuotes.value = searchQuotes;
     return null;
