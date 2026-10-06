@@ -102,41 +102,6 @@ export async function setUserFirestore() {
   return { isNewUser: true };
 }
 
-export async function testFirestore() {
-  const uid = getUid();
-
-  /* GET UNE SOUS COLLECTION */
-  // const userCollectionRef = collection(db, 'users', uid, 'references');
-  // const docSnap = await getDocs(userCollectionRef);
-  // const references = docSnap.docs.map((doc) => ({
-  //   id: doc.id,
-  //   ...doc.data(),
-  // }));
-
-  // console.log(references);
-
-  /* Attention toutefois : getDocs() récupère toutes les références une seule fois. Si tu veux que ton application reçoive automatiquement les nouvelles références ou les modifications en temps réel, il faut utiliser onSnapshot() à la place. */
-
-  /* GET collection with WHERE */
-  const res = await getReferencesByProject('Project-1789463170877');
-  console.log(res);
-
-  /* CREER UNE SOUS COLLECTION */
-  // const referencesRef = doc(db, 'users', uid, 'references', 'bGnDTrd89nueNuAUQ3dN');
-
-  // await setDoc(referencesRef, {});
-
-  // console.log(referencesRef.id);
-
-  /* UPDATE UNE SOUS COLLECTION */
-  // await setDoc(referencesRef, {
-  //   title: 'ghislain',
-  //   author: 'girardeau',
-  //   year: 2025,
-  //   project_id: '123456',
-  // });
-}
-
 /* REFERENCES */
 
 export const getReferencesByProject = async (projectId: string) => {

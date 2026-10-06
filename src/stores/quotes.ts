@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia';
-import { computed, ref, type Ref } from 'vue';
+import { ref } from 'vue';
 import type { Quote } from 'src/types/references';
-import { useReferencesStore } from './references';
 import {
   getQuotesByReference,
   removeQuoteFirestore,
-  saveDataFirestore,
   saveQuoteFirestore,
   updateQuoteFirestore,
 } from 'src/utils/useFirestore';
