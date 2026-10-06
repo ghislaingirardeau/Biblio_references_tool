@@ -1,16 +1,11 @@
 import { defineStore } from 'pinia';
-import type { Project, Projects } from 'src/types/projects';
+import type { Project } from 'src/types/projects';
 import type { Tags } from 'src/types/tags';
-import type { References } from 'src/types/references';
 
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
-import { identity, useStorage } from '@vueuse/core';
+import { useStorage } from '@vueuse/core';
 import { saveDataFirestore } from 'src/utils/useFirestore';
-import { format } from 'quasar';
-import { useRoute, useRouter } from 'vue-router';
-
-const { capitalize } = format;
 
 export const useProjectsStore = defineStore('ProjectsStore', () => {
   const projects: Ref<Project[]> = useStorage('projects', [

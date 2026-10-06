@@ -1,5 +1,4 @@
 export interface ReferenceDetails {
-  lists: BibliographicEntry[];
   type: string;
   label: string;
   description: string;
@@ -25,12 +24,7 @@ export type ReferencesType = readonly [
   'conferencePaper',
   'dissertation',
   'report',
-  'newspaperArticle',
-  'magazineArticle',
-  'software',
   'legislation',
-  'manuscript',
-  'presentation',
 ];
 
 export interface Quote {

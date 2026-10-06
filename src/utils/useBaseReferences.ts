@@ -1,6 +1,5 @@
 export const referencesTemplate = {
   articles: {
-    lists: [],
     type: 'articles',
     label: 'Articles',
     description: 'A scholarly article published in an academic journal.',
@@ -28,7 +27,6 @@ export const referencesTemplate = {
     },
   },
   books: {
-    lists: [],
     type: 'books',
     label: 'Books',
     description: 'A complete book written by one or more authors.',
@@ -50,7 +48,6 @@ export const referencesTemplate = {
     },
   },
   bookChapter: {
-    lists: [],
     type: 'bookChapter',
     label: 'Book Chapter',
     description: 'A chapter or section within an edited book.',
@@ -79,7 +76,6 @@ export const referencesTemplate = {
     },
   },
   conferencePaper: {
-    lists: [],
     type: 'conferencePaper',
     label: 'Conference Paper',
     description: 'A paper presented at a conference or symposium.',
@@ -102,7 +98,6 @@ export const referencesTemplate = {
     },
   },
   dissertation: {
-    lists: [],
     type: 'dissertation',
     label: 'Dissertation or Thesis',
     description: 'An academic dissertation or dissertation submitted for a degree.',
@@ -123,7 +118,6 @@ export const referencesTemplate = {
     },
   },
   report: {
-    lists: [],
     type: 'report',
     label: 'Report',
     description: 'A technical or research report published by an institution or organization.',
@@ -147,7 +141,6 @@ export const referencesTemplate = {
     },
   },
   web: {
-    lists: [],
     type: 'web',
     label: 'Web Page',
     description: 'Content from an online source, such as a website or blog post.',
@@ -168,7 +161,7 @@ export const referencesTemplate = {
     },
   },
   /* newspaperArticle: {
-    lists: [],
+    
     type: 'newspaperArticle',
     label: 'Newspaper Article',
     description: 'An article published in a newspaper.',
@@ -188,7 +181,7 @@ export const referencesTemplate = {
     },
   },
   magazineArticle: {
-    lists: [],
+    
     type: 'magazineArticle',
     label: 'Magazine Article',
     description: 'An article published in a magazine or popular journal.',
@@ -209,7 +202,7 @@ export const referencesTemplate = {
     },
   },
   software: {
-    lists: [],
+    
     type: 'software',
     label: 'Software',
     description: 'Software or code used or cited in the research.',
@@ -231,7 +224,6 @@ export const referencesTemplate = {
   }, */
 
   legislation: {
-    lists: [],
     type: 'legislation',
     label: 'Legislation',
     description: 'A law, statute, or regulation.',
@@ -253,7 +245,7 @@ export const referencesTemplate = {
   },
 
   /* manuscript: {
-    lists: [],
+    
     type: 'manuscript',
     label: 'Manuscript',
     description: 'An unpublished or in-progress work.',
@@ -273,7 +265,7 @@ export const referencesTemplate = {
     },
   },
   presentation: {
-    lists: [],
+    
     type: 'presentation',
     label: 'Presentation or Lecture',
     description: 'An oral presentation, lecture, or slide deck.',

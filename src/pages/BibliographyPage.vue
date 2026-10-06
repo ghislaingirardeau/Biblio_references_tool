@@ -2,11 +2,11 @@
   <q-page class="p-2">
     <q-select borderless v-model="selectedFormat" :options="formats" label="Format" class="w-24" />
 
-    <div v-for="(referenceType, i) in project?.references" :key="i">
-      <div v-if="referenceType?.lists.length">
+    <div v-for="(reference, type) in references" :key="type">
+      <div>
         <div class="flex flex-center q-gutter-md">
           <span class="font-bold p-2">
-            {{ referenceType!.label }}
+            {{ type }}
           </span>
           <!-- FOR CUSTOM FORMAT -->
           <!-- <q-select
@@ -34,8 +34,8 @@
 
         <CitationsContainer
           :key="selectedFormat"
-          :references="referenceType.lists"
-          :referenceType="referenceType!.type"
+          :references="references[type]!"
+          :referenceType="type"
           @modalEdit="modalEdit"
         />
       </div>
@@ -52,13 +52,13 @@ import { storeToRefs } from 'pinia';
 import CitationsContainer from 'src/components/bibliography/CitationsContainer.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useFormatReferenceStore } from 'src/stores/formatReference';
-import { useProjectsStore } from 'src/stores/projects';
+import { useReferencesStore } from 'src/stores/references';
 import type { BibliographicEntry } from 'src/types/references';
 
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
-const ProjectsStore = useProjectsStore();
-const { project, projectId } = storeToRefs(ProjectsStore);
+const ReferenceStore = useReferencesStore();
+const { references } = storeToRefs(ReferenceStore);
 
 const FormatReferenceStore = useFormatReferenceStore();
 const { selectedFormat, formats } = storeToRefs(FormatReferenceStore);
