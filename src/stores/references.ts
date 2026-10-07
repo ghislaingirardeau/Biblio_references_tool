@@ -40,7 +40,12 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   async function add(type: string, reference: BibliographicEntry) {
-    references.value[type as keyof References]?.unshift(reference);
+    const typeReferences = references.value[type as keyof References];
+    if (typeReferences) {
+      typeReferences.unshift(reference);
+    } else {
+      references.value[type as keyof References] = [reference];
+    }
     await saveReferenceFirestore(reference);
   }
 

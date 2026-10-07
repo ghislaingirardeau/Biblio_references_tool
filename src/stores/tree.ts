@@ -27,8 +27,6 @@ export const useTreeStore = defineStore('TreeStore', () => {
     // if you are a routing menu
     const useRouteOnClick = route?.name === 'references';
 
-    console.log('from treeProjectview', references.value);
-
     const formatTree = referencesString.map((refLabel, index) => {
       return {
         label: capitalize(referencesLabels.value[index]!),
