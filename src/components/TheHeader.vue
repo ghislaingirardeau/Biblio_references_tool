@@ -4,13 +4,17 @@
       <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
       <q-toolbar-title>
-        {{ mainTitle }}
+        <q-spinner v-if="isFetchingData" color="white" size="1em" />
+
+        <span v-else>
+          {{ mainTitle }}
+        </span>
       </q-toolbar-title>
 
       <!-- Reset datas and save to reset firestore as well -->
-      <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
+      <!-- <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
-      <SyncWidget />
+      <!-- <SyncWidget /> -->
       <SaveWidget />
       <AuthentificationWidget />
     </q-toolbar>
@@ -21,24 +25,23 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { format } from 'quasar';
-import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { storeToRefs } from 'pinia';
 import { useReferencesStore } from 'src/stores/references';
+import { useAuth } from 'src/stores/auth';
 import { useProjectsStore } from 'src/stores/projects';
 import AuthentificationWidget from './AuthentificationWidget.vue';
 import SaveWidget from './SaveWidget.vue';
 import type { References } from 'src/types/references';
-import SyncWidget from './SyncWidget.vue';
+// import SyncWidget from './SyncWidget.vue';
 const { capitalize } = format;
 
 const route = useRoute();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 
-const modalReferenceStore = useModalReferenceStore();
 const ReferenceStore = useReferencesStore();
-const { open } = storeToRefs(modalReferenceStore);
-
+const auth = useAuth();
+const { isFetchingData } = storeToRefs(auth);
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
@@ -49,7 +52,7 @@ function toggleLeftDrawer() {
 const mainTitle = computed(() => {
   let title = null;
 
-  if (project.value?.label) {
+  if (project.value?.label && !isFetchingData.value) {
     title = capitalize(project.value.label).concat(` - ${capitalize(route.name as string)}`);
   }
 

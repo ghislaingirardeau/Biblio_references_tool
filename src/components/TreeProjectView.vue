@@ -16,7 +16,7 @@
       />
     </transition>
   </q-card-section>
-  <q-inner-loading :showing="loadingReferences || !tree">
+  <q-inner-loading :showing="loadingReferences || !tree || isFetchingData">
     <q-spinner-gears size="50px" color="primary" />
   </q-inner-loading>
 </template>
@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
+import { useAuth } from 'src/stores/auth';
 import { useReferencesStore } from 'src/stores/references';
 import { useTreeStore } from 'src/stores/tree';
 import { computed, ref, useTemplateRef } from 'vue';
@@ -32,6 +33,8 @@ const treeStore = useTreeStore();
 const { treeProjectView } = storeToRefs(treeStore);
 const ReferencesStore = useReferencesStore();
 const { loadingReferences } = storeToRefs(ReferencesStore);
+const auth = useAuth();
+const { isFetchingData } = storeToRefs(auth);
 
 const filter = ref('');
 const filterRef = useTemplateRef<QInput>('filterRef');

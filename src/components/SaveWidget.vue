@@ -5,7 +5,7 @@
     class="q-ml-sm text-white"
     :icon="mdiContentSave"
     round
-    :loading="isSaving"
+    :loading="isSaving || isFetchingData"
     @click="saveData"
   >
     <q-badge v-if="userHasToSave" color="red" floating>!</q-badge>
@@ -22,7 +22,7 @@ import { saveDataFirestore } from 'src/utils/useFirestore';
 import { ref } from 'vue';
 
 const auth = useAuth();
-const { user } = storeToRefs(auth);
+const { user, isFetchingData } = storeToRefs(auth);
 const ProjectsStore = useProjectsStore();
 const { userHasToSave } = storeToRefs(ProjectsStore);
 
