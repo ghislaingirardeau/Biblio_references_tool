@@ -22,12 +22,16 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     },
   });
 
-  const projects: Ref<Project[]> = useStorage('projects', [projectTemplate.value]);
+  const projects: Ref<Project[]> = ref([projectTemplate.value]);
 
   // JUST NEED TO SET projectId to a new id, to switch project automaticly
   const projectId = ref(projectTemplate.value.id);
   const userHasToSave = ref(false);
   const refreshKey = ref(0);
+
+  const localStorage = useStorage('biblio_tool', {
+    lastProjectId: projectId.value,
+  });
 
   const project = computed(() => projects.value.find((p) => p.id === projectId.value));
 
@@ -42,8 +46,8 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     if (isDefault) {
       projectId.value = projectsFromFirestore[0]!.id;
     } else {
-      const findOnWorkProject = projects.value.find((project) => project.onWork);
-      projectId.value = findOnWorkProject!.id;
+      const findOnWorkProject = localStorage.value.lastProjectId;
+      projectId.value = findOnWorkProject;
     }
     console.log('The current project is ', project.value);
   }
@@ -106,6 +110,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projectTemplate,
     project,
     projectsLabel,
+    localStorage,
     loadProjectsFromFirestore,
     add,
     edit,
