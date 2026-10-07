@@ -21,10 +21,9 @@ export const useAuth = defineStore(
       try {
         const response = await setUserFirestore();
         if (response) {
-          console.log('the current project is', ProjectsStore.project, 'go to reference');
+          console.log('the current project is', ProjectsStore.project);
           await router.push({ name: 'references' });
         }
-        console.log('all data is set', isFetchingData.value);
         isFetchingData.value = false;
       } catch (error) {
         console.log(error);
@@ -36,7 +35,6 @@ export const useAuth = defineStore(
       isFetchingData.value = true;
       // si connecter ou si la persitence de connection est assuré
       // sinon cel aveut dire qu'aucun user n'est connecté
-      console.log('is fetching data', isFetchingData.value);
       if (firebaseUser) {
         const { uid, displayName, email } = firebaseUser;
         user.value = { uid, displayName, email };

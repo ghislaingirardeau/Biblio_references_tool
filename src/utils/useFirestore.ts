@@ -42,7 +42,6 @@ const getUid = () => {
 };
 
 export async function saveDataFirestore() {
-  console.log('is saving');
   const authStore = useAuth();
 
   if (authStore.user && authStore.user?.uid) {
@@ -72,12 +71,13 @@ export async function saveDataFirestore() {
 export async function setUserFirestore() {
   const ReferencesStore = useReferencesStore();
 
-  const response = await loadProjectsFirestore();
+  const hasProjects = await loadProjectsFirestore();
 
-  if (!response) {
+  if (!hasProjects) {
+    // if no projects from firestore, set default one (template) & loaded
     const ProjectsStore = useProjectsStore();
     await saveProjectFirestore(ProjectsStore.projectTemplate);
-    ProjectsStore.loadProjectsFromFirestore([ProjectsStore.projectTemplate]);
+    ProjectsStore.loadProjectsFromFirestore([ProjectsStore.projectTemplate], true);
 
     Notify.create({
       message: 'User data set',
@@ -86,6 +86,7 @@ export async function setUserFirestore() {
       timeout: 3000,
     });
   } else {
+    // Load references only if projects exist, because if no default projects => no references
     await ReferencesStore.loadReferences();
   }
 
@@ -117,12 +118,12 @@ export async function loadProjectsFirestore() {
     ...doc.data(),
   }));
 
-  console.log('all projects is loaded', data);
+  console.log('all projects is loaded');
 
   if (data.length > 0) {
     // User has already a default project minimum set
     const ProjectsStore = useProjectsStore();
-    ProjectsStore.loadProjectsFromFirestore(data as Project[]);
+    ProjectsStore.loadProjectsFromFirestore(data as Project[], false);
     return true;
   } else {
     return false;
