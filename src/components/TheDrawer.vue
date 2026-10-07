@@ -99,7 +99,7 @@ import { useRouter } from 'vue-router';
 import { useTemplateRefsList } from '@vueuse/core';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, projectId, userHasToSave } = storeToRefs(ProjectsStore);
+const { projectsLabel, projectId, userHasToSave, project } = storeToRefs(ProjectsStore);
 const router = useRouter();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');

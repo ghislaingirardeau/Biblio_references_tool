@@ -5,6 +5,7 @@
       size="sm"
       round
       :icon="mdiLogout"
+      :loading="isFetchingData"
       class="q-ml-sm text-white"
       @click="showConfirmModal = true"
     >

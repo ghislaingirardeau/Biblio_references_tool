@@ -5,25 +5,27 @@ import type { Tags } from 'src/types/tags';
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
-import { saveDataFirestore } from 'src/utils/useFirestore';
+import { saveDataFirestore, saveProjectFirestore } from 'src/utils/useFirestore';
 
 export const useProjectsStore = defineStore('ProjectsStore', () => {
-  const projects: Ref<Project[]> = useStorage('projects', [
-    {
-      id: `project-${Date.now()}`,
-      label: 'Default',
-      name: 'default',
-      created_at: Date.now(),
-      references: referencesTemplate,
-      onEdited: false,
-      tags: {
-        references: [],
-        quotes: [],
-      },
+  const projectTemplate: Ref<Project> = ref({
+    id: `project-${Date.now()}`,
+    label: 'Default',
+    name: 'default',
+    created_at: Date.now(),
+    references: referencesTemplate,
+    onEdited: false,
+    onWork: true,
+    tags: {
+      references: [],
+      quotes: [],
     },
-  ]);
+  });
 
-  const projectId = ref(projects.value[0]!.id);
+  const projects: Ref<Project[]> = useStorage('projects', [projectTemplate.value]);
+
+  // JUST NEED TO SET projectId to a new id, to switch project automaticly
+  const projectId = ref(projectTemplate.value.id);
   const userHasToSave = ref(false);
   const refreshKey = ref(0);
 
@@ -36,22 +38,22 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   );
 
   async function add(label: string) {
-    projects.value.push({
-      id: `project-${Date.now()}`,
-      label,
-      created_at: Date.now(),
-      references: referencesTemplate,
-      onEdited: true,
-      tags: {
-        references: [],
-        quotes: [],
-      },
-    });
-    await saveDataFirestore();
+    try {
+      projectTemplate.value.label = label;
+      projectTemplate.value.id = `project-${Date.now()}`;
+      projectTemplate.value.created_at = Date.now();
+      await saveProjectFirestore(projectTemplate.value);
+      projects.value.push(projectTemplate.value);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function loadProjectsFromFirestore(projectsFromFirestore: Project[]) {
+    console.log('load projects and change project id', projectsFromFirestore[0]!.id);
     projects.value = projectsFromFirestore;
+    projectId.value = projectsFromFirestore[0]!.id;
+    console.log('The current project is ', project.value);
   }
 
   function edit(id: string, label: string) {
@@ -80,32 +82,21 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   }
 
   function resetProjects() {
-    projects.value = [
-      {
-        id: `project-${Date.now()}`,
-        label: 'Default',
-        created_at: Date.now(),
-        references: referencesTemplate,
-        onEdited: false,
-        tags: {
-          references: [],
-          quotes: [],
-        },
-      },
-    ];
+    projects.value = [projectTemplate.value];
   }
 
-  watch(
-    () => projects.value,
-    () => {
-      userHasToSave.value = true;
-    },
-    { deep: true },
-  );
+  // watch(
+  //   () => projects.value,
+  //   () => {
+  //     userHasToSave.value = true;
+  //   },
+  //   { deep: true },
+  // );
 
   return {
     projectId,
     projects,
+    projectTemplate,
     project,
     projectsLabel,
     loadProjectsFromFirestore,

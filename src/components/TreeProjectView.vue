@@ -1,5 +1,5 @@
 <template>
-  <q-card-section>
+  <q-card-section v-if="tree">
     <q-input ref="filterRef" filled v-model="filter" label="Filter">
       <template v-slot:append>
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
@@ -16,7 +16,7 @@
       />
     </transition>
   </q-card-section>
-  <q-inner-loading :showing="loadingReferences">
+  <q-inner-loading :showing="loadingReferences || !tree">
     <q-spinner-gears size="50px" color="primary" />
   </q-inner-loading>
 </template>

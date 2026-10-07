@@ -33,6 +33,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
     try {
       references.value = await getReferencesByProject(projectId.value);
+      console.log('ref is loaded ', references.value);
     } finally {
       loadingReferences.value = false;
     }

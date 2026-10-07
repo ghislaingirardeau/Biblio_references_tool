@@ -59,14 +59,14 @@ async function deleteProject() {
   selectedFolder.value = null;
 }
 
-onMounted(async () => {
-  if (projectId.value) {
-    await Promise.all([
-      ReferencesStore.loadReferences(),
-      // quotesStore.loadQuotes(projectStore.currentProjectId)
-    ]);
-  }
-});
+// onMounted(async () => {
+//   if (projectId.value) {
+//     await Promise.all([
+//       ReferencesStore.loadReferences(),
+//       // quotesStore.loadQuotes(projectStore.currentProjectId)
+//     ]);
+//   }
+// });
 </script>
 
 <style lang="scss" scoped></style>

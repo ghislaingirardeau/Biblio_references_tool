@@ -13,30 +13,41 @@ export const useAuth = defineStore(
     const user = ref<Partial<User> | null>(null);
     const loggedIn = ref(false);
     const loggedOut = ref(true);
-    const isFetchingData = ref(false);
+    const isFetchingData = ref(true);
     const router = useRouter();
     const ProjectsStore = useProjectsStore();
-    const { userHasToSave } = storeToRefs(ProjectsStore);
+
+    async function setAllData() {
+      try {
+        const response = await setUserFirestore();
+        if (response) {
+          console.log('the current project is', ProjectsStore.project, 'go to reference');
+          await router.push({ name: 'references' });
+        }
+        console.log('all data is set', isFetchingData.value);
+        isFetchingData.value = false;
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     // Écouter les changements d'état d'authentification
     onAuthStateChanged(auth, (firebaseUser) => {
+      isFetchingData.value = true;
       // si connecter ou si la persitence de connection est assuré
       // sinon cel aveut dire qu'aucun user n'est connecté
+      console.log('is fetching data', isFetchingData.value);
       if (firebaseUser) {
-        isFetchingData.value = true;
         const { uid, displayName, email } = firebaseUser;
         user.value = { uid, displayName, email };
         loggedIn.value = true;
         loggedOut.value = false;
 
+        console.log('user is log');
+
         // Exécuter du code async sans rendre le callback async
         void (async () => {
-          await setUserFirestore();
-          const goTo = await router.push({ name: 'references' });
-          if (goTo) {
-            isFetchingData.value = false;
-          }
-          userHasToSave.value = false;
+          await setAllData();
         })();
       } else {
         user.value = null;

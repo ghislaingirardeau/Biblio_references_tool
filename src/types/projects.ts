@@ -7,6 +7,7 @@ export interface Project {
   created_at: number;
   references: References;
   onEdited: boolean;
+  onWork: boolean;
   tags: Tags;
 }
 

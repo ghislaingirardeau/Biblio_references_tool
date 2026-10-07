@@ -2,6 +2,7 @@
 
 <!-- TODO GLOBAL
 - Nettoyer le firestore Projects
+- clean userHasToSave
 - revoir les tags et appel load avec firestore
 - retester toutes les fonctionnalités
 - Fixe quand je me reconnecte, je perds la connection au serveur pour extraction de l'image, si je reconnecte cela refonctionne

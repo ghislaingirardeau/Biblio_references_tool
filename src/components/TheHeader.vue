@@ -8,7 +8,7 @@
       </q-toolbar-title>
 
       <!-- Reset datas and save to reset firestore as well -->
-      <!-- <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
+      <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" />
 
       <SyncWidget />
       <SaveWidget />
@@ -47,7 +47,11 @@ function toggleLeftDrawer() {
 }
 
 const mainTitle = computed(() => {
-  let title = capitalize(project.value!.label).concat(` - ${capitalize(route.name as string)}`);
+  let title = null;
+
+  if (project.value?.label) {
+    title = capitalize(project.value.label).concat(` - ${capitalize(route.name as string)}`);
+  }
 
   if (route.params.type) {
     title = project.value!.references[route.params.type as keyof References]!.label;

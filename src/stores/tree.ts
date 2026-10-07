@@ -21,9 +21,13 @@ export const useTreeStore = defineStore('TreeStore', () => {
   const textToExtractIn = ref<{ type: string; referenceId: string } | null>(null);
 
   const treeProjectView = computed(() => {
-    const referencesString = Object.keys(project.value!.references) as Array<keyof References>;
+    if (!references.value || !project.value) return undefined;
+
+    const referencesString = Object.keys(project.value.references) as Array<keyof References>;
     // if you are a routing menu
     const useRouteOnClick = route?.name === 'references';
+
+    console.log('from treeProjectview', references.value);
 
     const formatTree = referencesString.map((refLabel, index) => {
       return {

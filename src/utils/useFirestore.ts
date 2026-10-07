@@ -16,7 +16,8 @@ import { storeToRefs } from 'pinia';
 import { Notify } from 'quasar';
 import { useAuth } from 'src/stores/auth';
 import { useProjectsStore } from 'src/stores/projects';
-import type { Projects } from 'src/types/projects';
+import { useReferencesStore } from 'src/stores/references';
+import type { Project, Projects } from 'src/types/projects';
 import type { BibliographicEntry, Quote } from 'src/types/references';
 
 /* FIRESTORE:
@@ -69,37 +70,63 @@ export async function saveDataFirestore() {
 // Si user already exist, load data from firestore on connection
 // /!\ save store before logout !!!!!
 export async function setUserFirestore() {
-  const authStore = useAuth();
-  const userDocRef = doc(db, 'users', authStore.user!.uid!);
-  const docSnap = await getDoc(userDocRef);
+  const ReferencesStore = useReferencesStore();
 
-  const ProjectsStore = useProjectsStore();
+  const response = await loadProjectsFirestore();
 
-  if (!docSnap.exists()) {
-    // créer le document utilisateur si celui-ci est nouveau
-    await setDoc(doc(db, 'users', authStore.user!.uid!), {
-      projects: ProjectsStore.projects,
+  if (!response) {
+    const ProjectsStore = useProjectsStore();
+    await saveProjectFirestore(ProjectsStore.projectTemplate);
+    ProjectsStore.loadProjectsFromFirestore([ProjectsStore.projectTemplate]);
+
+    Notify.create({
+      message: 'User data set',
+      color: 'secondary',
+      icon: mdiContentSaveCheck,
+      timeout: 3000,
     });
-
-    return;
+  } else {
+    await ReferencesStore.loadReferences();
   }
 
-  // Sinon extrait les projets
-  const { projects } = docSnap.data() as Projects;
+  return true;
+}
 
-  if (projects) {
-    ProjectsStore.loadProjectsFromFirestore(projects);
+/* PROJECTS */
 
-    return { isNewUser: false };
+export async function saveProjectFirestore(project: Project) {
+  const uid = getUid();
+
+  console.log('new project is saved');
+
+  const referencesCollection = doc(db, 'users', uid, 'projects', project.id);
+
+  await setDoc(referencesCollection, project);
+}
+
+export async function loadProjectsFirestore() {
+  const uid = getUid();
+
+  const referencesCollection = collection(db, 'users', uid, 'projects');
+
+  const q = query(referencesCollection);
+
+  const snapshot = await getDocs(q);
+
+  const data = snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+
+  console.log('all projects is loaded', data);
+
+  if (data.length > 0) {
+    // User has already a default project minimum set
+    const ProjectsStore = useProjectsStore();
+    ProjectsStore.loadProjectsFromFirestore(data as Project[]);
+    return true;
+  } else {
+    return false;
   }
-
-  Notify.create({
-    message: 'Data saved',
-    color: 'secondary',
-    icon: mdiContentSaveCheck,
-    timeout: 3000,
-  });
-  return { isNewUser: true };
 }
 
 /* REFERENCES */
