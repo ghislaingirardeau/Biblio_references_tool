@@ -15,13 +15,11 @@ export const useAuth = defineStore(
     const loggedOut = ref(true);
     const isFetchingData = ref(true);
     const router = useRouter();
-    const ProjectsStore = useProjectsStore();
 
     async function setAllData() {
       try {
         const response = await setUserFirestore();
         if (response) {
-          console.log('the current project is', ProjectsStore.project);
           await router.push({ name: 'references' });
         }
         isFetchingData.value = false;

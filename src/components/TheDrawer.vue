@@ -85,6 +85,7 @@
 
 <script setup lang="ts">
 import { useProjectsStore } from 'src/stores/projects';
+import { useReferencesStore } from 'src/stores/references';
 import {
   mdiCheckCircleOutline,
   mdiFolderEditOutline,
@@ -100,6 +101,7 @@ import { useTemplateRefsList } from '@vueuse/core';
 
 const ProjectsStore = useProjectsStore();
 const { projectsLabel, projectId, userHasToSave, project } = storeToRefs(ProjectsStore);
+const ReferenceStore = useReferencesStore();
 const router = useRouter();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
@@ -137,11 +139,17 @@ async function showModalProject(e: Event) {
 }
 
 async function switchProject(id: string) {
-  if (isProjectOnEditing.value) return;
-  projectId.value = id;
-  leftDrawerOpen.value = false;
-  userHasToSave.value = false;
-  await router.push({ name: 'references' });
+  try {
+    if (isProjectOnEditing.value) return;
+    // changing projectId, change the value of current project
+    projectId.value = id;
+    leftDrawerOpen.value = false;
+    userHasToSave.value = false;
+    await ReferenceStore.loadReferences();
+    await router.push({ name: 'references' });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function editProject(id: string, label: string) {

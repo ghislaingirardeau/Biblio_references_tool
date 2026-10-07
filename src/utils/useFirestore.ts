@@ -98,7 +98,7 @@ export async function setUserFirestore() {
 export async function saveProjectFirestore(project: Project) {
   const uid = getUid();
 
-  console.log('new project is saved');
+  console.log('project is saved or updated');
 
   const referencesCollection = doc(db, 'users', uid, 'projects', project.id);
 
@@ -180,14 +180,6 @@ export const saveReferenceFirestore = async (reference: BibliographicEntry) => {
   const referencesCollection = doc(db, 'users', uid, 'references', reference.id!);
 
   await setDoc(referencesCollection, reference);
-};
-
-export const updateReferenceFirestore = async (reference: BibliographicEntry) => {
-  const uid = getUid();
-
-  const referencesDoc = doc(db, 'users', uid, 'references', reference.id!);
-
-  await setDoc(referencesDoc, reference);
 };
 
 export const removeReferenceFirestore = async (referenceId: string) => {

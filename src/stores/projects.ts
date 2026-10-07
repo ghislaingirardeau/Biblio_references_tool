@@ -37,6 +37,17 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }),
   );
 
+  function loadProjectsFromFirestore(projectsFromFirestore: Project[], isDefault: boolean) {
+    projects.value = projectsFromFirestore;
+    if (isDefault) {
+      projectId.value = projectsFromFirestore[0]!.id;
+    } else {
+      const findOnWorkProject = projects.value.find((project) => project.onWork);
+      projectId.value = findOnWorkProject!.id;
+    }
+    console.log('The current project is ', project.value);
+  }
+
   async function add(label: string) {
     try {
       projectTemplate.value.label = label;
@@ -47,13 +58,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function loadProjectsFromFirestore(projectsFromFirestore: Project[]) {
-    console.log('load projects and change project id', projectsFromFirestore[0]!.id);
-    projects.value = projectsFromFirestore;
-    projectId.value = projectsFromFirestore[0]!.id;
-    console.log('The current project is ', project.value);
   }
 
   function edit(id: string, label: string) {
@@ -85,13 +89,16 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     projects.value = [projectTemplate.value];
   }
 
-  // watch(
-  //   () => projects.value,
-  //   () => {
-  //     userHasToSave.value = true;
-  //   },
-  //   { deep: true },
-  // );
+  watch(
+    () => project.value,
+    async (afterState, previousState) => {
+      if (!previousState?.label) return;
+      if (project.value) {
+        await saveProjectFirestore(project.value);
+      }
+    },
+    { deep: true },
+  );
 
   return {
     projectId,

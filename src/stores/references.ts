@@ -7,7 +7,6 @@ import {
   getReferencesByProject,
   removeReferenceFirestore,
   saveReferenceFirestore,
-  updateReferenceFirestore,
 } from 'src/utils/useFirestore';
 
 const ProjectsStore = useProjectsStore();
@@ -51,7 +50,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   async function update(reference: BibliographicEntry) {
     try {
-      await updateReferenceFirestore(reference);
+      await saveReferenceFirestore(reference);
     } catch (error) {
       console.log(error);
     }
