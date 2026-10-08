@@ -8,6 +8,7 @@ import {
   removeReferenceFirestore,
   saveReferenceFirestore,
 } from 'src/utils/useFirestore';
+import { watch } from 'vue';
 
 const ProjectsStore = useProjectsStore();
 const { project, projectId } = storeToRefs(ProjectsStore);
@@ -103,6 +104,15 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
       loadingReferences.value = false;
     }
   }
+
+  watch(
+    () => projectId.value,
+    async (afterState, previousState) => {
+      console.log('watcher on projectId activated');
+      await loadReferences();
+    },
+    { deep: true },
+  );
 
   return {
     references,

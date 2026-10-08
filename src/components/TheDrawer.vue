@@ -61,9 +61,7 @@
                       :name="mdiFolderEditOutline"
                       color="primary"
                       class="cursor-pointer"
-                      @click="
-                        handleActions(project.onEdited, project.id, project.label, index, $event)
-                      "
+                      @click="editableProjectLabel(project.id)"
                     />
                     <q-icon
                       v-if="index > 0"
@@ -81,6 +79,9 @@
       </template>
     </q-list>
   </q-drawer>
+  <ConfirmModal v-model="showConfirmModal" @confirm="deleteProject"
+    ><template v-slot:message> Are you sure to delete this project ? </template>
+  </ConfirmModal>
 </template>
 
 <script setup lang="ts">
@@ -98,19 +99,20 @@ import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTemplateRefsList } from '@vueuse/core';
+import ConfirmModal from 'src/components/ConfirmModal.vue';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, projectId,  localStorage } = storeToRefs(ProjectsStore);
+const { projectsLabel, projectId, localStorage } = storeToRefs(ProjectsStore);
 const ReferenceStore = useReferencesStore();
 const router = useRouter();
 
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
-const showConfirmModal = defineModel<boolean>('showConfirmModal');
-const selectedFolder = defineModel<string | null>('selectedFolder');
 
 const isProjectOnEditing = ref(false);
 const inputRefs = useTemplateRefsList<HTMLInputElement>();
 const isExpanded = ref(true);
+const showConfirmModal = ref(false);
+const selectedFolder = ref<string | null>(null);
 
 const menuList = computed(() => {
   return [
@@ -145,7 +147,7 @@ async function switchProject(id: string) {
     // changing projectId, change the value of current project
     projectId.value = id;
     leftDrawerOpen.value = false;
-    await ReferenceStore.loadReferences();
+    // await ReferenceStore.loadReferences();
     await router.push({ name: 'references' });
   } catch (error) {
     console.log(error);
@@ -157,7 +159,7 @@ function editProject(id: string, label: string) {
   isProjectOnEditing.value = false;
 }
 
-function handleActions(onEdited: boolean, id: string, label: string, index: number, e: Event) {
+function editableProjectLabel(id: string) {
   isProjectOnEditing.value = true;
   ProjectsStore.enableEdit(id);
 }
@@ -166,6 +168,13 @@ function askConfirmation(onEdited: boolean, id: string) {
   if (onEdited) return;
   showConfirmModal.value = true;
   selectedFolder.value = id;
+}
+
+async function deleteProject() {
+  if (selectedFolder.value) {
+    await ProjectsStore.remove(selectedFolder.value);
+  }
+  selectedFolder.value = null;
 }
 </script>
 

@@ -65,15 +65,13 @@ export async function saveDataFirestore() {
 // Si user already exist, load data from firestore on connection
 // /!\ save store before logout !!!!!
 export async function setUserFirestore() {
-  const ReferencesStore = useReferencesStore();
-
   const hasProjects = await loadProjectsFirestore();
 
   if (!hasProjects) {
     // if no projects from firestore, set default one (template) & loaded
     const ProjectsStore = useProjectsStore();
     await saveProjectFirestore(ProjectsStore.projectTemplate);
-    ProjectsStore.loadProjectsFromFirestore([ProjectsStore.projectTemplate], true);
+    ProjectsStore.loadProjects([ProjectsStore.projectTemplate], true);
 
     Notify.create({
       message: 'User data set',
@@ -81,10 +79,9 @@ export async function setUserFirestore() {
       icon: mdiContentSaveCheck,
       timeout: 3000,
     });
-  } else {
-    // Load references only if projects exist, because if no default projects => no references
-    await ReferencesStore.loadReferences();
   }
+
+  // no need to loadReference, because already load when project change value with WATCHER
 
   return true;
 }
@@ -119,12 +116,17 @@ export async function loadProjectsFirestore() {
   if (data.length > 0) {
     // User has already a default project minimum set
     const ProjectsStore = useProjectsStore();
-    ProjectsStore.loadProjectsFromFirestore(data as Project[], false);
+    ProjectsStore.loadProjects(data as Project[], false);
     return true;
   } else {
     return false;
   }
 }
+
+export const removeProjectFirestore = async (projectId: string) => {
+  const uid = getUid();
+  await deleteDoc(doc(db, 'users', uid, 'projects', projectId));
+};
 
 /* REFERENCES */
 

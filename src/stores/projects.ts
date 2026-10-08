@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
 import type { Project } from 'src/types/projects';
 import type { Tags } from 'src/types/tags';
-
 import { computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
-import { saveDataFirestore, saveProjectFirestore } from 'src/utils/useFirestore';
+import { removeProjectFirestore, saveProjectFirestore } from 'src/utils/useFirestore';
 
 export const useProjectsStore = defineStore('ProjectsStore', () => {
   const projectTemplate: Ref<Project> = ref({
@@ -40,7 +39,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     }),
   );
 
-  function loadProjectsFromFirestore(projectsFromFirestore: Project[], isDefault: boolean) {
+  function loadProjects(projectsFromFirestore: Project[], isDefault: boolean) {
     projects.value = projectsFromFirestore;
     if (isDefault) {
       projectId.value = projectsFromFirestore[0]!.id;
@@ -84,8 +83,13 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   }
 
   async function remove(id: string) {
+    // If user is currently on the project he want to delete, move to the first project
+    if (id === projectId.value) {
+      const firstDefaultProject = projects.value[0];
+      firstDefaultProject ? (projectId.value = firstDefaultProject?.id) : null;
+    }
     projects.value = projects.value.filter((p) => p.id !== id);
-    await saveDataFirestore();
+    await removeProjectFirestore(id);
   }
 
   function resetProjects() {
@@ -95,12 +99,14 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   watch(
     () => project.value,
     async (afterState, previousState) => {
+      console.dir(previousState);
       if (!previousState?.label) return;
       if (project.value) {
+        console.log('watcher on project is saving');
         await saveProjectFirestore(project.value);
       }
     },
-    { deep: true },
+    { deep: true, immediate: false },
   );
 
   return {
@@ -110,7 +116,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     project,
     projectsLabel,
     localStorage,
-    loadProjectsFromFirestore,
+    loadProjects,
     add,
     edit,
     remove,
