@@ -12,8 +12,6 @@ const ReferencesStore = useReferencesStore();
 const { referencesTypes, references } = storeToRefs(ReferencesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
-  const tags: Ref<Tags> = computed(() => project.value!.tags);
-
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
   const tagsQuote: Ref<string[]> = computed(() => project.value!.tags.quotes);
 
@@ -92,7 +90,6 @@ export const useTagsStore = defineStore('TagsStore', () => {
   }
 
   return {
-    tags,
     tagsReference,
     tagsQuote,
     addTag,

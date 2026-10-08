@@ -7,6 +7,7 @@
     </q-input>
     <q-tree
       :nodes="tree"
+      :key="refresh"
       node-key="label"
       v-model="expandedKeys"
       default-expand-all
@@ -25,7 +26,14 @@
           >
             {{ prop.node.label }}
           </div>
-          <q-input v-else autofocus dense v-model="newTag" @blur="createTag($event)"></q-input>
+          <q-input
+            v-else
+            autofocus
+            dense
+            v-model="newTag"
+            @blur="createTag($event)"
+            @keyup.enter="$event.target.blur()"
+          ></q-input>
           <q-icon
             v-if="!prop.node.children"
             :name="mdiMinus"
@@ -48,7 +56,6 @@
 
 <script setup lang="ts">
 import { mdiMinus, mdiPlus } from '@quasar/extras/mdi-v7';
-import { storeToRefs } from 'pinia';
 import { QInput, type QTreeNode } from 'quasar';
 import { useTagsStore } from 'src/stores/tags';
 import type { Tags } from 'src/types/tags';
@@ -67,6 +74,7 @@ const filterRef = useTemplateRef<QInput>('filterRef');
 const tree = computed<QTreeNode[]>(() => props.treeTags);
 const newTag = ref('');
 const expandedKeys = ref(true);
+const refresh = ref(0);
 
 function resetFilter() {
   filter.value = '';
@@ -86,6 +94,7 @@ function createTag(e: Event) {
     ? tagsStore.addTag(props.type, newTag.value)
     : tagsStore.addTag(props.type, '');
   newTag.value = '';
+  refresh.value++;
 }
 
 function sendFilterTagToStore(e: Event, label: string) {
