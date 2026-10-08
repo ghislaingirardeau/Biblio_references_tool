@@ -1,6 +1,4 @@
-<template>
-  <q-spinner-ios v-if="isSavingQuote" color="primary" size="4em" />
-</template>
+<template><span></span></template>
 
 <script setup lang="ts">
 import { useQuotesStore } from 'src/stores/quotes';
@@ -12,12 +10,13 @@ import { useProjectsStore } from 'src/stores/projects';
 import { storeToRefs } from 'pinia';
 
 const QuotesStore = useQuotesStore();
+const { loadingQuotes } = storeToRefs(QuotesStore);
+
 const route = useRoute();
 
 const ProjectsStore = useProjectsStore();
 const { projectId } = storeToRefs(ProjectsStore);
 
-const isSavingQuote = ref(false);
 const screenshot = ref(null);
 const newQuote = ref<Quote>({
   id: 'quote_' + Date.now().toString(),
@@ -39,7 +38,7 @@ onBeforeUnmount(() => {
 });
 
 function handleSelectedText(event: any) {
-  isSavingQuote.value = true;
+  loadingQuotes.value = true;
 
   const text = event.detail.text;
 
@@ -53,7 +52,7 @@ function handleSelectedText(event: any) {
 function handleScreenshot(event: any) {
   console.log('Capture reçue depuis extension', event);
 
-  isSavingQuote.value = true;
+  loadingQuotes.value = true;
 
   const image = event.detail?.image;
 
@@ -77,7 +76,7 @@ async function saveQuote() {
   newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
 
   await QuotesStore.addQuote(newQuote.value);
-  isSavingQuote.value = false;
+  loadingQuotes.value = false;
 }
 </script>
 

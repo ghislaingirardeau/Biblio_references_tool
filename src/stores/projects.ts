@@ -21,10 +21,10 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     },
   });
 
-  const projects: Ref<Project[]> = ref([projectTemplate.value]);
+  const projects: Ref<Project[]> = ref([]);
 
   // JUST NEED TO SET projectId to a new id, to switch project automaticly
-  const projectId = ref(projectTemplate.value.id);
+  const projectId = ref();
   const refreshKey = ref(0);
 
   const localStorage = useStorage('biblio_tool', {
@@ -99,8 +99,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
   watch(
     () => project.value,
     async (afterState, previousState) => {
-      console.dir(previousState);
-      if (!previousState?.label) return;
+      if (!previousState) return;
       if (project.value) {
         console.log('watcher on project is saving');
         await saveProjectFirestore(project.value);
