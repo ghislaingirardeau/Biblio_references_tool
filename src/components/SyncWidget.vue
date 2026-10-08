@@ -25,7 +25,7 @@ const auth = useAuth();
 const { user } = storeToRefs(auth);
 
 const ProjectsStore = useProjectsStore();
-const { userHasToSave, refreshKey } = storeToRefs(ProjectsStore);
+const {  refreshKey } = storeToRefs(ProjectsStore);
 
 const isSync = ref(false);
 
@@ -33,7 +33,6 @@ async function syncData() {
   isSync.value = true;
   await setUserFirestore();
   isSync.value = false;
-  userHasToSave.value = false;
   refreshKey.value++;
 }
 </script>

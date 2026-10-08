@@ -100,7 +100,7 @@ import { useRouter } from 'vue-router';
 import { useTemplateRefsList } from '@vueuse/core';
 
 const ProjectsStore = useProjectsStore();
-const { projectsLabel, projectId, userHasToSave, localStorage } = storeToRefs(ProjectsStore);
+const { projectsLabel, projectId,  localStorage } = storeToRefs(ProjectsStore);
 const ReferenceStore = useReferencesStore();
 const router = useRouter();
 
@@ -145,7 +145,6 @@ async function switchProject(id: string) {
     // changing projectId, change the value of current project
     projectId.value = id;
     leftDrawerOpen.value = false;
-    userHasToSave.value = false;
     await ReferenceStore.loadReferences();
     await router.push({ name: 'references' });
   } catch (error) {

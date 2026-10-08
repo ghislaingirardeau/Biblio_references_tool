@@ -24,13 +24,7 @@
     <ConfirmModal
       v-model:showConfirmModal="showConfirmModal"
       @confirm="useFirebaseAuth.logout(router)"
-      ><template v-slot:message>
-        {{
-          userHasToSave
-            ? 'You have work not saved ! If you log out, you work will be lost'
-            : 'Are you sure to log out ?'
-        }}
-      </template>
+      ><template v-slot:message> Are you sure to log out ? </template>
     </ConfirmModal>
   </div>
 </template>
@@ -43,20 +37,17 @@ import { useFirebaseAuth } from 'src/utils/useFirebaseAuth';
 import { useRouter } from 'vue-router';
 import ConfirmModal from './ConfirmModal.vue';
 import { ref } from 'vue';
-import { useProjectsStore } from 'src/stores/projects';
 
 const auth = useAuth();
 const { loggedIn, isFetchingData } = storeToRefs(auth);
 
 const router = useRouter();
-const ProjectsStore = useProjectsStore();
-const { userHasToSave } = storeToRefs(ProjectsStore);
 
 const showConfirmModal = ref(false);
 
 const authentify = async () => {
   isFetchingData.value = true;
-  const response = await useFirebaseAuth.signInWithGoogle();
+  await useFirebaseAuth.signInWithGoogle();
 };
 </script>
 

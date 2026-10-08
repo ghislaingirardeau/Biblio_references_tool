@@ -26,7 +26,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   // JUST NEED TO SET projectId to a new id, to switch project automaticly
   const projectId = ref(projectTemplate.value.id);
-  const userHasToSave = ref(false);
   const refreshKey = ref(0);
 
   const localStorage = useStorage('biblio_tool', {
@@ -118,7 +117,6 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
     enableEdit,
     resetProjects,
     addTagToProject,
-    userHasToSave,
     refreshKey,
   };
 });

@@ -52,10 +52,6 @@ export async function saveDataFirestore() {
     // update data
     await updateDoc(userDocRef, { projects: ProjectsStore.projects });
 
-    // remove badge on save icon
-    const { userHasToSave } = storeToRefs(ProjectsStore);
-    userHasToSave.value = false;
-
     Notify.create({
       message: 'Data saved',
       color: 'secondary',

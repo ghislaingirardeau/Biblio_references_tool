@@ -8,7 +8,7 @@
     :loading="isSaving || isFetchingData"
     @click="saveData"
   >
-    <q-badge v-if="userHasToSave" color="red" floating>!</q-badge>
+    <!-- <q-badge v-if="userHasToSave" color="red" floating>!</q-badge> -->
     <q-tooltip class="" :offset="[10, 10]"> Save </q-tooltip>
   </q-btn>
 </template>
@@ -23,8 +23,6 @@ import { ref } from 'vue';
 
 const auth = useAuth();
 const { user, isFetchingData } = storeToRefs(auth);
-const ProjectsStore = useProjectsStore();
-const { userHasToSave } = storeToRefs(ProjectsStore);
 
 const isSaving = ref(false);
 
