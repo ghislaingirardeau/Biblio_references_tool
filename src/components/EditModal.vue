@@ -75,7 +75,7 @@ async function saveOnChange() {
     await ReferencesStore.update(selectedReference.value);
   }
   if (hasToSaveQuote.value && selectedQuote.value) {
-    await QuotesStore.updateQuote(selectedQuote.value);
+    await QuotesStore.update(selectedQuote.value);
   }
   hasToSaveReference.value = false;
   hasToSaveQuote.value = false;

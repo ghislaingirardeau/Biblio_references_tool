@@ -97,9 +97,10 @@ function createTag(e: Event) {
   refresh.value++;
 }
 
-function sendFilterTagToStore(e: Event, label: string) {
+async function sendFilterTagToStore(e: Event, label: string) {
   e.stopPropagation();
-  tagsStore.filterProjectsWithTagReferences(props.type, label);
+
+  await tagsStore.filterTag(props.type, label);
 }
 </script>
 

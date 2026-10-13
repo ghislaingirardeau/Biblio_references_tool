@@ -14,19 +14,22 @@
       <div class="col-12 col-md-4">
         <q-card outlined class="full-height p-2">Tutorial d'aide et explications ici</q-card>
       </div>
-      <div class="col-12" v-if="referencesWithSpecificTag.tag">
-        <span class="text-h6 underline"
-          >References with "{{ referencesWithSpecificTag.tag }}" tags :</span
-        >
+      <div class="col-12" v-if="resultTagFilter.tag">
+        <span class="text-h6 underline">References with "{{ resultTagFilter.tag }}" tags :</span>
         <q-card
-          v-for="referenceFound in referencesWithSpecificTag.list"
+          v-for="referenceFound in resultTagFilter.list"
           :key="referenceFound.id!"
           outlined
           class="p-2 m-2 cursor-pointer hover:bg-slate-200"
-          @click="getModeForFileReference(referenceFound.type, referenceFound.id)"
+          @click="goToReference(referenceFound)"
         >
-          {{ referenceFound.title }}</q-card
-        >
+          <q-card-section v-if="'title' in referenceFound">
+            {{ referenceFound.title }}
+          </q-card-section>
+          <q-card-section v-if="'content' in referenceFound">
+            <span v-html="referenceFound.content"></span>
+          </q-card-section>
+        </q-card>
       </div>
     </div>
   </q-page>
@@ -36,15 +39,22 @@
 import { storeToRefs } from 'pinia';
 import TreeTagsView from 'src/components/TreeTagsView.vue';
 import { useTagsStore } from 'src/stores/tags';
+import type { BibliographicEntry, Quote } from 'src/types/references';
 import { useRouter } from 'vue-router';
 
 const tagsStore = useTagsStore();
-const { treeReferencesTags, treeQuotesTags, referencesWithSpecificTag } = storeToRefs(tagsStore);
+const { treeReferencesTags, treeQuotesTags, resultTagFilter } = storeToRefs(tagsStore);
 
 const router = useRouter();
 
-async function getModeForFileReference(type: string, id: string | null) {
-  await router.push({ name: 'quotes-id', params: { type: type, id } });
+async function goToReference(reference: BibliographicEntry | Quote) {
+  const referenceId = 'reference_id' in reference ? reference.reference_id : reference.id;
+  const referenceType = 'reference_id' in reference ? reference.fromType : reference.type;
+
+  await router.push({
+    name: 'quotes-id',
+    params: { type: referenceType as string, id: referenceId },
+  });
 }
 </script>
 

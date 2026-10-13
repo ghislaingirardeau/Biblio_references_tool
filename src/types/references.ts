@@ -34,6 +34,7 @@ export interface Quote {
   tag?: string[] | null;
   reference_id: string | null;
   project_id: string | null;
+  fromType: null | keyof ReferencesType;
 }
 
 export interface Authors {

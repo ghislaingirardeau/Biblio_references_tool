@@ -17,7 +17,7 @@
       use-input
       input-debounce="0"
       @new-value="createValue"
-      :options="tagsFirstCapitalize"
+      :options="tagsQuotes"
       label="Tags"
     />
     <QuillEditor
@@ -46,8 +46,8 @@ const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 const ProjectsStore = useProjectsStore();
 
-const tagsFirstCapitalize = computed(() => {
-  return ProjectsStore.project?.tags.quotes.map((tag) => capitalize(tag));
+const tagsQuotes = computed(() => {
+  return ProjectsStore.project?.tags.quotes;
 });
 
 function createValue(

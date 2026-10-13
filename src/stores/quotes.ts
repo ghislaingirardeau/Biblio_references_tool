@@ -38,7 +38,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
   }
 
-  async function updateQuote(quote: Quote) {
+  async function update(quote: Quote) {
     try {
       await updateQuoteFirestore(quote);
     } catch (error) {
@@ -83,7 +83,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     loadQuotes,
     filteredQuotes,
     addQuote,
-    updateQuote,
+    update,
     filterQuotes,
     resetQuoteFilter,
     removeQuote,

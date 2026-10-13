@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useQuotesStore } from 'src/stores/quotes';
-import type { Quote } from 'src/types/references';
+import type { Quote, ReferencesType } from 'src/types/references';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSentToOcr } from 'src/utils/useSentToOcr';
@@ -25,6 +25,7 @@ const newQuote = ref<Quote>({
   tag: null,
   reference_id: null,
   project_id: null,
+  fromType: null,
 });
 
 onMounted(() => {
@@ -74,6 +75,7 @@ function handleScreenshot(event: any) {
 async function saveQuote() {
   newQuote.value.project_id = projectId.value;
   newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
+  newQuote.value.fromType = route.params.type as keyof ReferencesType;
 
   await QuotesStore.addQuote(newQuote.value);
   loadingQuotes.value = false;

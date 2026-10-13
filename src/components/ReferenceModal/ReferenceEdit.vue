@@ -14,7 +14,7 @@
             use-input
             input-debounce="0"
             @new-value="createValue"
-            :options="tagsFirstCapitalize"
+            :options="tagsReferences"
             label="Tags"
           />
         </div>
@@ -92,8 +92,8 @@ const props = defineProps({
 
 const { capitalize } = format;
 
-const tagsFirstCapitalize = computed(() => {
-  return ProjectsStore.project!.tags.references.map((tag) => capitalize(tag));
+const tagsReferences = computed(() => {
+  return ProjectsStore.project!.tags.references;
 });
 
 function formatLabel(label: string) {

@@ -206,7 +206,9 @@ export const getQuotesByTag = async (tag: string) => {
 
   const quotesCollection = collection(db, 'users', uid, 'quotes');
 
-  const q = query(quotesCollection, where('tags', 'array-contains', tag));
+  console.log('search firestore:', tag);
+
+  const q = query(quotesCollection, where('tag', 'array-contains', tag));
 
   const snapshot = await getDocs(q);
 

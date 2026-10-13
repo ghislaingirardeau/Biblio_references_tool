@@ -1,9 +1,11 @@
 import { defineStore, storeToRefs, acceptHMRUpdate } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
-import type { Tags } from 'src/types/tags';
+import type { Tags, TagType } from 'src/types/tags';
 import { useProjectsStore } from './projects';
 import { useReferencesStore } from './references';
-import type { BibliographicEntry } from 'src/types/references';
+import type { BibliographicEntry, Quote } from 'src/types/references';
+import { useQuotesStore } from './quotes';
+import { getQuotesByTag, getReferencesByTags } from 'src/utils/useFirestore';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
@@ -11,13 +13,21 @@ const { project } = storeToRefs(ProjectsStore);
 const ReferencesStore = useReferencesStore();
 const { referencesTypes, references } = storeToRefs(ReferencesStore);
 
+const QuotesStore = useQuotesStore();
+const { quotes } = storeToRefs(QuotesStore);
+
 export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
   const tagsQuote: Ref<string[]> = computed(() => project.value!.tags.quotes);
 
-  const referencesWithSpecificTag = ref({
+  const resultTagFilter = ref({
     tag: '' as string,
-    list: [] as BibliographicEntry[],
+    list: [] as BibliographicEntry[] | Quote[],
+  });
+
+  const quotesWithSpecificTag = ref({
+    tag: '' as string,
+    list: [] as Quote[],
   });
 
   const treeQuotesTags: Ref<any[]> = computed(() => {
@@ -70,22 +80,21 @@ export const useTagsStore = defineStore('TagsStore', () => {
     // Use Filter() from store References to get all with the tags, map and delete
   }
 
-  function filterProjectsWithTagReferences(type: keyof Tags, tag: string) {
-    referencesWithSpecificTag.value = {
+  async function filterTag(type: TagType, tag: string) {
+    resultTagFilter.value = {
       tag,
       list: [],
     };
 
-    for (const key of referencesTypes.value) {
-      const typeOfReferences = references.value[key];
-      // if there is no references type inside list array return
-      if (!typeOfReferences?.length) continue;
-      const typesWithTags = typeOfReferences?.filter((e) => {
-        const findTag = e.tags!.find((t) => t.toLowerCase() === tag.toLowerCase());
-        if (findTag) return true;
-      });
-      if (!typesWithTags.length) continue;
-      referencesWithSpecificTag.value.list.push(...typesWithTags);
+    let result;
+
+    if (type === 'references') {
+      result = await getReferencesByTags(tag);
+      resultTagFilter.value.list = result as BibliographicEntry[];
+    }
+    if (type === 'quotes') {
+      result = await getQuotesByTag(tag);
+      resultTagFilter.value.list = result as Quote[];
     }
   }
 
@@ -96,8 +105,8 @@ export const useTagsStore = defineStore('TagsStore', () => {
     removeTag,
     treeQuotesTags,
     treeReferencesTags,
-    filterProjectsWithTagReferences,
-    referencesWithSpecificTag,
+    filterTag,
+    resultTagFilter,
   };
 });
 

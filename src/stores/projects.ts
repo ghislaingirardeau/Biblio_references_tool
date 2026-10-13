@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import type { Project } from 'src/types/projects';
 import type { Tags } from 'src/types/tags';
-import { computed, ref, watch, type Ref } from 'vue';
+import { capitalize, computed, ref, watch, type Ref } from 'vue';
 import { referencesTemplate } from 'src/utils/useBaseReferences';
 import { useStorage } from '@vueuse/core';
 import { removeProjectFirestore, saveProjectFirestore } from 'src/utils/useFirestore';
@@ -72,7 +72,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   function addTagToProject(type: 'references' | 'quotes', tag: string) {
     const foundProject = projects.value.find((p) => p.id === projectId.value);
-    foundProject?.tags?.[type as keyof Tags].unshift(tag);
+    foundProject?.tags?.[type as keyof Tags].unshift(capitalize(tag));
   }
 
   function enableEdit(id: string) {

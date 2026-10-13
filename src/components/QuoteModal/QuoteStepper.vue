@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import type { Quote } from 'src/types/references';
+import type { Quote, ReferencesType } from 'src/types/references';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
@@ -58,6 +58,7 @@ const newQuote = ref<Quote>({
   tag: null,
   reference_id: null,
   project_id: null,
+  fromType: null,
 });
 
 const QuotesStore = useQuotesStore();
@@ -70,6 +71,7 @@ async function saveQuote() {
   isSavingQuote.value = true;
   newQuote.value.project_id = projectId.value;
   newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
+  newQuote.value.fromType = route.params.type as keyof ReferencesType;
 
   await QuotesStore.addQuote(newQuote.value);
   modalReferenceStore.reset();

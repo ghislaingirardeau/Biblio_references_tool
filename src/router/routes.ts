@@ -1,3 +1,4 @@
+import type { ReferencesType } from 'src/types/references';
 import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -25,13 +26,16 @@ const routes: RouteRecordRaw[] = [
         path: '/:type',
         name: 'references-type',
         component: () => import('pages/ReferencePage.vue'),
-        props: (route) => ({ type: route.params.type as string }),
+        props: (route) => ({ type: route.params.type as keyof ReferencesType }),
       },
       {
         path: ':type/:id',
         name: 'quotes-id',
         component: () => import('pages/quotes/IdPage.vue'),
-        props: (route) => ({ type: route.params.type, id: route.params.id }),
+        props: (route) => ({
+          type: route.params.type as keyof ReferencesType,
+          id: route.params.id,
+        }),
       },
     ],
   },
