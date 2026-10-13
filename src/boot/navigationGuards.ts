@@ -1,9 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import { useAuth } from 'src/stores/auth';
-import { useProjectsStore } from 'src/stores/projects';
 import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
-import type { References } from 'src/types/references';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
