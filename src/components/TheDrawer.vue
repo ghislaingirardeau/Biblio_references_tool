@@ -147,7 +147,6 @@ async function switchProject(id: string) {
     // changing projectId, change the value of current project
     projectId.value = id;
     leftDrawerOpen.value = false;
-    // await ReferenceStore.loadReferences();
     await router.push({ name: 'references' });
   } catch (error) {
     console.log(error);

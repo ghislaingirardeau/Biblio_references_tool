@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import TheFooter from 'src/components/TheFooter.vue';
 import TheHeader from 'src/components/TheHeader.vue';
 import ReferenceModal from 'src/components/ReferenceModal.vue';
@@ -37,15 +37,6 @@ const route = useRoute();
 const modalMode = computed(() => {
   return route.params?.id ? 'quote' : 'reference';
 });
-
-// onMounted(async () => {
-//   if (projectId.value) {
-//     await Promise.all([
-//       ReferencesStore.loadReferences(),
-//       // quotesStore.loadQuotes(projectStore.currentProjectId)
-//     ]);
-//   }
-// });
 </script>
 
 <style lang="scss" scoped></style>
