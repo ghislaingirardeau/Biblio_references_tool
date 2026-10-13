@@ -72,11 +72,9 @@ const hasRequiredField = computed(() => {
 
 async function saveOnChange() {
   if (hasToSaveReference.value && selectedReference.value) {
-    console.log('reference has change, need to save: ', selectedReference.value?.id);
     await ReferencesStore.update(selectedReference.value);
   }
   if (hasToSaveQuote.value && selectedQuote.value) {
-    console.log('quote has change, need to save: ', selectedQuote.value?.id);
     await QuotesStore.updateQuote(selectedQuote.value);
   }
   hasToSaveReference.value = false;

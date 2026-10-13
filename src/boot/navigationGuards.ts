@@ -1,7 +1,9 @@
 import { boot } from 'quasar/wrappers';
 import { useAuth } from 'src/stores/auth';
+import { useProjectsStore } from 'src/stores/projects';
 import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
+import type { References } from 'src/types/references';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
@@ -15,24 +17,23 @@ export default boot(({ app, router, redirect, store }) => {
   router.afterEach((to, from) => {
     const ReferencesStore = useReferencesStore();
     const QuotesStore = useQuotesStore();
-    ReferencesStore.resetFilter();
-    QuotesStore.resetQuoteFilter();
+    if (to.name === 'references-type') ReferencesStore.resetFilter();
+    if (to.name === 'quotes-id') QuotesStore.resetQuoteFilter();
   });
   router.beforeEach((to, from) => {
-    const ReferencesStore = useReferencesStore();
     // verifie si un utilisateur est deja connecté, sinon redirige vers la route "guest"
     const Auth = useAuth();
     if (!Auth.user && to.name !== 'guest') {
       redirect('/guest');
     }
-    // si la route references-type ne correspond pas à une référence pré-défini, redirige vers l'accueil
-    const typeParam = to.params.type;
-    if (
-      !typeParam ||
-      ReferencesStore.referencesTypes.includes(typeParam as 'books' | 'articles' | 'web')
-    ) {
+    // if hot reload on 'references' => OK
+    if (!from.name && to.name === 'references') {
       return;
-    } else {
+    }
+    // if navigation between route name => OK
+    if (from.name && to.name) return;
+    // if hot reload and not on 'reference', redirect to home page
+    if (!from.name) {
       redirect('/');
     }
   });

@@ -1,7 +1,6 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
-- revoir les tags et appel load avec firestore
 - retester toutes les fonctionnalités
 - Fixe quand je me reconnecte, je perds la connection au serveur pour extraction de l'image, si je reconnecte cela refonctionne
 - Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
