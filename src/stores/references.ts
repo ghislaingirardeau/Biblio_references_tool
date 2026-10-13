@@ -9,9 +9,12 @@ import {
   saveReferenceFirestore,
 } from 'src/utils/useFirestore';
 import { watch } from 'vue';
+import { useQuotesStore } from './quotes';
 
 const ProjectsStore = useProjectsStore();
 const { project, projectId } = storeToRefs(ProjectsStore);
+
+const QuotesStore = useQuotesStore();
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
@@ -110,6 +113,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     async (afterState, previousState) => {
       console.log('watcher on projectId activated');
       await loadReferences();
+      await QuotesStore.loadQuotes(projectId.value);
     },
     { deep: true },
   );

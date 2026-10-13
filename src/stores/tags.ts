@@ -2,7 +2,6 @@ import { defineStore, storeToRefs, acceptHMRUpdate } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { Tags, TagType } from 'src/types/tags';
 import { useProjectsStore } from './projects';
-import { useReferencesStore } from './references';
 import type { BibliographicEntry, Quote } from 'src/types/references';
 import { useQuotesStore } from './quotes';
 import { getQuotesByTag, getReferencesByTags } from 'src/utils/useFirestore';
@@ -10,11 +9,7 @@ import { getQuotesByTag, getReferencesByTags } from 'src/utils/useFirestore';
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
-const ReferencesStore = useReferencesStore();
-const { referencesTypes, references } = storeToRefs(ReferencesStore);
-
 const QuotesStore = useQuotesStore();
-const { quotes } = storeToRefs(QuotesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);

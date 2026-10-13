@@ -110,10 +110,10 @@ import { useClipboard } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';
-import { isElectron } from 'src/utils/useElectron';
 
 const QuotesStore = useQuotesStore();
-const { loadingQuotes, removingQuote } = storeToRefs(QuotesStore);
+const { loadingQuotes, removingQuote, quotesByReference, filteredQuotes } =
+  storeToRefs(QuotesStore);
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
 
@@ -128,10 +128,10 @@ const isQuoteExpanded = ref(true);
 const quoteContent = useTemplateRef<HTMLDivElement[]>('quote-content');
 
 const quotes = computed(() => {
-  if (Array.isArray(QuotesStore.filteredQuotes)) {
-    return QuotesStore.filteredQuotes as Quote[];
+  if (Array.isArray(filteredQuotes.value)) {
+    return filteredQuotes.value as Quote[];
   }
-  return QuotesStore.quotes ?? [];
+  return quotesByReference.value ?? [];
 });
 
 async function copyQuote(index: number) {
@@ -145,9 +145,7 @@ function askConfirmation(id: string) {
 }
 
 async function deleteQuote() {
-  selectedQuoteId.value
-    ? await QuotesStore.removeQuote(route.params.id as string, selectedQuoteId.value)
-    : null;
+  selectedQuoteId.value ? await QuotesStore.removeQuote(selectedQuoteId.value) : null;
   selectedQuoteId.value = null;
 }
 
@@ -162,7 +160,7 @@ function confirmEdit() {
 }
 
 onMounted(async () => {
-  await QuotesStore.loadQuotes(route.params.id as string);
+  await QuotesStore.loadQuotesByReferences(route.params.id as string);
 });
 </script>
 

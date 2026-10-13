@@ -187,6 +187,20 @@ export const removeReferenceFirestore = async (referenceId: string) => {
 
 /* QUOTES */
 
+export const getQuotesByProject = async (projectId: string) => {
+  const uid = getUid();
+
+  const quotesCollection = collection(db, 'users', uid, 'quotes');
+
+  const q = query(quotesCollection, where('project_id', '==', projectId));
+
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+};
+
 export const getQuotesByReference = async (referenceId: string) => {
   const uid = getUid();
 

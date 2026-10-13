@@ -48,8 +48,9 @@ const { treeReferencesTags, treeQuotesTags, resultTagFilter } = storeToRefs(tags
 const router = useRouter();
 
 async function goToReference(reference: BibliographicEntry | Quote) {
-  const referenceId = 'reference_id' in reference ? reference.reference_id : reference.id;
-  const referenceType = 'reference_id' in reference ? reference.fromType : reference.type;
+  const isQuote = 'reference_id' in reference;
+  const referenceId = isQuote ? reference.reference_id : reference.id;
+  const referenceType = isQuote ? reference.fromType : reference.type;
 
   await router.push({
     name: 'quotes-id',

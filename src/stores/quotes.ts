@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Quote } from 'src/types/references';
 import {
+  getQuotesByProject,
   getQuotesByReference,
   removeQuoteFirestore,
   saveQuoteFirestore,
@@ -10,6 +11,7 @@ import {
 
 export const useQuotesStore = defineStore('QuotesStore', () => {
   const quotes = ref<Quote[]>([]);
+  const quotesByReference = ref<Quote[]>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
 
   const loadingQuotes = ref(false);
@@ -19,11 +21,21 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     filteredQuotes.value = null;
   }
 
-  async function loadQuotes(referenceId: string) {
+  async function loadQuotes(projectId: string) {
     loadingQuotes.value = true;
 
     try {
-      quotes.value = (await getQuotesByReference(referenceId)) as Quote[];
+      quotes.value = (await getQuotesByProject(projectId)) as Quote[];
+    } finally {
+      loadingQuotes.value = false;
+    }
+  }
+
+  function loadQuotesByReferences(referenceId: string) {
+    loadingQuotes.value = true;
+
+    try {
+      quotesByReference.value = quotes.value.filter((quote) => quote.reference_id === referenceId);
     } finally {
       loadingQuotes.value = false;
     }
@@ -33,6 +45,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     try {
       await saveQuoteFirestore(quote);
       quotes.value.unshift(quote);
+      quotesByReference.value.unshift(quote);
     } catch (error) {
       console.log(error);
     }
@@ -46,11 +59,15 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
   }
 
-  async function removeQuote(referenceId: string, quoteId: string) {
+  async function removeQuote(quoteId: string) {
     try {
       removingQuote.value = true;
       await removeQuoteFirestore(quoteId);
       const filterQuotes = quotes.value.filter((quote) => quote.id !== quoteId);
+      const filterQuotesOnReference = quotesByReference.value.filter(
+        (quote) => quote.id !== quoteId,
+      );
+      quotesByReference.value = filterQuotesOnReference;
       quotes.value = filterQuotes;
     } catch (error) {
       console.log(error);
@@ -65,7 +82,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
       return;
     }
     const lowerQuery = query.toLowerCase();
-    const searchQuotes = quotes.value.filter(
+    const searchQuotes = quotesByReference.value.filter(
       (quote) =>
         quote.content!.toLowerCase().includes(lowerQuery) ||
         quote.tag?.map((q) => q.toLowerCase()).includes(lowerQuery),
@@ -79,8 +96,10 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   return {
     quotes,
+    quotesByReference,
     loadingQuotes,
     loadQuotes,
+    loadQuotesByReferences,
     filteredQuotes,
     addQuote,
     update,
