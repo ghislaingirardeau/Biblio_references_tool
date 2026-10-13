@@ -21,7 +21,7 @@
           :key="referenceFound.id!"
           outlined
           class="p-2 m-2 cursor-pointer hover:bg-slate-200"
-          @click="goToReference(referenceFound)"
+          @click="goToReference(referenceFound, resultTagFilter.tag)"
         >
           <q-card-section v-if="'title' in referenceFound">
             {{ referenceFound.title }}
@@ -47,14 +47,16 @@ const { treeReferencesTags, treeQuotesTags, resultTagFilter } = storeToRefs(tags
 
 const router = useRouter();
 
-async function goToReference(reference: BibliographicEntry | Quote) {
+async function goToReference(reference: BibliographicEntry | Quote, tag: string) {
   const isQuote = 'reference_id' in reference;
   const referenceId = isQuote ? reference.reference_id : reference.id;
   const referenceType = isQuote ? reference.fromType : reference.type;
+  const quoteId = isQuote ? reference.id : null;
 
   await router.push({
     name: 'quotes-id',
     params: { type: referenceType as string, id: referenceId },
+    query: quoteId ? { quoteId } : {},
   });
 }
 </script>

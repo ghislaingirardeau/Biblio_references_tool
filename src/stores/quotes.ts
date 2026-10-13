@@ -94,6 +94,13 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     return null;
   }
 
+  function findQuote(id: string) {
+    const find = quotes.value.find((q) => q.id === id);
+    if (find) {
+      filteredQuotes.value = [find];
+    }
+  }
+
   return {
     quotes,
     quotesByReference,
@@ -101,6 +108,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     loadQuotes,
     loadQuotesByReferences,
     filteredQuotes,
+    findQuote,
     addQuote,
     update,
     filterQuotes,

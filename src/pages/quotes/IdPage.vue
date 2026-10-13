@@ -128,7 +128,10 @@ const isQuoteExpanded = ref(true);
 const quoteContent = useTemplateRef<HTMLDivElement[]>('quote-content');
 
 const quotes = computed(() => {
-  if (Array.isArray(filteredQuotes.value)) {
+  if ('quoteId' in route.query) {
+    QuotesStore.findQuote(route.query.quoteId as string);
+  }
+  if (filteredQuotes.value) {
     return filteredQuotes.value as Quote[];
   }
   return quotesByReference.value ?? [];
