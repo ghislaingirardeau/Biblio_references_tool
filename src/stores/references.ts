@@ -17,7 +17,7 @@ const { project, projectId } = storeToRefs(ProjectsStore);
 const QuotesStore = useQuotesStore();
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
-  const filterReferences = ref<Pick<References, 'books' | 'articles'>[] | null>(null);
+  const filterReferences = ref<BibliographicEntry[] | null>(null);
 
   const loadingReferences = ref(false);
   const references = ref<Record<string, BibliographicEntry[]>>({});
@@ -60,6 +60,14 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     }
   }
 
+  function find(type: string, id: string) {
+    const find = references.value[type as keyof References]!.find((q) => q.id === id);
+    console.log('find ref: ', find);
+    if (find) {
+      filterReferences.value = [find];
+    }
+  }
+
   function filter(type: string, query: string) {
     filterReferences.value = null;
 
@@ -81,7 +89,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     if (findReferences.length === 0) {
       return 'No references found...';
     }
-    filterReferences.value = findReferences as Pick<References, 'books' | 'articles'>[];
+    filterReferences.value = findReferences;
     return null;
   }
 
@@ -129,6 +137,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     update,
     remove,
     filterReferences,
+    find,
     filter,
     resetFilter,
   };

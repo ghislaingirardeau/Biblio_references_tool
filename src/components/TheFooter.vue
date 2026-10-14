@@ -33,12 +33,13 @@ import { mdiCloseThick } from '@quasar/extras/mdi-v7';
 import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
 import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
 const QuotesStore = useQuotesStore();
 
 const route = useRoute();
+const router = useRouter();
 const query = ref('');
 const isLoading = ref(false);
 const message = ref<null | string | undefined>(null);
@@ -51,15 +52,30 @@ const isRouteQuotes = computed(() => {
   return !!route.params.id;
 });
 
-function filter() {
+async function filter() {
   isLoading.value = true;
-  typeToFilter();
+  await typeToFilter();
   isLoading.value = false;
 }
 
-function restore() {
+async function restore() {
   query.value = '';
+  // Route from tag, so with one reference. Removing query with routing => restore filter
+  if (route.query.id) {
+    await restoreRemovingQuery();
+  }
   typeToFilter();
+}
+
+async function restoreRemovingQuery() {
+  if (isRouteQuotes.value) {
+    await router.push({
+      name: 'quotes-id',
+      params: { type: route.params.type, id: route.params.id },
+    });
+  } else {
+    await router.push({ name: 'references-type', params: { type: route.params.type } });
+  }
 }
 
 function typeToFilter() {
@@ -81,9 +97,15 @@ function filterQuotes() {
 
 watch(
   () => route,
-  () => {
-    query.value = '';
-    message.value = null;
+  (after, before) => {
+    if (after.name === 'quotes-id' || after.name === 'references-type') {
+      if (route.query.id) {
+        query.value = route.query.id as string;
+        return;
+      }
+      query.value = '';
+      message.value = null;
+    }
   },
   { deep: true },
 );

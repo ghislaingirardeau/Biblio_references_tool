@@ -1,10 +1,15 @@
 <template>
   <q-page class="p-2">
-    <div v-if="typeReferences && typeReferences.length" class="row q-col-gutter-md q-pa-md">
+    <div v-if="referencesToShow && referencesToShow.length" class="row q-col-gutter-md q-pa-md">
       <div v-if="loadingReferences" class="col-12 flex justify-center">
         <q-spinner color="primary" size="3em" />
       </div>
-      <div v-else class="col-12 col-md-4" v-for="reference in typeReferences" :key="reference.id!">
+      <div
+        v-else
+        class="col-12 col-md-4"
+        v-for="reference in referencesToShow"
+        :key="reference.id!"
+      >
         <q-card class="full-height flex flex-col justify-between">
           <q-card-section @click="goToQuotes(reference.id!)" class="cursor-pointer">
             <div class="text-h6">{{ reference.title }}</div>
@@ -93,11 +98,11 @@ import type { ComputedRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
-const { loadingReferences, references } = storeToRefs(ReferencesStore);
+const { loadingReferences, references, filterReferences } = storeToRefs(ReferencesStore);
 const router = useRouter();
 const route = useRoute();
 
-const type = computed(() => route.params.type);
+const type = computed(() => route.params.type as string);
 
 const showConfirmModal = ref(false);
 const showEditModal = ref(false);
@@ -110,9 +115,12 @@ const selectedReference = ref<BibliographicEntry>({
 });
 const selectedId = ref<null | string>(null);
 
-const typeReferences: ComputedRef<BibliographicEntry[]> = computed(() => {
-  if (Array.isArray(ReferencesStore.filterReferences)) {
-    return ReferencesStore.filterReferences as BibliographicEntry[];
+const referencesToShow: ComputedRef<BibliographicEntry[]> = computed(() => {
+  if ('id' in route.query) {
+    ReferencesStore.find(type.value, route.query.id as string);
+  }
+  if (filterReferences.value) {
+    return filterReferences.value as BibliographicEntry[];
   }
   return references.value[type.value as keyof References] ?? [];
 });
@@ -136,7 +144,7 @@ function modalEdit(reference: BibliographicEntry) {
 }
 
 async function confirmDelete() {
-  await ReferencesStore.remove(type.value as string, selectedId.value!);
+  await ReferencesStore.remove(type.value, selectedId.value!);
   selectedId.value = null;
 }
 </script>

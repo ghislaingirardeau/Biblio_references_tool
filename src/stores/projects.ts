@@ -41,7 +41,7 @@ export const useProjectsStore = defineStore('ProjectsStore', () => {
 
   function loadProjects(projectsFromFirestore: Project[], isDefault: boolean) {
     projects.value = projectsFromFirestore;
-    if (isDefault) {
+    if (isDefault || !localStorage.value.lastProjectId) {
       projectId.value = projectsFromFirestore[0]!.id;
     } else {
       const findOnWorkProject = localStorage.value.lastProjectId;

@@ -51,12 +51,13 @@ async function goToReference(reference: BibliographicEntry | Quote, tag: string)
   const isQuote = 'reference_id' in reference;
   const referenceId = isQuote ? reference.reference_id : reference.id;
   const referenceType = isQuote ? reference.fromType : reference.type;
-  const quoteId = isQuote ? reference.id : null;
 
   await router.push({
-    name: 'quotes-id',
-    params: { type: referenceType as string, id: referenceId },
-    query: quoteId ? { quoteId } : {},
+    name: isQuote ? 'quotes-id' : 'references-type',
+    params: isQuote
+      ? { type: referenceType as string, id: referenceId }
+      : { type: referenceType as string },
+    query: { id: reference.id },
   });
 }
 </script>
