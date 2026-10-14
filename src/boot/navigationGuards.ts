@@ -25,13 +25,13 @@ export default boot(({ app, router, redirect, store }) => {
       redirect('/guest');
     }
     // if hot reload on 'references' => OK
-    if (!from.name && to.name === 'references') {
+    if (Auth.user && !from.name && to.name === 'references') {
       return;
     }
     // if navigation between route name => OK
-    if (from.name && to.name) return;
+    if (Auth.user && from.name && to.name) return;
     // if hot reload and not on 'reference', redirect to home page
-    if (!from.name) {
+    if (Auth.user && !from.name) {
       redirect('/');
     }
   });
