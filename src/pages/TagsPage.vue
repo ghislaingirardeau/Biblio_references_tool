@@ -40,6 +40,7 @@ import { storeToRefs } from 'pinia';
 import TreeTagsView from 'src/components/TreeTagsView.vue';
 import { useTagsStore } from 'src/stores/tags';
 import type { BibliographicEntry, Quote } from 'src/types/references';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const tagsStore = useTagsStore();
@@ -60,6 +61,13 @@ async function goToReference(reference: BibliographicEntry | Quote, tag: string)
     query: { id: reference.id },
   });
 }
+
+onMounted(() => {
+  resultTagFilter.value = {
+    tag: '',
+    list: [],
+  };
+});
 </script>
 
 <style scoped></style>

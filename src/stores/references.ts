@@ -18,7 +18,7 @@ const QuotesStore = useQuotesStore();
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const filterReferences = ref<BibliographicEntry[] | null>(null);
-
+  const referencesInArray = ref<BibliographicEntry[] | []>([]);
   const loadingReferences = ref(false);
   const references = ref<Record<string, BibliographicEntry[]>>({});
   const referencesTypes = computed(() => {
@@ -35,7 +35,9 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     loadingReferences.value = true;
 
     try {
-      references.value = await getReferencesByProject(projectId.value);
+      const { biblioData, arrayData } = await getReferencesByProject(projectId.value);
+      referencesInArray.value = arrayData as BibliographicEntry[];
+      references.value = biblioData;
       console.log('ref is loaded ', references.value);
     } finally {
       loadingReferences.value = false;
@@ -128,6 +130,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   return {
     references,
+    referencesInArray,
     referencesTypes,
     referencesLabels,
     getTitle,

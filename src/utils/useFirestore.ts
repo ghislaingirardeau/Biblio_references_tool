@@ -139,22 +139,26 @@ export const getReferencesByProject = async (projectId: string) => {
 
   const snapshot = await getDocs(q);
 
-  const result: Record<string, Array<BibliographicEntry>> = {};
+  const biblioData: Record<string, Array<BibliographicEntry>> = {};
 
   snapshot.docs.forEach((doc) => {
     const data = doc.data() as BibliographicEntry;
     const type = data.type;
 
-    if (!result[type]) {
-      result[type] = [];
+    if (!biblioData[type]) {
+      biblioData[type] = [];
     }
 
-    result[type].push({
+    biblioData[type].push({
       ...data,
     });
   });
 
-  return result;
+  const arrayData = snapshot.docs.map((doc) => ({
+    ...doc.data(),
+  }));
+
+  return { biblioData, arrayData };
 };
 
 export const getReferencesByTags = async (tag: string) => {

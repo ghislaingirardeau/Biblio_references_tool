@@ -5,11 +5,16 @@ import { useProjectsStore } from './projects';
 import type { BibliographicEntry, Quote } from 'src/types/references';
 import { useQuotesStore } from './quotes';
 import { getQuotesByTag, getReferencesByTags } from 'src/utils/useFirestore';
+import { useReferencesStore } from './references';
 
 const ProjectsStore = useProjectsStore();
 const { project } = storeToRefs(ProjectsStore);
 
 const QuotesStore = useQuotesStore();
+const { quotes } = storeToRefs(QuotesStore);
+
+const ReferencesStore = useReferencesStore();
+const { references, referencesInArray } = storeToRefs(ReferencesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
@@ -18,11 +23,6 @@ export const useTagsStore = defineStore('TagsStore', () => {
   const resultTagFilter = ref({
     tag: '' as string,
     list: [] as BibliographicEntry[] | Quote[],
-  });
-
-  const quotesWithSpecificTag = ref({
-    tag: '' as string,
-    list: [] as Quote[],
   });
 
   const treeQuotesTags: Ref<any[]> = computed(() => {
@@ -75,21 +75,19 @@ export const useTagsStore = defineStore('TagsStore', () => {
     // Use Filter() from store References to get all with the tags, map and delete
   }
 
-  async function filterTag(type: TagType, tag: string) {
+  function filterTag(type: TagType, tag: string) {
     resultTagFilter.value = {
       tag,
       list: [],
     };
 
-    let result;
-
     if (type === 'references') {
-      result = await getReferencesByTags(tag);
-      resultTagFilter.value.list = result as BibliographicEntry[];
+      resultTagFilter.value.list = referencesInArray.value.filter((ref) =>
+        ref.tags ? ref.tags.includes(tag) : false,
+      );
     }
     if (type === 'quotes') {
-      result = await getQuotesByTag(tag);
-      resultTagFilter.value.list = result as Quote[];
+      resultTagFilter.value.list = quotes.value.filter((quote) => quote.tag?.includes(tag));
     }
   }
 
