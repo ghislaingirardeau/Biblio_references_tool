@@ -60,8 +60,8 @@
               <q-tooltip class="" :offset="[10, 10]"> Edit </q-tooltip>
             </q-btn>
             <q-btn
-              :loading="removingQuote"
-              :disable="removingQuote"
+              :loading="removingQuote && selectedQuoteId === quote.id"
+              :disable="removingQuote && selectedQuoteId === quote.id"
               dense
               flat
               round
@@ -87,7 +87,11 @@
       :isReadonly="isReadonly"
     />
 
-    <ConfirmModal v-model:showConfirmModal="showConfirmModal" @confirm="deleteQuote">
+    <ConfirmModal
+      v-model:showConfirmModal="showConfirmModal"
+      @confirm="deleteQuote"
+      @cancel="removingQuote = false"
+    >
       <template v-slot:message> Are you sure to delete this quote ? </template>
     </ConfirmModal>
   </q-page>
@@ -139,6 +143,7 @@ async function copyQuote(index: number) {
 }
 
 function askConfirmation(id: string) {
+  removingQuote.value = true;
   showConfirmModal.value = true;
   selectedQuoteId.value = id;
 }

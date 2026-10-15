@@ -8,7 +8,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Cancel" color="negative" v-close-popup />
+        <q-btn flat label="Cancel" color="negative" v-close-popup @click="emits('cancel')" />
         <q-btn flat label="Yes" color="negative" v-close-popup @click="emits('confirm')" />
       </q-card-actions>
     </q-card>
@@ -18,7 +18,7 @@
 <script setup lang="ts">
 const showConfirmModal = defineModel<boolean>('showConfirmModal');
 
-const emits = defineEmits(['confirm']);
+const emits = defineEmits(['confirm', 'cancel']);
 </script>
 
 <style scoped></style>

@@ -15,7 +15,7 @@
       <!-- <q-btn dense flat round icon="restore" @click="ProjectsStore.resetProjects()" /> -->
 
       <!-- <SyncWidget /> -->
-      <SaveWidget />
+      <!-- <SaveWidget /> -->
       <AuthentificationWidget />
     </q-toolbar>
   </q-header>
