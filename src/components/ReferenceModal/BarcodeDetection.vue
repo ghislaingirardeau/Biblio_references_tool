@@ -1,15 +1,21 @@
 <template>
-  <div class="flex my-2">
-    <video v-if="BarcodeDetector" ref="videoElement" class="rounded-md h-80 w-full" />
-    <p class="mt-2 font-bold italic">
-      {{ codeBarMessage }}
-    </p>
+  <div class="flex">
+    <video
+      v-if="BarcodeDetector"
+      ref="videoElement"
+      class="rounded-md w-full"
+      :style="{ height: `${canvasWHeight}px` }"
+    />
+    <p class="mt-2 font-bold italic">{{ codeBarMessage }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useIntervalFn } from '@vueuse/core';
+import { useIntervalFn, useWindowSize } from '@vueuse/core';
+import { computed } from 'vue';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
+
+const { height } = useWindowSize();
 
 const emit = defineEmits(['detection-isbn']);
 
@@ -24,6 +30,8 @@ const codeBarMessage = ref<string | null>();
 
 const videoElement = ref<HTMLVideoElement | null>(null);
 const imagePreview = ref<string | null>(null);
+
+const canvasWHeight = computed(() => height.value - 315);
 
 async function startCamera() {
   try {
