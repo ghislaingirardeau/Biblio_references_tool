@@ -94,10 +94,6 @@
 </template>
 
 <script setup lang="ts">
-/* TODO
-- not possible to add or click on extraction from extension (use inner loading quasar) ?
-*/
-
 import { mdiContentCopy } from '@quasar/extras/mdi-v7';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';

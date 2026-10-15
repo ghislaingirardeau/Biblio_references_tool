@@ -12,11 +12,9 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore';
-import { storeToRefs } from 'pinia';
 import { Notify } from 'quasar';
 import { useAuth } from 'src/stores/auth';
 import { useProjectsStore } from 'src/stores/projects';
-import { useReferencesStore } from 'src/stores/references';
 import type { Project, Projects } from 'src/types/projects';
 import type { BibliographicEntry, Quote } from 'src/types/references';
 
@@ -91,11 +89,18 @@ export async function setUserFirestore() {
 export async function saveProjectFirestore(project: Project) {
   const uid = getUid();
 
-  console.log('project is saved or updated');
+  console.log('project saved');
 
   const referencesCollection = doc(db, 'users', uid, 'projects', project.id);
 
   await setDoc(referencesCollection, project);
+
+  Notify.create({
+    message: 'Project saved',
+    color: 'secondary',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 }
 
 export async function loadProjectsFirestore() {
@@ -111,8 +116,6 @@ export async function loadProjectsFirestore() {
     ...doc.data(),
   }));
 
-  console.log('all projects is loaded');
-
   if (data.length > 0) {
     // User has already a default project minimum set
     const ProjectsStore = useProjectsStore();
@@ -126,6 +129,12 @@ export async function loadProjectsFirestore() {
 export const removeProjectFirestore = async (projectId: string) => {
   const uid = getUid();
   await deleteDoc(doc(db, 'users', uid, 'projects', projectId));
+  Notify.create({
+    message: 'Project removed',
+    color: 'negative',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 };
 
 /* REFERENCES */
@@ -182,11 +191,24 @@ export const saveReferenceFirestore = async (reference: BibliographicEntry) => {
   const referencesCollection = doc(db, 'users', uid, 'references', reference.id!);
 
   await setDoc(referencesCollection, reference);
+
+  Notify.create({
+    message: 'Reference saved',
+    color: 'secondary',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 };
 
 export const removeReferenceFirestore = async (referenceId: string) => {
   const uid = getUid();
   await deleteDoc(doc(db, 'users', uid, 'references', referenceId));
+  Notify.create({
+    message: 'Reference removed',
+    color: 'negative',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 };
 
 /* QUOTES */
@@ -239,23 +261,27 @@ export const getQuotesByTag = async (tag: string) => {
 export const saveQuoteFirestore = async (quote: Quote) => {
   const uid = getUid();
 
-  const referencesRef = doc(db, 'users', uid, 'quotes', quote.id!);
-
-  await setDoc(referencesRef, quote);
-};
-
-export const updateQuoteFirestore = async (quote: Quote) => {
-  const uid = getUid();
-
-  console.log(quote.id);
-
   const quotesDoc = doc(db, 'users', uid, 'quotes', quote.id!);
 
   await setDoc(quotesDoc, quote);
+
+  Notify.create({
+    message: 'Quote saved',
+    color: 'secondary',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 };
 
 export const removeQuoteFirestore = async (quoteId: string) => {
   const uid = getUid();
 
   await deleteDoc(doc(db, 'users', uid, 'quotes', quoteId));
+
+  Notify.create({
+    message: 'Quote removed',
+    color: 'negative',
+    icon: mdiContentSaveCheck,
+    timeout: 2000,
+  });
 };

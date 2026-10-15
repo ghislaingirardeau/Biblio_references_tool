@@ -6,7 +6,6 @@ import {
   getQuotesByReference,
   removeQuoteFirestore,
   saveQuoteFirestore,
-  updateQuoteFirestore,
 } from 'src/utils/useFirestore';
 
 export const useQuotesStore = defineStore('QuotesStore', () => {
@@ -53,7 +52,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   async function update(quote: Quote) {
     try {
-      await updateQuoteFirestore(quote);
+      await saveQuoteFirestore(quote);
     } catch (error) {
       console.log(error);
     }
