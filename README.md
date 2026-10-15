@@ -13,6 +13,11 @@
 - sur tags, que je clique dessus cela me renvoit à toutes les references ou quote avec ce tag
  -->
 
+## Firestore
+
+Keep CRUD function in useFirestore but limit to some. Limitation on free plan to use 50 000 read & write call !
+If call 100 references on load, one user cost already 100 reads
+
 ## Deploy
 
 Npm run build:pwa => comit & push to repo => auto deploy on Render

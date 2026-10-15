@@ -162,8 +162,9 @@ function confirmEdit() {
   selectedQuote.value = null;
 }
 
-onMounted(async () => {
-  await QuotesStore.loadQuotesByReferences(route.params.id as string);
+onMounted(() => {
+  QuotesStore.loadQuotesByReferences(route.params.id as string);
+  QuotesStore.resetQuoteFilter();
 });
 </script>
 

@@ -12,12 +12,6 @@ Pourquoi ? parce que pas de fichier mains.js Vue 3. Donc si on veut ajouter des 
 */
 
 export default boot(({ app, router, redirect, store }) => {
-  router.afterEach((to, from) => {
-    const ReferencesStore = useReferencesStore();
-    const QuotesStore = useQuotesStore();
-    if (to.name === 'references-type') ReferencesStore.resetFilter();
-    if (to.name === 'quotes-id') QuotesStore.resetQuoteFilter();
-  });
   router.beforeEach((to, from) => {
     // verifie si un utilisateur est deja connecté, sinon redirige vers la route "guest"
     const Auth = useAuth();

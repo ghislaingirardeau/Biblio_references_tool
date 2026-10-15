@@ -93,7 +93,7 @@ import EditModal from 'src/components/EditModal.vue';
 import { useReferencesStore } from 'src/stores/references';
 import type { BibliographicEntry } from 'src/types/references';
 import type { References } from 'src/types/references';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import type { ComputedRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -147,6 +147,10 @@ async function confirmDelete() {
   await ReferencesStore.remove(type.value, selectedId.value!);
   selectedId.value = null;
 }
+
+onMounted(() => {
+  ReferencesStore.resetFilter();
+});
 </script>
 
 <style scoped></style>
