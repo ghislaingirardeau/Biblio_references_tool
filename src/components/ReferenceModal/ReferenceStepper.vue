@@ -76,7 +76,8 @@ import { referencesTemplate } from 'src/utils/useBaseReferences';
 import ReferenceEdit from './ReferenceEdit.vue';
 import {
   formatArticleData,
-  formatBookData,
+  formatBookGoogle,
+  formatBookOpenlibrary,
   formatConferenceData,
   formatIdentifier,
   formatReportData,
@@ -156,6 +157,10 @@ const hasRequiredField = computed(() => {
 
 const errorMessage = ref<null | string>(null);
 
+function isISBN() {
+  return isbnRegex.test(identifier.value) ? true : false;
+}
+
 function url() {
   return isbnRegex.test(identifier.value)
     ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1&key=${process.env.APIKEY}`
@@ -167,35 +172,104 @@ async function findReference() {
     isLoading.value = true;
     errorMessage.value = null;
 
-    const response = await fetch(url());
-    if (response.ok) {
-      const result = await response.json();
-      newReference.value.id = 'reference_' + encodeURIComponent(identifier.value);
-      if (route.params.type === 'books' || route.params.type === 'bookChapter') {
-        console.log(result);
-        formatBookData(result.items[0].volumeInfo, newReference, route.params.type);
+    const response = await getReferenceByISBN();
+
+    if (!response) throw new Error('No reference found from APi');
+    const { source, result } = response;
+
+    newReference.value.id = 'reference_' + encodeURIComponent(identifier.value);
+    if (route.params.type === 'books' || route.params.type === 'bookChapter') {
+      console.log(result);
+      if (source === 'google') {
+        formatBookGoogle(result.items[0].volumeInfo, newReference, route.params.type);
       }
-      if (route.params.type === 'articles') {
-        formatArticleData(result.message, newReference, route.params.type);
+      if (source === 'openlibrary') {
+        formatBookOpenlibrary(result, newReference, route.params.type);
       }
-      if (route.params.type === 'report') {
-        formatReportData(result.message, newReference, route.params.type);
-      }
-      if (route.params.type === 'conferencePaper') {
-        formatConferenceData(result.message, newReference, route.params.type);
-      }
-      // DOI for dissertation do not found on CrossRef
-      // if (route.params.type === 'dissertation') {
-      //   console.log(result.message);
-      // }
     }
+    if (route.params.type === 'articles') {
+      formatArticleData(result.message, newReference, route.params.type);
+    }
+    if (route.params.type === 'report') {
+      formatReportData(result.message, newReference, route.params.type);
+    }
+    if (route.params.type === 'conferencePaper') {
+      formatConferenceData(result.message, newReference, route.params.type);
+    }
+    // DOI for dissertation do not found on CrossRef
+    // if (route.params.type === 'dissertation') {
+    //   console.log(result.message);
+    // }
 
     stepperRef?.value.next();
   } catch (error) {
     console.log(error);
-    errorMessage.value = 'Reference not found';
+    errorMessage.value = error as string;
   }
   isLoading.value = false;
+}
+
+async function getReferenceByISBN() {
+  let result;
+  let source;
+
+  if (isISBN()) {
+    result = await getBookFromGoogle();
+    source = 'google';
+    if (!result.items) {
+      console.log('search on open library');
+      result = await getBookFromOpenLibrary();
+      source = 'openlibrary';
+    }
+  } else {
+    result = await getDOIFromApiCrossref();
+    source = 'crossref';
+  }
+
+  if (!result) {
+    errorMessage.value = 'Reference not found';
+    source = null;
+    return;
+  }
+
+  return { source, result };
+}
+
+async function getBookFromOpenLibrary() {
+  const response = await fetch(`https://openlibrary.org/isbn/${identifier.value}.json`);
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return await response.json();
+}
+
+async function getBookFromGoogle() {
+  const response = await fetch(
+    `https://www.googleapis.com/books/v1/volumes` +
+      `?q=isbn:${encodeURIComponent(identifier.value)}` +
+      `&maxResults=1` +
+      `&key=${process.env.APIKEY}`,
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return await response.json();
+}
+
+async function getDOIFromApiCrossref() {
+  const response = await fetch(
+    `https://api.crossref.org/works/${encodeURIComponent(identifier.value)}`,
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  return await response.json();
 }
 
 async function handleDetectionComplete(payload: string) {

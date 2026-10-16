@@ -36,12 +36,11 @@ export interface IsbnAPIData {
   subtitle: string;
   authors: string[];
   publisher: string;
+  publishers: string[];
   publishedDate: string;
-  categories: string;
-  language: string;
   formatAuthors: string;
   pageCount: string;
   infoLink: string;
-  imageLinks: { thumbnail: string };
-  thumbnail: string;
+  number_of_pages: string;
+  publish_date: string;
 }

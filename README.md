@@ -1,11 +1,10 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
+- ISBN google book ne fonctionne pas, changer d'API open library (chatGPT guide)
 - retester toutes les fonctionnalités
-- Fixe quand je me reconnecte, je perds la connection au serveur pour extraction de l'image, si je reconnecte cela refonctionne
 - Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
 - Faire la description du tuto
-- Finaliser les tags
 - Reprendre la biblio pour finaliser
 - faire le test avec terract.js pour l'extraction avec electron car moins couteuse que vision API
 - Possibilité de tout extraire en fichier excel ou word (optionnal)

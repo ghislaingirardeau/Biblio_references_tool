@@ -50,9 +50,7 @@
             flat
             color="primary"
             icon="add"
-            @click="
-              (editReference as any)[reference].push({ firstname: 'hello', lastname: 'world' })
-            "
+            @click="(editReference as any)[reference].push({ firstname: '', lastname: '' })"
             :label="`add ${reference}`"
           />
         </div>

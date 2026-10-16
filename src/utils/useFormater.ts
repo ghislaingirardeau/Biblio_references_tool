@@ -37,7 +37,6 @@ export function formatArticleData(
     volume: volume || '',
     DOI: DOI || '',
     URL: URL || '',
-    language: language || '',
   });
 }
 
@@ -52,7 +51,6 @@ export function formatReportData(
       lastname: a.name,
     };
   });
-  console.log(article);
   const { title: rawTitle, publisher, DOI, language, URL } = article;
   const publishedDate = article?.['published-print']?.['date-parts']?.[0]?.[0];
   newReference.value = Object.assign(newReference.value, {
@@ -64,16 +62,15 @@ export function formatReportData(
     date: publishedDate || '',
     DOI: DOI || '',
     URL: URL || '',
-    language: language || '',
   });
 }
 
-export function formatBookData(
+export function formatBookGoogle(
   result: IsbnAPIData,
   newReference: Ref<BibliographicEntry>,
   type: string,
 ) {
-  const { title, subtitle, authors, publisher } = result;
+  const { title, subtitle, authors, publisher, publishedDate, pageCount, infoLink } = result;
   console.log(authors);
   const formatAuthors = authors?.map((a) => {
     const textToArray = a.split(' ');
@@ -88,11 +85,26 @@ export function formatBookData(
     subtitle: subtitle || '',
     authors: formatAuthors || [],
     publisher: publisher || '',
-    date: result.publishedDate || '',
-    page: result.pageCount || '',
-    URL: result.infoLink || '',
-    imageLinks: result.imageLinks?.thumbnail || '',
-    language: result.language || '',
+    date: publishedDate || '',
+    page: pageCount || '',
+    URL: infoLink || '',
+  });
+}
+
+export function formatBookOpenlibrary(
+  result: IsbnAPIData,
+  newReference: Ref<BibliographicEntry>,
+  type: string,
+) {
+  const { title, subtitle, publishers, number_of_pages, publish_date } = result;
+  newReference.value = Object.assign(newReference.value, {
+    title,
+    type,
+    subtitle: subtitle || '',
+    authors: [],
+    publisher: publishers[0] || '',
+    date: publish_date || '',
+    page: number_of_pages || '',
   });
 }
 
@@ -122,7 +134,6 @@ export function formatConferenceData(
     name: event?.name || '',
     DOI: DOI || '',
     URL: URL || '',
-    language: language || '',
     page: page || '',
   });
 }
