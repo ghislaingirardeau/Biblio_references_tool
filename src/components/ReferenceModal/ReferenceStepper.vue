@@ -161,12 +161,6 @@ function isISBN() {
   return isbnRegex.test(identifier.value) ? true : false;
 }
 
-function url() {
-  return isbnRegex.test(identifier.value)
-    ? `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(identifier.value)}&maxResults=1&key=${process.env.APIKEY}`
-    : `https://api.crossref.org/works/${encodeURIComponent(identifier.value)}`;
-}
-
 async function findReference() {
   try {
     isLoading.value = true;
