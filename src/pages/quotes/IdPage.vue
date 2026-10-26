@@ -110,12 +110,14 @@ import { useClipboard } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import AddWidget from 'src/components/AddWidget.vue';
 import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';
+import { useSearchStore } from 'src/stores/search';
 
 const QuotesStore = useQuotesStore();
 const { loadingQuotes, removingQuote, quotesByReference, filteredQuotes } =
   storeToRefs(QuotesStore);
 const ModalReference = useModalReferenceStore();
 const { isReadonly } = storeToRefs(ModalReference);
+const SearchStore = useSearchStore();
 
 const { copy, copied } = useClipboard();
 
@@ -150,6 +152,9 @@ function askConfirmation(id: string) {
 
 async function deleteQuote() {
   selectedQuoteId.value ? await QuotesStore.removeQuote(selectedQuoteId.value) : null;
+  if (selectedQuoteId.value === route.query.id) {
+    await SearchStore.restore();
+  }
   selectedQuoteId.value = null;
 }
 
