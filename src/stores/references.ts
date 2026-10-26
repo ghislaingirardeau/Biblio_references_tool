@@ -1,4 +1,4 @@
-import { defineStore, storeToRefs } from 'pinia';
+import { acceptHMRUpdate, defineStore, storeToRefs } from 'pinia';
 import { computed, ref, type Ref } from 'vue';
 import type { References } from 'src/types/references';
 import type { BibliographicEntry } from 'src/types/references';
@@ -18,11 +18,18 @@ const QuotesStore = useQuotesStore();
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
   const filterReferences = ref<BibliographicEntry[] | null>(null);
-  const referencesInArray = ref<BibliographicEntry[] | []>([]);
   const loadingReferences = ref(false);
   const references = ref<Record<string, BibliographicEntry[]>>({});
   const referencesTypes = computed(() => {
     return Object.keys(project.value!.references) as Array<keyof References>;
+  });
+
+  const referencesAsArray = computed(() => {
+    const result = [];
+    for (const property in references.value) {
+      result.push(...(references.value[property] as BibliographicEntry[]));
+    }
+    return result;
   });
 
   const referencesLabels = computed(() => {
@@ -35,8 +42,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     loadingReferences.value = true;
 
     try {
-      const { biblioData, arrayData } = await getReferencesByProject(projectId.value);
-      referencesInArray.value = arrayData as BibliographicEntry[];
+      const { biblioData } = await getReferencesByProject(projectId.value);
       references.value = biblioData;
       console.log('ref is loaded ', references.value);
     } finally {
@@ -111,6 +117,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
         (ref) => ref.id !== referenceId,
       );
       references.value[type as keyof References] = filterReferences as BibliographicEntry[];
+      resetFilter();
     } catch (error) {
       console.log(error);
     } finally {
@@ -130,7 +137,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   return {
     references,
-    referencesInArray,
+    referencesAsArray,
     referencesTypes,
     referencesLabels,
     getTitle,
@@ -145,3 +152,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
     resetFilter,
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useReferencesStore, import.meta.hot));
+}

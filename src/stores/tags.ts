@@ -14,7 +14,7 @@ const QuotesStore = useQuotesStore();
 const { quotes } = storeToRefs(QuotesStore);
 
 const ReferencesStore = useReferencesStore();
-const { references, referencesInArray } = storeToRefs(ReferencesStore);
+const { references, referencesAsArray } = storeToRefs(ReferencesStore);
 
 export const useTagsStore = defineStore('TagsStore', () => {
   const tagsReference: Ref<string[]> = computed(() => project.value!.tags.references);
@@ -82,7 +82,7 @@ export const useTagsStore = defineStore('TagsStore', () => {
     };
 
     if (type === 'references') {
-      resultTagFilter.value.list = referencesInArray.value.filter((ref) =>
+      resultTagFilter.value.list = referencesAsArray.value.filter((ref) =>
         ref.tags ? ref.tags.includes(tag) : false,
       );
     }

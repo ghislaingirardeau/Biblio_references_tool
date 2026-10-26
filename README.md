@@ -1,7 +1,6 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
-- ISBN google book ne fonctionne pas, changer d'API open library (chatGPT guide)
 - retester toutes les fonctionnalités
 - Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
 - Faire la description du tuto

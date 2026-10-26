@@ -163,11 +163,7 @@ export const getReferencesByProject = async (projectId: string) => {
     });
   });
 
-  const arrayData = snapshot.docs.map((doc) => ({
-    ...doc.data(),
-  }));
-
-  return { biblioData, arrayData };
+  return { biblioData };
 };
 
 export const getReferencesByTags = async (tag: string) => {
