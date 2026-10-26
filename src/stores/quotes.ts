@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import type { Quote } from 'src/types/references';
 import {
   getQuotesByProject,
-  getQuotesByReference,
   removeQuoteFirestore,
   saveQuoteFirestore,
 } from 'src/utils/useFirestore';
@@ -72,6 +71,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
       console.log(error);
     } finally {
       removingQuote.value = false;
+      resetQuoteFilter();
     }
   }
 

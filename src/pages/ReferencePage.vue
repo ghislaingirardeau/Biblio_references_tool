@@ -91,6 +91,7 @@ import AddWidget from 'src/components/AddWidget.vue';
 import ConfirmModal from 'src/components/ConfirmModal.vue';
 import EditModal from 'src/components/EditModal.vue';
 import { useReferencesStore } from 'src/stores/references';
+import { useSearchStore } from 'src/stores/search';
 import type { BibliographicEntry } from 'src/types/references';
 import type { References } from 'src/types/references';
 import { computed, onMounted, ref } from 'vue';
@@ -99,6 +100,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
 const { loadingReferences, references, filterReferences } = storeToRefs(ReferencesStore);
+const SearchStore = useSearchStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -145,6 +147,9 @@ function modalEdit(reference: BibliographicEntry) {
 
 async function confirmDelete() {
   await ReferencesStore.remove(type.value, selectedId.value!);
+  if (selectedId.value === route.query.id) {
+    await SearchStore.restore();
+  }
   selectedId.value = null;
 }
 

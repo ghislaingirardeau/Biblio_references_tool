@@ -17,7 +17,7 @@
         >
           <template v-slot:append>
             <q-icon name="search" @click="filter" color="primary" class="cursor-pointer" />
-            <q-icon :name="mdiCloseThick" @click="restore" color="primary" class="cursor-pointer" />
+            <q-icon :name="mdiCloseThick" @click="clear" color="primary" class="cursor-pointer" />
           </template>
         </q-input>
         <span class="ml-2">{{ message }}</span>
@@ -30,19 +30,20 @@
 
 <script setup lang="ts">
 import { mdiCloseThick } from '@quasar/extras/mdi-v7';
+import { storeToRefs } from 'pinia';
 import { useQuotesStore } from 'src/stores/quotes';
 import { useReferencesStore } from 'src/stores/references';
+import { useSearchStore } from 'src/stores/search';
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const ReferencesStore = useReferencesStore();
 const QuotesStore = useQuotesStore();
+const SearchStore = useSearchStore();
+const { query, message } = storeToRefs(SearchStore);
 
 const route = useRoute();
-const router = useRouter();
-const query = ref('');
 const isLoading = ref(false);
-const message = ref<null | string | undefined>(null);
 
 const isRouteForReferences = computed(() => {
   return !!route.params.type;
@@ -52,30 +53,15 @@ const isRouteQuotes = computed(() => {
   return !!route.params.id;
 });
 
-async function filter() {
-  isLoading.value = true;
-  await typeToFilter();
-  isLoading.value = false;
-}
-
-async function restore() {
-  query.value = '';
-  // Route from tag, so with one reference. Removing query with routing => restore filter
-  if (route.query.id) {
-    await restoreRemovingQuery();
-  }
+async function clear() {
+  await SearchStore.restore();
   typeToFilter();
 }
 
-async function restoreRemovingQuery() {
-  if (isRouteQuotes.value) {
-    await router.push({
-      name: 'quotes-id',
-      params: { type: route.params.type, id: route.params.id },
-    });
-  } else {
-    await router.push({ name: 'references-type', params: { type: route.params.type } });
-  }
+function filter() {
+  isLoading.value = true;
+  typeToFilter();
+  isLoading.value = false;
 }
 
 function typeToFilter() {
