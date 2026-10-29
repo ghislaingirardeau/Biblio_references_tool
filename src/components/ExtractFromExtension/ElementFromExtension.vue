@@ -10,7 +10,7 @@ import { useProjectsStore } from 'src/stores/projects';
 import { storeToRefs } from 'pinia';
 
 const QuotesStore = useQuotesStore();
-const { loadingQuotes } = storeToRefs(QuotesStore);
+const { loadingQuotes, newQuote } = storeToRefs(QuotesStore);
 
 const route = useRoute();
 
@@ -18,15 +18,6 @@ const ProjectsStore = useProjectsStore();
 const { projectId } = storeToRefs(ProjectsStore);
 
 const screenshot = ref(null);
-const newQuote = ref<Quote>({
-  id: 'quote_' + Date.now().toString(),
-  page: '0',
-  content: '',
-  tag: null,
-  reference_id: null,
-  project_id: null,
-  fromType: null,
-});
 
 onMounted(() => {
   window.addEventListener('EXTENSION_SELECTED_TEXT', handleSelectedText);
@@ -41,6 +32,8 @@ onBeforeUnmount(() => {
 function handleSelectedText(event: any) {
   loadingQuotes.value = true;
 
+  QuotesStore.resetNewQuote();
+
   const text = event.detail.text;
 
   console.log('Texte reçu depuis extension :', text);
@@ -54,6 +47,8 @@ function handleScreenshot(event: any) {
   console.log('Capture reçue depuis extension', event);
 
   loadingQuotes.value = true;
+
+  QuotesStore.resetNewQuote();
 
   const image = event.detail?.image;
 
@@ -73,11 +68,11 @@ function handleScreenshot(event: any) {
 }
 
 async function saveQuote() {
-  newQuote.value.project_id = projectId.value;
-  newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
-  newQuote.value.fromType = route.params.type as keyof ReferencesType;
-
-  await QuotesStore.addQuote(newQuote.value);
+  await QuotesStore.addQuote(
+    projectId.value,
+    route.params.type as keyof ReferencesType,
+    encodeURIComponent(route.params.id as string),
+  );
   loadingQuotes.value = false;
 }
 </script>

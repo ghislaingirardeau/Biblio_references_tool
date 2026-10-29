@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Quote } from 'src/types/references';
+import type { Quote, ReferencesType } from 'src/types/references';
 import {
   getQuotesByProject,
   removeQuoteFirestore,
@@ -8,12 +8,24 @@ import {
 } from 'src/utils/useFirestore';
 
 export const useQuotesStore = defineStore('QuotesStore', () => {
+  // store all quotes, so no need to call firebase more than necessary
   const quotes = ref<Quote[]>([]);
+  // store quotes for a specific route => reference
   const quotesByReference = ref<Quote[]>([]);
   const filteredQuotes = ref<Quote[] | null>(null);
 
   const loadingQuotes = ref(false);
   const removingQuote = ref(false);
+
+  const newQuote = ref<Quote>({
+    id: 'quote_' + Date.now().toString(),
+    page: '0',
+    content: '',
+    tag: null,
+    reference_id: null,
+    project_id: null,
+    fromType: null,
+  });
 
   function resetQuoteFilter() {
     filteredQuotes.value = null;
@@ -31,19 +43,19 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   function loadQuotesByReferences(referenceId: string) {
     loadingQuotes.value = true;
-
-    try {
-      quotesByReference.value = quotes.value.filter((quote) => quote.reference_id === referenceId);
-    } finally {
-      loadingQuotes.value = false;
-    }
+    quotesByReference.value = quotes.value.filter((quote) => quote.reference_id === referenceId);
+    loadingQuotes.value = false;
   }
 
-  async function addQuote(quote: Quote) {
+  async function addQuote(projectId: string, type: keyof ReferencesType, id: string) {
     try {
-      await saveQuoteFirestore(quote);
-      quotes.value.unshift(quote);
-      quotesByReference.value.unshift(quote);
+      newQuote.value.id = 'quote_' + Date.now().toString();
+      newQuote.value.project_id = projectId;
+      newQuote.value.reference_id = id;
+      newQuote.value.fromType = type;
+      await saveQuoteFirestore(newQuote.value);
+      quotes.value.unshift(newQuote.value);
+      quotesByReference.value.unshift(newQuote.value);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +87,18 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     }
   }
 
+  function resetNewQuote() {
+    newQuote.value = {
+      id: 'quote_' + Date.now().toString(),
+      page: '0',
+      content: '',
+      tag: null,
+      reference_id: null,
+      project_id: null,
+      fromType: null,
+    };
+  }
+
   function filterQuotes(query: string) {
     filteredQuotes.value = null;
     if (!query.trim()) {
@@ -102,6 +126,7 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
 
   return {
     quotes,
+    newQuote,
     quotesByReference,
     loadingQuotes,
     loadQuotes,
@@ -114,5 +139,6 @@ export const useQuotesStore = defineStore('QuotesStore', () => {
     resetQuoteFilter,
     removeQuote,
     removingQuote,
+    resetNewQuote,
   };
 });

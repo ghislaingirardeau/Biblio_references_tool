@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { useModalReferenceStore } from 'src/stores/modalReferences';
-import type { Quote, ReferencesType } from 'src/types/references';
-import { ref } from 'vue';
+import type { ReferencesType } from 'src/types/references';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useIsMobile } from 'src/utils/useDeviceInfo';
 import ImageToText from 'src/components/ReferenceModal/imageToText.vue';
@@ -46,37 +46,32 @@ import { useProjectsStore } from 'src/stores/projects.js';
 const ProjectsStore = useProjectsStore();
 const { projectId } = storeToRefs(ProjectsStore);
 
+const QuotesStore = useQuotesStore();
+const { newQuote } = storeToRefs(QuotesStore);
+const modalReferenceStore = useModalReferenceStore();
+
 const step = ref(1);
 const stepperRef = ref();
 
 const isSavingQuote = ref(false);
 
-const newQuote = ref<Quote>({
-  id: 'quote_' + Date.now().toString(),
-  page: '0',
-  content: '',
-  tag: null,
-  reference_id: null,
-  project_id: null,
-  fromType: null,
-});
-
-const QuotesStore = useQuotesStore();
-
-const modalReferenceStore = useModalReferenceStore();
-
 const route = useRoute();
 
 async function saveQuote() {
   isSavingQuote.value = true;
-  newQuote.value.project_id = projectId.value;
-  newQuote.value.reference_id = encodeURIComponent(route.params.id as string);
-  newQuote.value.fromType = route.params.type as keyof ReferencesType;
 
-  await QuotesStore.addQuote(newQuote.value);
+  await QuotesStore.addQuote(
+    projectId.value,
+    route.params.type as keyof ReferencesType,
+    encodeURIComponent(route.params.id as string),
+  );
   modalReferenceStore.reset();
   isSavingQuote.value = false;
 }
+
+onMounted(() => {
+  QuotesStore.resetNewQuote();
+});
 </script>
 
 <style scoped lang="scss">
