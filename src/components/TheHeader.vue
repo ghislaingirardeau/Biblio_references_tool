@@ -40,6 +40,8 @@ const route = useRoute();
 const leftDrawerOpen = defineModel<boolean>('leftDrawerOpen');
 
 const ReferenceStore = useReferencesStore();
+const { references } = storeToRefs(ReferenceStore);
+
 const auth = useAuth();
 const { isFetchingData } = storeToRefs(auth);
 const ProjectsStore = useProjectsStore();
@@ -59,7 +61,7 @@ const mainTitle = computed(() => {
   if (route.params.type) {
     title = project.value!.references[route.params.type as keyof References]!.label;
   }
-  if (route.params.id) {
+  if (route.params.id && Object.keys(references.value).length) {
     title = ReferenceStore.getTitle(route.params.type as string, route.params.id as string)!;
   }
   return title;

@@ -10,11 +10,10 @@ import {
 } from 'src/utils/useFirestore';
 import { watch } from 'vue';
 import { useQuotesStore } from './quotes';
-import { useSearchStore } from './search';
+import { useRoute } from 'vue-router';
 
 const ProjectsStore = useProjectsStore();
 const { project, projectId } = storeToRefs(ProjectsStore);
-const SearchStore = useSearchStore();
 const QuotesStore = useQuotesStore();
 
 export const useReferencesStore = defineStore('ReferencesStore', () => {
