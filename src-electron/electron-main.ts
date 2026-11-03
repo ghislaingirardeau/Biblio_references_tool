@@ -1,4 +1,4 @@
-import { app, BrowserWindow, clipboard, ipcMain } from 'electron';
+import { app, BrowserWindow, clipboard, ipcMain, desktopCapturer } from 'electron';
 import path from 'path';
 import os from 'os';
 import { fileURLToPath } from 'url';
@@ -69,4 +69,21 @@ app.on('activate', () => {
 
 ipcMain.handle('read-clipboard', () => {
   return clipboard.readText();
+});
+
+ipcMain.handle('capture-screen', async () => {
+  const sources = await desktopCapturer.getSources({
+    types: ['screen'],
+    thumbnailSize: {
+      width: 1920,
+      height: 1080,
+    },
+  });
+
+  if (!sources || !sources.length) {
+    throw new Error('Aucun écran détecté');
+  }
+  const image = sources[0]!.thumbnail;
+
+  return image.toDataURL();
 });

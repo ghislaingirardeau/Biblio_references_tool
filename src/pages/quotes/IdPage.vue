@@ -9,6 +9,7 @@
     />
     <ElementFromExtension />
     <TextClipboard v-if="!loadingQuotes" />
+    <TextCapture v-if="!loadingQuotes" />
 
     <div v-if="loadingQuotes" class="col-12 flex justify-center">
       <q-spinner color="primary" size="3em" />
@@ -113,6 +114,7 @@ import AddWidget from 'src/components/AddWidget.vue';
 import ElementFromExtension from 'src/components/ExtractFromExtension/ElementFromExtension.vue';
 import { useSearchStore } from 'src/stores/search';
 import TextClipboard from 'src/components/electron/textClipboard.vue';
+import TextCapture from 'src/components/electron/textCapture.vue';
 
 const QuotesStore = useQuotesStore();
 const { loadingQuotes, removingQuote, quotesByReference, filteredQuotes } =
