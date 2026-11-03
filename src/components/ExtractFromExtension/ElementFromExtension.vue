@@ -66,7 +66,7 @@ async function processScreenshot(event: any) {
 
   screenshot.value = image;
 
-  newQuote.value.content = await useSentToOcr(image);
+  newQuote.value.content = await useSentToOcr(image, '/ocrCapture');
 
   await saveQuote();
 }

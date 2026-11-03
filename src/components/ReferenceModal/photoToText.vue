@@ -143,7 +143,7 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
-    newQuote.value!.content = await useSentToOcr(imageCropped.value!);
+    newQuote.value!.content = await useSentToOcr(imageCropped.value!, '/ocrCapture');
     emits('next-step');
   } catch (error) {
     console.log('Image sent to OCR failed', error);

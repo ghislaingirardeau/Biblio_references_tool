@@ -17,7 +17,7 @@ import { useDesktop } from 'src/utils/useElectron';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { createWorker } from 'tesseract.js';
-import { useSentToOcrTesseract } from 'src/utils/useSentToOcr';
+import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const QuotesStore = useQuotesStore();
 const { newQuote, loadingQuotes } = storeToRefs(QuotesStore);
@@ -29,7 +29,7 @@ const route = useRoute();
 
 /* ---------------------------------------------------------------- */
 
-const screenshot = ref<string | null>(null);
+const screenshot = ref<null | string>(null);
 const isProcessing = ref(false);
 
 const retrieveCapture = async () => {
@@ -44,7 +44,7 @@ const retrieveCapture = async () => {
 
   screenshot.value = image;
 
-  newQuote.value.content = await useSentToOcrTesseract(screenshot.value);
+  newQuote.value.content = await useSentToOcr(screenshot.value, '/ocrCaptureTesseract');
 
   await saveQuote();
 
