@@ -12,29 +12,23 @@ const client = new vision.ImageAnnotatorClient({
     : '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
 });
 
-export async function imgToText(req, res) {
+export async function captureToTextWithVisionAPI(req, res) {
   try {
-    if (!req.files || !req.files.image) {
-      return res.status(400).send('No image uploaded.');
-    }
+    const { imageBase64 } = req.body;
 
-    const file = req.files.image;
-    const [result] = await client.textDetection(file.data);
+    const [result] = await client.textDetection({
+      image: { content: imageBase64.split(',')[1] }, // enlever "data:image/png;base64,"
+    });
 
     const detections = result.textAnnotations;
-    const fullText = detections.length > 0 ? detections[0].description : '';
-
-    fullText.replaceAll('\n', ' ');
-    const textFormated = fullText.replaceAll('\n', ' ');
-
-    res.json({ text: textFormated });
+    res.json({ text: detections[0]?.description || '' });
   } catch (err) {
     console.error(err);
     res.status(500).send('OCR processing failed.');
   }
 }
 
-export async function captureToText(req, res) {
+export async function captureToTextWithTesseract(req, res) {
   try {
     const { imageBase64 } = req.body;
 
