@@ -1,11 +1,11 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
-- retester toutes les fonctionnalités
-- Deployer les fonctionnalités de Electron : capture d'image, raccourci clavier, enregistrement ensuite
+- Pour electron: lecture clipboard et capture: utiliser tesseract avant google API
+- mettre les appels cotés serveur OCR et renvoyer le resultat
+- Pour Tesseract, doit ajouter la langue
 - Faire la description du tuto
 - Reprendre la biblio pour finaliser
-- faire le test avec terract.js pour l'extraction avec electron car moins couteuse que vision API
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
 - debug server OCR, la 1ere capture ne fonctionne pas, je dois recharger la page. cf chatgpt
 - sur tags, que je clique dessus cela me renvoit à toutes les references ou quote avec ce tag

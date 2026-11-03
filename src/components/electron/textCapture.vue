@@ -1,5 +1,11 @@
 <template>
-  <q-btn v-if="isElectron" label="Add quote from capture" @click="retrieveCapture" />
+  <q-btn
+    v-if="isElectron"
+    label="Add quote from capture"
+    @click="retrieveCapture"
+    :loading="isProcessing"
+    :disable="isProcessing"
+  />
   <q-img v-if="screenshot" :src="screenshot" style="max-width: 800px" />
 </template>
 
@@ -11,6 +17,7 @@ import type { ReferencesType } from 'src/types/references';
 import { useDesktop } from 'src/utils/useElectron';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { createWorker } from 'tesseract.js';
 
 const QuotesStore = useQuotesStore();
 const { newQuote, loadingQuotes } = storeToRefs(QuotesStore);
@@ -20,8 +27,9 @@ const { projectId } = storeToRefs(ProjectsStore);
 
 const route = useRoute();
 
+/* ---------------------------------------------------------------- */
+
 const screenshot = ref<string | null>(null);
-const capturing = ref(false);
 
 const retrieveCapture = async () => {
   const image = await window.electronAPI.getSnippingResult();
@@ -32,8 +40,46 @@ const retrieveCapture = async () => {
   }
 
   screenshot.value = image;
-  capturing.value = false;
+  await runOCR();
 };
+
+/* ---------------------------------------------------------------- */
+
+const ocrText = ref('');
+const isProcessing = ref(false);
+let worker = null as any;
+
+async function runOCR() {
+  if (!screenshot.value) return;
+
+  isProcessing.value = true;
+  ocrText.value = '';
+
+  try {
+    // fra
+    worker = await createWorker('eng', 1, {
+      logger: (message) => {
+        console.log(message);
+      },
+    });
+
+    const result = await worker.recognize(screenshot.value);
+
+    ocrText.value = result.data.text;
+    console.log(ocrText.value);
+  } catch (error) {
+    console.error('Erreur OCR:', error);
+  } finally {
+    if (worker) {
+      await worker.terminate();
+      worker = null;
+    }
+
+    isProcessing.value = false;
+  }
+}
+
+/* ---------------------------------------------------------------- */
 
 async function saveQuote() {
   await QuotesStore.addQuote(
