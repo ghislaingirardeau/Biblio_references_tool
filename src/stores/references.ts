@@ -127,12 +127,14 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
 
   watch(
     () => projectId.value,
-    async (afterState, previousState) => {
+    async (newProjectId, previousState) => {
+      if (!newProjectId) return;
       console.log('watcher on projectId activated');
       await loadReferences();
       await QuotesStore.loadQuotes(projectId.value);
     },
-    { deep: true },
+    // immediate => initialise le watcher dés le début de Pinia, ce qui evite que projectId change, mais que le watch ne soit pas pret
+    { immediate: true },
   );
 
   return {

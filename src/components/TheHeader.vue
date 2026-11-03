@@ -16,6 +16,7 @@
 
       <!-- <SyncWidget /> -->
       <!-- <SaveWidget /> -->
+      <span>{{ auth.user?.displayName }}</span>
       <AuthentificationWidget />
     </q-toolbar>
   </q-header>
