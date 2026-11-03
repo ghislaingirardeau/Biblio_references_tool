@@ -35,8 +35,6 @@ import { ref, watch } from 'vue';
 
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
-import { Notify } from 'quasar';
-import { getAuth } from 'firebase/auth';
 import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const modalReferenceStore = useModalReferenceStore();
@@ -73,9 +71,8 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
-    await useSentToOcr(imageCropped.value!, newQuote.value!, () => {
-      emits('next-step');
-    });
+    newQuote.value!.content = await useSentToOcr(imageCropped.value!);
+    emits('next-step');
   } catch (error) {
     console.log('Image sent to OCR failed', error);
   }

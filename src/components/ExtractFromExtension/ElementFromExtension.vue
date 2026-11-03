@@ -44,6 +44,10 @@ function handleSelectedText(event: any) {
 }
 
 function handleScreenshot(event: any) {
+  void processScreenshot(event);
+}
+
+async function processScreenshot(event: any) {
   console.log('Capture reçue depuis extension', event);
 
   loadingQuotes.value = true;
@@ -62,9 +66,9 @@ function handleScreenshot(event: any) {
 
   screenshot.value = image;
 
-  void useSentToOcr(image, newQuote.value, () => {
-    void saveQuote();
-  });
+  newQuote.value.content = await useSentToOcr(image);
+
+  await saveQuote();
 }
 
 async function saveQuote() {

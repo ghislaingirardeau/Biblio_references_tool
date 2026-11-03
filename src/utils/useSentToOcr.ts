@@ -1,8 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import { Notify } from 'quasar';
-import type { Quote } from 'src/types/references';
 
-export async function useSentToOcr(screenshot: ImageData, newQuote: Quote, toDoNext: () => void) {
+export async function useSentToOcr(screenshot: ImageData) {
   try {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -18,9 +17,7 @@ export async function useSentToOcr(screenshot: ImageData, newQuote: Quote, toDoN
 
     const data = await response.json();
 
-    newQuote.content = data.text;
-
-    toDoNext();
+    return data.text;
   } catch (err) {
     Notify.create({
       message: 'Error: extracting text.',
