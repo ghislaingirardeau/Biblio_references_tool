@@ -1,6 +1,7 @@
 import vision from '@google-cloud/vision';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { createWorker } from 'tesseract.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,17 +30,28 @@ export async function captureToTextWithVisionAPI(req, res) {
 }
 
 export async function captureToTextWithTesseract(req, res) {
+  console.log('start processing OCR tesseract...');
+
+  let worker = null;
+
   try {
     const { imageBase64 } = req.body;
 
-    const [result] = await client.textDetection({
-      image: { content: imageBase64.split(',')[1] }, // enlever "data:image/png;base64,"
+    // fra
+    worker = await createWorker('eng', 1, {
+      logger: (message) => {},
     });
 
-    const detections = result.textAnnotations;
-    res.json({ text: detections[0]?.description || '' });
+    const result = await worker.recognize(imageBase64);
+
+    res.json({ text: result.data.text || '' });
   } catch (err) {
     console.error(err);
     res.status(500).send('OCR processing failed.');
+  } finally {
+    if (worker) {
+      await worker.terminate();
+      worker = null;
+    }
   }
 }

@@ -30,3 +30,30 @@ export async function useSentToOcr(screenshot: ImageData, newQuote: Quote, toDoN
     });
   }
 }
+
+export async function useSentToOcrTesseract(screenshot: string) {
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('Utilisateur non connecté');
+    }
+    const token = await user.getIdToken();
+    const response = await fetch(`${process.env.API}/ocrCaptureTesseract`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ imageBase64: screenshot, user: { uid: user?.uid } }),
+    });
+
+    const data = await response.json();
+
+    return data.text;
+  } catch (err) {
+    Notify.create({
+      message: 'Error: extracting text.',
+      color: 'negative',
+      icon: 'system_update',
+      timeout: 3000,
+    });
+  }
+}

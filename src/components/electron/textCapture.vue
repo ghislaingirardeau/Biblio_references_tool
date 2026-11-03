@@ -17,6 +17,7 @@ import { useDesktop } from 'src/utils/useElectron';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { createWorker } from 'tesseract.js';
+import { useSentToOcrTesseract } from 'src/utils/useSentToOcr';
 
 const QuotesStore = useQuotesStore();
 const { newQuote, loadingQuotes } = storeToRefs(QuotesStore);
@@ -29,8 +30,11 @@ const route = useRoute();
 /* ---------------------------------------------------------------- */
 
 const screenshot = ref<string | null>(null);
+const isProcessing = ref(false);
 
 const retrieveCapture = async () => {
+  isProcessing.value = true;
+
   const image = await window.electronAPI.getSnippingResult();
 
   if (!image) {
@@ -39,45 +43,13 @@ const retrieveCapture = async () => {
   }
 
   screenshot.value = image;
-  await runOCR();
+
+  newQuote.value.content = await useSentToOcrTesseract(screenshot.value);
+
+  await saveQuote();
+
+  isProcessing.value = false;
 };
-
-/* ---------------------------------------------------------------- */
-
-const isProcessing = ref(false);
-let worker = null as any;
-
-async function runOCR() {
-  if (!screenshot.value) return;
-
-  isProcessing.value = true;
-
-  QuotesStore.resetNewQuote();
-
-  try {
-    // fra
-    worker = await createWorker('eng', 1, {
-      logger: (message) => {
-        console.log(message);
-      },
-    });
-
-    const result = await worker.recognize(screenshot.value);
-
-    newQuote.value.content = result.data.text;
-
-    await saveQuote();
-  } catch (error) {
-    console.error('Erreur OCR:', error);
-  } finally {
-    if (worker) {
-      await worker.terminate();
-      worker = null;
-    }
-
-    isProcessing.value = false;
-  }
-}
 
 /* ---------------------------------------------------------------- */
 
