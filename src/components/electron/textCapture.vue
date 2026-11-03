@@ -6,7 +6,6 @@
     :loading="isProcessing"
     :disable="isProcessing"
   />
-  <q-img v-if="screenshot" :src="screenshot" style="max-width: 800px" />
 </template>
 
 <script setup lang="ts">
@@ -45,7 +44,6 @@ const retrieveCapture = async () => {
 
 /* ---------------------------------------------------------------- */
 
-const ocrText = ref('');
 const isProcessing = ref(false);
 let worker = null as any;
 
@@ -53,7 +51,8 @@ async function runOCR() {
   if (!screenshot.value) return;
 
   isProcessing.value = true;
-  ocrText.value = '';
+
+  QuotesStore.resetNewQuote();
 
   try {
     // fra
@@ -65,8 +64,9 @@ async function runOCR() {
 
     const result = await worker.recognize(screenshot.value);
 
-    ocrText.value = result.data.text;
-    console.log(ocrText.value);
+    newQuote.value.content = result.data.text;
+
+    await saveQuote();
   } catch (error) {
     console.error('Erreur OCR:', error);
   } finally {
