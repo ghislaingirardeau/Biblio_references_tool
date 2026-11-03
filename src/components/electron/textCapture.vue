@@ -1,5 +1,5 @@
 <template>
-  <q-btn v-if="isElectron" label="Add quote from capture" @click="createNewQuote" />
+  <q-btn v-if="isElectron" label="Add quote from capture" @click="retrieveCapture" />
   <q-img v-if="screenshot" :src="screenshot" style="max-width: 800px" />
 </template>
 
@@ -14,20 +14,25 @@ import { useRoute } from 'vue-router';
 
 const QuotesStore = useQuotesStore();
 const { newQuote, loadingQuotes } = storeToRefs(QuotesStore);
-const { isElectron, captureScreen } = useDesktop();
+const { isElectron } = useDesktop();
 const ProjectsStore = useProjectsStore();
 const { projectId } = storeToRefs(ProjectsStore);
 
 const route = useRoute();
 
 const screenshot = ref<string | null>(null);
+const capturing = ref(false);
 
-const createNewQuote = async () => {
-  try {
-    screenshot.value = await captureScreen();
-  } catch (error) {
-    console.error('Erreur capture écran :', error);
+const retrieveCapture = async () => {
+  const image = await window.electronAPI.getSnippingResult();
+
+  if (!image) {
+    console.warn('Aucune capture disponible');
+    return;
   }
+
+  screenshot.value = image;
+  capturing.value = false;
 };
 
 async function saveQuote() {

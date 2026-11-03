@@ -9,7 +9,7 @@ declare namespace NodeJS {
 
 export interface ElectronAPI {
   readClipboard: () => Promise<string>;
-  captureScreen: () => Promise<string>;
+  getSnippingResult: () => Promise<string | null>;
 }
 
 declare global {

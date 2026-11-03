@@ -1,4 +1,4 @@
-import { app, BrowserWindow, clipboard, ipcMain, desktopCapturer } from 'electron';
+import { app, BrowserWindow, clipboard, ipcMain, nativeImage } from 'electron';
 import path from 'path';
 import os from 'os';
 import { fileURLToPath } from 'url';
@@ -71,19 +71,22 @@ ipcMain.handle('read-clipboard', () => {
   return clipboard.readText();
 });
 
-ipcMain.handle('capture-screen', async () => {
-  const sources = await desktopCapturer.getSources({
-    types: ['screen'],
-    thumbnailSize: {
-      width: 1920,
-      height: 1080,
-    },
-  });
+// Récupérer l'image sélectionnée
+ipcMain.handle('get-snipping-result', async () => {
+  const items = await clipboard.read();
 
-  if (!sources || !sources.length) {
-    throw new Error('Aucun écran détecté');
+  for (const item of items) {
+    const imageType = item.types.find((type) => type.startsWith('image/'));
+
+    if (imageType) {
+      const blob = (await item.getType(imageType)) as Blob;
+      const buffer = Buffer.from(await blob.arrayBuffer());
+
+      const image = nativeImage.createFromBuffer(buffer);
+
+      if (!image.isEmpty()) {
+        return image.toDataURL();
+      }
+    }
   }
-  const image = sources[0]!.thumbnail;
-
-  return image.toDataURL();
 });

@@ -11,17 +11,8 @@ export function useDesktop() {
     return navigator.clipboard.readText();
   };
 
-  const captureScreen = async () => {
-    if (!isElectron) {
-      throw new Error('Capture disponible uniquement dans Electron');
-    }
-
-    return window.electronAPI.captureScreen();
-  };
-
   return {
     isElectron,
     readClipboard,
-    captureScreen,
   };
 }

@@ -33,5 +33,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
   readClipboard: (): Promise<string> => {
     return ipcRenderer.invoke('read-clipboard');
   },
-  captureScreen: () => ipcRenderer.invoke('capture-screen'),
+  getSnippingResult: () => ipcRenderer.invoke('get-snipping-result'),
 });
