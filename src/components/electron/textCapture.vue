@@ -16,8 +16,8 @@ import type { ReferencesType } from 'src/types/references';
 import { useDesktop } from 'src/utils/useElectron';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { createWorker } from 'tesseract.js';
 import { useSentToOcr } from 'src/utils/useSentToOcr';
+import { Notify } from 'quasar';
 
 const QuotesStore = useQuotesStore();
 const { newQuote, loadingQuotes } = storeToRefs(QuotesStore);
@@ -35,18 +35,28 @@ const isProcessing = ref(false);
 const retrieveCapture = async () => {
   isProcessing.value = true;
 
-  const image = await window.electronAPI.getSnippingResult();
+  try {
+    const image = await window.electronAPI.getSnippingResult();
 
-  if (!image) {
-    console.warn('Aucune capture disponible');
-    return;
+    if (!image) {
+      isProcessing.value = false;
+      Notify.create({
+        message: 'No screenshot available',
+        color: 'warning',
+        icon: 'system_update',
+        timeout: 3000,
+      });
+      return;
+    }
+
+    screenshot.value = image;
+
+    newQuote.value.content = await useSentToOcr(screenshot.value, '/ocrCaptureTesseract');
+
+    await saveQuote();
+  } catch (error) {
+    console.log(error);
   }
-
-  screenshot.value = image;
-
-  newQuote.value.content = await useSentToOcr(screenshot.value, '/ocrCaptureTesseract');
-
-  await saveQuote();
 
   isProcessing.value = false;
 };

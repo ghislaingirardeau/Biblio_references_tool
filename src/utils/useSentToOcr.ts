@@ -1,5 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import { Notify } from 'quasar';
+import { useNavigatorLanguage } from '@vueuse/core';
 
 async function userConnection() {
   const auth = getAuth();
@@ -18,11 +19,13 @@ async function userConnection() {
 
 export async function useSentToOcr(screenshot: ImageData | string, APIRoute: string) {
   try {
+    const { language } = useNavigatorLanguage();
+
     const { token, uid } = await userConnection();
     const response = await fetch(`${process.env.API}${APIRoute}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ imageBase64: screenshot, user: { uid } }),
+      body: JSON.stringify({ imageBase64: screenshot, user: { uid }, language: language.value }),
     });
 
     const data = await response.json();

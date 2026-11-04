@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import 'dotenv/config';
 import routerApi from './router.js';
 import { isAuthenticated } from './middleware/isAuthenticated.js';
+import { homeServer } from './controller/global.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,6 +29,8 @@ app.use(
 );
 app.use(fileUpload());
 app.use(bodyParser.json({ limit: '10mb' }));
+
+app.get('/', homeServer);
 
 app.use('/api', isAuthenticated, routerApi);
 

@@ -35,10 +35,21 @@ export async function captureToTextWithTesseract(req, res) {
   let worker = null;
 
   try {
-    const { imageBase64 } = req.body;
+    const { imageBase64, language } = req.body;
+
+    let lang = 'eng';
+
+    switch (language) {
+      case 'fr-FR':
+        lang = 'fra';
+        break;
+      default:
+        lang = 'eng';
+        break;
+    }
 
     // fra
-    worker = await createWorker('eng', 1, {
+    worker = await createWorker(lang, 1, {
       logger: (message) => {},
     });
 

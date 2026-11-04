@@ -8,7 +8,6 @@
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
 - debug server OCR, la 1ere capture ne fonctionne pas, je dois recharger la page. cf chatgpt
-- sur tags, que je clique dessus cela me renvoit à toutes les references ou quote avec ce tag
  -->
 
 ## Firestore
