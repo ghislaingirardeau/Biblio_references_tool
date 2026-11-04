@@ -106,7 +106,7 @@ export const useReferencesStore = defineStore('ReferencesStore', () => {
   }
 
   function getTitle(type: string, id: string) {
-    return references.value[type as keyof References]!.find((ref) => ref.id === id)?.title;
+    return references.value[type as keyof References]?.find((ref) => ref.id === id)?.title;
   }
 
   async function remove(type: string, referenceId: string) {

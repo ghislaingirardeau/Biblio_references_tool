@@ -1,13 +1,9 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
-- si tesseract pas satsifaisant option google api
-- mettre les appels cotés serveur OCR et renvoyer le resultat
-- Pour Tesseract, doit ajouter la langue
 - Faire la description du tuto
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
-- debug server OCR, la 1ere capture ne fonctionne pas, je dois recharger la page. cf chatgpt
  -->
 
 ## Firestore

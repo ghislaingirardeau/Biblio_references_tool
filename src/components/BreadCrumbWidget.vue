@@ -41,7 +41,7 @@ const navigationLinks = computed(() => {
   if (route.params.id && route.params.type) {
     links.push({
       label: ReferenceStore.getTitle(route.params.type as string, route.params.id as string)!,
-      route: route.params.id as string,
+      route: `/${route.params.type as string}/${encodeURIComponent(route.params.id as string)}`,
     });
   }
   return links;
