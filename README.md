@@ -1,7 +1,7 @@
 # biblio_tool (my-biblio-tool)
 
 <!-- TODO GLOBAL
-- Pour electron: lecture clipboard et capture: utiliser tesseract avant google API
+- si tesseract pas satsifaisant option google api
 - mettre les appels cotés serveur OCR et renvoyer le resultat
 - Pour Tesseract, doit ajouter la langue
 - Faire la description du tuto
