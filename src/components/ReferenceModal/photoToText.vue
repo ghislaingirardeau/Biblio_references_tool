@@ -181,9 +181,9 @@ function reloadCanvasVideo() {
 
 function onCropperReady() {
   cropper.value.setCropBoxData({
-    top: 50,
-    width: 400,
-    height: 400,
+    top: 0,
+    width: 0,
+    height: 0,
   });
 }
 
