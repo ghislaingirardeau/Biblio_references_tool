@@ -26,8 +26,6 @@ async function saveToCloudinary(imageBase64, uid) {
     const imageUrl = result.secure_url;
     const publicId = result.public_id;
 
-    console.log('save in Cloudinary: ', imageUrl, publicId);
-
     return { imageUrl, publicId };
   } catch (error) {
     console.log(error);

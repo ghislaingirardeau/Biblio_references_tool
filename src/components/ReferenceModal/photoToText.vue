@@ -69,7 +69,7 @@ const previewUrl = ref<string | null>(null);
 const cropper = ref<any>(null);
 const imageCropped = ref<ImageData | null>(null);
 
-const newQuote = defineModel<Quote>();
+const newQuote = defineModel<Quote>('newQuote');
 const emits = defineEmits(['next-step']);
 
 const loading = ref(false);

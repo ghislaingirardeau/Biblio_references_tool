@@ -30,7 +30,7 @@ app.use(
 app.use(fileUpload());
 app.use(bodyParser.json({ limit: '10mb' }));
 
-app.get('/', homeServer);
+app.get('/home', homeServer);
 
 app.use('/api', isAuthenticated, routerApi);
 

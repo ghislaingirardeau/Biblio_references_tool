@@ -30,7 +30,7 @@ export async function useSentToOcr(screenshot: ImageData | string, APIRoute: str
 
     const data = await response.json();
 
-    return data.text;
+    return data;
   } catch (err) {
     Notify.create({
       message: 'Error: extracting text.',
