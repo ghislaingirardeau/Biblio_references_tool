@@ -2,6 +2,7 @@ import vision from '@google-cloud/vision';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { createWorker } from 'tesseract.js';
+import cloudinary from '../cloudinary.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,16 +14,39 @@ const client = new vision.ImageAnnotatorClient({
     : '/etc/secrets/ocr-image-466705-da5e8a78c3e4.json',
 });
 
+// Save photo to cloudinary
+
+async function saveToCloudinary(imageBase64, uid) {
+  try {
+    const result = await cloudinary.uploader.upload(imageBase64, {
+      folder: `biblio_tool/${uid}/captures`,
+      resource_type: 'image',
+    });
+
+    const imageUrl = result.secure_url;
+    const publicId = result.public_id;
+
+    console.log('save in Cloudinary: ', imageUrl, publicId);
+
+    return { imageUrl, publicId };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function captureToTextWithVisionAPI(req, res) {
   try {
-    const { imageBase64 } = req.body;
+    const { imageBase64, user } = req.body;
 
     const [result] = await client.textDetection({
       image: { content: imageBase64.split(',')[1] }, // enlever "data:image/png;base64,"
     });
 
     const detections = result.textAnnotations;
-    res.json({ text: detections[0]?.description || '' });
+
+    const { imageUrl, publicId } = await saveToCloudinary(imageBase64, user.uid);
+
+    res.json({ text: detections[0]?.description || '', imageUrl, publicId });
   } catch (err) {
     console.error(err);
     res.status(500).send('OCR processing failed.');

@@ -35,6 +35,8 @@ export interface Quote {
   reference_id: string | null;
   project_id: string | null;
   fromType: null | keyof ReferencesType;
+  imageUrl?: string;
+  publicId?: string;
 }
 
 export interface Authors {

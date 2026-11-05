@@ -3,7 +3,6 @@
 <!-- TODO GLOBAL
 - Faire la description du tuto
 - extension: click sur extension, ajoute les informations du site drectement dans les references en passant par le serveur
-- camera phone: pas de pré-selection de la zone
 - photo phone: archiver la photo avec la quote, pour un double controle de l'utilisateur
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)

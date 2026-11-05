@@ -53,7 +53,6 @@ import { computed, onMounted, onUnmounted, reactive, ref, shallowRef, watchEffec
 import { useModalReferenceStore } from 'src/stores/modalReferences';
 import { Notify } from 'quasar';
 import type { Quote } from 'src/types/references';
-import { getAuth } from 'firebase/auth';
 import { useSentToOcr } from 'src/utils/useSentToOcr';
 
 const videoRef = ref<HTMLVideoElement | null>(null);
@@ -143,7 +142,10 @@ function cropImage() {
 async function sendToOCR() {
   try {
     loading.value = true;
-    newQuote.value!.content = await useSentToOcr(imageCropped.value!, '/ocrCapture');
+    const { text, imageUrl, publicId } = await useSentToOcr(imageCropped.value!, '/ocrCapture');
+    newQuote.value!.content = text;
+    newQuote.value!.imageUrl = imageUrl;
+    newQuote.value!.publicId = publicId;
     emits('next-step');
   } catch (error) {
     console.log('Image sent to OCR failed', error);
