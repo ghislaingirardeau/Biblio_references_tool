@@ -3,7 +3,7 @@
 <!-- TODO GLOBAL
 - Faire la description du tuto
 - extension: click sur extension, ajoute les informations du site drectement dans les references en passant par le serveur
-- photo phone: archiver la photo avec la quote, pour un double controle de l'utilisateur
+- photo phone: a tester
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
  -->
