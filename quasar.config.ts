@@ -56,7 +56,7 @@ export default defineConfig((ctx) => {
       // analyze: true,
       env: {
         API: ctx.dev
-          ? 'http://127.0.0.1:3000/api'
+          ? 'http://localhost:3000/api'
           : 'https://biblio-references-tool.onrender.com/api',
         APIKEY: process.env.APIKEY,
         AUTH_DOMAIN: process.env.AUTH_DOMAIN,

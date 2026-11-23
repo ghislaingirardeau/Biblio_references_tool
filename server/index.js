@@ -67,6 +67,21 @@ app.use((req, res, next) => {
 /* Par contre, si un utilisateur veut supprimer un appareil enregistré, là oui, tu dois :
  supprimer son credential de ta base ou lui proposer une UI pour "gérer ses appareils" comme Google le fait */
 
-app.listen(port, () => {
-  console.log(`Serveur démarré sur http://localhost:${port}`);
+const server = app.listen(port, () => {
+  console.log('--------------------------------');
+  console.log(`Backend prêt : http://localhost:${port}`);
+  console.log(`PID : ${process.pid}`);
+  console.log(new Date().toISOString());
+  console.log('--------------------------------');
 });
+
+server.on('error', (err) => {
+  console.error('Erreur serveur :', err);
+});
+
+/* TODO
+test si err connect, dans le terminal 
+netstat -ano | findstr :3000
+puis:
+tasklist /FI "PID eq process.pid"
+*/

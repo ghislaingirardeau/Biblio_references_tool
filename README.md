@@ -39,7 +39,7 @@ It's the extension used to extract text from copy or from image capture and to i
 requirement:
 
 - Install extension:
-  - manage extension _ developper mode _ load unpacked \_ select the folder
+  - manage extension _ developper mode _ load unpacked \_ select the folder *chrome-extension*
 - The tab biblio_tool must be opened with the right reference to add quote
 - CTRL + SHIFT + X to extract from image /!\ it use Vision API
 - SELECT TEXT _ COPY LEFT CLICK _ CTRL + SHIFT + Q to send to the app
