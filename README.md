@@ -27,6 +27,13 @@ le build d'electron, crée un dossier associé dans `dist/electron` avec un fich
 
 ## Extension chrome-screenshot
 
+Dev on extension: need to compile popup.ts to .js, :
+
+- open integrated terminal on **chrome-screenshot** folder
+- npx tsc
+- reload extension inside chrome
+- reload chrome page to update
+
 It's the extension used to extract text from copy or from image capture and to integrate directly to quote folder
 
 requirement:
@@ -36,6 +43,8 @@ requirement:
 - The tab biblio_tool must be opened with the right reference to add quote
 - CTRL + SHIFT + X to extract from image /!\ it use Vision API
 - SELECT TEXT _ COPY LEFT CLICK _ CTRL + SHIFT + Q to send to the app
+
+No need the id of the extension. On click on the extension, it will detect if the app is open in a tab => if open = connected otherwise is disconnected
 
 ## Cloud Vision API & CLE GOOGLE SUR g.gXXXX
 

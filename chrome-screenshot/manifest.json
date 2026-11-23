@@ -1,21 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "Capture texte - Biblio Tool",
+  "name": "Extension - Biblio Tool",
   "version": "1.0.0",
-  "description": "Capture une zone de la page web et envoie du texte vers Biblio Tool.",
-  "permissions": ["activeTab", "tabs"],
+  "description": "Références à envoyer vers votre Biblio Tool.",
+  "permissions": ["activeTab", "tabs", "scripting"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "dist/background.js"
   },
   "action": {
-    "default_title": "Capturer une zone"
+    "default_title": "Biblio tool extension",
+    "default_popup": "dist/popup/popup.html"
   },
   "commands": {
     "start-capture": {
       "suggested_key": {
         "default": "Ctrl+Shift+X"
       },
-      "description": "Capturer une zone de la page"
+      "description": "Biblio tool extension de la page"
     },
 
     "send-selected-text": {
@@ -28,8 +29,12 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["style.css"]
+      "js": ["dist/content.js"],
+      "css": ["dist/style.css"]
     }
-  ]
+  ],
+  "host_permissions": ["https://biblio-references-tool.onrender.com/*", "http://localhost:9000/*"],
+  "externally_connectable": {
+    "matches": ["https://biblio-references-tool.onrender.com/*", "http://localhost:9000/*"]
+  }
 }

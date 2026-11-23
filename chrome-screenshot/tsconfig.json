@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "strict": true,
+    "outDir": "dist/popup",
+    "rootDir": "src",
+    "lib": ["ES2022", "DOM"],
+    "types": ["chrome"],
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -19,7 +19,8 @@
     "build:electron": "quasar build -m electron",
     "postinstall": "quasar prepare",
     "start": "node server/index.js",
-    "start:dev": "node --watch server/index.js"
+    "start:dev": "node --watch server/index.js",
+    "watch": "tsc --watch"
   },
   "dependencies": {
     "@google-cloud/vision": "^5.3.1",

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>biblio_tool</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+
+  <body>
+    <main class="popup">
+      <header class="header">
+        <div class="brand">
+          <div class="logo">B</div>
+          <span>biblio_tool</span>
+        </div>
+        <div class="connection">
+          <div class="status-dot" id="status-dot"></div>
+          <span class="connection-status" id="connection-status"> </span>
+        </div>
+      </header>
+
+      <section class="page-info">
+        <div class="section-heading">
+          <h1>Nouvelle référence</h1>
+          <span class="type-badge">WEB</span>
+        </div>
+
+        <div class="page-preview">
+          <div class="page-icon">🌐</div>
+          <div class="page-details">
+            <div id="page-title" class="page-title">Récupération de la page...</div>
+            <div id="page-domain" class="page-domain"></div>
+          </div>
+        </div>
+      </section>
+
+      <form id="reference-form">
+        <div class="field">
+          <label for="title">Titre</label>
+          <input id="title" name="title" type="text" placeholder="Titre de la page" required />
+        </div>
+
+        <div class="field">
+          <label for="authors">Auteur(s)</label>
+          <input id="authors" name="authors" type="text" placeholder="Nom de l'auteur" />
+          <small>Séparer les auteurs par une virgule.</small>
+        </div>
+
+        <div class="field">
+          <label for="siteName">Nom du site / éditeur</label>
+          <input id="siteName" name="siteName" type="text" placeholder="Nom du site" />
+        </div>
+
+        <div class="field">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="3"
+            placeholder="Description de la page..."
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="url">URL</label>
+          <input id="url" name="url" type="url" required />
+        </div>
+
+        <div id="error-message" class="message error hidden"></div>
+        <div id="success-message" class="message success hidden"></div>
+
+        <footer class="footer">
+          <button type="button" id="cancel-btn" class="btn-secondary">Annuler</button>
+
+          <button type="submit" id="submit-btn" class="btn-primary">
+            <span>+</span>
+            Envoyer
+          </button>
+        </footer>
+      </form>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -21,7 +21,7 @@ chrome.action.onClicked.addListener(async (tab) => {
 // MESSAGES DU CONTENT SCRIPT
 // ==========================================
 
-chrome.runtime.onMessage.addListener(async (message, sender) => {
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   // ==========================================
   // CAPTURE DE L'ÉCRAN
   // ==========================================
@@ -67,7 +67,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
     });
 
     if (!tabs.length) {
-      console.warn('Aucun onglet Quasar trouvé');
+      console.warn('Aucun onglet Biblio Tool trouvé');
       return;
     }
 
@@ -129,6 +129,54 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
     }
 
     return;
+  }
+
+  // ==========================================
+  // AJOUTE LE SITE WEB
+  // ==========================================
+  if (message.type === 'IMPORT_WEB_REFERENCE') {
+    const payload = message.payload;
+
+    console.log('data web reçu dans background:', payload);
+
+    if (!payload) {
+      throw new Error('Payload manquant');
+    }
+    const tabs = await chrome.tabs.query({
+      url: [
+        'http://localhost:9000/*',
+        'http://localhost:9200/*',
+        'https://biblio-references-tool.onrender.com/*',
+      ],
+    });
+
+    if (!tabs.length) {
+      console.warn('Aucun onglet Biblio Tool trouvé');
+      return;
+    }
+
+    const quasarTab = tabs[0];
+
+    console.log('tabs open', quasarTab);
+
+    try {
+      await chrome.tabs.sendMessage(quasarTab.id, {
+        type: 'IMPORT_WEB_REFERENCE',
+        payload,
+      });
+
+      sendResponse({
+        success: true,
+      });
+    } catch (error) {
+      console.error('Erreur importation:', error);
+      sendResponse({
+        success: false,
+        error: error instanceof Error ? error.message : 'Erreur inconnue',
+      });
+    }
+
+    return true;
   }
 });
 

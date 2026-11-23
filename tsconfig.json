@@ -1,6 +1,7 @@
 {
   "extends": "./.quasar/tsconfig.json",
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./declarations.d.ts"]
+    "typeRoots": ["./node_modules/@types", "./declarations.d.ts"],
+    "types": ["chrome"]
   }
 }

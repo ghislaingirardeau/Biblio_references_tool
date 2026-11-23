@@ -51,6 +51,18 @@ chrome.runtime.onMessage.addListener(async (message) => {
       }),
     );
   }
+
+  if (message.type === 'IMPORT_WEB_REFERENCE') {
+    console.log('Import reçu dans content.js:', message.payload);
+
+    window.dispatchEvent(
+      new CustomEvent('EXTENSION_IMPORTED_WEB_REFERENCE', {
+        detail: {
+          payload: message.payload,
+        },
+      }),
+    );
+  }
 });
 
 // ========================================
