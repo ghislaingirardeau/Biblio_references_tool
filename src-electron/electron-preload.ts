@@ -29,9 +29,34 @@ import { contextBridge, ipcRenderer } from 'electron';
  *   }
  * }
  */
+
 contextBridge.exposeInMainWorld('electronAPI', {
+  // ==========================================
+  // TEXT CLIPBOARD
   readClipboard: (): Promise<string> => {
     return ipcRenderer.invoke('read-clipboard');
   },
-  getSnippingResult: () => ipcRenderer.invoke('get-snipping-result'),
+
+  // ==========================================
+  // SCREEN SNIPPING CAPTURE
+
+  getSnippingResult: () => {
+    return ipcRenderer.invoke('get-snipping-result');
+  },
+
+  // ==========================================
+  // LISTEN TO CHROME EXTENSION TA ADD WEB REF
+
+  onImportWebReference: (callback: (payload: unknown) => void) => {
+    const listener = (_event: Electron.IpcRendererEvent, payload: unknown) => {
+      callback(payload);
+    };
+
+    ipcRenderer.on('extension:import-web-reference', listener);
+
+    // Permet de supprimer l'écouteur lorsque nécessaire
+    return () => {
+      ipcRenderer.removeListener('extension:import-web-reference', listener);
+    };
+  },
 });

@@ -113,7 +113,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   }
 
   // ==========================================
-  // AJOUTE LE SITE WEB
+  // SEND WEB REFERENCE TO LOCAL ELECTRON SERVER
   // ==========================================
   if (message.type === 'IMPORT_WEB_REFERENCE') {
     const payload = message.payload;
@@ -121,7 +121,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     console.log('data web reçu dans background:', payload);
 
     try {
-      const result = await importWebReference(message.payload);
+      const result = await importWebReference(payload);
 
       sendResponse({
         success: true,
@@ -196,6 +196,7 @@ chrome.commands.onCommand.addListener(async (command) => {
 
 /* http://127.0.0.1:32145 est un serveur local créer par l'application ELectron */
 async function importWebReference(payload) {
+  console.log('payload to importWebReference', payload);
   const response = await fetch('http://127.0.0.1:32145/import-reference', {
     method: 'POST',
     headers: {
@@ -204,7 +205,11 @@ async function importWebReference(payload) {
     body: JSON.stringify(payload),
   });
 
+  const result = await response.json();
+
   if (!response.ok) {
-    throw new Error('Impossible de transmettre la référence à Biblio Tool.');
+    throw new Error(result.error || 'Erreur de transmission vers Electron.');
   }
+
+  return result;
 }

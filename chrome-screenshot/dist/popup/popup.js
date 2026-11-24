@@ -42,7 +42,7 @@ async function getPageMetadata() {
         $('connection-status').classList.toggle('status-disconnected');
         $('status-dot').classList.toggle('status-dot-disconnected');
         $('connection-status').textContent = 'Disconnected';
-        submitBtn.disabled = true;
+        // submitBtn.disabled = true;
     }
     if (tab && (!tab.id || !tab.url)) {
         throw new Error('Impossible de récupérer la page.');
@@ -132,20 +132,18 @@ async function handleSubmit() {
         return;
     }
     const payload = {
-        reference: {
-            type: 'web',
-            title: $('title').value.trim(),
-            URL: $('url').value.trim(),
-            authors: $('authors')
-                .value.split(',')
-                .map((author) => author.trim())
-                .filter(Boolean),
-            description: $('description').value.trim(),
-            name: $('siteName').value.trim(),
-            accessDate: Date.now(),
-        },
+        type: 'web',
+        title: $('title').value.trim(),
+        URL: $('url').value.trim(),
+        authors: $('authors')
+            .value.split(',')
+            .map((author) => author.trim())
+            .filter(Boolean),
+        description: $('description').value.trim(),
+        name: $('siteName').value.trim(),
+        accessDate: Date.now(),
     };
-    if (!payload.reference.title) {
+    if (!payload.title) {
         showMessage(errorMessage, 'Le titre est obligatoire.');
         return;
     }

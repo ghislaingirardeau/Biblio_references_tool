@@ -86,7 +86,7 @@ async function getPageMetadata(): Promise<PageMetadata> {
     $('connection-status').classList.toggle('status-disconnected');
     $('status-dot').classList.toggle('status-dot-disconnected');
     $('connection-status').textContent = 'Disconnected';
-    submitBtn.disabled = true;
+    // submitBtn.disabled = true;
   }
 
   if (tab && (!tab.id || !tab.url)) {
@@ -216,27 +216,25 @@ async function handleSubmit(): Promise<void> {
   }
 
   const payload = {
-    reference: {
-      type: 'web' as const,
+    type: 'web' as const,
 
-      title: $('title').value.trim(),
+    title: $('title').value.trim(),
 
-      URL: $('url').value.trim(),
+    URL: $('url').value.trim(),
 
-      authors: $('authors')
-        .value.split(',')
-        .map((author) => author.trim())
-        .filter(Boolean),
+    authors: $('authors')
+      .value.split(',')
+      .map((author) => author.trim())
+      .filter(Boolean),
 
-      description: $('description').value.trim(),
+    description: $('description').value.trim(),
 
-      name: $('siteName').value.trim(),
+    name: $('siteName').value.trim(),
 
-      accessDate: Date.now(),
-    },
+    accessDate: Date.now(),
   };
 
-  if (!payload.reference.title) {
+  if (!payload.title) {
     showMessage(errorMessage, 'Le titre est obligatoire.');
     return;
   }

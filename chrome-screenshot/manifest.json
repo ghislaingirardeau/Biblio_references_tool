@@ -33,7 +33,11 @@
       "css": ["dist/style.css"]
     }
   ],
-  "host_permissions": ["https://biblio-references-tool.onrender.com/*", "http://localhost:9000/*"],
+  "host_permissions": [
+    "https://biblio-references-tool.onrender.com/*",
+    "http://localhost:9000/*",
+    "http://127.0.0.1:32145/*"
+  ],
   "externally_connectable": {
     "matches": ["https://biblio-references-tool.onrender.com/*", "http://localhost:9000/*"]
   }

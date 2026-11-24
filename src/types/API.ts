@@ -44,3 +44,13 @@ export interface IsbnAPIData {
   number_of_pages: string;
   publish_date: string;
 }
+
+export interface WebReferencePayload {
+  title: string;
+  URL: string;
+  authors?: string[];
+  accessDate?: string;
+  siteName?: string;
+  description?: string;
+  type: string;
+}
