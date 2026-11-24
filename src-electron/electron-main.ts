@@ -14,15 +14,13 @@ let mainWindow: BrowserWindow | undefined;
 // ==========================================
 // CREATE MINI LOCAL SERVER TO LISTEN TO CHROME EXTENSION TO ADD WEB REFERENCE TO ELECTRON
 
-const EXTENSION_ORIGIN = 'chrome-extension://kkocnbophcaapdoomfdgdehkcjcdjgjj';
+const EXTENSION_ORIGIN = 'chrome-extension://' + process.env.EXTENSION_ID;
 
 const EXTENSION_BRIDGE_PORT = 32145;
 
 const extensionBridge = createServer((req, res) => {
   void (async () => {
     const origin = req.headers.origin;
-
-    console.log('serveur electron', origin);
 
     // Vérifier l'origine de l'extension
     if (origin !== EXTENSION_ORIGIN) {

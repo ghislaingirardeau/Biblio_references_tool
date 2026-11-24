@@ -129,9 +129,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       });
     } catch (error) {
       console.error('Erreur importation:', error);
+      const errorMessage =
+        error.message === 'Failed to fetch' ? 'Open Biblio Tool App' : error.message;
       sendResponse({
         success: false,
-        error: error instanceof Error ? error.message : 'Erreur inconnue',
+        error: error instanceof Error ? errorMessage : 'Erreur inconnue',
       });
     }
 
@@ -195,9 +197,11 @@ chrome.commands.onCommand.addListener(async (command) => {
 });
 
 /* http://127.0.0.1:32145 est un serveur local créer par l'application ELectron */
+const ELECTRON_BRIDGE_URL = 'http://127.0.0.1:32145';
+
 async function importWebReference(payload) {
   console.log('payload to importWebReference', payload);
-  const response = await fetch('http://127.0.0.1:32145/import-reference', {
+  const response = await fetch(`${ELECTRON_BRIDGE_URL}/import-reference`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

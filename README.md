@@ -2,9 +2,8 @@
 
 <!-- TODO GLOBAL
 - Faire la description du tuto
-- ajout rapide web reference :
-  - Si Biblio Tool est ouvert dans Chrome : communication avec l'onglet et utilisation de Firebase Auth.
-  - Si Biblio Tool est ouvert dans Electron : communication avec le serveur local et utilisation de Firebase Auth dans Electron.
+- ajout rapide web reference, electron:
+    - Enregistrer la reference dans firestore + ajout pinia, mainlayout/subscribeToWebReferenceImport à finir
 - photo phone: a tester
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
@@ -37,6 +36,9 @@ Dev on extension: need to compile popup.ts to .js, :
 - reload chrome page to update
 
 It's the extension used to extract text from copy or from image capture and to integrate directly to quote folder
+
+- Si Biblio Tool est ouvert dans Chrome : communication avec l'onglet et utilisation de Firebase Auth.
+- Si Biblio Tool est ouvert dans Electron : communication avec le serveur local et utilisation de Firebase Auth dans Electron.
 
 requirement:
 
