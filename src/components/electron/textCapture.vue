@@ -51,7 +51,11 @@ const retrieveCapture = async () => {
 
     screenshot.value = image;
 
-    newQuote.value.content = await useSentToOcr(screenshot.value, '/ocrCaptureTesseract');
+    const { text } = await useSentToOcr(screenshot.value, '/ocrCaptureTesseract');
+
+    newQuote.value.content = text;
+
+    console.log('quote from capture', newQuote.value.content);
 
     await saveQuote();
   } catch (error) {

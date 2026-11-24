@@ -13,6 +13,8 @@
         <q-card class="full-height flex flex-col justify-between">
           <q-card-section @click="goToQuotes(reference.id!)" class="cursor-pointer">
             <div class="text-h6">{{ reference.title }}</div>
+            <div class="text-h7" v-if="reference.description">{{ reference.description }}</div>
+
             <span
               v-for="(author, i) in reference.authors"
               :key="author.lastname + i"

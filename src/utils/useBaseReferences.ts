@@ -148,13 +148,9 @@ export const referencesTemplate = {
       id: null,
       tags: [],
       title: '',
-      authors: [
-        {
-          firstname: '',
-          lastname: '',
-        },
-      ],
-      name: '',
+      authors: [],
+      description: '',
+      siteName: '',
       date: '',
       URL: '',
       accessDate: '',

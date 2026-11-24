@@ -56,6 +56,8 @@ export interface BibliographicEntry {
   ['main-authors']?: Authors[];
   publisher?: string;
   journal?: string;
+  description?: string;
+  siteName?: string;
   date?: string;
   page?: string;
   pages?: string;
