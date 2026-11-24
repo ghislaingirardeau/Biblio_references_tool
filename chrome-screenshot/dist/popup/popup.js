@@ -135,13 +135,14 @@ async function handleSubmit() {
         reference: {
             type: 'web',
             title: $('title').value.trim(),
-            url,
+            URL: $('url').value.trim(),
             authors: $('authors')
                 .value.split(',')
                 .map((author) => author.trim())
                 .filter(Boolean),
             description: $('description').value.trim(),
-            siteName: $('siteName').value.trim(),
+            name: $('siteName').value.trim(),
+            accessDate: Date.now(),
         },
     };
     if (!payload.reference.title) {

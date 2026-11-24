@@ -78,10 +78,3 @@ const server = app.listen(port, () => {
 server.on('error', (err) => {
   console.error('Erreur serveur :', err);
 });
-
-/* TODO
-test si err connect, dans le terminal 
-netstat -ano | findstr :3000
-puis:
-tasklist /FI "PID eq process.pid"
-*/

@@ -2,7 +2,9 @@
 
 <!-- TODO GLOBAL
 - Faire la description du tuto
-- extension: click sur extension, ajoute les informations du site drectement dans les references en passant par le serveur
+- ajout rapide web reference :
+  - Si Biblio Tool est ouvert dans Chrome : communication avec l'onglet et utilisation de Firebase Auth.
+  - Si Biblio Tool est ouvert dans Electron : communication avec le serveur local et utilisation de Firebase Auth dans Electron.
 - photo phone: a tester
 - Reprendre la biblio pour finaliser
 - Possibilité de tout extraire en fichier excel ou word (optionnal)
@@ -39,7 +41,7 @@ It's the extension used to extract text from copy or from image capture and to i
 requirement:
 
 - Install extension:
-  - manage extension _ developper mode _ load unpacked \_ select the folder *chrome-extension*
+  - manage extension _ developper mode _ load unpacked \_ select the folder _chrome-extension_
 - The tab biblio_tool must be opened with the right reference to add quote
 - CTRL + SHIFT + X to extract from image /!\ it use Vision API
 - SELECT TEXT _ COPY LEFT CLICK _ CTRL + SHIFT + Q to send to the app

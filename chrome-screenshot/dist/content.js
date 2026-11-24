@@ -13,6 +13,8 @@ let isSelecting = false;
 chrome.runtime.onMessage.addListener(async (message) => {
   console.log('Message reçu par content.js :', message);
 
+  /* On command press, get the text and send to the current tab */
+
   if (message.type === 'GET_SELECTED_TEXT') {
     const selection = window.getSelection();
 
@@ -40,6 +42,8 @@ chrome.runtime.onMessage.addListener(async (message) => {
     return;
   }
 
+  /* when current tab, received text, send to app tab*/
+
   if (message.type === 'SELECTED_TEXT_FOR_QUASAR') {
     console.log('Texte reçu pour Biblio Tool :', message.text);
 
@@ -52,7 +56,9 @@ chrome.runtime.onMessage.addListener(async (message) => {
     );
   }
 
-  if (message.type === 'IMPORT_WEB_REFERENCE') {
+  /* Import web page - DISABLED - send to backend directly to save ref */
+
+  /* if (message.type === 'IMPORT_WEB_REFERENCE') {
     console.log('Import reçu dans content.js:', message.payload);
 
     window.dispatchEvent(
@@ -62,7 +68,7 @@ chrome.runtime.onMessage.addListener(async (message) => {
         },
       }),
     );
-  }
+  } */
 });
 
 // ========================================

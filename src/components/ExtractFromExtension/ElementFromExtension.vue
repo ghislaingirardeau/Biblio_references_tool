@@ -22,20 +22,12 @@ const screenshot = ref(null);
 onMounted(() => {
   window.addEventListener('EXTENSION_SELECTED_TEXT', handleSelectedText);
   window.addEventListener('EXTENSION_SCREENSHOT', handleScreenshot);
-  window.addEventListener('EXTENSION_IMPORTED_WEB_REFERENCE', handleImportedWebPage);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('EXTENSION_SELECTED_TEXT', handleSelectedText);
   window.removeEventListener('EXTENSION_SCREENSHOT', handleScreenshot);
-  window.removeEventListener('EXTENSION_IMPORTED_WEB_REFERENCE', handleImportedWebPage);
 });
-
-function handleImportedWebPage(event: any) {
-  const customEvent = event as CustomEvent;
-
-  console.log('Import reçu dans Vue:', customEvent.detail.payload);
-}
 
 function handleSelectedText(event: any) {
   loadingQuotes.value = true;

@@ -221,7 +221,7 @@ async function handleSubmit(): Promise<void> {
 
       title: $('title').value.trim(),
 
-      url,
+      URL: $('url').value.trim(),
 
       authors: $('authors')
         .value.split(',')
@@ -230,7 +230,9 @@ async function handleSubmit(): Promise<void> {
 
       description: $('description').value.trim(),
 
-      siteName: $('siteName').value.trim(),
+      name: $('siteName').value.trim(),
+
+      accessDate: Date.now(),
     },
   };
 

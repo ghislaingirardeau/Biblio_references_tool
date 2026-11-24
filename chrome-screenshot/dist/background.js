@@ -1,23 +1,4 @@
 // ==========================================
-// CLIC SUR L'ICÔNE DE L'EXTENSION
-// → Capture d'image
-// ==========================================
-
-chrome.action.onClicked.addListener(async (tab) => {
-  if (!tab.id) {
-    return;
-  }
-
-  try {
-    await chrome.tabs.sendMessage(tab.id, {
-      type: 'START_CAPTURE',
-    });
-  } catch (error) {
-    console.error('Impossible de démarrer la capture :', error);
-  }
-});
-
-// ==========================================
 // MESSAGES DU CONTENT SCRIPT
 // ==========================================
 
@@ -139,34 +120,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     console.log('data web reçu dans background:', payload);
 
-    if (!payload) {
-      throw new Error('Payload manquant');
-    }
-    const tabs = await chrome.tabs.query({
-      url: [
-        'http://localhost:9000/*',
-        'http://localhost:9200/*',
-        'https://biblio-references-tool.onrender.com/*',
-      ],
-    });
-
-    if (!tabs.length) {
-      console.warn('Aucun onglet Biblio Tool trouvé');
-      return;
-    }
-
-    const quasarTab = tabs[0];
-
-    console.log('tabs open', quasarTab);
-
     try {
-      await chrome.tabs.sendMessage(quasarTab.id, {
-        type: 'IMPORT_WEB_REFERENCE',
-        payload,
-      });
+      const result = await importWebReference(message.payload);
 
       sendResponse({
         success: true,
+        data: result,
       });
     } catch (error) {
       console.error('Erreur importation:', error);
@@ -234,3 +193,18 @@ chrome.commands.onCommand.addListener(async (command) => {
     return;
   }
 });
+
+/* http://127.0.0.1:32145 est un serveur local créer par l'application ELectron */
+async function importWebReference(payload) {
+  const response = await fetch('http://127.0.0.1:32145/import-reference', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error('Impossible de transmettre la référence à Biblio Tool.');
+  }
+}
